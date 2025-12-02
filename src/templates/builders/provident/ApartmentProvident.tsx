@@ -14,7 +14,7 @@ import PaymentPlans from "@/templates/common/PaymentPlans";
 import LoanEligibilityWidget from "@/templates/common/LoanEligibility";
 import Testimonials from "@/templates/common/Testimonials";
 import Brochure from "@/templates/common/Brochure";
-import ProvidentSection from "@/templates/common/ProvidentSection";
+import ProvidentSection from "@/templates/common/AboutSection";
 import FAQ from "@/templates/common/FAQ";
 import LeadFormModal from "@/components/LeadFormModal";
 import Footer from "@/components/Footer/Footer";
@@ -63,7 +63,7 @@ const ApartmentProvident: React.FC<TemplateProps> = ({ data }) => {
 
       <Brochure data={data.brochure} />
 
-      <ProvidentSection data={data.providentSection} onCtaClick={() => openForm("about-provident")} />
+      <AboutSection data={data.aboutSection} onCtaClick={() => openForm("about-provident")} />
 
       <FAQ data={data.faq} openLeadForm={() => openForm("faq")} />
 
