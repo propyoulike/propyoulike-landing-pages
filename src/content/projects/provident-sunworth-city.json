@@ -5,53 +5,70 @@
   "template": "custom",
   "theme": "custom",
 
-  "locality": "Mysore Road / Kengeri",
+  "locality": "Mysore Road / NICE Junction / Kengeri",
   "city": "Bangalore",
-
   "name": "Provident Sunworth City",
-  "tagline": "60-Acre Township on Mysore Road, Bangalore",
-  "description": "Provident Sunworth City is a large 60-acre township on Mysore Road / NICE junction offering premium 2 & 3 BHK apartments with thoughtful amenities, landscaped greens and easy connectivity to Bangalore city and suburbs.",
-
+  "tagline": "60-Acre Integrated Township on Mysore Road, Bangalore",
+  "description": "Provident Sunworth City is a large 60-acre lifestyle township on Mysore Road / NICE junction offering premium 2 & 3 BHK apartments, lush green spaces, modern amenities and excellent connectivity.",
+  
+  /* Images & sharing */
   "heroImage": "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1920&q=80",
   "ogImage": "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&q=80",
 
-  "status": "Ready to Move / Ongoing",
-  "priceRange": "₹ 65 Lakhs – ₹ 1.2 Crore",
+  /* Legal / Approvals */
+  "rera": {
+    "id": "PRM/KA/RERA/1251/310/PR/190529/002585",
+    "status": "Registered",
+    "authority": "Karnataka RERA",
+    "lastUpdated": "2025-06-30" /* approximate — update when you refresh certificate */
+  },
 
+  "landArea": {
+    "value": 60,
+    "unit": "acre"
+  },
+
+  "status": "Ready / Ongoing",  
+  "unitCount": 770,          /* public listing on some portals mentions 770+ units */ :contentReference[oaicite:6]{index=6}
+  "towers": 29,
+
+  "priceRange": "₹65 Lakhs – ₹1.48 Crore",  /* adjusted to match public listings range */ :contentReference[oaicite:7]{index=7}
+
+  /* Standard project data for template rendering */
   "highlights": [
     {
-      "title": "Large 60-Acre Township",
-      "description": "Expansive township spread over 60 acres in Mysore Road / NICE junction for a community-like living experience."
+      "title": "60-Acre Township",
+      "description": "Large integrated township along Mysore Road / NICE junction by Provident."
     },
     {
       "title": "2 & 3 BHK Apartments",
-      "description": "Modern apartments in 2 & 3 BHK configurations, suitable for families and investors alike."
+      "description": "Modern apartments suitable for families and professionals."
     },
     {
       "title": "Excellent Connectivity",
-      "description": "Located on Mysore Road near NICE junction; close to Kengeri / Mysore Road highways and public transport links."
+      "description": "Close to NICE junction, Mysore Road, with good road connectivity."
     },
     {
-      "title": "Ready to Move / Ongoing Flats",
-      "description": "Some towers ready, others under development — flexible options depending on buyer preference."
+      "title": "Green Open Spaces",
+      "description": "Sprawling greens, landscaped gardens and open spaces planned."
     },
     {
-      "title": "Spacious Green Township Layout",
-      "description": "Township planning with open spaces, green zones, amenities, and community-style living."
+      "title": "Ready & Ongoing Flats",
+      "description": "Some towers ready, others under construction — flexible buying options."
     }
   ],
 
   "configurations": [
     {
       "type": "2 BHK",
-      "size": "880 – 1100 Sq.Ft",
-      "price": "₹ 65 Lakhs – ₹ 95 Lakhs",
+      "size": "900 – 1100 Sq.Ft",
+      "price": "₹65 Lakhs – ₹95 Lakhs",
       "availability": "Available"
     },
     {
       "type": "3 BHK",
       "size": "1250 – 1500 Sq.Ft",
-      "price": "₹ 95 Lakhs – ₹ 1.2 Crore",
+      "price": "₹95 Lakhs – ₹1.48 Crore",
       "availability": "Limited"
     }
   ],
@@ -63,7 +80,7 @@
       "bedrooms": 2,
       "bathrooms": 2,
       "image": "https://images.unsplash.com/photo-1560440021-33f9b867899d?w=800&q=80",
-      "price": "₹ 75 Lakhs"
+      "price": "₹75 Lakhs"
     },
     {
       "type": "3 BHK",
@@ -71,7 +88,7 @@
       "bedrooms": 3,
       "bathrooms": 2,
       "image": "https://images.unsplash.com/photo-1560440021-33f9b867899d?w=800&q=80",
-      "price": "₹ 1.05 Crore"
+      "price": "₹1.10 Crore"
     }
   ],
 
@@ -83,7 +100,7 @@
     { "name": "Children's Play Area", "icon": "playground" },
     { "name": "24/7 Security", "icon": "security" },
     { "name": "Covered Parking", "icon": "parking" },
-    { "name": "Indoor Games / Community Halls", "icon": "community" }
+    { "name": "Indoor Games / Community Hall", "icon": "community" }
   ],
 
   "gallery": [
@@ -97,31 +114,31 @@
   "locationMap": {
     "lat": 12.9007,
     "lng": 77.4316,
-    "address": "Near NICE Junction, Mysore Road, Kengeri, Bangalore - 560060",
+    "address": "Near NICE Junction, Mysore Road, Kengeri, Bengaluru, Karnataka 560060",
     "landmarks": [
       { "name": "NICE Road Junction", "distance": "500 m" },
-      { "name": "Kengeri Metro / Railway Station", "distance": "Approx 4–5 km" },
-      { "name": "Global Village Tech Park", "distance": "Approx 10 km" },
-      { "name": "Major Schools & Hospitals around Mysore Road", "distance": "Varies" }
+      { "name": "Kengeri Metro / Railway Station", "distance": "4–5 km" },
+      { "name": "Global Village Tech Park", "distance": "10 km" },
+      { "name": "Major Schools & Hospitals on Mysore Road", "distance": "Varies" }
     ]
   },
 
   "faq": [
     {
-      "question": "What are the available units?",
-      "answer": "2 BHK and 3 BHK apartments of various sizes."
+      "question": "What are the available unit types?",
+      "answer": "2 BHK and 3 BHK apartments across multiple towers."
     },
     {
       "question": "Is the project ready to move?",
-      "answer": "Some towers are ready, others are ongoing — check availability on inquiry."
+      "answer": "Some towers are ready; others are in ongoing phases — please check availability."
     },
     {
       "question": "Where is Provident Sunworth City located?",
-      "answer": "Off Mysore Road near the NICE junction, Kengeri, Bangalore."
+      "answer": "Off Mysore Road / NICE Junction, near Kengeri, Bengaluru."
     },
     {
-      "question": "What amenities are included?",
-      "answer": "Swimming pool, clubhouse, gym, landscaped gardens, kids play area, security & more."
+      "question": "What amenities does the project offer?",
+      "answer": "Swimming pool, clubhouse, gym, landscaped gardens, play area, covered parking, security, indoor games & more."
     }
   ],
 
