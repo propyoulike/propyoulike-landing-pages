@@ -5,24 +5,37 @@
    ========================================= */
 
 .provident-theme {
-  /* Primary = Dark navy */
-  --primary: 222 47% 11%;
+  /* Primary = Dark navy/charcoal */
+  --primary: 220 40% 12%;
   --primary-foreground: 0 0% 100%;
 
-  /* Accent = Provident Gold */
-  --accent: 42 85% 55%;
-  --accent-light: 42 90% 65%;
-  --accent-foreground: 222 47% 11%;
+  /* Accent = Provident Gold/Orange */
+  --accent: 35 95% 58%;
+  --accent-light: 35 100% 65%;
+  --accent-foreground: 220 40% 12%;
 
   /* Background / Surfaces */
   --background: 0 0% 100%;
-  --foreground: 222 15% 15%;
+  --foreground: 220 20% 15%;
 
   --muted: 220 14% 96%;
   --muted-foreground: 220 12% 44%;
 
   --card: 0 0% 100%;
-  --card-foreground: 222 15% 15%;
+  --card-foreground: 220 20% 15%;
+  
+  /* Border */
+  --border: 220 13% 91%;
+}
+
+/* Global typography improvements */
+.provident-theme {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.provident-theme .font-heading {
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  letter-spacing: -0.02em;
 }
 
 /* =========================================
@@ -84,24 +97,17 @@
   background-color: hsl(var(--accent-light));
 }
 
-/* Sticky CTA (Mobile) */
-.provident-theme .sticky-cta-bar {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background: hsl(var(--primary));
-  padding: 0.75rem 1rem;
-  display: flex;
-  justify-content: space-between;
-  z-index: 999;
+/* =========================================
+   CARDS & HOVER EFFECTS
+========================================= */
+
+.provident-theme .highlight-card {
+  transition: all 0.3s ease;
 }
 
-.provident-theme .sticky-cta-bar button {
-  flex: 1;
-  margin: 0 0.4rem;
-  padding: 0.9rem 1rem;
-  font-size: 1rem;
-  border-radius: 0.5rem;
+.provident-theme .highlight-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
 }
 
 /* =========================================
