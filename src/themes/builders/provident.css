@@ -1,0 +1,10 @@
+/* Provident Builder Theme */
+
+.provident-theme {
+  /* Provident-specific brand colors can be added here */
+  --accent: 38 92% 50%; /* Provident gold */
+}
+
+.provident-theme .hero-section {
+  /* Provident-specific hero styling */
+}
