@@ -1,5 +1,5 @@
-import { useParams, Navigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { Navigate, useParams } from "react-router-dom";
+import { useEffect, useMemo, useState } from "react";
 import { Helmet } from "react-helmet";
 
 // Default Templates
@@ -7,10 +7,12 @@ import ApartmentDefault from "@/templates/default/ApartmentDefault";
 import VillaDefault from "@/templates/default/VillaDefault";
 import PlotDefault from "@/templates/default/PlotDefault";
 
-// Builder-Specific Templates
+// Provident Templates
 import ApartmentProvident from "@/templates/builders/provident/ApartmentProvident";
 import VillaProvident from "@/templates/builders/provident/VillaProvident";
 import PlotProvident from "@/templates/builders/provident/PlotProvident";
+
+import Footer from "@/components/Footer/Footer";
 
 interface ProjectData {
   slug: string;
@@ -22,10 +24,12 @@ interface ProjectData {
   description: string;
   ogImage?: string;
   shareVideo?: string;
+  footer?: any;
+  locality?: string;
   [key: string]: any;
 }
 
-const DefaultTemplates = {
+const DefaultTemplates: Record<string, any> = {
   apartment: ApartmentDefault,
   villa: VillaDefault,
   plot: PlotDefault,
@@ -37,92 +41,89 @@ const BuilderTemplates: Record<string, Record<string, any>> = {
     villa: VillaProvident,
     plot: PlotProvident,
   },
-  prestige: {
-    apartment: ApartmentDefault, // Placeholder
-    villa: VillaDefault,
-    plot: PlotDefault,
-  },
-  sobha: {
-    apartment: ApartmentDefault, // Placeholder
-    villa: VillaDefault,
-    plot: PlotDefault,
-  },
-  brigade: {
-    apartment: ApartmentDefault, // Placeholder
-    villa: VillaDefault,
-    plot: PlotDefault,
-  },
-  lodha: {
-    apartment: ApartmentDefault, // Placeholder
-    villa: VillaDefault,
-    plot: PlotDefault,
-  },
 };
 
 const ProjectPage = () => {
   const { slug } = useParams<{ slug: string }>();
+
   const [projectData, setProjectData] = useState<ProjectData | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
 
+  // Load all project JSON files bundled by Vite
+  const allProjects = useMemo(() => {
+    const modules = import.meta.glob("@/content/projects/*.json", { eager: true }) as Record<
+      string,
+      { default: ProjectData }
+    >;
+
+    const map: Record<string, ProjectData> = {};
+    Object.keys(modules).forEach((path) => {
+      const json = modules[path].default;
+      const key = json.slug || path.split("/").pop()!.replace(".json", "");
+      map[key] = json;
+    });
+
+    return map;
+  }, []);
+
+  // Load project + theme
   useEffect(() => {
-    const loadProject = async () => {
-      try {
-        const data = await import(`@/content/projects/${slug}.json`);
-        setProjectData(data.default || data);
-        
-        // Load theme CSS dynamically
-        const theme = (data.default || data).theme;
-        const builder = (data.default || data).builder;
-        
-        if (theme === "custom" && builder) {
-          const themeLink = document.createElement("link");
-          themeLink.rel = "stylesheet";
-          themeLink.href = `/src/themes/builders/${builder}.css`;
-          themeLink.id = `theme-${builder}`;
-          document.head.appendChild(themeLink);
-          
-          return () => {
-            const existingLink = document.getElementById(`theme-${builder}`);
-            if (existingLink) {
-              existingLink.remove();
-            }
-          };
-        }
-      } catch (err) {
-        console.error("Failed to load project:", err);
-        setError(true);
-      } finally {
-        setLoading(false);
-      }
-    };
+    if (!slug) return;
 
-    loadProject();
-  }, [slug]);
+    const data = allProjects[slug];
+    if (!data) {
+      setProjectData(null);
+      setLoading(false);
+      return;
+    }
+
+    setProjectData(data);
+
+    // Load theme CSS correctly via Vite bundling
+    const builder = data.builder?.toLowerCase();
+    const theme = data.theme || "default";
+
+    (async () => {
+      if (theme === "custom" && builder) {
+        try {
+          await import(`@/themes/builders/${builder}.css`);
+        } catch (e) {
+          console.warn(`Builder theme not found for ${builder}, using default.`, e);
+          await import("@/themes/default.css");
+        }
+      } else {
+        await import("@/themes/default.css");
+      }
+    })();
+
+    setLoading(false);
+  }, [slug, allProjects]);
 
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-muted">
-        <div className="text-center">
-          <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-muted-foreground">Loading project...</p>
-        </div>
+        <p>Loading project...</p>
       </div>
     );
   }
 
-  if (error || !projectData) {
+  if (!projectData) {
     return <Navigate to="/404" replace />;
   }
 
-  // Template Selection Logic
-  const template = projectData.template || "default";
-  const builder = projectData.builder?.toLowerCase();
+  // Select template
   const propertyType = projectData.type;
+  const builder = projectData.builder?.toLowerCase();
+  const template = projectData.template || "default";
 
   let TemplateComponent;
-  
-  if (template === "custom" && builder && BuilderTemplates[builder]?.[propertyType]) {
+
+  if (
+    template === "custom" &&
+    builder &&
+    BuilderTemplates[builder] &&
+    BuilderTemplates[builder][propertyType]
+  ) {
     TemplateComponent = BuilderTemplates[builder][propertyType];
   } else {
     TemplateComponent = DefaultTemplates[propertyType] || ApartmentDefault;
@@ -130,28 +131,30 @@ const ProjectPage = () => {
 
   return (
     <>
+      {/* Helmet only affects browser, prerender handles OG SEO */}
       <Helmet>
         <title>{projectData.name} | PropYouLike</title>
         <meta name="description" content={projectData.description} />
-        
-        {/* Open Graph Tags */}
+
+        {/* OG BASIC */}
         <meta property="og:title" content={projectData.name} />
         <meta property="og:description" content={projectData.description} />
         <meta property="og:url" content={`https://propyoulike.com/projects/${slug}`} />
-        <meta property="og:type" content="website" />
+
         {projectData.ogImage && (
           <meta property="og:image" content={projectData.ogImage} />
         )}
-        
-        {/* Twitter Card */}
+
+        {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={projectData.name} />
         <meta name="twitter:description" content={projectData.description} />
+
         {projectData.ogImage && (
           <meta name="twitter:image" content={projectData.ogImage} />
         )}
-        
-        {/* Video Preview */}
+
+        {/* Video */}
         {projectData.shareVideo && (
           <>
             <meta property="og:video" content={projectData.shareVideo} />
@@ -162,8 +165,15 @@ const ProjectPage = () => {
           </>
         )}
       </Helmet>
-      
+
       <TemplateComponent data={projectData} />
+
+      <Footer
+        data={projectData.footer ?? null}
+        projectName={projectData.name}
+        builder={projectData.builder}
+        locality={projectData.locality}
+      />
     </>
   );
 };
