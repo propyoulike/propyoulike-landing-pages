@@ -5,57 +5,53 @@
   "template": "custom",
   "theme": "custom",
 
-  "locality": "Kengeri",
+  "locality": "Mysore Road / Kengeri",
   "city": "Bangalore",
 
   "name": "Provident Sunworth City",
-  "tagline": "A 60-Acre Lifestyle Township on Mysore Road",
-  "description": "Provident Sunworth City is a premium 60-acre lifestyle township offering spacious 2 & 3 BHK apartments near Kengeri on Mysore Road. The project offers excellent connectivity, top-tier amenities, and a fully developed community environment.",
+  "tagline": "60-Acre Township on Mysore Road, Bangalore",
+  "description": "Provident Sunworth City is a large 60-acre township on Mysore Road / NICE junction offering premium 2 & 3 BHK apartments with thoughtful amenities, landscaped greens and easy connectivity to Bangalore city and suburbs.",
 
   "heroImage": "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1920&q=80",
   "ogImage": "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&q=80",
 
-  "status": "Ready to Move",
-  "priceRange": "₹65 Lakhs – ₹1.2 Cr",
+  "status": "Ready to Move / Ongoing",
+  "priceRange": "₹ 65 Lakhs – ₹ 1.2 Crore",
 
   "highlights": [
     {
+      "title": "Large 60-Acre Township",
+      "description": "Expansive township spread over 60 acres in Mysore Road / NICE junction for a community-like living experience."
+    },
+    {
+      "title": "2 & 3 BHK Apartments",
+      "description": "Modern apartments in 2 & 3 BHK configurations, suitable for families and investors alike."
+    },
+    {
       "title": "Excellent Connectivity",
-      "description": "Located on Mysore Road with quick access to NICE Road and Kengeri Metro Station."
+      "description": "Located on Mysore Road near NICE junction; close to Kengeri / Mysore Road highways and public transport links."
     },
     {
-      "title": "60-Acre Township",
-      "description": "Large-scale development with multiple towers, parks, amenities, and community spaces."
+      "title": "Ready to Move / Ongoing Flats",
+      "description": "Some towers ready, others under development — flexible options depending on buyer preference."
     },
     {
-      "title": "World-Class Amenities",
-      "description": "Swimming pool, clubhouse, gym, indoor games, kids' play areas and more."
-    },
-    {
-      "title": "Ready-to-Move Options",
-      "description": "OC-received towers with families already residing."
-    },
-    {
-      "title": "Green Open Spaces",
-      "description": "Township planned with landscaped gardens and greenery."
-    },
-    {
-      "title": "Proximity to IT Hubs",
-      "description": "Close to Global Village Tech Park and ideal for professionals."
+      "title": "Spacious Green Township Layout",
+      "description": "Township planning with open spaces, green zones, amenities, and community-style living."
     }
   ],
 
   "configurations": [
     {
       "type": "2 BHK",
-      "size": "950 – 1100 Sq.Ft",
-      "price": "₹65 Lakhs – ₹95 Lakhs",
+      "size": "880 – 1100 Sq.Ft",
+      "price": "₹ 65 Lakhs – ₹ 95 Lakhs",
       "availability": "Available"
     },
     {
       "type": "3 BHK",
-      "size": "1300 – 1500 Sq.Ft",
-      "price": "₹1.05 Cr – ₹1.20 Cr",
+      "size": "1250 – 1500 Sq.Ft",
+      "price": "₹ 95 Lakhs – ₹ 1.2 Crore",
       "availability": "Limited"
     }
   ],
@@ -63,31 +59,31 @@
   "floorPlans": [
     {
       "type": "2 BHK",
-      "size": "1000 Sq.Ft",
+      "size": "950 Sq.Ft",
       "bedrooms": 2,
       "bathrooms": 2,
       "image": "https://images.unsplash.com/photo-1560440021-33f9b867899d?w=800&q=80",
-      "price": "₹75 Lakhs"
+      "price": "₹ 75 Lakhs"
     },
     {
       "type": "3 BHK",
-      "size": "1450 Sq.Ft",
+      "size": "1350 Sq.Ft",
       "bedrooms": 3,
       "bathrooms": 2,
       "image": "https://images.unsplash.com/photo-1560440021-33f9b867899d?w=800&q=80",
-      "price": "₹1.1 Cr"
+      "price": "₹ 1.05 Crore"
     }
   ],
 
   "amenities": [
     { "name": "Swimming Pool", "icon": "pool" },
-    { "name": "Gymnasium", "icon": "gym" },
     { "name": "Clubhouse", "icon": "clubhouse" },
+    { "name": "Gymnasium", "icon": "gym" },
     { "name": "Landscaped Gardens", "icon": "garden" },
-    { "name": "Children's Play Area", "icon": "sports" },
+    { "name": "Children's Play Area", "icon": "playground" },
     { "name": "24/7 Security", "icon": "security" },
     { "name": "Covered Parking", "icon": "parking" },
-    { "name": "Indoor Games", "icon": "sports" }
+    { "name": "Indoor Games / Community Halls", "icon": "community" }
   ],
 
   "gallery": [
@@ -95,39 +91,37 @@
     "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&q=80",
     "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&q=80",
     "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=1200&q=80",
-    "https://images.unsplash.com/photo-1600607687644-c7171b42498f?w=1200&q=80",
-    "https://images.unsplash.com/photo-1600585154363-67eb9e2e2099?w=1200&q=80"
+    "https://images.unsplash.com/photo-1600607687644-c7171b42498f?w=1200&q=80"
   ],
 
   "locationMap": {
     "lat": 12.9007,
     "lng": 77.4316,
-    "address": "Mysore Road, Kengeri, Bangalore - 560060",
+    "address": "Near NICE Junction, Mysore Road, Kengeri, Bangalore - 560060",
     "landmarks": [
-      { "name": "Global Village Tech Park", "distance": "8 km" },
-      { "name": "Rajajinagar", "distance": "12 km" },
-      { "name": "Kengeri Metro Station", "distance": "4 km" },
-      { "name": "NICE Road Junction", "distance": "3 km" },
-      { "name": "Bangalore University", "distance": "5 km" }
+      { "name": "NICE Road Junction", "distance": "500 m" },
+      { "name": "Kengeri Metro / Railway Station", "distance": "Approx 4–5 km" },
+      { "name": "Global Village Tech Park", "distance": "Approx 10 km" },
+      { "name": "Major Schools & Hospitals around Mysore Road", "distance": "Varies" }
     ]
   },
 
   "faq": [
     {
-      "question": "Is the project ready to move?",
-      "answer": "Yes, several towers are ready to move with occupancy certificate received."
+      "question": "What are the available units?",
+      "answer": "2 BHK and 3 BHK apartments of various sizes."
     },
     {
-      "question": "Is home loan assistance available?",
-      "answer": "Yes, we support all major banks for home loans."
+      "question": "Is the project ready to move?",
+      "answer": "Some towers are ready, others are ongoing — check availability on inquiry."
+    },
+    {
+      "question": "Where is Provident Sunworth City located?",
+      "answer": "Off Mysore Road near the NICE junction, Kengeri, Bangalore."
     },
     {
       "question": "What amenities are included?",
-      "answer": "Swimming pool, clubhouse, gym, kids play area, indoor games, landscaped gardens."
-    },
-    {
-      "question": "Is the project RERA approved?",
-      "answer": "Yes, all approvals and compliance are in place."
+      "answer": "Swimming pool, clubhouse, gym, landscaped gardens, kids play area, security & more."
     }
   ],
 
