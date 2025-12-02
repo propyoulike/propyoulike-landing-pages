@@ -1,10 +1,240 @@
-/* Provident Builder Theme */
+/* =========================================
+   PROVIDENT BUILDER THEME
+   Matches styling of:
+   https://propyoulike.com/provident-sunworth-city/
+   ========================================= */
 
 .provident-theme {
-  /* Provident-specific brand colors can be added here */
-  --accent: 38 92% 50%; /* Provident gold */
+  /* Primary = Dark navy */
+  --primary: 222 47% 11%;
+  --primary-foreground: 0 0% 100%;
+
+  /* Accent = Provident Gold */
+  --accent: 42 85% 55%;
+  --accent-light: 42 90% 65%;
+  --accent-foreground: 222 47% 11%;
+
+  /* Background / Surfaces */
+  --background: 0 0% 100%;
+  --foreground: 222 15% 15%;
+
+  --muted: 220 14% 96%;
+  --muted-foreground: 220 12% 44%;
+
+  --card: 0 0% 100%;
+  --card-foreground: 222 15% 15%;
 }
 
+/* =========================================
+   HERO SECTION (Full width banner)
+========================================= */
+
 .provident-theme .hero-section {
-  /* Provident-specific hero styling */
+  position: relative;
+  height: 70vh;
+  background-size: cover;
+  background-position: center;
+}
+
+.provident-theme .hero-section::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 12, 20, 0.72),
+    rgba(10, 12, 20, 0.85)
+  );
+}
+
+.provident-theme .hero-content {
+  position: relative;
+  z-index: 2;
+  color: white;
+  text-align: center;
+  padding-top: 8rem;
+}
+
+.provident-theme .hero-title {
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.provident-theme .hero-subtitle {
+  margin-top: 1rem;
+  font-size: 1.25rem;
+  opacity: 0.9;
+}
+
+/* =========================================
+   CTA BUTTONS
+========================================= */
+
+.provident-theme .cta-button {
+  background-color: hsl(var(--accent));
+  color: hsl(var(--accent-foreground));
+  padding: 0.9rem 2rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.provident-theme .cta-button:hover {
+  background-color: hsl(var(--accent-light));
+}
+
+/* Sticky CTA (Mobile) */
+.provident-theme .sticky-cta-bar {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: hsl(var(--primary));
+  padding: 0.75rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  z-index: 999;
+}
+
+.provident-theme .sticky-cta-bar button {
+  flex: 1;
+  margin: 0 0.4rem;
+  padding: 0.9rem 1rem;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+}
+
+/* =========================================
+   SECTION HEADERS
+========================================= */
+
+.provident-theme section h2 {
+  font-size: 2.25rem !important;
+  font-weight: 700;
+  color: hsl(var(--foreground));
+}
+
+/* =========================================
+   HIGHLIGHTS SECTION
+========================================= */
+
+.provident-theme .highlight-card {
+  border: 1px solid hsl(var(--muted-foreground) / 0.15);
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  transition: all 0.25s;
+  background: white;
+}
+
+.provident-theme .highlight-card:hover {
+  border-color: hsl(var(--accent));
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.provident-theme .highlight-icon {
+  color: hsl(var(--accent));
+}
+
+/* =========================================
+   AMENITIES GRID (Circular Icons)
+========================================= */
+
+.provident-theme .amenity-item {
+  text-align: center;
+}
+
+.provident-theme .amenity-icon {
+  width: 58px;
+  height: 58px;
+  margin: 0 auto 0.75rem;
+  border-radius: 50%;
+  background: hsl(var(--accent) / 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: hsl(var(--accent));
+  font-size: 1.45rem;
+}
+
+/* =========================================
+   PRICE TABLE
+========================================= */
+
+.provident-theme .price-table {
+  background: white;
+  border: 1px solid hsl(var(--muted-foreground) / 0.15);
+  border-radius: 0.75rem;
+}
+
+.provident-theme .price-row {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid hsl(var(--muted-foreground) / 0.12);
+}
+
+.provident-theme .price-row:last-child {
+  border-bottom: none;
+}
+
+/* =========================================
+   FLOOR PLAN SLIDER
+========================================= */
+
+.provident-theme .floorplan-card {
+  border: 1px solid hsl(var(--muted-foreground) / 0.15);
+  border-radius: 0.75rem;
+  background: white;
+  overflow: hidden;
+  transition: transform 0.25s;
+}
+
+.provident-theme .floorplan-card:hover {
+  transform: translateY(-3px);
+}
+
+/* =========================================
+   LOCATION MAP
+========================================= */
+
+.provident-theme .location-wrapper {
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 2px 18px rgba(0, 0, 0, 0.08);
+}
+
+/* =========================================
+   FAQ ACCORDION
+========================================= */
+
+.provident-theme .faq-item {
+  border-bottom: 1px solid hsl(var(--muted-foreground) / 0.2);
+  padding: 1.25rem 0;
+}
+
+.provident-theme .faq-question {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.provident-theme .faq-answer {
+  margin-top: 0.5rem;
+  color: hsl(var(--muted-foreground));
+  line-height: 1.6;
+}
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.provident-theme footer {
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  padding: 2.5rem 0;
+}
+
+.provident-theme footer a {
+  color: hsl(var(--accent));
+}
+
+.provident-theme footer a:hover {
+  color: hsl(var(--accent-light));
 }
