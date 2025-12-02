@@ -11,16 +11,14 @@
   "tagline": "60-Acre Integrated Township on Mysore Road, Bangalore",
   "description": "Provident Sunworth City is a large 60-acre lifestyle township on Mysore Road / NICE junction offering premium 2 & 3 BHK apartments, lush green spaces, modern amenities and excellent connectivity.",
   
-  /* Images & sharing */
   "heroImage": "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1920&q=80",
   "ogImage": "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&q=80",
 
-  /* Legal / Approvals */
   "rera": {
     "id": "PRM/KA/RERA/1251/310/PR/190529/002585",
     "status": "Registered",
     "authority": "Karnataka RERA",
-    "lastUpdated": "2025-06-30" /* approximate — update when you refresh certificate */
+    "lastUpdated": "2025-06-30"
   },
 
   "landArea": {
@@ -29,12 +27,11 @@
   },
 
   "status": "Ready / Ongoing",  
-  "unitCount": 770,          /* public listing on some portals mentions 770+ units */ :contentReference[oaicite:6]{index=6}
+  "unitCount": 770,
   "towers": 29,
 
-  "priceRange": "₹65 Lakhs – ₹1.48 Crore",  /* adjusted to match public listings range */ :contentReference[oaicite:7]{index=7}
+  "priceRange": "₹65 Lakhs – ₹1.48 Crore",
 
-  /* Standard project data for template rendering */
   "highlights": [
     {
       "title": "60-Acre Township",
