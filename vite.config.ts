@@ -8,7 +8,7 @@ export default defineConfig(({ mode }) => ({
   base: "/", // ensure asset URLs are root-relative (important for BigRock root hosting)
   server: {
     host: "::",
-    port: 8080,
+    port: 5173,
   },
   plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
   resolve: {
