@@ -4,6 +4,9 @@ import AutoScroll from "embla-carousel-auto-scroll";
 import { Play } from "lucide-react";
 import CTAButtons from "./CTAButtons";
 
+import TestThing from "@/App";
+console.log(TestThing);
+
 export interface Testimonial {
   name: string;
   quote: string;
