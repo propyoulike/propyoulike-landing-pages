@@ -115,4 +115,4 @@ const CustomerSpeaks = ({ testimonials, onCtaClick }: CustomerSpeaksProps) => {
   );
 };
 
-export default CustomerSpeaks;
+export default Testimonials;
