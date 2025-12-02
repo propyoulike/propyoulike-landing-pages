@@ -79,7 +79,7 @@ const ProjectPage = () => {
 
     setProjectData(data);
 
-    // Load theme CSS correctly via Vite bundling
+    // Load theme CSS with safe fallback
     const builder = data.builder?.toLowerCase();
     const theme = data.theme || "default";
 
@@ -88,7 +88,7 @@ const ProjectPage = () => {
         try {
           await import(`@/themes/builders/${builder}.css`);
         } catch (e) {
-          console.warn(`Builder theme not found for ${builder}, using default.`, e);
+          console.warn(`Builder theme not found for ${builder}, using default.`);
           await import("@/themes/default.css");
         }
       } else {
@@ -131,43 +131,67 @@ const ProjectPage = () => {
 
   return (
     <>
-      {/* Helmet only affects browser, prerender handles OG SEO */}
-      <Helmet>
-        <title>{projectData.name} | PropYouLike</title>
-        <meta name="description" content={projectData.description} />
+      {/* Helmet only when projectData exists */}
+      {projectData && (
+        <Helmet>
+          {/* --------------------------- */}
+          {/* SAFE TITLE (always string) */}
+          {/* --------------------------- */}
 
-        {/* OG BASIC */}
-        <meta property="og:title" content={projectData.name} />
-        <meta property="og:description" content={projectData.description} />
-        <meta property="og:url" content={`https://propyoulike.com/projects/${slug}`} />
+          <title>{`${String(projectData.name)} | PropYouLike`}</title>
 
-        {projectData.ogImage && (
-          <meta property="og:image" content={projectData.ogImage} />
-        )}
+          <meta
+            name="description"
+            content={String(projectData.description || "")}
+          />
 
-        {/* Twitter */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={projectData.name} />
-        <meta name="twitter:description" content={projectData.description} />
+          {/* OG BASIC */}
+          <meta property="og:title" content={String(projectData.name || "")} />
+          <meta
+            property="og:description"
+            content={String(projectData.description || "")}
+          />
+          <meta
+            property="og:url"
+            content={`https://propyoulike.com/projects/${slug}`}
+          />
 
-        {projectData.ogImage && (
-          <meta name="twitter:image" content={projectData.ogImage} />
-        )}
+          {projectData.ogImage && (
+            <meta property="og:image" content={projectData.ogImage} />
+          )}
 
-        {/* Video */}
-        {projectData.shareVideo && (
-          <>
-            <meta property="og:video" content={projectData.shareVideo} />
-            <meta property="og:video:secure_url" content={projectData.shareVideo} />
-            <meta property="og:video:type" content="text/html" />
-            <meta property="og:video:width" content="1280" />
-            <meta property="og:video:height" content="720" />
-          </>
-        )}
-      </Helmet>
+          {/* TWITTER */}
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:title" content={String(projectData.name || "")} />
+          <meta
+            name="twitter:description"
+            content={String(projectData.description || "")}
+          />
 
+          {projectData.ogImage && (
+            <meta name="twitter:image" content={projectData.ogImage} />
+          )}
+
+          {/* SOCIAL VIDEO (OPTIONAL) */}
+          {projectData.shareVideo && (
+            <>
+              <meta property="og:video" content={projectData.shareVideo} />
+              <meta
+                property="og:video:secure_url"
+                content={projectData.shareVideo}
+              />
+              <meta property="og:video:type" content="text/html" />
+              <meta property="og:video:width" content="1280" />
+              <meta property="og:video:height" content="720" />
+            </>
+          )}
+        </Helmet>
+      )}
+
+      {/* MAIN TEMPLATE RENDER */}
       <TemplateComponent data={projectData} />
 
+      {/* FOOTER WITH PROJECT DATA */}
       <Footer
         data={projectData.footer ?? null}
         projectName={projectData.name}
