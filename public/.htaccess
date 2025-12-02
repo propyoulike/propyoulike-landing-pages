@@ -1,20 +1,28 @@
 # BigRock Static Hosting Configuration
-# Enables SPA routing and proper OG meta handling
+# Supports SPA routing, project-level deep links, and OG sharing
 
 Options -MultiViews
 RewriteEngine On
 
-# Serve pre-rendered project pages for crawlers (social media bots)
-RewriteCond %{HTTP_USER_AGENT} (facebookexternalhit|Twitterbot|WhatsApp|LinkedInBot|TelegramBot) [NC]
+###############################################
+# 1. Pre-render for social media crawlers
+###############################################
+RewriteCond %{HTTP_USER_AGENT} (facebookexternalhit|twitterbot|WhatsApp|LinkedInBot|TelegramBot) [NC]
 RewriteCond %{REQUEST_URI} ^/projects/([^/]+)/?$
-RewriteRule ^projects/([^/]+)/?$ /projects/$1/index.html [L]
+RewriteRule ^projects/([^/]+)/?$ /projects/%1/index.html [L]
 
-# SPA fallback for regular users
+
+###############################################
+# 2. SPA fallback – must stay AFTER bot rules
+###############################################
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^ index.html [QSA,L]
+RewriteRule ^ /index.html [QSA,L]
 
-# Cache control for static assets
+
+###############################################
+# 3. Cache-control
+###############################################
 <IfModule mod_expires.c>
   ExpiresActive On
   ExpiresByType image/jpg "access plus 1 year"
@@ -22,11 +30,18 @@ RewriteRule ^ index.html [QSA,L]
   ExpiresByType image/gif "access plus 1 year"
   ExpiresByType image/png "access plus 1 year"
   ExpiresByType image/webp "access plus 1 year"
-  ExpiresByType text/css "access plus 1 month"
-  ExpiresByType application/javascript "access plus 1 month"
+
+  ExpiresByType text/css "access plus 7 days"
+  ExpiresByType application/javascript "access plus 7 days"
+
+  # HTML should NOT be cached (important for SPA updates)
+  ExpiresByType text/html "access plus 0 seconds"
 </IfModule>
 
-# Gzip compression
+
+###############################################
+# 4. GZIP compression
+###############################################
 <IfModule mod_deflate.c>
   AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
 </IfModule>
