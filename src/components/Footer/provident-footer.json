@@ -1,0 +1,23 @@
+{
+  "project_links": [
+    { "label": "Provident Sunworth Brochure", "url": "/projects/provident-sunworth-city/brochure.pdf" },
+    { "label": "Floor Plans", "url": "#floorplans" },
+    { "label": "Payment Plans", "url": "#price" }
+  ],
+  "builder_links": [
+    { "label": "Provident - About", "url": "/builder/provident" },
+    { "label": "Other Provident Projects", "url": "/builder/provident/projects" }
+  ],
+  "locality_links": [
+    { "label": "Hebbal Projects", "url": "/locality/hebbal" }
+  ],
+  "company": {
+    "name": "PropYouLike",
+    "email": "propyoulike@gmail.com",
+    "phone": "+91-XXXXXXXXXX",
+    "social": [
+      { "name": "Facebook", "url": "https://facebook.com/propyoulike" }
+    ],
+    "legal": "Prices are indicative. For accurate pricing & availability, contact the builder or PropYouLike."
+  }
+}
