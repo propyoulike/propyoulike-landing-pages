@@ -17,12 +17,28 @@ interface ApartmentProvidentProps {
 }
 
 const ApartmentProvident = ({ data }: ApartmentProvidentProps) => {
+  const highlights = data.highlights || [];
+  const gallery = Array.isArray(data.gallery)
+    ? data.gallery.map((g: any) => (typeof g === "string" ? g : g.url))
+    : [];
+
+  const configurations = data.configurations || [];
+  const floorPlans = data.floorPlans || [];
+  const amenities = data.amenities || [];
+
+  const location = data.locationMap || null;
+
+  const otherProjects = data.other_projects || [];
+  const excluded = data.exclude_projects_from_widgets || [];
+
+  const footerData = data.footer || undefined;
+
   return (
     <div className="min-h-screen provident-theme">
       <Hero data={data} />
-      
-      {/* Provident-specific Highlights Section */}
-      {data.highlights && data.highlights.length > 0 && (
+
+      {/* Highlights */}
+      {highlights.length > 0 && (
         <section className="py-20 bg-background">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
@@ -33,10 +49,13 @@ const ApartmentProvident = ({ data }: ApartmentProvidentProps) => {
                 Key features that make this project exceptional
               </p>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-              {data.highlights.map((highlight: any, index: number) => (
-                <Card key={index} className="border-accent/20 hover:border-accent transition-colors">
+              {highlights.map((highlight: any, index: number) => (
+                <Card
+                  key={index}
+                  className="border-accent/20 hover:border-accent transition-colors"
+                >
                   <CardContent className="p-6">
                     <div className="flex items-start gap-4">
                       <CheckCircle2 className="w-6 h-6 text-accent flex-shrink-0 mt-1" />
@@ -56,49 +75,68 @@ const ApartmentProvident = ({ data }: ApartmentProvidentProps) => {
           </div>
         </section>
       )}
-      
-      {data.gallery && data.gallery.length > 0 && (
-        <Gallery images={data.gallery} />
+
+      {/* Gallery */}
+      {gallery.length > 0 && <Gallery images={gallery} />}
+
+      {/* Price Table */}
+      {configurations.length > 0 && (
+        <div className="py-20">
+          <PriceTable configurations={configurations} />
+        </div>
       )}
-      
-      {data.configurations && data.configurations.length > 0 && (
-        <PriceTable configurations={data.configurations} />
+
+      {/* Floor Plans */}
+      {floorPlans.length > 0 && (
+        <div className="py-20">
+          <FloorPlans floorPlans={floorPlans} />
+        </div>
       )}
-      
-      {data.floorPlans && data.floorPlans.length > 0 && (
-        <FloorPlans floorPlans={data.floorPlans} />
+
+      {/* Amenities */}
+      {amenities.length > 0 && (
+        <div className="py-20">
+          <Amenities amenities={amenities} />
+        </div>
       )}
-      
-      {data.amenities && data.amenities.length > 0 && (
-        <Amenities amenities={data.amenities} />
+
+      {/* Location */}
+      {location && (
+        <div className="py-20">
+          <LocationMap location={location} />
+        </div>
       )}
-      
-      {data.locationMap && (
-        <LocationMap location={data.locationMap} />
-      )}
-      
-      <CTAButtons />
-      
+
+      {/* CTA Buttons */}
+      <div className="py-20">
+        <CTAButtons />
+      </div>
+
+      {/* FAQ */}
       {data.faq && data.faq.length > 0 && (
-        <FAQ faqs={data.faq} />
+        <div className="py-20">
+          <FAQ faqs={data.faq} />
+        </div>
       )}
-      
+
+      {/* Widgets */}
       <BuilderOtherProjects
         currentSlug={data.slug}
         builder={data.builder}
-        otherProjects={data.other_projects}
-        excludeProjects={data.exclude_projects_from_widgets}
+        otherProjects={otherProjects}
+        excludeProjects={excluded}
       />
-      
+
       <LocalityOtherProjects
         currentSlug={data.slug}
         locality={data.locality}
         builder={data.builder}
-        excludeProjects={data.exclude_projects_from_widgets}
+        excludeProjects={excluded}
       />
-      
+
+      {/* Footer */}
       <Footer
-        data={data.footer}
+        data={footerData}
         projectName={data.name}
         builder={data.builder}
         locality={data.locality}
