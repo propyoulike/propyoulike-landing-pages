@@ -1,0 +1,15 @@
+ {
+    "videoUrl": "https://www.youtube.com/embed/5PpgqAYGZHo",
+    "images": [
+      "https://www.providenthousing.com/wp-content/uploads/2022/12/2-bhk-apartments-mysore-road.webp"
+    ],
+    "overlayTitle": "Provident Sunworth City",
+    "overlaySubtitle": "Thoughtfully designed homes with world-class amenities",
+    "ctaEnabled": true,
+    "quickInfo": {
+      "price": "₹69.99 L Onwards",
+      "typology": "2 & 3 BHK",
+      "location": "Mysore Road",
+      "size": "60 Acres"
+    }
+  }

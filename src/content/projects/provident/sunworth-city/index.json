@@ -1,0 +1,40 @@
+{
+  "slug": "sunworth-city",
+  "projectName": "Provident Sunworth City",
+  "builder": "provident",
+
+"sections": [
+  "Navbar",
+  "Hero",
+  "Summary",
+  "FloorPlans",
+  "Location",
+  "Amenities",
+  "Views",
+  "Construction",
+  "PaymentPlans",
+  "LoanEligibility",
+  "CustomerSpeaks",
+  "Brochure",
+  "BuilderAbout",
+  "FAQ"
+],
+
+  "files": {
+    "hero": "hero.json",
+    "summary": "summary.json",
+    "navbar": "Navbar.json",
+    "locationUI": "location.json",
+    "amenities": "amenities.json",
+    "views": "views.json",
+    "construction": "construction.json",
+    "floorPlans": "floorPlans.json",
+    "paymentPlans": "paymentPlans.json",
+    "unitPlans": "unitPlans.json",
+    "testimonials": "testimonials.json",
+    "brochure": "brochure.json",
+    "faq": "faq.json",
+    "aboutbuilder": "../aboutbuilder.json",
+    "pricing": "pricing.json"
+  }
+}

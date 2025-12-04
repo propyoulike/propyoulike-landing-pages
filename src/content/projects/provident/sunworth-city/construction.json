@@ -1,0 +1,12 @@
+[
+  {
+      "name": "Tower 4J",
+      "image": "/images/construction/tower-4j.png",
+      "status": [
+        "2nd floor roof slab completed",
+        "3rd floor roof slab shuttering & reinforcements work in progress"
+      ],
+      "achieved": ["Completion of GF/Stilt floor roof slab"],
+      "upcoming": ["Completion of 3rd floor roof slab"]
+    }
+]

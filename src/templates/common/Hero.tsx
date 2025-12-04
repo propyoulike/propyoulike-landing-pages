@@ -1,108 +1,231 @@
-import { Button } from "@/components/ui/button";
-import { Phone, Download, MapPin } from "lucide-react";
+// src/templates/common/Hero.tsx
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import CTAButtons from "@/components/CTAButtons";
 
-interface HeroProps {
-  data: {
-    name: string;
-    tagline?: string;
-    heroImage: string;
-    locality?: string;
-    city?: string;
-    builder?: string;
-    status?: string;
-  };
-}
-
-const Hero = ({ data }: HeroProps) => {
-  const handleCallNow = () => {
-    window.location.href = "tel:+919876543210";
-  };
-
-  const handleDownloadBrochure = () => {
-    // Implement brochure download
-    console.log("Download brochure");
-  };
-
-  return (
-    <section className="relative h-[90vh] min-h-[600px] flex items-center overflow-hidden">
-      {/* Background Image */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: `url(${data.heroImage})` }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/95 via-primary/80 to-primary/60"></div>
-      </div>
-
-      {/* Content */}
-      <div className="container relative z-10 mx-auto px-4">
-        <div className="max-w-3xl animate-fade-in">
-          {/* Builder Badge */}
-          {data.builder && (
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-accent/20 backdrop-blur-sm rounded-full border border-accent/30 mb-6 animate-slide-in-left">
-              <span className="text-accent-foreground font-medium">By {data.builder}</span>
-              {data.status && (
-                <>
-                  <span className="w-1 h-1 bg-accent rounded-full"></span>
-                  <span className="text-accent-foreground text-sm">{data.status}</span>
-                </>
-              )}
-            </div>
-          )}
-
-          {/* Title */}
-          <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl font-bold text-primary-foreground mb-6 leading-tight animate-slide-in-left" style={{ animationDelay: "0.1s" }}>
-            {data.name}
-          </h1>
-
-          {/* Tagline */}
-          {data.tagline && (
-            <p className="text-xl md:text-2xl text-primary-foreground/90 mb-4 font-light animate-slide-in-left" style={{ animationDelay: "0.2s" }}>
-              {data.tagline}
-            </p>
-          )}
-
-          {/* Location */}
-          {(data.locality || data.city) && (
-            <div className="flex items-center gap-2 text-primary-foreground/80 mb-8 animate-slide-in-left" style={{ animationDelay: "0.3s" }}>
-              <MapPin className="w-5 h-5" />
-              <span className="text-lg">
-                {data.locality}{data.city ? `, ${data.city}` : ""}
-              </span>
-            </div>
-          )}
-
-          {/* CTA Buttons */}
-          <div className="flex flex-wrap gap-4 animate-slide-in-left" style={{ animationDelay: "0.4s" }}>
-            <Button
-              size="lg"
-              onClick={handleCallNow}
-              className="bg-accent hover:bg-accent-light text-accent-foreground font-semibold px-8 py-6 text-lg shadow-lg hover:shadow-glow transition-all"
-            >
-              <Phone className="w-5 h-5 mr-2" />
-              Call Now
-            </Button>
-            
-            <Button
-              size="lg"
-              variant="outline"
-              onClick={handleDownloadBrochure}
-              className="bg-primary-foreground/10 hover:bg-primary-foreground/20 text-primary-foreground border-primary-foreground/30 backdrop-blur-sm font-semibold px-8 py-6 text-lg"
-            >
-              <Download className="w-5 h-5 mr-2" />
-              Download Brochure
-            </Button>
-          </div>
-        </div>
-      </div>
-
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <div className="w-6 h-10 border-2 border-primary-foreground/30 rounded-full flex items-start justify-center p-2">
-          <div className="w-1 h-3 bg-primary-foreground/60 rounded-full"></div>
-        </div>
-      </div>
-    </section>
-  );
+type QuickInfo = {
+  price?: string;
+  typology?: string;
+  location?: string;
+  size?: string;
 };
 
-export default Hero;
+interface HeroProps {
+  videoUrl?: string;
+  images?: string[]; // [0] used as LCP fallback
+  overlayTitle?: string;
+  overlaySubtitle?: string;
+  ctaEnabled?: boolean;
+  quickInfo?: QuickInfo;
+  onCtaClick?: () => void;
+}
+
+/**
+ * Utility: extract YouTube ID from many URL formats
+ */
+function extractYouTubeId(url?: string) {
+  if (!url) return null;
+  const patterns = [
+    /youtu\.be\/([^?&/]+)/,
+    /youtube\.com\/embed\/([^?&/]+)/,
+    /youtube\.com\/watch\?v=([^?&/]+)/,
+    /youtube\.com\/shorts\/([^?&/]+)/,
+  ];
+  for (const p of patterns) {
+    const m = url.match(p);
+    if (m) return m[1];
+  }
+  return null;
+}
+
+/**
+ * Final Production Hero
+ * - LCP image (preconnect + fetchpriority)
+ * - YouTube nocookie embed (autoplay muted) but respects data-saver / reduced-motion
+ * - Fallback image fade-out when iframe loaded
+ * - Safari iOS fixes (playsInline + style objectFit)
+ * - Accessibility: region label and clear text content
+ */
+export default function Hero({
+  videoUrl,
+  images = [],
+  overlayTitle,
+  overlaySubtitle,
+  ctaEnabled = true,
+  quickInfo,
+  onCtaClick,
+}: HeroProps) {
+  const [shouldInjectIframe, setShouldInjectIframe] = useState(false);
+  const [iframeLoaded, setIframeLoaded] = useState(false);
+  const iframeRef = useRef<HTMLIFrameElement | null>(null);
+
+  // LCP fallback image (first provided or default)
+  const fallbackImage = images[0] ?? "/images/default-hero-fallback.jpg";
+
+  // Decide if we should autoplay video:
+  // - Respect reduced motion
+  // - Respect Save-Data or slow connections
+  const prefersReducedMotion = useMemo(() => {
+    try {
+      return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    } catch {
+      return false;
+    }
+  }, []);
+
+  const networkOk = useMemo(() => {
+    try {
+      const nav = (navigator as any);
+      // effectiveType could be '4g', '3g', '2g', 'slow-2g'
+      const effectiveType = nav.connection?.effectiveType;
+      const saveData = nav.connection?.saveData;
+      if (saveData) return false;
+      if (effectiveType && (effectiveType === "2g" || effectiveType === "slow-2g")) return false;
+    } catch {}
+    return true;
+  }, []);
+
+  // final boolean: if we should attempt injecting iframe
+  const canAutoplay = !prefersReducedMotion && networkOk;
+
+  // video id & embed url (use youtube-nocookie for privacy)
+  const videoId = extractYouTubeId(videoUrl);
+  const embedUrl = videoId
+    ? `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&mute=1&controls=0&playsinline=1&loop=1&playlist=${videoId}&modestbranding=1&rel=0`
+    : null;
+
+  // Delay injection to avoid blocking LCP; hero is top-of-page so small delay is safe.
+  useEffect(() => {
+    // if user opts out via prefersReducedMotion or network is poor, do not inject
+    if (!embedUrl || !canAutoplay) return;
+
+    const t = window.setTimeout(() => setShouldInjectIframe(true), 500); // short delay
+    return () => window.clearTimeout(t);
+  }, [embedUrl, canAutoplay]);
+
+  // Preconnect tags (insert early for performance)
+  // NOTE: React can render <link> in body; browsers still honor preconnect
+  const preconnectNodes = (
+    <>
+      <link rel="preconnect" href="https://www.youtube-nocookie.com" />
+      <link rel="preconnect" href="https://i.ytimg.com" />
+      <link rel="preconnect" href="https://www.google-analytics.com" crossOrigin="" />
+      {/* Preload the LCP image for LCP improvements */}
+      <link rel="preload" as="image" href={fallbackImage} />
+    </>
+  );
+
+  return (
+    <section
+      id="hero"
+      role="region"
+      aria-label={overlayTitle ? `${overlayTitle} hero` : "project hero"}
+      className="relative w-full h-[100svh] min-h-[520px] bg-black overflow-hidden"
+      style={{ WebkitTapHighlightColor: "transparent" }}
+    >
+      {preconnectNodes}
+
+      {/* LCP fallback image (must be first paint) */}
+      <img
+        src={fallbackImage}
+        alt={overlayTitle ?? "Project hero image"}
+        // ensure absolutely fills container and is clipped correctly across browsers
+        className={`absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-700 ${
+          iframeLoaded ? "opacity-0" : "opacity-100"
+        }`}
+        // ensure styles for Safari stability
+        style={{
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          objectPosition: "center",
+          display: "block",
+        }}
+        // lowercase attribute per React warnings
+        fetchpriority="high"
+      />
+
+      {/* Conditionally inject iframe only when allowed */}
+      {embedUrl && shouldInjectIframe && (
+        <iframe
+          ref={iframeRef}
+          src={embedUrl}
+          title={overlayTitle ? `${overlayTitle} video` : "project video"}
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
+            iframeLoaded ? "opacity-100" : "opacity-0"
+          }`}
+          style={{ width: "100%", height: "100%", border: "none" }}
+          allow="autoplay; encrypted-media; fullscreen"
+          loading="lazy"
+          // playsInline + muted help mobile autoplay
+          // 'muted' attribute is purely for HTMLMediaElement; still harmless on iframe
+          // onLoad -> mark iframe loaded so we fade-out fallback image
+          onLoad={() => setIframeLoaded(true)}
+        />
+      )}
+
+      {/* If we did NOT inject iframe (save-data, reduced motion, or no video) - keep image visible and optionally show a play button */}
+      {!shouldInjectIframe && embedUrl && (
+        <div
+          className="absolute inset-0 flex items-center justify-center z-10"
+          aria-hidden="true"
+          // small semi-transparent overlay to indicate video available
+          style={{ pointerEvents: "none" }}
+        />
+      )}
+
+      {/* subtle gradient for readability */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/30 to-black/80 z-20" />
+
+      {/* Text overlay */}
+      <div className="absolute top-[24vh] left-1/2 -translate-x-1/2 text-center max-w-3xl text-white px-6 z-30">
+        {overlayTitle && (
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold drop-shadow-xl mb-3 leading-tight">
+            {overlayTitle}
+          </h1>
+        )}
+        {overlaySubtitle && (
+          <p className="text-base md:text-lg text-white/90 max-w-xl mx-auto">{overlaySubtitle}</p>
+        )}
+      </div>
+
+      {/* Primary CTA block — high-converting placement */}
+      {ctaEnabled && (
+        <div className="absolute left-1/2 bottom-[24vh] -translate-x-1/2 z-30">
+          <CTAButtons onFormOpen={onCtaClick} />
+        </div>
+      )}
+
+      {/* Quick Info bar */}
+      {quickInfo && (
+        <div className="absolute bottom-0 w-full bg-background/85 backdrop-blur-md border-t border-border py-4 z-40">
+          <div className="container mx-auto px-4 grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+            {quickInfo.price && (
+              <div>
+                <p className="text-xs text-muted-foreground">Price</p>
+                <p className="text-lg font-semibold">{quickInfo.price}</p>
+              </div>
+            )}
+            {quickInfo.typology && (
+              <div>
+                <p className="text-xs text-muted-foreground">Typology</p>
+                <p className="text-lg font-semibold">{quickInfo.typology}</p>
+              </div>
+            )}
+            {quickInfo.location && (
+              <div>
+                <p className="text-xs text-muted-foreground">Location</p>
+                <p className="text-lg font-semibold">{quickInfo.location}</p>
+              </div>
+            )}
+            {quickInfo.size && (
+              <div>
+                <p className="text-xs text-muted-foreground">Size</p>
+                <p className="text-lg font-semibold">{quickInfo.size}</p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+    </section>
+  );
+}

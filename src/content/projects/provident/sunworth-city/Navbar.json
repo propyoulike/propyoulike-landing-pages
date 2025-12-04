@@ -1,0 +1,12 @@
+{
+  "logo": "https://www.providenthousing.com/wp-content/themes/provident/assets/images/Provident_logo_final_blacks.png",
+  "menu": [
+    { "label": "Overview", "targetId": "project-summary" },
+    { "label": "Plans", "targetId": "floorplanstabs" },
+    { "label": "Location", "targetId": "location" },
+    { "label": "Amenities", "targetId": "amenities" },
+    { "label": "Pricing", "targetId": "payment-plans" },
+    { "label": "About", "targetId": "about-builder" },
+    { "label": "FAQ", "targetId": "faq" }
+  ]
+}

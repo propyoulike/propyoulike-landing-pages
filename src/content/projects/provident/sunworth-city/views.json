@@ -1,0 +1,34 @@
+{
+  "title": "Mesmerizing Views",
+  "subtitle": "Wake up to 19 acres of greenery and breathtaking township vistas.",
+  "images": [
+    {
+      "src": "/images/views/elevation-1.webp",
+      "title": "Provident Sunworth Elevation"
+    },
+    {
+      "src": "/images/views/elevation-2.webp",
+      "title": "Provident Sunworth Elevation View"
+    },
+    {
+      "src": "/images/views/night-view-1.webp",
+      "title": "Provident Sunworth Night View"
+    },
+    {
+      "src": "/images/views/night-view-2.webp",
+      "title": "Clubhouse Night View"
+    },
+    {
+      "src": "/images/views/viewing-deck.webp",
+      "title": "Viewing Deck"
+    },
+    {
+      "src": "/images/views/tree-house.webp",
+      "title": "Tree House View"
+    },
+    {
+      "src": "/images/views/clubhouse.webp",
+      "title": "Clubhouse Aerial View"
+    }
+  ]
+}

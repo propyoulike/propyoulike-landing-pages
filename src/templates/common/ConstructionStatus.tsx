@@ -1,59 +1,63 @@
-import { Building2, CheckCircle2, Clock, ChevronDown, ChevronUp } from "lucide-react";
-import CTAButtons from "./CTAButtons";
+import {
+  Building2,
+  CheckCircle2,
+  Clock,
+  ChevronDown,
+  ChevronUp,
+} from "lucide-react";
+
+import CTAButtons from "@/components/CTAButtons";
 import useEmblaCarousel from "embla-carousel-react";
 import AutoScroll from "embla-carousel-auto-scroll";
 import { useEffect, useState, useRef } from "react";
 
-export interface TowerItem {
+interface ConstructionTower {
   name: string;
   image: string;
-  status: string[];
-  achieved: string[];
-  upcoming: string[];
+  status?: string[];
+  achieved?: string[];
+  upcoming?: string[];
 }
 
-export interface ConstructionStatusProps {
+interface ConstructionStatusProps {
+  id?: string;
+  title?: string;
+  subtitle?: string;
+  updates: ConstructionTower[];
   onCtaClick: () => void;
-  towers: TowerItem[];
-  heading?: string;
-  subheading?: string;
-  sectionId?: string;
-  phaseLabel?: string;
 }
 
 export default function ConstructionStatus({
+  id = "construction",
+  title = "Construction Progress",
+  subtitle = "Stay updated with the work happening on-site.",
+  updates = [],
   onCtaClick,
-  towers,
-  heading = "Here’s How Your Future Home is Shaping Up",
-  subheading = "Track the real-time progress of construction. Transparency you can trust.",
-  sectionId = "constructionstatus",
-  phaseLabel = "PHASE IV",
 }: ConstructionStatusProps) {
+  if (!updates.length) return null;
+
   const [emblaRef] = useEmblaCarousel(
     { loop: true, align: "start" },
     [AutoScroll({ playOnInit: true, stopOnInteraction: true, speed: 0.5 })]
   );
 
-  const [expandedTower, setExpandedTower] = useState<number | null>(null);
+  const [expanded, setExpanded] = useState<number | null>(null);
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const hasTrackedView = useRef(false);
 
-  // Track section visibility
+  /* ------------------- TRACK SECTION VIEW ------------------- */
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting && !hasTrackedView.current) {
+        if (!hasTrackedView.current && entries[0].isIntersecting) {
           hasTrackedView.current = true;
-          if (typeof (window as any).gtag === "function") {
-            (window as any).gtag("event", "section_view", {
-              event_category: "engagement",
-              event_label: `${sectionId} Section`,
-            });
-          }
-          if (typeof (window as any).fbq === "function") {
-            (window as any).fbq("trackCustom", `${sectionId}Viewed`);
-          }
-          observer.disconnect();
+
+          window?.dataLayer?.push({
+            event: "section_view",
+            section: id,
+          });
+
+          window?.fbq?.("trackCustom", "ConstructionStatusViewed");
         }
       },
       { threshold: 0.3 }
@@ -61,116 +65,137 @@ export default function ConstructionStatus({
 
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
-  }, [sectionId]);
+  }, []);
 
-  const handleTowerClick = (name: string) => {
-    if (typeof (window as any).gtag === "function") {
-      (window as any).gtag("event", "tower_click", {
-        event_category: "engagement",
-        event_label: name,
-      });
-    }
-    if (typeof (window as any).fbq === "function") {
-      (window as any).fbq("trackCustom", "TowerExpanded", { tower: name });
-    }
+  /* ------------------- TOGGLE PANEL ------------------- */
+  const handleToggle = (i: number, name: string) => {
+    setExpanded(expanded === i ? null : i);
+
+    window?.dataLayer?.push({
+      event: "tower_expand",
+      tower: name,
+    });
+
+    window?.fbq?.("trackCustom", "TowerExpanded", { tower: name });
   };
 
   return (
     <section
-      id={sectionId}
+      id={id}
       ref={sectionRef}
-      className="py-20 lg:py-28 scroll-mt-32 bg-background"
+      className="py-20 lg:py-28 bg-background scroll-mt-32"
     >
       <div className="container mx-auto px-4">
-        {/* Heading */}
+        
+        {/* HEADER */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          {phaseLabel && (
-            <div className="inline-block bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-semibold mb-4">
-              {phaseLabel}
-            </div>
-          )}
           <h2 className="text-3xl lg:text-5xl font-bold mb-6 text-foreground">
-            {heading.split(" ").map((word, i) =>
-              i === heading.split(" ").length - 1 ? (
-                <span key={i} className="text-primary">{word}</span>
-              ) : word + " "
-            )}
+            {title}
           </h2>
-          <p className="text-lg text-muted-foreground leading-relaxed">{subheading}</p>
+          {subtitle && (
+            <p className="text-lg text-muted-foreground">{subtitle}</p>
+          )}
         </div>
 
-        {/* Carousel */}
+        {/* CAROUSEL */}
         <div className="overflow-hidden mb-12" ref={emblaRef}>
           <div className="flex gap-6">
-            {towers.map((tower, index) => {
-              const isExpanded = expandedTower === index;
+            {updates.map((tower, i) => {
+              const isOpen = expanded === i;
               return (
-                <div key={index} className="flex-[0_0_90%] md:flex-[0_0_60%] lg:flex-[0_0_45%]">
-                  <div className="bg-card rounded-2xl overflow-hidden h-full" style={{ boxShadow: "var(--shadow-strong)" }}>
-                    <div className="aspect-video overflow-hidden bg-muted">
+                <div
+                  key={i}
+                  className="flex-[0_0_90%] md:flex-[0_0_55%] lg:flex-[0_0_40%]"
+                >
+                  <div
+                    className="bg-card rounded-2xl overflow-hidden h-full"
+                    style={{ boxShadow: "var(--shadow-strong)" }}
+                  >
+                    <div className="aspect-video bg-muted">
                       <img
                         src={tower.image}
-                        alt={`${tower.name} Construction Progress`}
+                        alt={tower.name}
                         className="w-full h-full object-cover"
                       />
                     </div>
 
                     <div className="p-6">
+                      {/* Title */}
                       <div className="flex items-center justify-between mb-4">
                         <div className="flex items-center gap-3">
-                          <Building2 className="w-8 h-8 text-primary" />
-                          <h3 className="text-xl font-bold text-foreground">{tower.name}</h3>
+                          <Building2 className="text-primary w-7 h-7" />
+                          <h3 className="text-xl font-bold">{tower.name}</h3>
                         </div>
 
                         <button
-                          onClick={() => {
-                            setExpandedTower(isExpanded ? null : index);
-                            handleTowerClick(tower.name);
-                          }}
-                          aria-expanded={isExpanded}
-                          className="p-2 hover:bg-muted rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
+                          onClick={() => handleToggle(i, tower.name)}
+                          className="p-2 rounded-full hover:bg-muted"
                         >
-                          {isExpanded ? <ChevronUp className="w-5 h-5 text-primary" /> : <ChevronDown className="w-5 h-5 text-primary" />}
+                          {isOpen ? (
+                            <ChevronUp className="text-primary" />
+                          ) : (
+                            <ChevronDown className="text-primary" />
+                          )}
                         </button>
                       </div>
 
-                      {isExpanded && (
-                        <div className="animate-accordion-down space-y-4">
-                          <div>
-                            <h4 className="text-sm font-semibold text-muted-foreground mb-3 uppercase">Tower Status</h4>
-                            <ul className="space-y-2">
-                              {tower.status.map((item, i) => (
-                                <li key={i} className="text-foreground flex items-start gap-2">
-                                  <span className="text-primary mt-1">•</span>
-                                  <span className="text-sm">{item}</span>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
+                      {/* Panel */}
+                      {isOpen && (
+                        <div className="space-y-6 animate-accordion-down">
 
-                          <div className="border-t border-border pt-4">
-                            <div className="flex items-center gap-2 mb-2">
-                              <CheckCircle2 className="w-4 h-4 text-green-600" />
-                              <h4 className="text-xs font-semibold text-muted-foreground uppercase">Milestones Achieved</h4>
+                          {/* Status */}
+                          {tower.status?.length && (
+                            <div>
+                              <h4 className="text-sm text-muted-foreground uppercase mb-2">
+                                Current Status
+                              </h4>
+                              <ul className="space-y-1">
+                                {tower.status.map((s, idx) => (
+                                  <li key={idx} className="text-sm">
+                                    • {s}
+                                  </li>
+                                ))}
+                              </ul>
                             </div>
-                            <ul className="space-y-1">
-                              {tower.achieved.map((item, i) => (
-                                <li key={i} className="text-sm text-foreground">{item}</li>
-                              ))}
-                            </ul>
-                          </div>
+                          )}
 
-                          <div className="border-t border-border pt-4">
-                            <div className="flex items-center gap-2 mb-2">
-                              <Clock className="w-4 h-4 text-orange-600" />
-                              <h4 className="text-xs font-semibold text-muted-foreground uppercase">Upcoming Milestones</h4>
+                          {/* Achieved */}
+                          {tower.achieved?.length && (
+                            <div className="border-t pt-4">
+                              <div className="flex items-center gap-2 mb-2">
+                                <CheckCircle2 className="text-green-600 w-4 h-4" />
+                                <h4 className="text-xs uppercase text-muted-foreground">
+                                  Achieved Milestones
+                                </h4>
+                              </div>
+                              <ul className="space-y-1">
+                                {tower.achieved.map((a, idx) => (
+                                  <li key={idx} className="text-sm">
+                                    {a}
+                                  </li>
+                                ))}
+                              </ul>
                             </div>
-                            <ul className="space-y-1">
-                              {tower.upcoming.map((item, i) => (
-                                <li key={i} className="text-sm text-foreground">{item}</li>
-                              ))}
-                            </ul>
-                          </div>
+                          )}
+
+                          {/* Upcoming */}
+                          {tower.upcoming?.length && (
+                            <div className="border-t pt-4">
+                              <div className="flex items-center gap-2 mb-2">
+                                <Clock className="text-orange-600 w-4 h-4" />
+                                <h4 className="text-xs uppercase text-muted-foreground">
+                                  Upcoming Milestones
+                                </h4>
+                              </div>
+                              <ul className="space-y-1">
+                                {tower.upcoming.map((u, idx) => (
+                                  <li key={idx} className="text-sm">
+                                    {u}
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
                         </div>
                       )}
                     </div>
@@ -181,6 +206,7 @@ export default function ConstructionStatus({
           </div>
         </div>
 
+        {/* CTA */}
         <CTAButtons onFormOpen={onCtaClick} />
       </div>
     </section>

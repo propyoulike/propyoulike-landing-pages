@@ -1,167 +1,39 @@
-import React, { useMemo } from "react";
-import { Link } from "react-router-dom";
-import { Phone, Mail, MapPin } from "lucide-react";
-import defaultFooter from "./footer-data-schema.json";
-import providentFooter from "./provident-footer.json";
+// src/components/footer/Footer.tsx
 
-/* ------------------------
-  Types
-   - FooterData / FooterProps
-   - keep in sync with your JSON schema
--------------------------*/
-type LinkItem = { label: string; url: string };
-
-type FooterData = {
-  projectLinks?: LinkItem[];
-  builderLinks?: LinkItem[];
-  localityLinks?: LinkItem[];
-  companyLinks?: LinkItem[];
-  legalText?: string;
-  contactInfo?: {
-    phone?: string;
-    email?: string;
-    address?: string;
-  };
-};
-
-type FooterProps = {
-  data?: FooterData | null;
-  projectName?: string | null;
-  builder?: string | null;
-  locality?: string | null;
-};
-
-/* ------------------------
-  Builder footer registry
-  Add new builder JSON imports here and map them by builder key
-  e.g.
-  import prestigeFooter from "./prestige-footer.json";
-  const builderFooterMap = { provident: providentFooter, prestige: prestigeFooter }
--------------------------*/
-const builderFooterMap: Record<string, FooterData> = {
-  provident: (providentFooter as unknown) as FooterData,
-  // prestige: (prestigeFooter as unknown) as FooterData,
-  // sobha: (sobhaFooter as unknown) as FooterData,
-};
-
-function isInternalUrl(url?: string) {
-  if (!url) return false;
-  return url.startsWith("/") || url.startsWith(window.location.origin);
-}
-
-const Footer: React.FC<FooterProps> = ({ data, projectName, builder, locality }) => {
-  // Resolve footer data: prop -> builder -> global default
-  const footerData: FooterData = useMemo(() => {
-    if (data) return data;
-    if (builder && builderFooterMap[builder]) {
-      return builderFooterMap[builder];
-    }
-    return (defaultFooter as unknown) as FooterData;
-  }, [data, builder]);
-
-  const renderLink = (link: LinkItem, idx: number) => {
-    const { label, url } = link;
-    if (!url) return <span key={idx}>{label}</span>;
-
-    if (isInternalUrl(url)) {
-      // Use react-router Link for internal links
-      return (
-        <li key={idx}>
-          <Link to={url} className="text-primary-foreground/80 hover:text-accent transition-colors">
-            {label}
-          </Link>
-        </li>
-      );
-    }
-
-    // External link
-    return (
-      <li key={idx}>
-        <a
-          href={url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-primary-foreground/80 hover:text-accent transition-colors"
-        >
-          {label}
-        </a>
-      </li>
-    );
-  };
-
+export default function Footer() {
   return (
-    <footer className="bg-primary text-primary-foreground">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
-          {/* Project Links */}
-          <div>
-            <h3 className="font-heading text-lg font-bold mb-4">{projectName || "Project"}</h3>
-            <ul className="space-y-2">
-              {(footerData.projectLinks || []).map(renderLink)}
-            </ul>
-          </div>
+    <footer className="bg-foreground text-background py-12 mt-20">
+      <div className="container mx-auto px-4 text-center">
+        <h3 className="text-2xl font-bold mb-2">Provident Sunworth</h3>
 
-          {/* Builder Links */}
-          <div>
-            <h3 className="font-heading text-lg font-bold mb-4">Builder</h3>
-            <ul className="space-y-2">{(footerData.builderLinks || []).map(renderLink)}</ul>
-          </div>
+        <p className="text-background/80 mb-6">
+          Your family's brighter everyday
+        </p>
 
-          {/* Locality Links */}
-          <div>
-            <h3 className="font-heading text-lg font-bold mb-4">Location</h3>
-            <ul className="space-y-2">{(footerData.localityLinks || []).map(renderLink)}</ul>
-          </div>
+        <p>RERA: PRM/KA/RERA/1251/310/AG/250811/005899</p>
+        <p>Email: propyoulike@gmail.com</p>
+        <p>Address: Banashankari 3rd Stage Bengaluru 560085</p>
 
-          {/* Company & Contact */}
-          <div>
-            <h3 className="font-heading text-lg font-bold mb-4">PropYouLike</h3>
-            <ul className="space-y-2 mb-4">{(footerData.companyLinks || []).map(renderLink)}</ul>
+        <p className="text-sm text-background/60 mt-4">
+          Disclaimer: All project information, including availability, pricing,
+          floor plans, and amenities, is subject to change without notice.
+          This website is operated by PropYouLike as an authorized channel
+          partner.
+        </p>
 
-            {footerData.contactInfo && (
-              <div className="space-y-2 text-sm">
-                {footerData.contactInfo.phone && (
-                  <div className="flex items-center gap-2 text-primary-foreground/80">
-                    <Phone className="w-4 h-4" />
-                    <a
-                      href={`tel:${footerData.contactInfo.phone}`}
-                      className="hover:text-accent transition-colors"
-                    >
-                      {footerData.contactInfo.phone}
-                    </a>
-                  </div>
-                )}
-                {footerData.contactInfo.email && (
-                  <div className="flex items-center gap-2 text-primary-foreground/80">
-                    <Mail className="w-4 h-4" />
-                    <a
-                      href={`mailto:${footerData.contactInfo.email}`}
-                      className="hover:text-accent transition-colors"
-                    >
-                      {footerData.contactInfo.email}
-                    </a>
-                  </div>
-                )}
-                {footerData.contactInfo.address && (
-                  <div className="flex items-start gap-2 text-primary-foreground/80">
-                    <MapPin className="w-4 h-4 mt-0.5" />
-                    <span>{footerData.contactInfo.address}</span>
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-        </div>
+        <p className="text-sm text-background/60 mt-2">
+          Privacy Policy: Data submitted is used only for project communication.
+          Contact us for data deletion.
+        </p>
 
-        {/* Legal Text */}
-        <div className="border-t border-primary-foreground/20 pt-8">
-          <p className="text-sm text-primary-foreground/60 text-center">
-            {footerData.legalText || ""}
-          </p>
-        </div>
+        <p className="text-sm text-background/60 mt-2">
+          Cookies may be used for analytics & user experience enhancement.
+        </p>
+
+        <p className="text-sm text-background/60 mt-4">
+          © 2025 PropYouLike. All rights reserved.
+        </p>
       </div>
     </footer>
   );
-};
-
-export default Footer;
+}

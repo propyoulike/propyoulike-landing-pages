@@ -1,10 +1,8 @@
 import Hero from "../common/Hero";
-import Gallery from "../common/Gallery";
 import Amenities from "../common/Amenities";
 import FloorPlans from "../common/FloorPlans";
-import PriceTable from "../common/PriceTable";
-import LocationMap from "../common/LocationMap";
-import CTAButtons from "../common/CTAButtons";
+import LocationMap from "../common/Location";
+import CTAButtons from "@/components/CTAButtons";
 import FAQ from "../common/FAQ";
 import BuilderOtherProjects from "@/components/Widgets/BuilderOtherProjects";
 import LocalityOtherProjects from "@/components/Widgets/LocalityOtherProjects";
@@ -15,55 +13,66 @@ interface ApartmentDefaultProps {
 }
 
 const ApartmentDefault = ({ data }: ApartmentDefaultProps) => {
+  // Safe defaults
+  const floorPlans = data?.floorPlans || [];
+  const amenities = data?.amenities || [];
+  const configurations = data?.configurations || [];
+  const faqs = data?.faq || [];
+  const locationMap = data?.locationMap;
+  const slug = data?.slug || "";
+  const builder = data?.builder || "";
+  const otherProjects = data?.other_projects || [];
+  const excludeProjects = data?.exclude_projects_from_widgets || [];
+  const footerData = data?.footer || {};
+  const projectName = data?.name || "";
+  const locality = data?.locality || "";
+
   return (
     <div className="min-h-screen">
-      <Hero data={data} />
-      
-      {data.gallery && data.gallery.length > 0 && (
-        <Gallery images={data.gallery} />
-      )}
-      
-      {data.configurations && data.configurations.length > 0 && (
-        <PriceTable configurations={data.configurations} />
-      )}
-      
-      {data.floorPlans && data.floorPlans.length > 0 && (
-        <FloorPlans floorPlans={data.floorPlans} />
-      )}
-      
-      {data.amenities && data.amenities.length > 0 && (
-        <Amenities amenities={data.amenities} />
-      )}
-      
-      {data.locationMap && (
-        <LocationMap location={data.locationMap} />
-      )}
-      
+      {/* Hero section */}
+      {data && <Hero data={data} />}
+
+      {/* Floor Plans */}
+      {floorPlans.length > 0 && <FloorPlans floorPlans={floorPlans} />}
+
+      {/* Amenities */}
+      {amenities.length > 0 && <Amenities amenities={amenities} />}
+
+      {/* Location Map */}
+      {locationMap && <LocationMap location={locationMap} />}
+
+      {/* Call-to-action buttons */}
       <CTAButtons />
-      
-      {data.faq && data.faq.length > 0 && (
-        <FAQ faqs={data.faq} />
+
+      {/* FAQ section */}
+      {faqs.length > 0 && <FAQ faqs={faqs} />}
+
+      {/* Builder's other projects */}
+      {builder && (
+        <BuilderOtherProjects
+          currentSlug={slug}
+          builder={builder}
+          otherProjects={otherProjects}
+          excludeProjects={excludeProjects}
+        />
       )}
-      
-      <BuilderOtherProjects
-        currentSlug={data.slug}
-        builder={data.builder}
-        otherProjects={data.other_projects}
-        excludeProjects={data.exclude_projects_from_widgets}
-      />
-      
-      <LocalityOtherProjects
-        currentSlug={data.slug}
-        locality={data.locality}
-        builder={data.builder}
-        excludeProjects={data.exclude_projects_from_widgets}
-      />
-      
+
+      {/* Locality's other projects */}
+      {locality && (
+        <LocalityOtherProjects
+          currentSlug={slug}
+          locality={locality}
+          builder={builder}
+          excludeProjects={excludeProjects}
+        />
+      )}
+
+      {/* Footer */}
       <Footer
-        data={data.footer}
-        projectName={data.name}
-        builder={data.builder}
-        locality={data.locality}
+        data={footerData}
+        projectName={projectName}
+        builder={builder}
+        locality={locality}
       />
     </div>
   );

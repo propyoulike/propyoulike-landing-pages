@@ -1,126 +1,95 @@
+import { memo, useState } from "react";
 import { FileText } from "lucide-react";
-import CTAButtons from "./CTAButtons";
-import { useEffect, useRef } from "react";
+import CTAButtons from "@/components/CTAButtons";
 
-export interface DocumentLink {
-  label: string;
-  href: string;
+interface Document {
+  title: string;
+  url: string;
 }
 
 interface BrochureProps {
-  title: string;
-  subtitle?: string;
-  description: string;
-  imageUrl: string;
-  documents?: DocumentLink[];
+  coverImage?: string;
+  heroTitle?: string;
+  heroSubtitle?: string;
+  documents?: Document[];
   onCtaClick: () => void;
 }
 
-const Brochure = ({
-  title,
-  subtitle,
-  description,
-  imageUrl,
-  documents = [],
-  onCtaClick,
-}: BrochureProps) => {
-  const sectionRef = useRef<HTMLDivElement | null>(null);
+const FALLBACK_IMAGE =
+  "https://via.placeholder.com/800x600?text=Brochure+Unavailable";
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          if (typeof (window as any).gtag === "function") {
-            (window as any).gtag("event", "section_view", {
-              event_category: "engagement",
-              event_label: "Brochure Section",
-            });
-          }
+const Brochure = memo(
+  ({
+    coverImage,
+    heroTitle = "A lifestyle project that suits your needs.",
+    heroSubtitle = "Explore detailed information on floor plans, amenities, pricing, layout plans and official documents.",
+    documents = [],
+    onCtaClick
+  }: BrochureProps) => {
+    const [imgSrc, setImgSrc] = useState(coverImage || FALLBACK_IMAGE);
 
-          if (typeof (window as any).fbq === "function") {
-            (window as any).fbq("trackCustom", "BrochureSectionViewed");
-          }
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.3 }
-    );
+    return (
+      <section className="py-12 bg-gray-50">
+        <div className="container mx-auto px-4 flex flex-col lg:flex-row gap-10">
 
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
+          {/* LEFT: Brochure Image */}
+          <div className="lg:w-1/2 w-full">
+            <img
+              src={imgSrc}
+              alt={heroTitle}
+              loading="lazy"
+              className="
+                w-full h-auto rounded-xl shadow-md object-cover
+                transition-opacity duration-300
+              "
+              onError={() => setImgSrc(FALLBACK_IMAGE)}
+            />
+          </div>
 
-  return (
-    <section
-      ref={sectionRef}
-      className="py-16 lg:py-24 scroll-mt-32 bg-background"
-    >
-      <div className="container mx-auto px-4">
-        <div className="max-w-6xl mx-auto">
-          <div
-            className="bg-card rounded-2xl p-6 sm:p-8 lg:p-12"
-            style={{ boxShadow: "var(--shadow-strong)" }}
-          >
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+          {/* RIGHT: Content */}
+          <div className="lg:w-1/2 w-full flex flex-col justify-center space-y-6">
 
-              {/* LEFT IMAGE */}
-              <div className="w-full">
-                <div className="w-full aspect-[4/3] overflow-hidden rounded-2xl shadow-lg">
-                  <img
-                    src={imageUrl}
-                    alt="Brochure Cover"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              </div>
+            <header>
+              <h2 className="text-3xl font-bold mb-4">{heroTitle}</h2>
+              <p className="text-gray-600">{heroSubtitle}</p>
+            </header>
 
-              {/* RIGHT TEXT */}
-              <div className="flex flex-col justify-center">
-                <h2 className="text-3xl lg:text-4xl font-bold mb-4 text-foreground leading-tight">
-                  {title} <br />
-                  {subtitle && <span className="text-primary">{subtitle}</span>}
-                </h2>
-
-                <p className="text-lg text-muted-foreground mb-6 lg:mb-8 leading-relaxed">
-                  {description}
-                </p>
-
-                {/* DOCUMENT LINKS */}
-                {documents.length > 0 && (
-                  <div className="pt-4">
-                    <h3 className="text-xl font-bold mb-4 text-foreground">
-                      Official Documents
-                    </h3>
-                    <div className="flex flex-col gap-3">
-                      {documents.map((doc, idx) => (
+            {/* Documents */}
+            {Array.isArray(documents) && documents.length > 0 && (
+              <div>
+                <h3 className="font-semibold mb-3">Official Documents</h3>
+                <ul className="space-y-3">
+                  {documents.map((doc, idx) =>
+                    doc?.title && doc?.url ? (
+                      <li key={idx}>
                         <a
-                          key={idx}
-                          href={doc.href}
+                          href={doc.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 text-primary hover:underline font-semibold"
+                          className="text-blue-600 hover:underline flex items-center gap-2 group"
                         >
-                          <FileText className="w-5 h-5" /> {doc.label}
+                          <FileText className="group-hover:text-blue-800" />
+                          <span>{doc.title}</span>
                         </a>
-                      ))}
-                    </div>
-                  </div>
-                )}
+                      </li>
+                    ) : null
+                  )}
+                </ul>
               </div>
-            </div>
+            )}
 
-            {/* CTA */}
-            <div className="mt-10 pt-8 border-t border-border w-full">
-              <div className="w-full flex flex-col sm:flex-row gap-4">
-                <CTAButtons onFormOpen={onCtaClick} />
-              </div>
+            {/* CTA Buttons */}
+            <div className="w-full flex flex-wrap gap-4 pt-4">
+              <CTAButtons onFormOpen={onCtaClick} />
             </div>
 
           </div>
         </div>
-      </div>
-    </section>
-  );
-};
+      </section>
+    );
+  }
+);
+
+Brochure.displayName = "Brochure";
 
 export default Brochure;

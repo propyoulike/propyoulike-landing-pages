@@ -1,0 +1,16 @@
+[
+   {
+      "title": "Agreement Stage",
+      "percentage": "20%",
+      "expandable": true,
+      "items": [
+        "Initial Advance – ₹2,00,000",
+        "Post Agreement Execution – 11%"
+      ]
+    },
+    {
+      "title": "Excavation Complete",
+      "percentage": "10%",
+      "expandable": false
+    }
+]

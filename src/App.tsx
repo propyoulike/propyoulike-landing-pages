@@ -2,44 +2,56 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+
+import { HelmetProvider } from "react-helmet-async";   // ✅ SEO Provider
 
 import Index from "./pages/Index";
 import ProjectPage from "./pages/ProjectPage";
 import NotFound from "./pages/NotFound";
 import Tracking from "./templates/common/Tracking";
 
-// Optional placeholders (highly recommended)
 import BuilderPage from "./pages/BuilderPage";
 import LocalityPage from "./pages/LocalityPage";
+
+import { LeadCTAProvider } from "@/components/lead/LeadCTAProvider";
 
 const queryClient = new QueryClient();
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
+  <HelmetProvider>
+    {/* SEO Provider must wrap entire app */}
 
-      {/* Global tracking scripts */}
-      <Tracking />
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
 
-      {/* Your app routes */}
-      <Routes>
-        <Route path="/" element={<Index />} />
+        <Tracking />
 
-        {/* Dynamic project landing pages */}
-        <Route path="/projects/:slug" element={<ProjectPage />} />
+        <LeadCTAProvider
+          projectName="Provident Sunworth"
+          projectId="sunworth"
+          whatsappNumber="919379822010"
+        >
+          <Routes>
+            <Route path="/" element={<Index />} />
 
-        {/* Optional pages required for widgets */}
-        <Route path="/builder/:builder" element={<BuilderPage />} />
-        <Route path="/locality/:locality" element={<LocalityPage />} />
+            {/* Project SEO is inside ProjectPage */}
+            <Route path="/projects/:slug" element={<ProjectPage />} />
 
-        {/* Catch all */}
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </TooltipProvider>
-  </QueryClientProvider>
+            {/* Builder SEO inside BuilderPage */}
+            <Route path="/builder/:builder" element={<BuilderPage />} />
+
+            {/* Locality SEO inside LocalityPage */}
+            <Route path="/locality/:locality" element={<LocalityPage />} />
+
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </LeadCTAProvider>
+      </TooltipProvider>
+    </QueryClientProvider>
+  </HelmetProvider>
 );
 
 export default App;

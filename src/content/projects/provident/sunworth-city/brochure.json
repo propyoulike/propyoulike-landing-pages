@@ -1,0 +1,15 @@
+{
+    "heroTitle": "A lifestyle project that suits your needs.",
+    "heroSubtitle": "Explore detailed information on floor plans, amenities, pricing, layout plans and official project documents.",
+    "coverImage": "https://www.providenthousing.com/wp-content/uploads/2022/12/sunworthcity-brochure-cover-1.png",
+    "documents": [
+      {
+        "title": "RERA Certificate",
+        "url": "https://www.providenthousing.com/wp-content/uploads/2022/12/Provident-Sunworth-City-RERA-Certificate-1.pdf"
+      },
+      {
+        "title": "MOEF Certificate",
+        "url": "https://www.providenthousing.com/wp-content/uploads/2022/12/MOEF-sunworth-city.pdf"
+      }
+    ]
+  }

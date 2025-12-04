@@ -1,0 +1,67 @@
+
+   {
+    "heroTitle": "Your Leisure Adorned With Opulence",
+    "heroSubtitle": "From sports to leisure, wellness to education...",
+    "amenityImages": [
+      { "src": "/images/amenities/basketball.jpg", "title": "Basketball Court", "description": "Professional court for sports enthusiasts" },
+      { "src": "/images/amenities/gym.jpg", "title": "Gymnasium", "description": "Gymnasium to keep you fit" },
+      { "src": "/images/amenities/swimming-pool.jpg", "title": "Swimming Pool", "description": "Olympic-size pool for all ages" },
+      { "src": "/images/amenities/tennis.jpg", "title": "Tennis Court", "description": "Premium tennis facilities" },
+      { "src": "/images/amenities/playground.png", "title": "Childrens Play Area", "description": "Safe and fun play zones for kids" },
+      { "src": "/images/amenities/library.jpg", "title": "Library", "description": "Quiet reading and study space" },
+      { "src": "/images/amenities/forest-walk.jpg", "title": "Forest Walk", "description": "Scenic nature trails within the township" },
+      { "src": "/images/amenities/cricket.webp", "title": "Cricket Pitch", "description": "Full-sized cricket ground" }
+    ],
+    "amenityCategories": [
+      {
+        "title": "Sports & Fitness",
+        "items": [
+          "Cricket Pitch",
+          "Badminton Courts",
+          "Tennis Courts",
+          "Basketball Court",
+          "Skating Rink",
+          "Jogging Track",
+          "Gym",
+          "Yoga Deck"
+        ]
+      },
+      {
+        "title": "Recreation",
+        "items": [
+          "Swimming Pool",
+          "Kids Play Area",
+          "Amphitheater",
+          "Party Lawn",
+          "Clubhouse",
+          "Indoor Games",
+          "Library",
+          "Multipurpose Hall"
+        ]
+      },
+      {
+        "title": "Wellness & Nature",
+        "items": [
+          "Reflexology Path",
+          "Meditation Zone",
+          "Outdoor Gym",
+          "Senior Citizen Corner",
+          "Pet Park",
+          "Butterfly Garden",
+          "7000+ Trees",
+          "19 Acres Green Cover"
+        ]
+      },
+      {
+        "title": "Essential Services",
+        "items": [
+          "Chrysalis High School",
+          "Retail Commercial",
+          "24/7 Security",
+          "Power Backup",
+          "Water Supply",
+          "Maintenance Services"
+        ]
+      }
+    ]
+  }

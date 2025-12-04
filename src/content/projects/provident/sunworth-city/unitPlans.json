@@ -1,0 +1,35 @@
+[
+  {
+    "title": "2 BHK Flat",
+    "video": "https://www.youtube.com/shorts/z6-d5uB4rRA",
+    "description": "Experience the thoughtful design and smart use of space",
+    "sba": "883 sq.ft",
+    "ca": "628 sq.ft",
+    "usable": "655 sq.ft",
+    "uds": "321 sq.ft",
+    "price": "₹69.99 L*",
+    "floorPlan": "https://www.providenthousing.com/wp-content/uploads/2022/12/2_bhk_plan.webp"
+  },
+  {
+    "title": "3 BHK Regular Flat",
+    "video": "https://youtube.com/shorts/QEtUBt1Ac3U",
+    "description": "Explore premium homes designed for growing families",
+    "sba": "1082 sq.ft",
+    "ca": "779 sq.ft",
+    "usable": "805 sq.ft",
+    "uds": "398 sq.ft",
+    "price": "₹79.99 L*",
+    "floorPlan": "https://www.providenthousing.com/wp-content/uploads/2022/12/3_bhk_plan.webp"
+  },
+  {
+    "title": "3 BHK Royale Flat",
+    "video": "https://youtu.be/B2izuPDFLak",
+    "description": "Discover luxurious living with premium finishes",
+    "sba": "1779 sq.ft",
+    "ca": "1287 sq.ft",
+    "usable": "1351 sq.ft",
+    "uds": "658 sq.ft",
+    "price": "149.99 L*",
+    "floorPlan": "https://www.providenthousing.com/wp-content/uploads/2022/12/3bhk_royale.webp"
+  }
+]
