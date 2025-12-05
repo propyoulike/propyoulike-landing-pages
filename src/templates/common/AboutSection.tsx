@@ -1,7 +1,7 @@
 import { Building2, Users, Award, TrendingUp, ChevronDown, ChevronUp } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import CTAButtons from "@/components/CTAButtons";
+import CTAButtons from "./CTAButtons";
 
 export interface StatItem {
   icon: React.ElementType;

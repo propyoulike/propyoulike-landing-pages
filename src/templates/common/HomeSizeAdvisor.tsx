@@ -84,7 +84,7 @@ export default function HomeSizeAdvisor({
 
     // Pick backup as next larger unit
     const suitableBackupIndex = Math.max(0, units.findIndex((u) => u.label === primary.type) + 1);
-    const suitableBackup = units[suitableBackupIndex] || primary;
+    const suitableBackup = units[suitableBackupIndex] || suitablePrimary;
     backup = { type: suitableBackup.label, size: suitableBackup.size || "", rationale: ["Backup option"] };
 
     const rationale: string[] = [];
