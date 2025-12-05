@@ -1,17 +1,29 @@
 import { Button } from "@/components/ui/button";
 import { Phone, Download, Mail } from "lucide-react";
 
-const CTAButtons = () => {
+interface CTAButtonsProps {
+  onFormOpen?: () => void;
+}
+
+const CTAButtons = ({ onFormOpen }: CTAButtonsProps) => {
   const handleCallNow = () => {
     window.location.href = "tel:+919876543210";
   };
 
   const handleDownloadBrochure = () => {
-    console.log("Download brochure");
+    if (onFormOpen) {
+      onFormOpen();
+    } else {
+      console.log("Download brochure");
+    }
   };
 
   const handleEnquiry = () => {
-    window.location.href = "mailto:info@propyoulike.com";
+    if (onFormOpen) {
+      onFormOpen();
+    } else {
+      window.location.href = "mailto:info@propyoulike.com";
+    }
   };
 
   return (

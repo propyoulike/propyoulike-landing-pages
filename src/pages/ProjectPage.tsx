@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ContactForm } from "./ContactForm"; // your existing component
+import LeadForm from "@/components/LeadForm";
 
 export default function ContactFormWrapper() {
   const [showForm, setShowForm] = useState(false);
@@ -27,7 +27,7 @@ export default function ContactFormWrapper() {
       )}
 
       {/* Show Form */}
-      {showForm && <ContactForm />}
+      {showForm && <LeadForm onSuccess={() => setShowForm(false)} />}
     </div>
   );
 }
