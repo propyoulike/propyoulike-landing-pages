@@ -1,114 +1,74 @@
-// src/lib/data/loadProject.ts
-import { ProjectSchema } from "@/content/schema/project.schema";
-import type { ProjectData } from "@/content/schema/project.schema";
-import { loadBuilder } from "./loadBuilder";
+import { ProjectSchema, type ProjectData } from "@/content/schema/project.schema";
 
-const projectFiles = import.meta.glob("/src/content/projects/**/*.json", {
-  eager: true,
-});
+const projectFiles = import.meta.glob("/src/content/**/*.json", { eager: true }) as Record<string, any>;
 
-/**
- * Create all possible resolution paths for a given file
- */
-function resolveCandidates(baseDir: string, fileName: string, builder: string, projectSlug: string) {
-  const projectDir = `/src/content/projects/${builder}/${projectSlug}/`;
-  const builderDir = `/src/content/projects/${builder}/`;
+function candidatePaths(baseDir: string, fileName: string) {
+  const out: string[] = [];
+  out.push(`${baseDir}${fileName}`);
 
-  const clean = fileName.replace(/^\.\/+/, ""); // remove ./ prefix
-
-  const candidates = [];
-
-  // 1. Project-level direct file
-  candidates.push(`${projectDir}${clean}`);
-
-  // 2. If "../" used → go to builder folder
   if (fileName.startsWith("../")) {
-    candidates.push(`${builderDir}${fileName.replace("../", "")}`);
+    out.push(`${baseDir}${fileName.replace(/^\.\.\//, "")}`);
+    const parent = baseDir.replace(/\/[^\/]+\/$/, "/");
+    out.push(`${parent}${fileName.replace(/^\.\.\//, "")}`);
   }
-
-  // 3. Allow explicit builder-level reference: "/builder/aboutbuilder.json"
-  if (fileName.startsWith("/")) {
-    candidates.push(`/src/content/projects${fileName}`);
-  }
-
-  // 4. Try absolute-clean
-  candidates.push(`${projectDir}${clean}`.toLowerCase()); 
-
-  return Array.from(new Set(candidates)); // unique
+  return Array.from(new Set(out));
 }
 
-export async function loadProject(slug?: string): Promise<ProjectData | null> {
+export async function loadProject(slug?: string | null): Promise<ProjectData & { builderData?: any } | null> {
   if (!slug) return null;
 
-  try {
-    const [builder, ...rest] = slug.split("-");
-    const projectSlug = rest.join("-");
+  const parts = slug.split("-");
+  const builder = parts[0];
+  const projectSlug = parts.slice(1).join("-");
+  const baseDir = `/src/content/projects/${builder}/${projectSlug}/`;
 
-    const projectDir = `/src/content/projects/${builder}/${projectSlug}/`;
-    const indexPath = `${projectDir}index.json`;
+  const indexKey = `${baseDir}index.json`;
+  const indexModule = projectFiles[indexKey];
 
-    let baseData: any = null;
+  if (!indexModule) return null;
 
-    // -----------------------------
-    // 1. LOAD PROJECT INDEX.JSON
-    // -----------------------------
-    const indexModule = projectFiles[indexPath];
-    if (!indexModule) {
-      console.error("❌ Project index.json not found:", indexPath);
-      return null;
-    }
+  const baseData = structuredClone(indexModule.default ?? indexModule);
 
-    baseData = (indexModule as any).default;
+  // ----------------------------
+  //  FILE MERGING + AUTO FIXING
+  // ----------------------------
+  if (baseData.files && typeof baseData.files === "object") {
+    for (const key of Object.keys(baseData.files)) {
+      const fileName = baseData.files[key];
+      const candidates = candidatePaths(baseDir, fileName);
 
-    // -----------------------------
-    // 2. LOAD SUBFILES DECLARED IN index.json
-    // -----------------------------
-    if (baseData.files) {
-      for (const key in baseData.files) {
-        const fileName = baseData.files[key];
-        const candidates = resolveCandidates(projectDir, fileName, builder, projectSlug);
+      for (const c of candidates) {
+        if (projectFiles[c]) {
+          const raw = projectFiles[c].default ?? projectFiles[c];
 
-        let match: any = null;
-
-        for (const path of candidates) {
-          if (projectFiles[path]) {
-            match = projectFiles[path];
-            break;
+          // AUTO-UNWRAP if JSON wraps itself:
+          //
+          // { floorPlansSection: { ... } }
+          //
+          if (typeof raw === "object" && raw !== null && Object.keys(raw).length === 1 && raw[key]) {
+            baseData[key] = raw[key];   // unwrap
+          } else {
+            baseData[key] = raw;        // normal JSON
           }
+          break;
         }
-
-        if (!match) {
-          console.warn(`⚠ Missing subfile for "${key}" → Tried:`, candidates);
-          continue; // important: do NOT break project if optional file missing
-        }
-
-        baseData[key] = match.default;
       }
     }
+  }
 
-    // -----------------------------
-    // 3. VALIDATE AGAINST SCHEMA
-    // -----------------------------
-    const validated = ProjectSchema.safeParse(baseData);
+  // Optional builder overrides
+  const builderOverrideKey = `/src/content/builders/${builder}.json`;
+  const builderData = projectFiles[builderOverrideKey]?.default ?? null;
 
-    if (!validated.success) {
-      console.error("❌ Project schema failed:", validated.error);
-      return null;
-    }
-
-    const project = validated.data;
-
-    // -----------------------------
-    // 4. LOAD BUILDER DATA
-    // -----------------------------
-    const builderData = await loadBuilder(builder);
-
-    return {
-      ...project,
-      builderData,
-    };
-  } catch (err) {
-    console.error("❌ Unexpected error:", slug, err);
+  // Validate schema
+  const parsed = ProjectSchema.safeParse(baseData);
+  if (!parsed.success) {
+    console.error("❌ Project schema validation failed:", parsed.error);
     return null;
   }
+
+  return {
+    ...parsed.data,
+    builderData: builderData ?? undefined
+  };
 }

@@ -1,27 +1,44 @@
 // src/lib/data/useProject.ts
+
 import { useEffect, useState } from "react";
 import type { ProjectData } from "@/content/schema/project.schema";
 import { loadProject } from "./loadProject";
 
+/**
+ * Shape returned by this hook.
+ */
 interface UseProjectResult {
   project: ProjectData | null;
   loading: boolean;
   error: string | null;
 }
 
-export function useProject(slug: string): UseProjectResult {
+/**
+ * useProject(slug)
+ * -----------------
+ * Loads a project's JSON + merged builder overrides using loadProject().
+ * Handles loading, errors, and cancellation on unmount.
+ *
+ * This hook is the ONLY place where project-loading state is managed.
+ * All pages/components rely on this normalized interface.
+ */
+export function useProject(slug: string | null): UseProjectResult {
+
   const [project, setProject] = useState<ProjectData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!slug) {
-      setError("Invalid project slug");
+    /** -------------------------------------------------------
+     * If slug is missing (undefined / empty), we stop early.
+     * Prevents unnecessary loadProject() execution.
+     * ------------------------------------------------------ */
+    if (!slug || slug.trim() === "") {
       setLoading(false);
       return;
     }
 
-    let cancelled = false;
+    let cancelled = false; // prevents state updates after unmount
 
     async function fetchProject() {
       setLoading(true);
@@ -30,21 +47,26 @@ export function useProject(slug: string): UseProjectResult {
       try {
         const data = await loadProject(slug);
 
+        // Component unmounted?
         if (cancelled) return;
 
+        // Project not found?
         if (!data) {
           setError("Project not found");
           setProject(null);
           return;
         }
 
-        // ---- Final Normalization Layer ----
+        /** -------------------------------------------------------
+         * Normalize project shape
+         * Ensures frontend never breaks due to missing fields.
+         * ------------------------------------------------------ */
         const normalized: ProjectData = {
           ...data,
           builder: data.builder || "default",
           type: data.type || "apartment",
-          builderData: data.builderData ?? null, // ensure added
-          sections: data.sections ?? [],         // avoid undefined
+          builderData: data.builderData ?? null,
+          sections: data.sections ?? [],
         };
 
         setProject(normalized);
@@ -54,9 +76,7 @@ export function useProject(slug: string): UseProjectResult {
           setError("Failed to load project");
         }
       } finally {
-        if (!cancelled) {
-          setLoading(false);
-        }
+        if (!cancelled) setLoading(false);
       }
     }
 

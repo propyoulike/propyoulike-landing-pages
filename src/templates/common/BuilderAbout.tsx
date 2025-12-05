@@ -10,6 +10,8 @@ interface StatItem {
 }
 
 interface BuilderAboutProps {
+  id?: string;
+  name?: string;
   title?: string;
   subtitle?: string;
   description?: string;
@@ -19,6 +21,8 @@ interface BuilderAboutProps {
 }
 
 const BuilderAbout = ({
+  id = "about-builder",
+  name,
   title,
   subtitle,
   description,
@@ -34,10 +38,12 @@ const BuilderAbout = ({
   const trackView = () => {
     if (!hasTrackedView.current) {
       hasTrackedView.current = true;
+
       window.gtag?.("event", "section_view", {
         event_category: "engagement",
         event_label: "BuilderAbout",
       });
+
       window.fbq?.("trackCustom", "BuilderAboutViewed");
     }
   };
@@ -72,14 +78,20 @@ const BuilderAbout = ({
   /* ---------------- Render ---------------- */
 
   return (
-    <section id="about-builder" ref={sectionRef} className="py-20 lg:py-28 bg-background scroll-mt-32">
+    <section
+      id={id}
+      ref={sectionRef}
+      className="py-20 lg:py-28 bg-background scroll-mt-32"
+    >
       <div className="container mx-auto px-4">
         <div className="max-w-5xl mx-auto text-center mb-12">
+
           {title && (
             <h2 className="text-3xl lg:text-5xl font-bold mb-4 text-foreground">
               {title}
             </h2>
           )}
+
           {subtitle && (
             <p className="text-lg text-muted-foreground">{subtitle}</p>
           )}
@@ -101,14 +113,21 @@ const BuilderAbout = ({
             {/* Stats Grid */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 py-10">
               {stats.map((s, i) => {
-                const Icon = Icons[s.icon as keyof typeof Icons] ?? Icons.Circle;
+                const Icon =
+                  Icons[s.icon as keyof typeof Icons] ?? Icons.Circle;
+
                 return (
-                  <div key={i} className="text-center p-6 bg-muted/50 rounded-xl">
+                  <div
+                    key={i}
+                    className="text-center p-6 bg-muted/50 rounded-xl"
+                  >
                     <Icon className="w-10 h-10 mx-auto text-primary mb-3" />
                     <div className="text-2xl font-semibold text-foreground">
                       {s.value}
                     </div>
-                    <div className="text-sm text-muted-foreground">{s.label}</div>
+                    <div className="text-sm text-muted-foreground">
+                      {s.label}
+                    </div>
                   </div>
                 );
               })}
@@ -118,7 +137,12 @@ const BuilderAbout = ({
 
         {/* Expand Button */}
         <div className="text-center">
-          <Button variant="outline" size="lg" onClick={handleExpandToggle} className="rounded-full">
+          <Button
+            variant="outline"
+            size="lg"
+            onClick={handleExpandToggle}
+            className="rounded-full"
+          >
             {isExpanded ? (
               <>
                 <Icons.ChevronUp className="mr-2 h-5 w-5" /> Show Less

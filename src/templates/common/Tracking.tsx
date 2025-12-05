@@ -6,7 +6,6 @@ export default function Tracking() {
   useEffect(() => {
     // Example: fire pageview or analytics event
     // Replace with your actual tracking integrations
-    console.log("Tracking: page loaded");
 
     // Example: Facebook Meta Pixel
     // window.fbq?.("track", "PageView");

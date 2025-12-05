@@ -1,307 +1,324 @@
 import { z } from "zod";
 
-/* ----------------------------------------------------
-   HERO
----------------------------------------------------- */
-const HeroSchema = z.object({
-  videoUrl: z.string().optional(),
-  images: z.array(z.string()).optional(),
-  overlayTitle: z.string().optional(),
-  overlaySubtitle: z.string().optional(),
-  ctaEnabled: z.boolean().default(true),
-  quickInfo: z
-    .object({
-      price: z.string().optional(),
-      typology: z.string().optional(),
-      location: z.string().optional(),
-      size: z.string().optional(),
-    })
-    .optional(),
-});
+/**
+ * Universal project schema.
+ * Generic and reusable across all builders.
+ */
 
-/* ----------------------------------------------------
-   NAVBAR
----------------------------------------------------- */
-const NavbarSchema = z.object({
-  logo: z.string().optional(),
-  menu: z
-    .array(
-      z.object({
-        label: z.string(),
-        targetId: z.string().optional(),
+/* -----------------------------------------
+    COMMON SECTION SCHEMAS
+----------------------------------------- */
+
+const HeroSchema = z
+  .object({
+    videoUrl: z.string().optional(),
+    images: z.array(z.string()).optional(),
+    overlayTitle: z.string().optional(),
+    overlaySubtitle: z.string().optional(),
+    ctaEnabled: z.boolean().default(false),
+    quickInfo: z
+      .object({
+        price: z.string().optional(),
+        typology: z.string().optional(),
+        size: z.string().optional(),
       })
-    )
-    .optional(),
-}).optional();
+      .optional(),
+  })
+  .optional();
 
-/* ----------------------------------------------------
-   SUMMARY
----------------------------------------------------- */
-const SummarySchema = z.object({
-  title: z.string().optional(),
+const NavbarSchema = z
+  .object({
+    logo: z.string().optional(),
+    menu: z
+      .array(
+        z.object({
+          label: z.string(),
+          targetId: z.string().optional(),
+        })
+      )
+      .optional(),
+  })
+  .optional();
+
+const SummarySchema = z
+  .object({
+    title: z.string().optional(),
+    subtitle: z.string().optional(),
+    description: z.string().optional(),
+    highlights: z
+      .array(
+        z.object({
+          icon: z.string().optional(),
+          label: z.string().optional(),
+          value: z.string().optional(),
+        })
+      )
+      .optional(),
+  })
+  .optional();
+
+const BrochureSchema = z
+  .object({
+    heroTitle: z.string().optional(),
+    heroSubtitle: z.string().optional(),
+    coverImage: z.string().optional(),
+    documents: z
+      .array(
+        z.object({
+          title: z.string(),
+          url: z.string(),
+        })
+      )
+      .optional(),
+  })
+  .optional();
+
+const ViewsSchema = z
+  .object({
+    title: z.string().optional(),
+    subtitle: z.string().optional(),
+    images: z
+      .array(
+        z.object({
+          src: z.string(),
+          title: z.string().optional(),
+        })
+      )
+      .optional(),
+  })
+  .optional();
+
+/* -----------------------------------------
+    FLOOR PLANS SECTION
+----------------------------------------- */
+
+const FloorPlansSectionSchema = z
+  .object({
+    title: z.string(),
+    subtitle: z.string(),
+
+    unitPlans: z.array(
+      z.object({
+        title: z.string(),
+        videoUrl: z.string(),
+        description: z.string(),
+        sba: z.string(),
+        ca: z.string(),
+        usable: z.string(),
+        uds: z.string(),
+        price: z.string(),
+        floorPlanImage: z.string().optional(),
+      })
+    ),
+
+    floorPlans: z.array(
+      z.object({
+        title: z.string(),
+        image: z.string(),
+        description: z.string(),
+      })
+    ),
+
+    masterPlan: z.object({
+      image: z.string(),
+      title: z.string(),
+      description: z.string(),
+    }),
+
+    ctaText: z.string(),
+  })
+  .optional();
+
+/* -----------------------------------------
+    LOCATION UI SECTION (NEW)
+----------------------------------------- */
+
+const LocationUISchema = z.object({
+  sectionId: z.string().default("location-ui"),
+  title: z.string(),
   subtitle: z.string().optional(),
-  description: z.string().optional(),
-  highlights: z
-    .array(
-      z.object({
-        icon: z.string().optional(),
-        label: z.string().optional(),
-        value: z.string().optional(),
-      })
-    )
-    .optional(),
-});
+  tagline: z.string().optional(),
+  videoUrl: z.string().optional(),
+  mapUrl: z.string().optional(),
 
-/* ----------------------------------------------------
-   BROCHURE
----------------------------------------------------- */
-const BrochureSchema = z.object({
-  heroTitle: z.string().optional(),
-  heroSubtitle: z.string().optional(),
-  coverImage: z.string().optional(),
-  documents: z
+  categories: z
     .array(
       z.object({
         title: z.string(),
-        url: z.string(),
+        items: z.array(z.string())
       })
     )
-    .optional(),
-}).optional();
+    .default([]),
 
-/* ----------------------------------------------------
-   VIEWS (REUSABLE)
----------------------------------------------------- */
-const ViewImageSchema = z.object({
-  src: z.string(),
-  title: z.string().optional(),
+  ctaText: z.string().optional(),
 });
 
-const ViewsSchema = z.object({
-  title: z.string().optional(),
-  subtitle: z.string().optional(),
-  images: z.array(ViewImageSchema),
-}).optional();
+/* -----------------------------------------
+    OTHER SECTIONS
+----------------------------------------- */
 
-/* ----------------------------------------------------
-   GALLERY
----------------------------------------------------- */
-const GallerySchema = z.array(z.string()).optional();
+const AmenitiesSchema = z
+  .object({
+    heroTitle: z.string().optional(),
+    heroSubtitle: z.string().optional(),
+    amenityImages: z
+      .array(
+        z.object({
+          src: z.string(),
+          title: z.string().optional(),
+        })
+      )
+      .optional(),
+    amenityCategories: z
+      .array(
+        z.object({
+          title: z.string(),
+          items: z.array(z.string()),
+        })
+      )
+      .optional(),
+  })
+  .optional();
 
-/* ----------------------------------------------------
-   UNIT PLANS
----------------------------------------------------- */
-const UnitPlanSchema = z.object({
-  title: z.string(),
-  video: z.string().optional(),
-  description: z.string().optional(),
-  sba: z.string().optional(),
-  ca: z.string().optional(),
-  usable: z.string().optional(),
-  uds: z.string().optional(),
-  price: z.string().optional(),
-  floorPlan: z.string().optional(),
-});
-
-/* ----------------------------------------------------
-   FLOOR PLANS
----------------------------------------------------- */
-const FloorPlanSchema = z.object({
-  title: z.string(),
-  image: z.string(),
-  description: z.string().optional(),
-});
-const FloorPlansSchema = z.array(FloorPlanSchema).optional();
-
-/* ----------------------------------------------------
-   LOCATION DATA
----------------------------------------------------- */
-const LocationSchema = z.object({
-  address: z.string().optional(),
-  city: z.string().optional(),
-  state: z.string().optional(),
-  coordinates: z
-    .object({
-      lat: z.number().optional(),
-      lng: z.number().optional(),
+const ConstructionSchema = z
+  .array(
+    z.object({
+      name: z.string(),
+      image: z.string().optional(),
+      updates: z.array(z.string()).optional(),
     })
-    .optional(),
-  landmarks: z.array(z.string()).optional(),
-});
+  )
+  .optional();
 
-/* ----------------------------------------------------
-   LOCATION UI (REUSABLE)
----------------------------------------------------- */
-const LocationSectionSchema = z.object({
-  title: z.string(),
-  items: z.array(z.string()),
-});
+/* -----------------------------------------
+    PAYMENT PLANS
+----------------------------------------- */
 
-const LocationUISchema = z.object({
-  videoUrl: z.string().optional(),
-  mapUrl: z.string().optional(),
-  sections: z.array(LocationSectionSchema),
-}).optional();
+const PaymentPlansSchema = z
+  .object({
+    sectionId: z.string(),
+    sectionTitle: z.string(),
+    sectionSubtitle: z.string(),
+    pricingTitle: z.string(),
 
-/* ----------------------------------------------------
-   PAYMENT UI (for PaymentPlans component)
----------------------------------------------------- */
-const PricingComputationSchema = z.object({
-  title: z.string(),
-  points: z.array(z.string()),
-});
-
-const PaymentStageSchema = z.object({
-  title: z.string(),
-  percentage: z.string(),
-  expandable: z.boolean().default(false),
-  items: z.array(z.string()).optional(),
-});
-
-const PaymentPlansUISchema = z.object({
-  pricingComputation: z.array(PricingComputationSchema).optional(),
-  paymentSchedule: z.array(PaymentStageSchema).optional(),
-}).optional();
-
-/* ----------------------------------------------------
-   CUSTOMER SPEAKS
----------------------------------------------------- */
-const TestimonialSchema = z.object({
-  name: z.string(),
-  videoId: z.string(),
-  quote: z.string().optional(),
-});
-
-const CustomerSpeaksSchema = z.object({
-  title: z.string().optional(),
-  subtitle: z.string().optional(),
-  testimonials: z.array(TestimonialSchema),
-}).optional();
-
-/* ----------------------------------------------------
-   BUILDER ABOUT (REUSABLE)
----------------------------------------------------- */
-const BuilderAboutSchema = z.object({
-  title: z.string().optional(),
-  subtitle: z.string().optional(),
-  description: z.string().optional(),
-  descriptionExpanded: z.string().optional(),
-  stats: z
-    .array(
+    pricingComputation: z.array(
       z.object({
-        icon: z.string().optional(),
-        label: z.string().optional(),
-        value: z.string().optional(),
+        title: z.string(),
+        points: z.array(z.string()),
       })
-    )
-    .optional(),
-}).optional();
+    ),
 
-/* ----------------------------------------------------
-   FAQ
----------------------------------------------------- */
+    scheduleTitle: z.string(),
+
+    paymentSchedule: z.array(
+      z.object({
+        title: z.string(),
+        percentage: z.string(),
+        items: z.array(z.string()).optional(),
+      })
+    ),
+
+    ctaText: z.string(),
+  })
+  .optional();
+
+/* -----------------------------------------
+    CUSTOMER SPEAKS
+----------------------------------------- */
+
+const CustomerSpeaksSchema = z
+  .object({
+    title: z.string().optional(),
+    subtitle: z.string().optional(),
+    testimonials: z
+      .array(
+        z.object({
+          name: z.string(),
+          videoId: z.string().optional(),
+          quote: z.string().optional(),
+        })
+      )
+      .optional(),
+  })
+  .optional();
+
+/* -----------------------------------------
+    FAQ (Array of Items)
+----------------------------------------- */
+
 const FAQItemSchema = z.object({
   question: z.string(),
   answer: z.string(),
 });
 
-const FAQSchema = z.object({
-  title: z.string().optional(),
-  subtitle: z.string().optional(),
-  items: z.array(FAQItemSchema),
-}).optional();
+const FAQSchema = z.array(FAQItemSchema).optional();
 
-/* ----------------------------------------------------
-   AMENITIES (NEW REUSABLE)
----------------------------------------------------- */
-const AmenityImageSchema = z.object({
-  src: z.string(),
-  title: z.string().optional(),
-  description: z.string().optional(),
-});
+/* -----------------------------------------
+    BUILDER ABOUT
+----------------------------------------- */
 
-const AmenityCategorySchema = z.object({
-  title: z.string(),
-  items: z.array(z.string()),
-});
+const BuilderAboutSchema = z
+  .object({
+    title: z.string().optional(),
+    subtitle: z.string().optional(),
+    description: z.string().optional(),
+    descriptionExpanded: z.string().optional(),
+    stats: z
+      .array(
+        z.object({
+          icon: z.string().optional(),
+          label: z.string().optional(),
+          value: z.string().optional(),
+        })
+      )
+      .optional(),
+  })
+  .optional();
 
-const AmenitiesSchema = z.object({
-  heroTitle: z.string().optional(),
-  heroSubtitle: z.string().optional(),
-  amenityImages: z.array(AmenityImageSchema).optional(),
-  amenityCategories: z.array(AmenityCategorySchema).optional(),
-}).optional();
 
-/* ----------------------------------------------------
-   CONSTRUCTION
----------------------------------------------------- */
-const ConstructionTowerSchema = z.object({
-  name: z.string(),
-  image: z.string(),
-  status: z.array(z.string()).optional(),
-  achieved: z.array(z.string()).optional(),
-  upcoming: z.array(z.string()).optional(),
-});
+navbarConfig: z.object({
+  visible: z.array(z.string()).optional(),
+  hidden: z.array(z.string()).optional(),
+  order: z.array(z.string()).optional(),
+  ctaLabel: z.string().optional()
+}).optional()
 
-const ConstructionSchema = z.array(ConstructionTowerSchema).optional();
 
-/* ----------------------------------------------------
-   SECTIONS ORDER
----------------------------------------------------- */
-const SectionsSchema = z.array(z.string()).optional();
 
-/* ----------------------------------------------------
-   BASE PROJECT SCHEMA
----------------------------------------------------- */
-export const ProjectBaseSchema = z.object({
+/* -----------------------------------------
+    TOP-LEVEL PROJECT SCHEMA
+----------------------------------------- */
+
+export const ProjectSchema = z.object({
   builder: z.string(),
   slug: z.string(),
   projectName: z.string(),
+  type: z.string().optional(),
 
-  navbar: NavbarSchema,
-  sections: SectionsSchema,
-
-  hero: HeroSchema.optional(),
-  summary: SummarySchema.optional(),
-
-  location: LocationSchema.optional(),
-  locationUI: LocationUISchema.optional(),
-
-  brochure: BrochureSchema,
-views: ViewsSchema.optional(),
-  gallery: GallerySchema,
-
-  unitPlans: z.array(UnitPlanSchema).default([]),
-  floorPlans: FloorPlansSchema,
-
-amenities: AmenitiesSchema.optional(),
-construction: ConstructionSchema.optional(),
-
-  media: z.object({ masterPlan: z.string().optional() }).optional(),
-  paymentUI: PaymentPlansUISchema.optional(),
-
-  customerSpeaks: CustomerSpeaksSchema,
-  faqs: FAQSchema.optional(),
-
-
-  builderAbout: BuilderAboutSchema.optional(),
-});
-
-/* ----------------------------------------------------
-   PROVIDENT EXTENSION
----------------------------------------------------- */
-export const ProvidentExtensionSchema = z.object({
-  provident: z
+  meta: z
     .object({
-      theme: z.string().optional(),
-      communitySize: z.string().optional(),
-      usp: z.array(z.string()).optional(),
+      title: z.string().optional(),
+      description: z.string().optional(),
     })
     .optional(),
+
+  sections: z.array(z.string()).optional(),
+
+  navbar: NavbarSchema,
+  hero: HeroSchema,
+  summary: SummarySchema,
+  brochure: BrochureSchema,
+  views: ViewsSchema,
+  floorPlansSection: FloorPlansSectionSchema,
+  locationUI: LocationUISchema.optional(),
+  amenities: AmenitiesSchema,
+  construction: ConstructionSchema,
+  paymentPlans: PaymentPlansSchema,
+  customerSpeaks: CustomerSpeaksSchema,
+
+  faq: FAQSchema,
+
+  builderAbout: BuilderAboutSchema,
 });
 
-/* ----------------------------------------------------
-   MERGED SCHEMA
----------------------------------------------------- */
-export const ProjectSchema = ProjectBaseSchema.merge(ProvidentExtensionSchema);
 export type ProjectData = z.infer<typeof ProjectSchema>;

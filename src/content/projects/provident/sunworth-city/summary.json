@@ -1,15 +1,27 @@
 {
-  "text": "Provident Sunworth City offers thoughtfully designed 2 & 3 BHK apartments with world-class amenities.",
-  "location": {
-    "address": "Kengeri",
-    "city": "Bengaluru",
-    "state": "Karnataka",
-    "coordinates": { "lat": 12.923, "lng": 77.564 },
-    "landmarks": [
-      "Kengeri Bus Stop",
-      "Metro Station",
-      "Shopping Mall",
-      "School & Hospital"
+    "title": "Provident Sunworth City",
+    "subtitle": "Experience the perfect blend of modern living and nature in Bangalore's most promising residential township.",
+    "description": "Provident Sunworth City is a thoughtfully planned 60-acre township that brings together everything your family needs for a wholesome lifestyle. With over 50 world-class amenities, lush green landscapes, and spacious 2 & 3 BHK homes, this is where memories are made and dreams come true.",
+    "highlights": [
+      {
+        "icon": "home",
+        "label": "2 & 3 BHK Apartments",
+        "value": "Possession by Q1 2028"
+      },
+      {
+        "icon": "mapPin",
+        "label": "Prime Location",
+        "value": "Mysore Road, Bangalore"
+      },
+      {
+        "icon": "treePine",
+        "label": "Township Size",
+        "value": "60 Acres"
+      },
+      {
+        "icon": "award",
+        "label": "Amenities",
+        "value": "50+ Premium Facilities"
+      }
     ]
   }
-}

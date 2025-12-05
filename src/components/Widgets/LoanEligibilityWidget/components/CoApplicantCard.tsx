@@ -1,5 +1,5 @@
-// src/components/widgets/LoanEligibilityWidget/components/CoApplicantCard.tsx
 import React from "react";
+import Card from "./Card";
 import ApplicantCard from "./ApplicantCard";
 import { ApplicantInput } from "../types";
 
@@ -15,20 +15,30 @@ export default function CoApplicantCard({
   onChange: (patch: Partial<ApplicantInput>) => void;
 }) {
   return (
-    <div className="bg-card border rounded-2xl p-6 shadow-sm hover:shadow-lg transition">
-      <div className="flex items-center justify-between mb-3">
-        <h3 className="text-xl font-semibold">Co-applicant</h3>
-        <div className="flex items-center gap-3">
-          <label className="text-sm">Add co-applicant</label>
-          <input type="checkbox" className="toggle" checked={present} onChange={onToggle} />
-        </div>
+    <Card>
+      <div className="flex justify-between items-center mb-4">
+        <h3 className="text-lg font-semibold">Co-applicant</h3>
+
+        <label className="flex items-center gap-2 cursor-pointer text-sm">
+          <input
+            type="checkbox"
+            checked={present}
+            onChange={onToggle}
+            className="toggle"
+          />
+          Add co-applicant
+        </label>
       </div>
 
       {present ? (
-        <ApplicantCard title="Co-applicant" applicant={applicant} onChange={onChange} />
+        <ApplicantCard
+          title="Co-applicant Details"
+          applicant={applicant}
+          onChange={onChange}
+        />
       ) : (
-        <div className="text-sm text-muted-foreground">No co-applicant added.</div>
+        <p className="text-sm text-muted-foreground">No co-applicant added.</p>
       )}
-    </div>
+    </Card>
   );
 }

@@ -1,0 +1,73 @@
+{
+  "title": "The Perfect Setting",
+  "subtitle": "Everything you need within easy reach — schools, hospitals, connectivity & more.",
+  "tagline": "Life. Convenience. Future-ready.",
+
+  "videoUrl": "https://www.youtube.com/embed/CY-IwT0sCv0?autoplay=1&mute=1&controls=0&loop=1&playlist=CY-IwT0sCv0&rel=0&modestbranding=1",
+
+  "mapUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3889.320637874632!2d77.46611847358743!3d12.887092216728457!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae398a15854881%3A0xd22d0d3f18b5ebb4!2sProvident%20Sunworth%20City!5e0!3m2!1sen!2sin!4v1764218094401!5m2!1sen!2sin",
+
+  "categories": [
+    {
+      "title": "COMMUTE",
+      "items": [
+        "Challaghatta Metro Station",
+        "NICE Road Junction",
+        "Kengeri Metro Station",
+        "Kengeri Railway Station",
+        "Kengeri Bus Terminal"
+      ]
+    },
+    {
+      "title": "OFFICES",
+      "items": [
+        "Global Village Tech Park",
+        "Bidadi Industrial Estate",
+        "Hindustan Coca Cola Beverages Ltd",
+        "Toyota Kirloskar Motor Pvt. Ltd."
+      ]
+    },
+    {
+      "title": "HOSPITALS",
+      "items": [
+        "Raja Rajeshwari Medical College and Hospital",
+        "Raja Rajeshwari Dental College and Hospital",
+        "BGS Hospital",
+        "Medisol Hospital"
+      ]
+    },
+    {
+      "title": "ENTERTAINMENT",
+      "items": [
+        "Good Earth Eco Tourism",
+        "Grips Gokarting and Clubbing",
+        "Decathalon",
+        "The Garden Asia Resort",
+        "Gopalan Arcade Mall",
+        "Wonderla"
+      ]
+    },
+    {
+      "title": "SCHOOLS",
+      "items": [
+        "National Public School",
+        "Marigold International School",
+        "Gurukula Vidya Peetha School",
+        "Gopalan National School",
+        "Tattva School"
+      ]
+    },
+    {
+      "title": "COLLEGES",
+      "items": [
+        "ACS College of Engineering",
+        "RR College of Engineering",
+        "Don-Bosco Institute of Technology",
+        "RV College of Engineering",
+        "Bangalore University"
+      ]
+    }
+  ],
+
+  "ctaText": "Schedule a site visit today"
+}

@@ -6,7 +6,7 @@ interface SEOProps {
 }
 
 export default function ProjectSEO({ project }: SEOProps) {
-  const url = `https://yourdomain.com/${project.builder}-${project.slug}`;
+  const url = `https://propyoulike.com/${project.builder}-${project.slug}`;
 
   /* -----------------------------------------------
       SAFE FALLBACKS

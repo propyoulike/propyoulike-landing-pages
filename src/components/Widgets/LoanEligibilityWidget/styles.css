@@ -1,21 +1,48 @@
-/* src/components/widgets/LoanEligibilityWidget/styles.css */
-.timeline-line-small { height: 100%; transition: height 1.2s ease-out; }
-.fade-stage { opacity: 0; transform: translateY(18px); animation: fadeUpStageSmall 0.6s forwards ease-out; }
-@keyframes fadeUpStageSmall { to { opacity: 1; transform: translateY(0); } }
+/* visual enhancements for Loan eligibility widget */
+.bg-card {
+  background: var(--card);
+}
 
+/* subtle card motion */
+.fade-stage { opacity: 0; transform: translateY(10px); animation: fade-in 420ms forwards ease-out; }
+@keyframes fade-in { to { opacity: 1; transform: translateY(0); } }
+
+/* small timeline bar used in InlineNotes */
+.timeline-line-small { width: 4px; height: 100%; top: 0; left: 0; position: absolute; background: linear-gradient(180deg, rgba(59,130,246,0.18), rgba(59,130,246,0.05)); border-radius: 4px; }
+
+/* inputs & buttons (small normalized look) */
 .input {
   width: 100%;
-  padding: 0.6rem 0.75rem;
-  border-radius: 0.65rem;
   border: 1px solid rgba(15,23,42,0.06);
-  background: transparent;
+  background: var(--muted);
+  padding: 0.5rem 0.65rem;
+  border-radius: 0.5rem;
   outline: none;
 }
-.input:focus { box-shadow: 0 0 0 4px rgba(99,102,241,0.06); border-color: rgba(99,102,241,0.6); }
+.input:focus { box-shadow: 0 6px 18px rgba(59,130,246,0.06); border-color: rgba(59,130,246,0.28); }
 
-.toggle { width: 44px; height: 24px; }
-.btn { padding: 0.6rem 1rem; border-radius: 0.65rem; }
-.btn-primary { background: linear-gradient(90deg, #4f46e5, #7c3aed); color: white; font-weight: 600; }
+.btn {
+  padding: 0.6rem 1rem;
+  border-radius: 0.65rem;
+  border: none;
+  cursor: pointer;
+}
+.btn-primary {
+  background: linear-gradient(90deg, var(--primary), color-mix(in srgb, var(--primary) 85%, #fff 15%));
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 6px 18px rgba(59,130,246,0.12);
+}
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 10px 28px rgba(59,130,246,0.14); }
 
-input[type="range"] { -webkit-appearance: none; appearance: none; height: 4px; background: linear-gradient(to right, #c7d2fe, #f0f9ff); border-radius: 999px; }
-input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%; background: #4f46e5; box-shadow: 0 2px 6px rgba(79,70,229,0.25); }
+/* small utility classes used above */
+.p-4 { padding: 1rem; }
+.rounded-xl { border-radius: 1rem; }
+
+/* nicer small badges */
+.text-primary { color: var(--primary); font-weight: 700; }
+
+/* support for "sticky" right column on smaller screens */
+@media (max-width: 1024px) {
+  .sticky { position: static; top: auto; }
+}

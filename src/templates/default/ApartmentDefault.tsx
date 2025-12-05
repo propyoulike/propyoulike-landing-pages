@@ -1,7 +1,6 @@
 import Hero from "../common/Hero";
 import Amenities from "../common/Amenities";
 import FloorPlans from "../common/FloorPlans";
-import LocationMap from "../common/Location";
 import CTAButtons from "@/components/CTAButtons";
 import FAQ from "../common/FAQ";
 import BuilderOtherProjects from "@/components/Widgets/BuilderOtherProjects";
@@ -18,7 +17,6 @@ const ApartmentDefault = ({ data }: ApartmentDefaultProps) => {
   const amenities = data?.amenities || [];
   const configurations = data?.configurations || [];
   const faqs = data?.faq || [];
-  const locationMap = data?.locationMap;
   const slug = data?.slug || "";
   const builder = data?.builder || "";
   const otherProjects = data?.other_projects || [];
@@ -37,9 +35,6 @@ const ApartmentDefault = ({ data }: ApartmentDefaultProps) => {
 
       {/* Amenities */}
       {amenities.length > 0 && <Amenities amenities={amenities} />}
-
-      {/* Location Map */}
-      {locationMap && <LocationMap location={locationMap} />}
 
       {/* Call-to-action buttons */}
       <CTAButtons />

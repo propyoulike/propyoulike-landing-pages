@@ -1,12 +1,63 @@
-[
-   {
-      "title": "2 BHK",
-      "image": "/images/projects/sunworth/floorplan-2bhk.jpg",
-      "description": "2 BHK Floor Plan (1125 sq.ft)"
+{
+  "floorPlansSection": {
+    "title": "Meticulously Designed Homes",
+    "subtitle": "Explore our thoughtfully designed homes with virtual walkthroughs and detailed floor plans",
+
+    "unitPlans": [
+      {
+        "title": "2 BHK Flat",
+        "videoUrl": "https://www.youtube.com/shorts/z6-d5uB4rRA",
+        "description": "Experience the thoughtful design and smart use of space",
+        "sba": "883 sq.ft",
+        "ca": "628 sq.ft",
+        "usable": "655 sq.ft",
+        "uds": "321 sq.ft",
+        "price": "₹69.99 L*",
+        "floorPlanImage": "https://www.providenthousing.com/wp-content/uploads/2022/12/2_bhk_plan.webp"
+      },
+      {
+        "title": "3 BHK Regular Flat",
+        "videoUrl": "https://youtube.com/shorts/QEtUBt1Ac3U",
+        "description": "Explore premium homes designed for growing families",
+        "sba": "1082 sq.ft",
+        "ca": "779 sq.ft",
+        "usable": "805 sq.ft",
+        "uds": "398 sq.ft",
+        "price": "₹79.99 L*",
+        "floorPlanImage": "https://www.providenthousing.com/wp-content/uploads/2022/12/3_bhk_plan.webp"
+      },
+      {
+        "title": "3 BHK Royale Flat",
+        "videoUrl": "https://youtu.be/B2izuPDFLak",
+        "description": "Discover luxurious living with premium finishes",
+        "sba": "1779 sq.ft",
+        "ca": "1287 sq.ft",
+        "usable": "1351 sq.ft",
+        "uds": "658 sq.ft",
+        "price": "149.99 L*",
+        "floorPlanImage": "https://www.providenthousing.com/wp-content/uploads/2022/12/3bhk_royale.webp"
+      }
+    ],
+
+    "floorPlans": [
+      {
+        "title": "Type 1",
+        "image": "https://www.providenthousing.com/wp-content/uploads/2022/12/type_1.webp",
+        "description": "Type 1 floor plan"
+      },
+      {
+        "title": "Type 2",
+        "image": "https://www.providenthousing.com/wp-content/uploads/2022/12/AD-G-WING-RENDER-1.webp",
+        "description": "Type 2 floor plan"
+      }
+    ],
+
+    "masterPlan": {
+      "image": "https://www.providenthousing.com/wp-content/uploads/2022/12/sunworth-city-master-plan.webp",
+      "title": "Complete Township Layout",
+      "description": "A meticulously planned 60-acre township with residential towers, green spaces, and world-class amenities."
     },
-    {
-      "title": "3 BHK",
-      "image": "/images/projects/sunworth/floorplan-3bhk.jpg",
-      "description": "3 BHK Floor Plan (1500 sq.ft)"
-    }
-]
+
+    "ctaText": "Get detailed floor plans and pricing for your preferred configuration"
+  }
+}

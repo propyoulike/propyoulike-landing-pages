@@ -1,4 +1,13 @@
-// src/pages/ProjectPage.tsx
+// ------------------------------------------------------
+// Project Page
+// ------------------------------------------------------
+// Responsibilities:
+// 1. Read :slug from URL
+// 2. Load project JSON using loadProject()
+// 3. Handle loading + error states
+// 4. Render SEO + Dynamic Sections + Footer
+// ------------------------------------------------------
+
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
@@ -10,12 +19,21 @@ import { loadProject } from "@/lib/data/loadProject";
 import type { ProjectData } from "@/content/schema/project.schema";
 
 export default function ProjectPage() {
+  // --------------------------------------------------
+  // 1. Pull slug from the route:  /projects/:slug
+  // --------------------------------------------------
   const { slug } = useParams<{ slug: string }>();
 
+  // --------------------------------------------------
+  // Local State
+  // --------------------------------------------------
   const [project, setProject] = useState<ProjectData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // --------------------------------------------------
+  // 2. Load Project Data Whenever Slug Changes
+  // --------------------------------------------------
   useEffect(() => {
     if (!slug) {
       setError("Invalid slug");
@@ -44,23 +62,32 @@ export default function ProjectPage() {
     }
 
     fetchData();
+
+    // Cleanup to avoid updating state on unmounted component
     return () => {
       mounted = false;
     };
   }, [slug]);
 
+  // --------------------------------------------------
+  // 3. Loading / Error / Empty States
+  // --------------------------------------------------
   if (loading) return <div>Loading…</div>;
   if (error) return <div>{error}</div>;
   if (!project) return <div>Project Not Found</div>;
 
+  // --------------------------------------------------
+  // 4. Render SEO + Dynamic Sections + Footer
+  // --------------------------------------------------
   return (
     <>
-      {/* ⭐ Critical for SEO */}
+      {/* SEO Meta Tags */}
       <ProjectSEO project={project} />
 
-      {/* 🔥 Dynamic Builder+Project Sections */}
+      {/* Main Content Sections */}
       <ProjectRenderer project={project} />
 
+      {/* Global Footer */}
       <Footer />
     </>
   );

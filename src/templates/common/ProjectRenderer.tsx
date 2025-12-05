@@ -1,154 +1,88 @@
-import { SECTION_COMPONENTS } from "./sections";
+// src/templates/common/ProjectRenderer.tsx
+import { SECTIONS } from "@/templates/common/sections.config";
 import type { ProjectData } from "@/content/schema/project.schema";
 import { useLeadCTAContext } from "@/components/lead/LeadCTAProvider";
+import { buildAutoMenuFromResolved } from "@/templates/common/buildAutoMenu";
+import FloatingQuickNav from "@/templates/common/FloatingQuickNav";
 
 export default function ProjectRenderer({ project }: { project: ProjectData }) {
   const { openCTA } = useLeadCTAContext();
-
   const sections = project.sections || [];
 
+  // -----------------------------------------
+  // 1️⃣ Build resolved section map
+  // -----------------------------------------
+  const resolvedSectionMap = sections
+    .map((name) => {
+      const normalized = name.charAt(0).toUpperCase() + name.slice(1);
+      const def = SECTIONS[normalized];
+
+      if (!def || def.menuVisible === false) return null;
+
+      const resolvedId =
+        typeof def.id === "function" ? def.id(project) : def.id;
+
+      if (!resolvedId) return null;
+
+      return {
+        name: normalized,   // ⭐ REQUIRED for buildAutoMenu
+        id: String(resolvedId).trim(),
+        label: def.menuLabel ??
+          normalized.replace(/([A-Z])/g, " $1").trim(), // "FloorPlansSection" → "Floor Plans Section"
+      };
+    })
+    .filter(Boolean);
+
+
+  // -----------------------------------------
+  // 2️⃣ Build auto menu
+  // -----------------------------------------
+  const autoMenu = buildAutoMenuFromResolved(
+    resolvedSectionMap as any,
+    project
+  );
+
+  // -----------------------------------------
+  // 3️⃣ Render sections
+  // -----------------------------------------
   return (
     <div>
-      {sections.map((sectionName, index) => {
-        // Normalize from "amenities", "faq", "aboutbuilder" → "Amenities", "Faq", "Aboutbuilder"
-        const normalized =
-          sectionName.charAt(0).toUpperCase() + sectionName.slice(1);
+      {sections.map((name, index) => {
+        const normalized = name.charAt(0).toUpperCase() + name.slice(1);
+        const def = SECTIONS[normalized as keyof typeof SECTIONS];
 
-        const SectionComponent = SECTION_COMPONENTS[normalized];
-
-        if (!SectionComponent) {
-          console.warn(`⚠ Unknown section: ${sectionName}`);
+        if (!def) {
+          console.warn(`⚠ Unknown section: "${name}"`);
           return null;
         }
 
-        const props = getSectionProps(normalized, project, openCTA);
+        const Component = def.Component;
+        const props = def.props(project, openCTA, autoMenu);
 
-        return <SectionComponent key={index} {...props} />;
+        // inject autoMenu only into Navbar
+        const extraProps =
+          normalized === "Navbar"
+            ? { autoMenu, onCtaClick: openCTA }
+            : {};
+
+        // ensure valid DOM id
+        let id = "";
+        try {
+          const raw = typeof def.id === "function" ? def.id(project) : def.id;
+          id = typeof raw === "string" ? raw : `section-${index}`;
+        } catch {
+          id = `section-${index}`;
+        }
+
+        return (
+          <section id={id} key={index}>
+            {/* @ts-ignore */}
+            <Component {...props} {...extraProps} />
+          </section>
+        );
       })}
+
+      <FloatingQuickNav items={autoMenu} />
     </div>
   );
-}
-
-/**
- * Maps JSON → Component Props
- * Using normalized section names
- */
-function getSectionProps(
-  sectionName: string,
-  project: ProjectData,
-  openCTA: () => void
-) {
-  switch (sectionName) {
-    case "Hero":
-      return {
-        videoUrl: project.hero?.videoUrl,
-        images: project.hero?.images,
-        overlayTitle: project.hero?.overlayTitle,
-        overlaySubtitle: project.hero?.overlaySubtitle,
-        ctaEnabled: project.hero?.ctaEnabled,
-        quickInfo: project.hero?.quickInfo,
-      };
-
-    case "Navbar":
-      return {
-        logo: project.navbar?.logo || null,
-        menu: project.navbar?.menu || [],
-        onCtaClick: openCTA,
-      };
-
-    case "Summary":
-      return {
-        title: project.summary?.title,
-        subtitle: project.summary?.subtitle,
-        description: project.summary?.description,
-        highlights: project.summary?.highlights || [],
-        onCtaClick: openCTA,
-      };
-
-    case "FloorPlans":
-      return {
-        unitPlans: project.unitPlans || [],
-        floorPlans: project.floorPlans || [],
-        masterPlan: project.media?.masterPlan,
-      };
-
-    case "Location":
-      return {
-        videoUrl: project.location?.videoUrl,
-        mapUrl: project.location?.mapUrl,
-        categories: project.location?.sections || [],
-        onCtaClick: openCTA,
-      };
-
-    case "Amenities":
-      return {
-        heroTitle: project.amenities?.heroTitle,
-        heroSubtitle: project.amenities?.heroSubtitle,
-        amenityImages: project.amenities?.amenityImages || [],
-        amenityCategories: project.amenities?.amenityCategories || [],
-      };
-
-    case "Views":
-      return {
-        id: project.views?.id || "views",
-        title: project.views?.title,
-        subtitle: project.views?.subtitle,
-        images: project.views?.images || [],
-        onCtaClick: openCTA,
-      };
-
-    case "Construction":
-      return {
-        updates: project.construction || [],
-      };
-
-    case "PaymentPlans":
-      return {
-        pricingComputation: project.paymentUI?.pricingComputation,
-        paymentSchedule: project.paymentUI?.paymentSchedule,
-        onCtaClick: openCTA,
-      };
-
-    case "LoanEligibility":
-      return {
-        onCtaClick: openCTA,
-      };
-
-    case "CustomerSpeaks":
-      return {
-        id: "customerspeaks",
-        title: project.customerSpeaks?.title,
-        subtitle: project.customerSpeaks?.subtitle,
-        testimonials: project.customerSpeaks?.testimonials || [],
-        onCtaClick: openCTA,
-      };
-
-    case "Brochure":
-      return {
-        heroTitle: project.brochure?.heroTitle,
-        heroSubtitle: project.brochure?.heroSubtitle,
-        coverImage: project.brochure?.coverImage,
-        documents: project.brochure?.documents || [],
-      };
-
-    case "Builderabout": // because "aboutbuilder" → normalized → "Aboutbuilder"
-    case "BuilderAbout":
-      return {
-        ...project.builderAbout,
-        onCtaClick: openCTA,
-      };
-
-    case "Faq":
-    case "FAQ":
-      return {
-        id: "faq",
-        title: project.faqTitle || "Frequently Asked Questions",
-        subtitle: project.faqSubtitle || "Find answers to common buyer questions.",
-        faqs: project.faqs || [],
-        onCtaClick: openCTA,
-      };
-
-    default:
-      return {};
-  }
 }

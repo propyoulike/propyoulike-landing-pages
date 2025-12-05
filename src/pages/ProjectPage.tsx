@@ -1,29 +1,21 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useState, useRef } from "react";
+import { useParams, useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet";
-
 import { useProject } from "@/lib/data/useProject";
 import { getTemplate } from "@/templates/getTemplate";
 import { LeadCTAProvider } from "@/components/lead/LeadCTAProvider";
 
 export default function ProjectPage() {
-  const params = useParams();
+  const { slug: rawSlug } = useParams();
+  const location = useLocation();
 
-  // Always run hooks FIRST — no conditional returns
-  const [stableSlug, setStableSlug] = useState<string | null>(null);
+  // 🔥 Freeze slug permanently (cannot change on re-renders)
+  const slug = useRef(rawSlug || "").current;
 
-  useEffect(() => {
-    if (!stableSlug && params.slug && typeof params.slug === "string") {
-      setStableSlug(params.slug);
-    }
-  }, [params.slug, stableSlug]);
+  // Load project with *stable* slug
+  const { project, loading, error } = useProject(slug);
 
-  // Now it is safe to use hooks
-  const { project, loading } = useProject(stableSlug || "");
-
-  const [Template, setTemplate] =
-    useState<React.ComponentType<any> | null>(null);
-
+  const [Template, setTemplate] = useState<React.ComponentType<any> | null>(null);
   const [templateError, setTemplateError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -35,15 +27,22 @@ export default function ProjectPage() {
     }
 
     const tpl = getTemplate(project.builder, project.type);
-    if (!tpl) setTemplateError("No template available for this project.");
-    else setTemplate(() => tpl);
+
+    if (!tpl) {
+      setTemplateError("No template available for this project.");
+    } else {
+      setTemplate(() => tpl);
+    }
   }, [project]);
 
-  // --------------------------------------------------------------------
-  // RENDER GUARDS (safe because all hooks above already executed)
-  // --------------------------------------------------------------------
+  // -------------------------
+  // Render States
+  // -------------------------
+  if (!slug) {
+    console.log("%c[ERROR] NO SLUG — Invalid project URL", "color:red;font-weight:bold;");
+    return <div>Invalid project URL</div>;
+  }
 
-  if (!stableSlug) return <div>Loading project…</div>;
   if (loading) return <div>Loading project…</div>;
   if (!project) return <div>404 – Project not found</div>;
   if (templateError) return <div>{templateError}</div>;

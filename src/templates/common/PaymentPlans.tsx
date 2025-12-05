@@ -3,23 +3,42 @@ import { ChevronDown, ChevronUp, CheckCircle } from "lucide-react";
 import CTAButtons from "@/components/CTAButtons";
 
 interface PaymentPlansProps {
+  sectionId?: string;
+  sectionTitle?: string;
+  sectionSubtitle?: string;
+
+  pricingTitle?: string;
   pricingComputation?: {
     title: string;
     points: string[];
   }[];
+
+  scheduleTitle?: string;
   paymentSchedule?: {
     title: string;
     percentage: string;
-    expandable?: boolean;
     items?: string[];
   }[];
+
+  ctaText?: string;
+
   onCtaClick: () => void;
 }
 
-const PaymentPlans = ({ pricingComputation = [], paymentSchedule = [], onCtaClick }: PaymentPlansProps) => {
+const PaymentPlans = ({
+  sectionId = "payment-plans",
+  sectionTitle = "Pricing & Payment Plans",
+  sectionSubtitle = "",
+  pricingTitle = "Pricing Computation",
+  pricingComputation = [],
+  scheduleTitle = "Construction Payment Schedule",
+  paymentSchedule = [],
+  ctaText = "Get detailed pricing and payment breakdown",
+  onCtaClick,
+}: PaymentPlansProps) => {
+
   const [openPrice, setOpenPrice] = useState<number | null>(null);
   const [openStage, setOpenStage] = useState<number | null>(null);
-
   const lineRef = useRef<HTMLDivElement | null>(null);
 
   // Animate vertical timeline
@@ -39,33 +58,44 @@ const PaymentPlans = ({ pricingComputation = [], paymentSchedule = [], onCtaClic
   }, []);
 
   return (
-    <section id="payment-plans" className="py-24 lg:py-32 bg-background">
+    <section id={sectionId} className="py-24 lg:py-32 bg-background">
       <div className="container mx-auto px-4">
 
         {/* HEADER */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-4xl lg:text-6xl font-extrabold mb-5">
-            Pricing & <span className="text-primary">Payment Plans</span>
+            {sectionTitle.split(" ").slice(0, -2).join(" ")}{" "}
+            <span className="text-primary">
+              {sectionTitle.split(" ").slice(-2).join(" ")}
+            </span>
           </h2>
-          <p className="text-muted-foreground text-lg">
-            Transparent costing • Milestone-based • RERA compliant
-          </p>
+
+          {sectionSubtitle && (
+            <p className="text-muted-foreground text-lg">{sectionSubtitle}</p>
+          )}
         </div>
 
         <div className="grid lg:grid-cols-2 gap-14">
 
           {/* LEFT — Pricing */}
           <div>
-            <h3 className="text-2xl font-bold mb-6">Pricing Computation</h3>
+            <h3 className="text-2xl font-bold mb-6">{pricingTitle}</h3>
 
             <div className="space-y-4">
               {pricingComputation.map((item, i) => {
                 const open = openPrice === i;
                 return (
                   <div key={i} className="bg-card border rounded-2xl p-6 shadow-sm hover:shadow-lg transition">
-                    <button className="w-full flex justify-between" onClick={() => setOpenPrice(open ? null : i)}>
+                    <button
+                      className="w-full flex justify-between"
+                      onClick={() => setOpenPrice(open ? null : i)}
+                    >
                       <span className="font-semibold text-lg">{item.title}</span>
-                      {open ? <ChevronUp className="text-primary" /> : <ChevronDown className="text-primary" />}
+                      {open ? (
+                        <ChevronUp className="text-primary" />
+                      ) : (
+                        <ChevronDown className="text-primary" />
+                      )}
                     </button>
 
                     {open && (
@@ -86,27 +116,30 @@ const PaymentPlans = ({ pricingComputation = [], paymentSchedule = [], onCtaClic
 
           {/* RIGHT — Payment Schedule */}
           <div>
-            <h3 className="text-2xl font-bold mb-6">Construction Payment Schedule</h3>
+            <h3 className="text-2xl font-bold mb-6">{scheduleTitle}</h3>
 
             <div className="relative pl-8">
 
-              <div ref={lineRef} className="absolute top-0 left-2 w-1 bg-primary/20 rounded-full timeline-line" />
+              <div
+                ref={lineRef}
+                className="absolute top-0 left-2 w-1 bg-primary/20 rounded-full timeline-line"
+              />
 
               <div className="space-y-10">
                 {paymentSchedule.map((stage, i) => {
                   const open = openStage === i;
-
+                  const expandable = !!stage.items;
                   return (
                     <div key={i} className="relative fade-stage">
                       <button
                         className="w-full flex items-center justify-between"
-                        onClick={() => stage.expandable ? setOpenStage(open ? null : i) : null}
+                        onClick={() => expandable ? setOpenStage(open ? null : i) : null}
                       >
                         <span className="text-lg font-semibold">{stage.title}</span>
 
                         <div className="flex items-center gap-2">
                           <span className="text-primary font-bold">{stage.percentage}</span>
-                          {stage.expandable &&
+                          {expandable &&
                             (open ? (
                               <ChevronUp className="text-primary" />
                             ) : (
@@ -136,7 +169,10 @@ const PaymentPlans = ({ pricingComputation = [], paymentSchedule = [], onCtaClic
 
         {/* CTA */}
         <div className="text-center mt-16">
-          <CTAButtons onFormOpen={onCtaClick} />
+          <CTAButtons
+            onFormOpen={() => onCtaClick()}
+            label={ctaText}
+          />
         </div>
       </div>
 
