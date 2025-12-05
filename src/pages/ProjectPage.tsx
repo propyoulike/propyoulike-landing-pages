@@ -1,86 +1,33 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { Helmet } from "react-helmet";
+import { useState, useEffect } from "react";
+import LeadForm from "@/components/LeadForm";
 
-import { useProject } from "@/lib/data/useProject";
-import { getTemplate } from "@/templates/getTemplate";
-import { LeadCTAProvider } from "@/components/lead/LeadCTAProvider";
+export default function ContactFormWrapper() {
+  const [showForm, setShowForm] = useState(false);
 
-export default function ProjectPage() {
-  const params = useParams();
-
-  // Always run hooks FIRST — no conditional returns
-  const [stableSlug, setStableSlug] = useState<string | null>(null);
-
+  // Auto-show after 10 seconds
   useEffect(() => {
-    if (!stableSlug && params.slug && typeof params.slug === "string") {
-      setStableSlug(params.slug);
-    }
-  }, [params.slug, stableSlug]);
+    const timer = setTimeout(() => setShowForm(true), 10000);
+    return () => clearTimeout(timer);
+  }, []);
 
-  // Now it is safe to use hooks
-  const { project, loading } = useProject(stableSlug || "");
-
-  const [Template, setTemplate] =
-    useState<React.ComponentType<any> | null>(null);
-
-  const [templateError, setTemplateError] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (!project) return;
-
-    if (!project.builder || !project.type) {
-      setTemplateError("No template available for this project.");
-      return;
-    }
-
-    const tpl = getTemplate(project.builder, project.type);
-    if (!tpl) setTemplateError("No template available for this project.");
-    else setTemplate(() => tpl);
-  }, [project]);
-
-  // --------------------------------------------------------------------
-  // RENDER GUARDS (safe because all hooks above already executed)
-  // --------------------------------------------------------------------
-
-  if (!stableSlug) return <div>Loading project…</div>;
-  if (loading) return <div>Loading project…</div>;
-  if (!project) return <div>404 – Project not found</div>;
-  if (templateError) return <div>{templateError}</div>;
-  if (!Template) return <div>Loading template…</div>;
+  const handleCTA = () => setShowForm(true);
 
   return (
-    <>
-      <Helmet>
-        <title>{project.meta?.title || project.name}</title>
-        <meta
-          name="description"
-          content={
-            project.meta?.description ||
-            project.tagline ||
-            project.overview ||
-            ""
-          }
-        />
-      </Helmet>
+    <div className="relative">
+      {/* CTA Button - only visible if form is not yet shown */}
+      {!showForm && (
+        <div className="text-center my-8">
+          <button
+            onClick={handleCTA}
+            className="px-6 py-3 bg-primary text-white rounded-xl shadow-lg hover:bg-primary-dark transition"
+          >
+            Book a Site Visit
+          </button>
+        </div>
+      )}
 
-      <LeadCTAProvider
-        projectName={project.name}
-        projectId={project.slug}
-        whatsappNumber={project.whatsappNumber || "919379822010"}
-        trackEvent={(event, data) => {
-          if (window.dataLayer) {
-            window.dataLayer.push({
-              event,
-              project: project.name,
-              project_id: project.slug,
-              ...data,
-            });
-          }
-        }}
-      >
-        <Template project={project} />
-      </LeadCTAProvider>
-    </>
+      {/* Show Form */}
+      {showForm && <LeadForm onSuccess={() => setShowForm(false)} />}
+    </div>
   );
 }
