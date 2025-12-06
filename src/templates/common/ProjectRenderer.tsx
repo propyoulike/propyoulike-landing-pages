@@ -33,6 +33,14 @@ export default function ProjectRenderer({ project }: { project: ProjectData }) {
     })
     .filter(Boolean);
 
+  // 1️⃣ Build resolved section map
+const resolvedSectionMap = sections
+  .map(...)
+  .filter(Boolean);
+
+console.log("[Renderer] sections input:", sections);
+console.log("[Renderer] resolvedSectionMap:", resolvedSectionMap);
+
 
   // -----------------------------------------
   // 2️⃣ Build auto menu
