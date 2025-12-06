@@ -194,7 +194,7 @@ LoanEligibility: {
   Component: LoanEligibility,
   props: (project: ProjectData, openCTA: () => void) => ({
     onCtaClick: openCTA,
-    banks: project.loanBanks ?? [],   // 👈 pass banks if present
+    banks: (project as any).loanBanks ?? [],
   }),
 },
 

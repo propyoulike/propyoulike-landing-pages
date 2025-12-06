@@ -54,9 +54,13 @@ export function buildAutoMenuFromResolved(
     if (cfg.hidden) base = base.filter((b) => !cfg.hidden.includes(b.label));
     if (cfg.visible) base = base.filter((b) => cfg.visible.includes(b.label));
     if (cfg.order) {
-      const order = new Map(cfg.order.map((val: string, idx: number) => [val, idx]));
+      const order = new Map<string, number>(cfg.order.map((val: string, idx: number) => [val, idx]));
       base.sort(
-        (a, b) => (order.get(a.label) ?? 999) - (order.get(b.label) ?? 999)
+        (a, b) => {
+          const orderA = order.get(a.label) ?? 999;
+          const orderB = order.get(b.label) ?? 999;
+          return orderA - orderB;
+        }
       );
     }
   }

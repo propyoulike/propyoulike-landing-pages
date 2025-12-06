@@ -92,15 +92,22 @@ const ProjectSummary = ({
           {/* HIGHLIGHTS */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
             {highlights.map((item, index) => {
-              const IconComponent =
-                Icons[item.icon as keyof typeof Icons] ?? Icons.Circle;
+              // Get icon safely - default to Circle if not found
+              const iconName = item.icon as string;
+              const LucideIcon = iconName && iconName in Icons 
+                ? (Icons as unknown as Record<string, React.ComponentType<{ className?: string }>>)[iconName]
+                : null;
 
               return (
                 <Card
                   key={index}
                   className="p-6 text-center hover:shadow-lg transition-shadow"
                 >
-                  <IconComponent className="w-12 h-12 mx-auto mb-4 text-primary" />
+                  {LucideIcon ? (
+                    <LucideIcon className="w-12 h-12 mx-auto mb-4 text-primary" />
+                  ) : (
+                    <Icons.Circle className="w-12 h-12 mx-auto mb-4 text-primary" />
+                  )}
                   <h3 className="font-semibold text-foreground mb-2">
                     {item.label}
                   </h3>
