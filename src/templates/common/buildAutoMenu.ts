@@ -43,6 +43,8 @@ export function buildAutoMenuFromResolved(
   let base: AutoMenuItem[] = resolved.map((r) => {
     const cleaned = CLEAN_MAP[r.name] ?? r.label;
 
+    console.log("[MenuBuilder] entry:", r.name, "→ id:", r.id);
+
     return {
       // ⭐ FIX: Ensure ID never becomes empty
       id: r.id || r.name.toLowerCase(),
