@@ -102,7 +102,7 @@ export default function ConstructionStatus({
                   className="flex-[0_0_90%] md:flex-[0_0_55%] lg:flex-[0_0_40%]"
                 >
                   <div
-                    className="bg-card rounded-2xl h-full"
+                    className="bg-card rounded-2xl"
                     style={{ boxShadow: "var(--shadow-strong)" }}
                   >
                     <div className="aspect-video bg-muted">
