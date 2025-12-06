@@ -54,8 +54,8 @@ export function buildAutoMenuFromResolved(
   // Apply optional navbarConfig overrides
   const cfg = (project as any).navbarConfig;
   if (cfg) {
-    if (cfg.hidden) base = base.filter((b) => !cfg.hidden.includes(b.label));
-    if (cfg.visible) base = base.filter((b) => cfg.visible.includes(b.label));
+    if (cfg.hidden) base = base.filter((b) => !cfg.hidden.includes(b.id));
+    if (cfg.visible) base = base.filter((b) => cfg.visible.includes(b.id));
     if (cfg.order) {
       const order = new Map<string, number>(
         cfg.order.map((val: string, idx: number) => [val, idx])
