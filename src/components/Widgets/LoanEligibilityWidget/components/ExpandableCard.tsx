@@ -25,9 +25,12 @@ export default function ExpandableCard({
 
   return (
     <div className="bg-card border rounded-xl shadow-sm mb-4">
-      <button
+      <div
         onClick={() => !toggleable && setOpen(!open)}
-        className="w-full px-4 py-3 flex justify-between items-center text-left"
+        className={`w-full px-4 py-3 flex justify-between items-center text-left ${!toggleable ? 'cursor-pointer' : ''}`}
+        role={!toggleable ? "button" : undefined}
+        tabIndex={!toggleable ? 0 : undefined}
+        onKeyDown={!toggleable ? (e) => e.key === 'Enter' && setOpen(!open) : undefined}
       >
         <div>
           <span className="font-medium">{title}</span>
@@ -42,7 +45,7 @@ export default function ExpandableCard({
             ▼
           </span>
         )}
-      </button>
+      </div>
 
       {(toggleable ? toggled : open) && <div className="px-4 pb-4">{children}</div>}
     </div>
