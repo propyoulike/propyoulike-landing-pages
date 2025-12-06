@@ -37,7 +37,10 @@ function extractChildrenFor(name: string, project: ProjectData) {
 export function buildAutoMenuFromResolved(
   resolved: { name: string; id: string; label: string }[],
   project: ProjectData
-) {
+) 
+console.log("[MenuBuilder] resolved input:", resolved);
+
+{
   let base: AutoMenuItem[] = resolved.map((r) => {
     const cleaned = CLEAN_MAP[r.name] ?? r.label;
 
