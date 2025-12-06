@@ -37,10 +37,10 @@ function extractChildrenFor(name: string, project: ProjectData) {
 export function buildAutoMenuFromResolved(
   resolved: { name: string; id: string; label: string }[],
   project: ProjectData
-) 
-console.log("[MenuBuilder] resolved input:", resolved);
+) {
+  // 🔍 DEBUG INPUT
+  console.log("[MenuBuilder] resolved input:", resolved);
 
-{
   let base: AutoMenuItem[] = resolved.map((r) => {
     const cleaned = CLEAN_MAP[r.name] ?? r.label;
 
@@ -57,17 +57,19 @@ console.log("[MenuBuilder] resolved input:", resolved);
     if (cfg.hidden) base = base.filter((b) => !cfg.hidden.includes(b.label));
     if (cfg.visible) base = base.filter((b) => cfg.visible.includes(b.label));
     if (cfg.order) {
-      const order = new Map<string, number>(cfg.order.map((val: string, idx: number) => [val, idx]));
-      base.sort(
-        (a, b) => {
-          const orderA = order.get(a.label) ?? 999;
-          const orderB = order.get(b.label) ?? 999;
-          return orderA - orderB;
-        }
+      const order = new Map<string, number>(
+        cfg.order.map((val: string, idx: number) => [val, idx])
       );
+      base.sort((a, b) => {
+        const orderA = order.get(a.label) ?? 999;
+        const orderB = order.get(b.label) ?? 999;
+        return orderA - orderB;
+      });
     }
   }
-console.log("[MenuBuilder] final autoMenu:", base);
+
+  // 🔍 DEBUG OUTPUT
+  console.log("[MenuBuilder] final autoMenu:", base);
 
   return base;
 }
