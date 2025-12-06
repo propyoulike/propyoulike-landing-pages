@@ -36,7 +36,7 @@ export default function ConstructionStatus({
 }: ConstructionStatusProps) {
   if (!updates.length) return null;
 
-  const [emblaRef] = useEmblaCarousel(
+  const [emblaRef, emblaApi] = useEmblaCarousel(
     { loop: true, align: "start" },
     [AutoScroll({ playOnInit: true, stopOnInteraction: true, speed: 0.5 })]
   );
@@ -66,7 +66,13 @@ export default function ConstructionStatus({
 
   /* Toggle Panel */
   const handleToggle = (i: number, name: string) => {
-    setExpanded(expanded === i ? null : i);
+    const newExpanded = expanded === i ? null : i;
+    setExpanded(newExpanded);
+
+    // Recalculate embla layout so height expands correctly
+    setTimeout(() => {
+      emblaApi?.reInit();
+    }, 50);
 
     window?.dataLayer?.push({
       event: "tower_expand",
@@ -99,7 +105,7 @@ export default function ConstructionStatus({
               return (
                 <div
                   key={i}
-                  className="flex-[0_0_90%] md:flex-[0_0_55%] lg:flex-[0_0_40%]"
+                  className="flex-[0_0_90%] md:flex-[0_0_55%] lg:flex-[0_0_40%] self-start"
                 >
                   <div
                     className="bg-card rounded-2xl"
