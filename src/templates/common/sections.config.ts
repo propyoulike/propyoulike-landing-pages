@@ -62,7 +62,7 @@ export const SECTIONS = {
 
 Navbar: {
   id: "navbar",
-  menuVisible: true,
+  menuVisible: false,
   menuLabel: "Home", // override label if needed
   Component: Navbar,
   props: (project: ProjectData, openCTA: () => void, autoMenu: any[]) => ({
