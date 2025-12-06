@@ -13,6 +13,7 @@ import CustomerSpeaks from "@/templates/common/CustomerSpeaks";
 import Brochure from "@/templates/common/Brochure";
 import BuilderAbout from "@/templates/common/BuilderAbout";
 import FAQ from "@/templates/common/FAQ";
+import constructionData from "@/content/construction.json";
 
 import type { ProjectData } from "@/content/schema/project.schema";
 
@@ -166,16 +167,17 @@ LocationUI: {
   }),
 },
 
-  Construction: {
-    id: "construction",
-    menuVisible: false,
-    menuLabel: "Status",
-    menuOrder: 8,
-    Component: Construction,
-    props: (project) => ({
-      updates: project.construction,
-    }),
-  },
+Construction: {
+  id: "construction",
+  menuVisible: true,
+  menuLabel: "Construction",
+  menuOrder: 8,
+  Component: Construction,
+  props: () => ({
+    updates: constructionData,
+    onCtaClick: () => {},
+  }),
+},
 
   PaymentPlans: {
     id: "payment-plans",
