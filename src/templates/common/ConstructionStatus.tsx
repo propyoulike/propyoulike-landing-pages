@@ -73,7 +73,7 @@ export default function ConstructionStatus({ updates, onCtaClick }: Props) {
                     {/* CONTENT */}
                     <div className="p-6 flex flex-col">
 
-                      {/* HEADER ROW */}
+                      {/* TITLE + CHEVRON */}
                       <button
                         onClick={() => setExpanded(isOpen ? null : i)}
                         className="flex items-center justify-between w-full"
@@ -92,7 +92,7 @@ export default function ConstructionStatus({ updates, onCtaClick }: Props) {
 
                       {/* EXPANDED PANEL */}
                       {isOpen && (
-                        <div className="mt-6 space-y-8 text-sm block w-full overflow-visible">
+                        <div className="mt-6 space-y-8 text-sm block w-full overflow-visible flex-grow min-h-[1px]">
 
                           {/* STATUS */}
                           {tower.status?.length > 0 && (
@@ -139,9 +139,7 @@ export default function ConstructionStatus({ updates, onCtaClick }: Props) {
                           {/* TIMELINE */}
                           {tower.timeline?.length > 0 && (
                             <div>
-                              <h4 className="font-semibold mb-2">
-                                Progress Timeline
-                              </h4>
+                              <h4 className="font-semibold mb-2">Progress Timeline</h4>
                               <div className="flex gap-3 overflow-x-auto">
                                 {tower.timeline.map((img, idx) => (
                                   <div
@@ -158,9 +156,9 @@ export default function ConstructionStatus({ updates, onCtaClick }: Props) {
                               </div>
                             </div>
                           )}
+
                         </div>
                       )}
-
                     </div>
                   </div>
                 </div>
