@@ -1,18 +1,20 @@
-"customerSpeaks": {
-  "title": "What Our Customers Say",
-  "subtitle": "Here’s what our customers shared about their experience",
-  "testimonials": [
-    {
-      "name": "Rahul Sharma",
-      "videoId": "mU4jU5J-UzU",
-      "quote": "Very smooth buying experience!",
-      "thumbUrl": "/images/customers/rahul.jpg"
-    },
-    {
-      "name": "Priya Menon",
-      "videoId": "pC0b8y7TnCE",
-      "quote": "The support team is excellent.",
-      "thumbUrl": "/images/customers/priya.jpg"
-    }
-  ]
+{
+  "customerSpeaks": {
+    "title": "What Our Customers Say",
+    "subtitle": "Here’s what our customers shared about their experience",
+    "testimonials": [
+      {
+        "name": "Rahul Sharma",
+        "videoId": "mU4jU5J-UzU",
+        "quote": "Very smooth buying experience!",
+        "thumbUrl": "/images/customers/rahul.jpg"
+      },
+      {
+        "name": "Priya Menon",
+        "videoId": "pC0b8y7TnCE",
+        "quote": "The support team is excellent.",
+        "thumbUrl": "/images/customers/priya.jpg"
+      }
+    ]
+  }
 }
