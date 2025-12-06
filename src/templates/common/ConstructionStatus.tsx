@@ -25,9 +25,10 @@ interface ConstructionStatusProps {
 }
 
 export default function ConstructionStatus({
-  updates,
+  updates = [],
   onCtaClick,
 }: ConstructionStatusProps) {
+  if (!updates.length) return null;
 
   const [emblaRef] = useEmblaCarousel(
     { loop: true, align: "start" },
@@ -37,18 +38,20 @@ export default function ConstructionStatus({
   const [expanded, setExpanded] = useState<number | null>(null);
 
   return (
-    <section className="py-20 bg-background">
+    <section className="py-20 bg-background scroll-mt-32">
       <div className="container mx-auto px-4">
 
-        {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <h2 className="text-3xl lg:text-5xl font-bold mb-6">Construction Progress</h2>
+        {/* HEADER */}
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <h2 className="text-3xl lg:text-5xl font-bold mb-6">
+            Construction Progress
+          </h2>
           <p className="text-lg text-muted-foreground">
             Stay updated with the work happening on-site.
           </p>
         </div>
 
-        {/* Carousel */}
+        {/* CAROUSEL */}
         <div className="overflow-visible mb-12" ref={emblaRef}>
           <div className="flex gap-6 overflow-visible">
             {updates.map((tower, i) => {
@@ -59,10 +62,12 @@ export default function ConstructionStatus({
                   key={i}
                   className="flex-[0_0_90%] md:flex-[0_0_55%] lg:flex-[0_0_40%] self-start"
                 >
-                  <div className="bg-card rounded-2xl shadow overflow-hidden">
-
-                    {/* Image */}
-                    <div className="aspect-video bg-muted">
+                  <div
+                    className="bg-card rounded-2xl shadow overflow-hidden"
+                    style={{ boxShadow: "var(--shadow-strong)" }}
+                  >
+                    {/* IMAGE */}
+                    <div className="aspect-video bg-muted rounded-t-2xl overflow-hidden">
                       <img
                         src={tower.image}
                         alt={tower.name}
@@ -70,9 +75,9 @@ export default function ConstructionStatus({
                       />
                     </div>
 
-                    {/* Content */}
+                    {/* TEXT */}
                     <div className="p-6">
-                      {/* Header */}
+                      {/* Header Row */}
                       <button
                         onClick={() => setExpanded(isOpen ? null : i)}
                         className="flex items-center justify-between w-full"
@@ -89,18 +94,17 @@ export default function ConstructionStatus({
                         )}
                       </button>
 
-                      {/* Accordion Panel */}
-                      <div
-                        className="overflow-hidden transition-[max-height] duration-500 ease-in-out"
-                        style={{ maxHeight: isOpen ? "500px" : "0px" }}
-                      >
-                        <div className="mt-6 space-y-6">
+                      {/* PANEL */}
+                      {isOpen && (
+                        <div className="mt-6 space-y-6 text-sm">
 
-                          {/* Status */}
+                          {/* STATUS */}
                           {tower.status?.length > 0 && (
                             <div>
-                              <h4 className="font-semibold mb-1">Current Status</h4>
-                              <ul className="list-disc pl-5 space-y-1 text-sm">
+                              <h4 className="font-semibold mb-1">
+                                Current Status
+                              </h4>
+                              <ul className="list-disc pl-5 space-y-1">
                                 {tower.status.map((s, idx) => (
                                   <li key={idx}>{s}</li>
                                 ))}
@@ -108,14 +112,14 @@ export default function ConstructionStatus({
                             </div>
                           )}
 
-                          {/* Achieved */}
+                          {/* ACHIEVED */}
                           {tower.achieved?.length > 0 && (
                             <div>
                               <h4 className="font-semibold mb-1 flex items-center gap-2">
                                 <CheckCircle2 className="text-green-500 w-4 h-4" />
                                 Achieved Milestones
                               </h4>
-                              <ul className="list-disc pl-5 space-y-1 text-sm">
+                              <ul className="list-disc pl-5 space-y-1">
                                 {tower.achieved.map((a, idx) => (
                                   <li key={idx}>{a}</li>
                                 ))}
@@ -123,14 +127,14 @@ export default function ConstructionStatus({
                             </div>
                           )}
 
-                          {/* Upcoming */}
+                          {/* UPCOMING */}
                           {tower.upcoming?.length > 0 && (
                             <div>
                               <h4 className="font-semibold mb-1 flex items-center gap-2">
                                 <Clock className="text-orange-500 w-4 h-4" />
                                 Upcoming Milestones
                               </h4>
-                              <ul className="list-disc pl-5 space-y-1 text-sm">
+                              <ul className="list-disc pl-5 space-y-1">
                                 {tower.upcoming.map((u, idx) => (
                                   <li key={idx}>{u}</li>
                                 ))}
@@ -139,8 +143,7 @@ export default function ConstructionStatus({
                           )}
 
                         </div>
-                      </div>
-
+                      )}
                     </div>
                   </div>
                 </div>
@@ -153,6 +156,7 @@ export default function ConstructionStatus({
         <div className="flex justify-center">
           <CTAButtons onFormOpen={onCtaClick} variant="compact" />
         </div>
+
       </div>
     </section>
   );
