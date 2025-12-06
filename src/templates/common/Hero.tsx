@@ -187,7 +187,7 @@ export default function Hero({
       {/* Primary CTA block — high-converting placement */}
       {ctaEnabled && (
         <div className="absolute left-1/2 bottom-[24vh] -translate-x-1/2 z-30">
-          <CTAButtons onFormOpen={onCtaClick} variant="compact" />
+          <CTAButtons onFormOpen={onCtaClick} variant="hero" />
         </div>
       )}
 

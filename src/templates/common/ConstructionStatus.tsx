@@ -207,7 +207,9 @@ export default function ConstructionStatus({
         </div>
 
         {/* CTA */}
-        <CTAButtons onFormOpen={onCtaClick} />
+        <div className="flex justify-center">
+          <CTAButtons onFormOpen={onCtaClick} variant="compact" />
+        </div>
       </div>
     </section>
   );

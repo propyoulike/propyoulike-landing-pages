@@ -256,7 +256,9 @@ const FloorPlans = ({ onCtaClick, trackGA, trackFB, section }: FloorPlansProps) 
         {/* CTA */}
         <div className="mt-12 text-center">
           <p className="text-muted-foreground mb-6">{section.ctaText}</p>
-          <CTAButtons onFormOpen={onCtaClick} />
+          <div className="flex justify-center">
+            <CTAButtons onFormOpen={onCtaClick} variant="compact" />
+          </div>
         </div>
       </div>
 

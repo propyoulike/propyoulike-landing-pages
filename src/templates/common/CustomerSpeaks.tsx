@@ -147,7 +147,9 @@ export default function CustomerSpeaks({
         </div>
 
         {/* CTA */}
-        <CTAButtons onFormOpen={onCtaClick} variant="compact" />
+        <div className="flex justify-center">
+          <CTAButtons onFormOpen={onCtaClick} variant="compact" />
+        </div>
       </div>
     </section>
   );

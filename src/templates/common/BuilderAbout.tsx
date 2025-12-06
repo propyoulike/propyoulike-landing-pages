@@ -163,8 +163,8 @@ const BuilderAbout = ({
         </div>
 
         {/* CTA */}
-        <div className="mt-14 text-center">
-          <CTAButtons onFormOpen={onCtaClick} />
+        <div className="mt-14 flex justify-center">
+          <CTAButtons onFormOpen={onCtaClick} variant="compact" />
         </div>
       </div>
     </section>
