@@ -4,7 +4,7 @@ import type { ProjectData } from "@/content/schema/project.schema";
 export type AutoMenuItem = {
   id: string;
   label: string;
-  icon?: string;
+  order?: number; // NEW ⭐ for deterministic ordering
   children?: AutoMenuItem[];
 };
 
@@ -24,7 +24,6 @@ const CLEAN_MAP: Record<string, string> = {
   FAQ: "FAQ",
 };
 
-// Optional: sub-menu extraction
 function extractChildrenFor(name: string, project: ProjectData) {
   if (name === "FloorPlansSection" && project.floorPlansSection?.unitPlans) {
     return project.floorPlansSection.unitPlans.map((u, i) => ({
@@ -35,50 +34,38 @@ function extractChildrenFor(name: string, project: ProjectData) {
 }
 
 export function buildAutoMenuFromResolved(
-  resolved: { name: string; id: string; label: string }[],
+  resolved: { name: string; id: string; label: string; order?: number }[],
   project: ProjectData
 ) {
 
-  let base: AutoMenuItem[] = resolved.map((r) => {
-    const cleaned = CLEAN_MAP[r.name] ?? r.label;
+  let base: AutoMenuItem[] = resolved.map((r) => ({
+    id: r.id || r.name.toLowerCase(),
+    label: CLEAN_MAP[r.name] ?? r.label,
+    order: (SECTIONS as any)[r.name]?.menuOrder ?? 999,
+    children: extractChildrenFor(r.name, project),
+  }));
 
-    return {
-      // ⭐ FIX: Ensure ID never becomes empty
-      id: r.id || r.name.toLowerCase(),
-      label: cleaned,
-      children: extractChildrenFor(r.name, project),
-    };
-  });
-
-  // ⭐ DEBUG: Show navbar config coming from project
   const cfg = (project as any).navbarConfig;
 
-  // ⭐ FIX: Only apply filtering if config has real valid entries
   if (cfg && Object.keys(cfg).length > 0) {
 
-    // ⭐ FIX: Only filter hidden if list is non-empty
-    if (cfg.hidden && Array.isArray(cfg.hidden) && cfg.hidden.length > 0) {
+    if (cfg.hidden && cfg.hidden.length > 0) {
       base = base.filter((b) => !cfg.hidden.includes(b.id));
     }
 
-    // ⭐ FIX: Only filter visible if list is non-empty
-    if (cfg.visible && Array.isArray(cfg.visible) && cfg.visible.length > 0) {
+    if (cfg.visible && cfg.visible.length > 0) {
       base = base.filter((b) => cfg.visible.includes(b.id));
     }
 
-    // ⭐ FIX: Only sort if order list is non-empty
-    if (cfg.order && Array.isArray(cfg.order) && cfg.order.length > 0) {
+    if (cfg.order && cfg.order.length > 0) {
       const order = new Map<string, number>(
         cfg.order.map((val: string, idx: number) => [val, idx])
       );
-
-      base.sort((a, b) => {
-        const orderA = order.get(a.label) ?? 999;
-        const orderB = order.get(b.label) ?? 999;
-        return orderA - orderB;
-      });
+      base.sort((a, b) => (order.get(a.label) ?? 999) - (order.get(b.label) ?? 999));
     }
   }
+
+  base.sort((a, b) => (a.order ?? 999) - (b.order ?? 999));
 
   return base;
 }
