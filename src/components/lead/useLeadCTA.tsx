@@ -1,9 +1,8 @@
 // src/components/lead/useLeadCTA.tsx
 import { useEffect, useState, useCallback } from "react";
 import LeadFormModal from "./LeadFormModal";
-import LeadDrawer from "./LeadDrawer";
+import LeadFormDrawer from "./LeadFormDrawer";
 import FloatingCTA from "./FloatingCTA";
-import { LeadPipeline } from "./LeadPipeline";
 
 interface UseLeadCTAProps {
   projectName: string;
@@ -46,7 +45,7 @@ export function useLeadCTA({
     } else {
       setOpenModal(true);
     }
-  }, [isMobile, projectName, projectId]);
+  }, [isMobile, projectName, projectId, trackEvent]);
 
   /** ----------------------------------------------------------
    * CTA Close
@@ -72,7 +71,7 @@ export function useLeadCTA({
     }, 8000);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [trackEvent, projectName, projectId]);
 
   /** ----------------------------------------------------------
    * Render UI components controlled by this hook
@@ -86,17 +85,15 @@ export function useLeadCTA({
         projectName={projectName}
         projectId={projectId}
         whatsappNumber={whatsappNumber}
-        trackEvent={trackEvent}
       />
 
       {/* Mobile Drawer */}
-      <LeadDrawer
+      <LeadFormDrawer
         open={openDrawer}
         onOpenChange={setOpenDrawer}
         projectName={projectName}
         projectId={projectId}
         whatsappNumber={whatsappNumber}
-        trackEvent={trackEvent}
       />
 
       {/* Floating CTA (mobile only) */}

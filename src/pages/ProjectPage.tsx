@@ -1,13 +1,18 @@
 import { useEffect, useState, useRef } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { useProject } from "@/lib/data/useProject";
 import { getTemplate } from "@/templates/getTemplate";
 import { LeadCTAProvider } from "@/components/lead/LeadCTAProvider";
 
+declare global {
+  interface Window {
+    dataLayer?: any[];
+  }
+}
+
 export default function ProjectPage() {
   const { slug: rawSlug } = useParams();
-  const location = useLocation();
 
   // 🔥 Freeze slug permanently (cannot change on re-renders)
   const slug = useRef(rawSlug || "").current;
@@ -51,32 +56,21 @@ export default function ProjectPage() {
   return (
     <>
       <Helmet>
-        <title>{project.meta?.title || project.name}</title>
+        <title>{project.meta?.title || project.projectName}</title>
         <meta
           name="description"
           content={
             project.meta?.description ||
-            project.tagline ||
-            project.overview ||
+            project.summary?.description ||
             ""
           }
         />
       </Helmet>
 
       <LeadCTAProvider
-        projectName={project.name}
+        projectName={project.projectName}
         projectId={project.slug}
-        whatsappNumber={project.whatsappNumber || "919379822010"}
-        trackEvent={(event, data) => {
-          if (window.dataLayer) {
-            window.dataLayer.push({
-              event,
-              project: project.name,
-              project_id: project.slug,
-              ...data,
-            });
-          }
-        }}
+        whatsappNumber="919379822010"
       >
         <Template project={project} />
       </LeadCTAProvider>

@@ -1,12 +1,19 @@
 // src/components/lead/LeadPipeline.ts
 
+declare global {
+  interface Window {
+    dataLayer?: any[];
+    fbq?: (...args: any[]) => void;
+  }
+}
+
 export const LeadPipeline = {
   /** ---------------------------------------------------------
    * 1. Generate WhatsApp message
    * -------------------------------------------------------- */
   buildWhatsAppUrl(data: any, projectName: string, whatsappNumber: string) {
     return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-      `Hi, I’m ${data.name}. I'm interested in ${projectName}. BHK: ${
+      `Hi, I'm ${data.name}. I'm interested in ${projectName}. BHK: ${
         data.bhkPreference || "Not Sure"
       }. Please share availability, views & pricing.`
     )}`;

@@ -275,15 +275,12 @@ const BuilderAboutSchema = z
   })
   .optional();
 
-
-navbarConfig: z.object({
+const NavbarConfigSchema = z.object({
   visible: z.array(z.string()).optional(),
   hidden: z.array(z.string()).optional(),
   order: z.array(z.string()).optional(),
   ctaLabel: z.string().optional()
-}).optional()
-
-
+}).optional();
 
 /* -----------------------------------------
     TOP-LEVEL PROJECT SCHEMA
@@ -305,6 +302,7 @@ export const ProjectSchema = z.object({
   sections: z.array(z.string()).optional(),
 
   navbar: NavbarSchema,
+  navbarConfig: NavbarConfigSchema,
   hero: HeroSchema,
   summary: SummarySchema,
   brochure: BrochureSchema,

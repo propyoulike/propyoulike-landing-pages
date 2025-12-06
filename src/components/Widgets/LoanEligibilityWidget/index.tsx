@@ -6,19 +6,20 @@ import CoApplicantCard from "./components/CoApplicantCard";
 import LoanParameters from "./components/LoanParameters";
 import InfoNotes from "./components/InfoNotes";
 import { useLoanCalculator } from "./hooks/useLoanCalculator";
+import { ApplicantInput } from "./types";
 import CTAButtons from "@/components/CTAButtons";
 
-export default function LoanEligibilityWidget({ onCtaClick, banks = [] }) {
+export default function LoanEligibilityWidget({ onCtaClick, banks = [] }: { onCtaClick?: () => void; banks?: any[] }) {
 
   // ---------------- STATE ----------------
-  const [primary, setPrimary] = useState({ type: "salaried" });
-  const [co, setCo] = useState({ type: "salaried" });
+  const [primary, setPrimary] = useState<ApplicantInput>({ type: "salaried" });
+  const [co, setCo] = useState<ApplicantInput>({ type: "salaried" });
   const [coActive, setCoActive] = useState(false);
 
   const [params, setParams] = useState({
     interestRate: 8,
-    tenureYears: undefined,
-    propertyValue: undefined,
+    tenureYears: undefined as number | undefined,
+    propertyValue: undefined as number | undefined,
   });
 
   // ---------------- RESTORE FROM LOCAL STORAGE ----------------
@@ -65,6 +66,7 @@ export default function LoanEligibilityWidget({ onCtaClick, banks = [] }) {
 
           <ExpandableCard title="Applicant Details" defaultOpen>
             <ApplicantCard
+              title="Primary Applicant"
               applicant={primary}
               onChange={(v) => setPrimary({ ...primary, ...v })}
             />
@@ -79,9 +81,9 @@ export default function LoanEligibilityWidget({ onCtaClick, banks = [] }) {
           >
             {coActive && (
               <CoApplicantCard
-		present={coActive}
+                present={coActive}
                 applicant={co}
-		onToggle={() => setCoActive(!coActive)}
+                onToggle={() => setCoActive(!coActive)}
                 onChange={(v) => setCo({ ...co, ...v })}
               />
             )}

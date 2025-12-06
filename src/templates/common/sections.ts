@@ -9,7 +9,7 @@ import Amenities from "@/templates/common/Amenities";
 import Views from "@/templates/common/Views";
 import ConstructionStatus from "@/templates/common/ConstructionStatus";
 import PaymentPlans from "@/templates/common/PaymentPlans";
-import LoanEligibilityWidget from "@/components/widgets/LoanEligibilityWidget";
+import LoanEligibilityWidget from "@/components/Widgets/LoanEligibilityWidget";
 import CustomerSpeaks from "@/templates/common/CustomerSpeaks";
 import Brochure from "@/templates/common/Brochure";
 import BuilderAbout from "@/templates/common/BuilderAbout";

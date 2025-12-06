@@ -25,6 +25,8 @@ const formSchema = z.object({
   bhkPreference: z.string().min(1, "Select an option"),
 });
 
+type FormData = z.infer<typeof formSchema>;
+
 export interface LeadFormProps {
   className?: string;
 
@@ -56,15 +58,15 @@ export default function LeadForm({
     control,
     reset,
     formState: { errors },
-  } = useForm({
+  } = useForm<FormData>({
     resolver: zodResolver(formSchema),
-    defaultValues: { bhkPreference: "" },
+    defaultValues: { name: "", phone: "", email: "", bhkPreference: "" },
   });
 
   /** ----------------------------------------------------
    * FINAL PRODUCTION SUBMIT HANDLER USING LEAD PIPELINE
    * -------------------------------------------------- */
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: FormData) => {
     setLoading(true);
 
     try {
