@@ -13,7 +13,6 @@ import CustomerSpeaks from "@/templates/common/CustomerSpeaks";
 import Brochure from "@/templates/common/Brochure";
 import BuilderAbout from "@/templates/common/BuilderAbout";
 import FAQ from "@/templates/common/FAQ";
-import constructionData from "@/content/construction.json";
 
 import type { ProjectData } from "@/content/schema/project.schema";
 
