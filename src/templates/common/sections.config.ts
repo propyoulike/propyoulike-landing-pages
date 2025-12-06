@@ -75,7 +75,7 @@ Navbar: {
   Summary: {
     id: "summary",
     Component: Summary,
-    menuVisible: false,
+    menuVisible: true,
     menuLabel: "Overview",
     props: (project, openCTA) => ({
       title: project.summary?.title,
@@ -112,7 +112,7 @@ Navbar: {
 
   Views: {
     id: "views",
-    menuVisible: true,
+    menuVisible: false,
     menuLabel: "Gallery",
     Component: Views,
     props: (project, openCTA) => ({
@@ -161,7 +161,7 @@ LocationUI: {
 
   Construction: {
     id: "construction",
-    menuVisible: true,
+    menuVisible: false,
     menuLabel: "Status",
     Component: Construction,
     props: (project) => ({
@@ -171,7 +171,7 @@ LocationUI: {
 
   PaymentPlans: {
     id: "payment-plans",
-    menuVisible: true,
+    menuVisible: false,
     menuLabel: "Pricing",
     Component: PaymentPlans,
     props: (project, openCTA) => ({
@@ -189,7 +189,7 @@ LocationUI: {
 
 LoanEligibility: {
   id: "loan-eligibility",
-  menuVisible: true,
+  menuVisible: false,
   menuLabel: "Eligibility",
   Component: LoanEligibility,
   props: (project: ProjectData, openCTA: () => void) => ({
