@@ -128,11 +128,9 @@ export default function Hero({
       <img
         src={fallbackImage}
         alt={overlayTitle ?? "Project hero image"}
-        // ensure absolutely fills container and is clipped correctly across browsers
         className={`absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-700 ${
           iframeLoaded ? "opacity-0" : "opacity-100"
         }`}
-        // ensure styles for Safari stability
         style={{
           width: "100%",
           height: "100%",
@@ -140,7 +138,6 @@ export default function Hero({
           objectPosition: "center",
           display: "block",
         }}
-        fetchPriority="high"
       />
 
       {/* Conditionally inject iframe only when allowed */}
