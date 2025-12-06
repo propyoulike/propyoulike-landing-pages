@@ -37,7 +37,7 @@ export default function ConstructionStatus({ updates, onCtaClick }: Props) {
     <section id="construction" className="py-20 bg-background scroll-mt-32">
       <div className="container mx-auto px-4">
 
-        {/* HEADER */}
+        {/* TITLE */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl lg:text-5xl font-bold mb-6">
             Construction Progress
@@ -57,9 +57,9 @@ export default function ConstructionStatus({ updates, onCtaClick }: Props) {
               return (
                 <div
                   key={i}
-                  className="flex-[0_0_90%] md:flex-[0_0_55%] lg:flex-[0_0_40%] self-stretch"
+                  className="w-full md:w-[55%] lg:w-[40%]"
                 >
-                  <div className="bg-card rounded-2xl shadow overflow-visible flex flex-col">
+                  <div className="bg-card rounded-2xl shadow overflow-hidden">
 
                     {/* IMAGE */}
                     <div className="aspect-video overflow-hidden">
@@ -71,9 +71,9 @@ export default function ConstructionStatus({ updates, onCtaClick }: Props) {
                     </div>
 
                     {/* CONTENT */}
-                    <div className="p-6 flex flex-col">
+                    <div className="p-6">
 
-                      {/* TITLE + CHEVRON */}
+                      {/* HEADER ROW */}
                       <button
                         onClick={() => setExpanded(isOpen ? null : i)}
                         className="flex items-center justify-between w-full"
@@ -90,75 +90,78 @@ export default function ConstructionStatus({ updates, onCtaClick }: Props) {
                         )}
                       </button>
 
-                      {/* EXPANDED PANEL */}
-                      {isOpen && (
-                        <div className="mt-6 space-y-8 text-sm block w-full overflow-visible flex-grow min-h-[1px]">
+                      {/* EXPANDED BLOCK */}
+                      <div className="w-full">
+                        {isOpen && (
+                          <div className="mt-6 space-y-8 text-sm w-full">
 
-                          {/* STATUS */}
-                          {tower.status?.length > 0 && (
-                            <div>
-                              <h4 className="font-semibold mb-1">Current Status</h4>
-                              <ul className="list-disc pl-5 space-y-1">
-                                {tower.status.map((s, idx) => (
-                                  <li key={idx}>{s}</li>
-                                ))}
-                              </ul>
-                            </div>
-                          )}
-
-                          {/* ACHIEVED */}
-                          {tower.achieved?.length > 0 && (
-                            <div>
-                              <h4 className="font-semibold mb-1 flex items-center gap-2">
-                                <CheckCircle2 className="text-green-500 w-4 h-4" />
-                                Achieved Milestones
-                              </h4>
-                              <ul className="list-disc pl-5 space-y-1">
-                                {tower.achieved.map((a, idx) => (
-                                  <li key={idx}>{a}</li>
-                                ))}
-                              </ul>
-                            </div>
-                          )}
-
-                          {/* UPCOMING */}
-                          {tower.upcoming?.length > 0 && (
-                            <div>
-                              <h4 className="font-semibold mb-1 flex items-center gap-2">
-                                <Clock className="text-orange-500 w-4 h-4" />
-                                Upcoming Milestones
-                              </h4>
-                              <ul className="list-disc pl-5 space-y-1">
-                                {tower.upcoming.map((u, idx) => (
-                                  <li key={idx}>{u}</li>
-                                ))}
-                              </ul>
-                            </div>
-                          )}
-
-                          {/* TIMELINE */}
-                          {tower.timeline?.length > 0 && (
-                            <div>
-                              <h4 className="font-semibold mb-2">Progress Timeline</h4>
-                              <div className="flex gap-3 overflow-x-auto">
-                                {tower.timeline.map((img, idx) => (
-                                  <div
-                                    key={idx}
-                                    className="w-[120px] h-[80px] flex-shrink-0 rounded-lg overflow-hidden border"
-                                  >
-                                    <img
-                                      src={img}
-                                      alt="timeline"
-                                      className="w-full h-full object-cover"
-                                    />
-                                  </div>
-                                ))}
+                            {/* STATUS */}
+                            {tower.status?.length > 0 && (
+                              <div>
+                                <h4 className="font-semibold mb-1">Current Status</h4>
+                                <ul className="list-disc pl-5 space-y-1">
+                                  {tower.status.map((s, idx) => (
+                                    <li key={idx}>{s}</li>
+                                  ))}
+                                </ul>
                               </div>
-                            </div>
-                          )}
+                            )}
 
-                        </div>
-                      )}
+                            {/* ACHIEVED */}
+                            {tower.achieved?.length > 0 && (
+                              <div>
+                                <h4 className="font-semibold mb-1 flex items-center gap-2">
+                                  <CheckCircle2 className="text-green-500 w-4 h-4" />
+                                  Achieved Milestones
+                                </h4>
+                                <ul className="list-disc pl-5 space-y-1">
+                                  {tower.achieved.map((a, idx) => (
+                                    <li key={idx}>{a}</li>
+                                  ))}
+                                </ul>
+                              </div>
+                            )}
+
+                            {/* UPCOMING */}
+                            {tower.upcoming?.length > 0 && (
+                              <div>
+                                <h4 className="font-semibold mb-1 flex items-center gap-2">
+                                  <Clock className="text-orange-500 w-4 h-4" />
+                                  Upcoming Milestones
+                                </h4>
+                                <ul className="list-disc pl-5 space-y-1">
+                                  {tower.upcoming.map((u, idx) => (
+                                    <li key={idx}>{u}</li>
+                                  ))}
+                                </ul>
+                              </div>
+                            )}
+
+                            {/* TIMELINE */}
+                            {tower.timeline?.length > 0 && (
+                              <div>
+                                <h4 className="font-semibold mb-2">Progress Timeline</h4>
+                                <div className="flex gap-3 overflow-x-auto">
+                                  {tower.timeline.map((img, idx) => (
+                                    <div
+                                      key={idx}
+                                      className="w-[120px] h-[80px] flex-shrink-0 rounded-lg overflow-hidden border"
+                                    >
+                                      <img
+                                        src={img}
+                                        alt="timeline"
+                                        className="w-full h-full object-cover"
+                                      />
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+
+                          </div>
+                        )}
+                      </div>
+
                     </div>
                   </div>
                 </div>
