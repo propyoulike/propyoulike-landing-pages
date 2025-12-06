@@ -25,7 +25,7 @@ export interface ConstructionStatusProps {
 }
 
 export default function ConstructionStatus({
-  updates,
+  updates = [],
   onCtaClick,
 }: ConstructionStatusProps) {
   const [expanded, setExpanded] = useState<number | null>(null);
@@ -38,7 +38,8 @@ export default function ConstructionStatus({
   return (
     <section id="construction" className="py-20 bg-background scroll-mt-32">
       <div className="container mx-auto px-4">
-        {/* Header */}
+
+        {/* HEADER */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl lg:text-5xl font-bold mb-6">
             Construction Progress
@@ -48,10 +49,11 @@ export default function ConstructionStatus({
           </p>
         </div>
 
-        {/* Carousel */}
+        {/* CAROUSEL */}
         <div className="overflow-visible mb-12" ref={emblaRef}>
           <div className="flex gap-6 overflow-visible">
-            {updates?.map((tower, i) => {
+
+            {updates.map((tower, i) => {
               const isOpen = expanded === i;
 
               return (
@@ -59,8 +61,12 @@ export default function ConstructionStatus({
                   key={i}
                   className="flex-[0_0_90%] md:flex-[0_0_55%] lg:flex-[0_0_40%] self-start"
                 >
-                  <div className="bg-card rounded-2xl shadow">
-                    {/* Image */}
+                  <div
+                    className="bg-card rounded-2xl shadow overflow-hidden"
+                    style={{ boxShadow: "var(--shadow-strong)" }}
+                  >
+
+                    {/* IMAGE */}
                     <div className="aspect-video bg-muted rounded-t-2xl overflow-hidden">
                       <img
                         src={tower.image}
@@ -69,9 +75,10 @@ export default function ConstructionStatus({
                       />
                     </div>
 
-                    {/* Content */}
+                    {/* CONTENT */}
                     <div className="p-6">
-                      {/* Header Row */}
+
+                      {/* HEADER ROW */}
                       <button
                         onClick={() => setExpanded(isOpen ? null : i)}
                         className="flex items-center justify-between w-full"
@@ -88,25 +95,24 @@ export default function ConstructionStatus({
                         )}
                       </button>
 
-                      {/* Expanded Content */}
+                      {/* EXPANDED PANEL */}
                       {isOpen && (
-                        <div className="mt-6 space-y-6 text-sm">
-                          {/* Status */}
-                          {tower.status?.length ? (
+                        <div className="mt-6 space-y-6 text-sm w-full block">
+
+                          {/* STATUS */}
+                          {tower.status?.length > 0 && (
                             <div>
-                              <h4 className="font-semibold mb-1">
-                                Current Status
-                              </h4>
+                              <h4 className="font-semibold mb-1">Current Status</h4>
                               <ul className="list-disc pl-5 space-y-1">
                                 {tower.status.map((s, idx) => (
                                   <li key={idx}>{s}</li>
                                 ))}
                               </ul>
                             </div>
-                          ) : null}
+                          )}
 
-                          {/* Achieved */}
-                          {tower.achieved?.length ? (
+                          {/* ACHIEVED */}
+                          {tower.achieved?.length > 0 && (
                             <div>
                               <h4 className="font-semibold mb-1 flex items-center gap-2">
                                 <CheckCircle2 className="text-green-500 w-4 h-4" />
@@ -118,10 +124,10 @@ export default function ConstructionStatus({
                                 ))}
                               </ul>
                             </div>
-                          ) : null}
+                          )}
 
-                          {/* Upcoming */}
-                          {tower.upcoming?.length ? (
+                          {/* UPCOMING */}
+                          {tower.upcoming?.length > 0 && (
                             <div>
                               <h4 className="font-semibold mb-1 flex items-center gap-2">
                                 <Clock className="text-orange-500 w-4 h-4" />
@@ -133,14 +139,17 @@ export default function ConstructionStatus({
                                 ))}
                               </ul>
                             </div>
-                          ) : null}
+                          )}
+
                         </div>
                       )}
+
                     </div>
                   </div>
                 </div>
               );
             })}
+
           </div>
         </div>
 
@@ -148,6 +157,7 @@ export default function ConstructionStatus({
         <div className="flex justify-center">
           <CTAButtons onFormOpen={onCtaClick} variant="compact" />
         </div>
+
       </div>
     </section>
   );
