@@ -145,8 +145,8 @@ const Views = ({
         </div>
 
         {/* CTA */}
-        <div className="text-center">
-          <CTAButtons onFormOpen={handleCtaClick} />
+        <div className="flex justify-center">
+          <CTAButtons onFormOpen={handleCtaClick} variant="compact" />
         </div>
       </div>
     </section>

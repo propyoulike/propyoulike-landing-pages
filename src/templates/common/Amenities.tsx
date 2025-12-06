@@ -109,8 +109,10 @@ const Amenities = ({
           })}
         </div>
 
-        {/* ⭐ UNIVERSAL CTA BUTTONS — no props, auto-wired */}
-        <CTAButtons />
+        {/* CTA */}
+        <div className="mt-12 flex justify-center">
+          <CTAButtons variant="compact" />
+        </div>
 
       </div>
     </section>

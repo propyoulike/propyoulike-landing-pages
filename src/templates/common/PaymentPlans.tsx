@@ -168,9 +168,10 @@ const PaymentPlans = ({
         </div>
 
         {/* CTA */}
-        <div className="text-center mt-16">
+        <div className="mt-16 flex justify-center">
           <CTAButtons
-            onFormOpen={() => onCtaClick()}
+            onFormOpen={onCtaClick}
+            variant="compact"
             label={ctaText}
           />
         </div>

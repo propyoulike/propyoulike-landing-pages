@@ -29,7 +29,7 @@ const Brochure = memo(
     const [imgSrc, setImgSrc] = useState(coverImage || FALLBACK_IMAGE);
 
     return (
-      <section className="py-12 bg-gray-50">
+      <section className="py-12 bg-muted/30">
         <div className="container mx-auto px-4 flex flex-col lg:flex-row gap-10">
 
           {/* LEFT: Brochure Image */}
@@ -50,14 +50,14 @@ const Brochure = memo(
           <div className="lg:w-1/2 w-full flex flex-col justify-center space-y-6">
 
             <header>
-              <h2 className="text-3xl font-bold mb-4">{heroTitle}</h2>
-              <p className="text-gray-600">{heroSubtitle}</p>
+              <h2 className="text-3xl font-bold mb-4 text-foreground">{heroTitle}</h2>
+              <p className="text-muted-foreground">{heroSubtitle}</p>
             </header>
 
             {/* Documents */}
             {Array.isArray(documents) && documents.length > 0 && (
               <div>
-                <h3 className="font-semibold mb-3">Official Documents</h3>
+                <h3 className="font-semibold mb-3 text-foreground">Official Documents</h3>
                 <ul className="space-y-3">
                   {documents.map((doc, idx) =>
                     doc?.title && doc?.url ? (
@@ -66,9 +66,9 @@ const Brochure = memo(
                           href={doc.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-blue-600 hover:underline flex items-center gap-2 group"
+                          className="text-primary hover:underline flex items-center gap-2 group"
                         >
-                          <FileText className="group-hover:text-blue-800" />
+                          <FileText className="group-hover:text-primary-dark" />
                           <span>{doc.title}</span>
                         </a>
                       </li>
@@ -80,7 +80,7 @@ const Brochure = memo(
 
             {/* CTA Buttons */}
             <div className="w-full flex flex-wrap gap-4 pt-4">
-              <CTAButtons onFormOpen={onCtaClick} />
+              <CTAButtons onFormOpen={onCtaClick} variant="compact" />
             </div>
 
           </div>

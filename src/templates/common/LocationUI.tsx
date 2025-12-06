@@ -155,8 +155,8 @@ export default function LocationUI({ section, onCtaClick }: LocationUIProps) {
         </div>
 
         {/* CTA */}
-        <div className="max-w-3xl mx-auto">
-          <CTAButtons onFormOpen={onCtaClick} label={ctaText} />
+        <div className="max-w-3xl mx-auto flex justify-center">
+          <CTAButtons onFormOpen={onCtaClick} variant="compact" label={ctaText} />
         </div>
       </div>
     </section>

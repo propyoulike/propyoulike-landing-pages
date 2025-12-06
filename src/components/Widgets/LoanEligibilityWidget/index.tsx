@@ -104,7 +104,7 @@ export default function LoanEligibilityWidget({ onCtaClick, banks = [] }: { onCt
 
           {/* CTA (Mobile Only) */}
           <div className="text-center lg:hidden">
-            <CTAButtons onFormOpen={onCtaClick} />
+            <CTAButtons onFormOpen={onCtaClick} variant="compact" />
           </div>
         </div>
 

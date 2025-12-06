@@ -127,8 +127,8 @@ const ProjectSummary = ({
           )}
 
           {/* CTA */}
-          <div className="mt-12 text-center">
-            <CTAButtons onFormOpen={handleCtaClick} />
+          <div className="mt-12 flex justify-center">
+            <CTAButtons onFormOpen={handleCtaClick} variant="compact" />
           </div>
         </div>
       </div>
