@@ -11,23 +11,21 @@ import useEmblaCarousel from "embla-carousel-react";
 import AutoScroll from "embla-carousel-auto-scroll";
 import { useState } from "react";
 
-export interface ConstructionTower {
+interface ConstructionTower {
   name: string;
   image: string;
   status?: string[];
   achieved?: string[];
   upcoming?: string[];
+  timeline?: string[]; // <-- ADDED this
 }
 
-export interface ConstructionStatusProps {
+interface Props {
   updates: ConstructionTower[];
   onCtaClick: () => void;
 }
 
-export default function ConstructionStatus({
-  updates = [],
-  onCtaClick,
-}: ConstructionStatusProps) {
+export default function ConstructionStatus({ updates, onCtaClick }: Props) {
   const [expanded, setExpanded] = useState<number | null>(null);
 
   const [emblaRef] = useEmblaCarousel(
@@ -61,13 +59,9 @@ export default function ConstructionStatus({
                   key={i}
                   className="flex-[0_0_90%] md:flex-[0_0_55%] lg:flex-[0_0_40%] self-start"
                 >
-                  <div
-                    className="bg-card rounded-2xl shadow overflow-hidden"
-                    style={{ boxShadow: "var(--shadow-strong)" }}
-                  >
-
-                    {/* IMAGE */}
-                    <div className="aspect-video bg-muted rounded-t-2xl overflow-hidden">
+                  <div className="bg-card rounded-2xl shadow overflow-hidden">
+                    {/* Tower Image */}
+                    <div className="aspect-video rounded-t-2xl overflow-hidden">
                       <img
                         src={tower.image}
                         alt={tower.name}
@@ -75,10 +69,10 @@ export default function ConstructionStatus({
                       />
                     </div>
 
-                    {/* CONTENT */}
+                    {/* Content */}
                     <div className="p-6">
 
-                      {/* HEADER ROW */}
+                      {/* Title row */}
                       <button
                         onClick={() => setExpanded(isOpen ? null : i)}
                         className="flex items-center justify-between w-full"
@@ -87,7 +81,6 @@ export default function ConstructionStatus({
                           <Building2 className="text-primary w-7 h-7" />
                           <h3 className="text-xl font-bold">{tower.name}</h3>
                         </div>
-
                         {isOpen ? (
                           <ChevronUp className="text-primary" />
                         ) : (
@@ -97,7 +90,7 @@ export default function ConstructionStatus({
 
                       {/* EXPANDED PANEL */}
                       {isOpen && (
-                        <div className="mt-6 space-y-6 text-sm w-full block">
+                        <div className="mt-6 space-y-8 w-full block text-sm">
 
                           {/* STATUS */}
                           {tower.status?.length > 0 && (
@@ -141,15 +134,34 @@ export default function ConstructionStatus({
                             </div>
                           )}
 
+                          {/* TIMELINE */}
+                          {tower.timeline?.length > 0 && (
+                            <div>
+                              <h4 className="font-semibold mb-3">Progress Timeline</h4>
+                              <div className="flex gap-3 overflow-x-auto">
+                                {tower.timeline.map((img, idx) => (
+                                  <div
+                                    key={idx}
+                                    className="w-[120px] h-[80px] flex-shrink-0 rounded-lg overflow-hidden border"
+                                  >
+                                    <img
+                                      src={img}
+                                      alt="Timeline"
+                                      className="w-full h-full object-cover"
+                                    />
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+
                         </div>
                       )}
-
                     </div>
                   </div>
                 </div>
               );
             })}
-
           </div>
         </div>
 
@@ -157,7 +169,6 @@ export default function ConstructionStatus({
         <div className="flex justify-center">
           <CTAButtons onFormOpen={onCtaClick} variant="compact" />
         </div>
-
       </div>
     </section>
   );
