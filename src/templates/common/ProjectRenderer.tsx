@@ -21,7 +21,6 @@ export default function ProjectRenderer({ project }: { project: ProjectData }) {
 
       const resolvedId =
         typeof def.id === "function" ? def.id(project) : def.id;
-        console.log("[Renderer] resolvedSections:", resolvedSectionMap);
 
       if (!resolvedId) return null;
 
