@@ -6,23 +6,15 @@ import type { AutoMenuItem } from "./buildAutoMenu";
 interface NavbarProps {
   logo?: string | null;
   autoMenu?: AutoMenuItem[];
-  ctaLabel?: string | null;       // optional CTA text shown on desktop
+  ctaLabel?: string | null;
   onCtaClick?: () => void;
 }
-
-/**
- * Production-grade Navbar:
- * - sticky + shrinking
- * - desktop dropdowns (hover)
- * - mobile nested drawer (accordion-like)
- * - optional CTA button
- * - safe scrollIntoView lookup
- */
 
 export default function Navbar({ logo, autoMenu = [], ctaLabel, onCtaClick }: NavbarProps) {
   const [sticky, setSticky] = useState(false);
   const [shrink, setShrink] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [activeId, setActiveId] = useState("");
 
   // sticky + shrink behaviour
   useEffect(() => {
@@ -32,7 +24,6 @@ export default function Navbar({ logo, autoMenu = [], ctaLabel, onCtaClick }: Na
       if (!hero) return;
       const rect = hero.getBoundingClientRect();
       setSticky(rect.bottom <= 0);
-      // shrink when we scrolled somewhat
       setShrink(rect.bottom <= -48);
     };
 
@@ -41,13 +32,34 @@ export default function Navbar({ logo, autoMenu = [], ctaLabel, onCtaClick }: Na
     return () => window.removeEventListener("scroll", handler);
   }, []);
 
+  // ACTIVE SECTION SCROLLSPY ⭐
+  useEffect(() => {
+    const ids = autoMenu.map((m) => m.id);
+
+    const spy = () => {
+      let current = "";
+      for (let id of ids) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        const rect = el.getBoundingClientRect();
+        if (rect.top <= 100 && rect.bottom >= 100) {
+          current = id;
+          break;
+        }
+      }
+      setActiveId(current);
+    };
+
+    window.addEventListener("scroll", spy, { passive: true });
+    spy();
+    return () => window.removeEventListener("scroll", spy);
+  }, [autoMenu]);
+
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
-    if (!el) {
-      console.warn(`[NAV] Scroll target not found: ${id}`);
-      return;
-    }
+    if (!el) return;
     el.scrollIntoView({ behavior: "smooth" });
+    window.history.replaceState(null, "", `#${id}`); // SEO-friendly hash
   };
 
   return (
@@ -56,9 +68,9 @@ export default function Navbar({ logo, autoMenu = [], ctaLabel, onCtaClick }: Na
         className={`w-full z-[9999] transition-all duration-300 ${
           sticky ? "fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm shadow" : "absolute top-0 left-0 right-0 bg-transparent"
         }`}
-        style={{ willChange: "transform, background" }}
       >
         <nav className={`container mx-auto px-4 transition-all duration-300 flex items-center justify-between ${shrink ? "py-2" : "py-4"}`}>
+          
           {/* Logo */}
           <div className="flex items-center gap-4">
             {logo ? (
@@ -82,15 +94,16 @@ export default function Navbar({ logo, autoMenu = [], ctaLabel, onCtaClick }: Na
                 {m.children && m.children.length > 0 ? (
                   <>
                     <button
-                      className="flex items-center gap-2 text-sm font-medium hover:text-primary transition"
+                      className={`flex items-center gap-2 text-sm font-medium transition ${
+                        activeId === m.id ? "text-primary font-semibold" : "hover:text-primary"
+                      }`}
                       onClick={() => scrollTo(m.id)}
-                      onMouseDown={(e) => e.preventDefault()} // avoid focus jump
+                      onMouseDown={(e) => e.preventDefault()}
                     >
                       <span>{m.label}</span>
                       <ChevronDown className="h-4 w-4" />
                     </button>
 
-                    {/* Dropdown */}
                     <div className="absolute left-0 mt-2 hidden group-hover:block min-w-[12rem] bg-white rounded-lg shadow-md border overflow-hidden z-50">
                       <ul className="py-2">
                         {m.children!.map((c) => (
@@ -102,7 +115,12 @@ export default function Navbar({ logo, autoMenu = [], ctaLabel, onCtaClick }: Na
                     </div>
                   </>
                 ) : (
-                  <button className="text-sm font-medium hover:text-primary transition" onClick={() => scrollTo(m.id)}>
+                  <button
+                    className={`text-sm font-medium transition ${
+                      activeId === m.id ? "text-primary font-semibold" : "hover:text-primary"
+                    }`}
+                    onClick={() => scrollTo(m.id)}
+                  >
                     {m.label}
                   </button>
                 )}
@@ -138,12 +156,16 @@ export default function Navbar({ logo, autoMenu = [], ctaLabel, onCtaClick }: Na
             {autoMenu.map((m) => (
               <li key={m.id} className="border-b">
                 <div className="flex items-center justify-between px-4 py-3">
-                  <button className="text-base font-medium text-left" onClick={() => { scrollTo(m.id); setMobileOpen(false); }}>
+                  <button
+                    className={`text-base font-medium text-left ${
+                      activeId === m.id ? "text-primary font-semibold" : ""
+                    }`}
+                    onClick={() => { scrollTo(m.id); setMobileOpen(false); }}
+                  >
                     {m.label}
                   </button>
                   {m.children && m.children.length > 0 ? (
                     <div className="ml-2">
-                      {/* Expand children inline */}
                       <details>
                         <summary className="cursor-pointer list-none" />
                         <ul className="pl-4 pb-2">
