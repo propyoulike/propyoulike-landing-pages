@@ -140,8 +140,7 @@ export default function Hero({
           objectPosition: "center",
           display: "block",
         }}
-        // lowercase attribute per React warnings
-        fetchpriority="high"
+        fetchPriority="high"
       />
 
       {/* Conditionally inject iframe only when allowed */}

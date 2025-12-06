@@ -113,15 +113,22 @@ const BuilderAbout = ({
             {/* Stats Grid */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 py-10">
               {stats.map((s, i) => {
-                const Icon =
-                  Icons[s.icon as keyof typeof Icons] ?? Icons.Circle;
+                // Get icon safely - default to Circle if not found
+                const iconName = s.icon as string;
+                const LucideIcon = iconName && iconName in Icons 
+                  ? (Icons as unknown as Record<string, React.ComponentType<{ className?: string }>>)[iconName]
+                  : null;
 
                 return (
                   <div
                     key={i}
                     className="text-center p-6 bg-muted/50 rounded-xl"
                   >
-                    <Icon className="w-10 h-10 mx-auto text-primary mb-3" />
+                    {LucideIcon ? (
+                      <LucideIcon className="w-10 h-10 mx-auto text-primary mb-3" />
+                    ) : (
+                      <Icons.Circle className="w-10 h-10 mx-auto text-primary mb-3" />
+                    )}
                     <div className="text-2xl font-semibold text-foreground">
                       {s.value}
                     </div>
