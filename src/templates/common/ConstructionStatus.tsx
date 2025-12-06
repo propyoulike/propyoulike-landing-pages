@@ -9,12 +9,13 @@ import CTAButtons from "@/components/CTAButtons";
 import useEmblaCarousel from "embla-carousel-react";
 import { useState } from "react";
 
-// ===== Modal Component =====
-function Modal({ tower, onClose }: any) {
+function Modal({ data, onClose }: { data: any; onClose: () => void }) {
+  if (!data) return null;
+
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <div className="bg-card rounded-xl w-full max-w-lg p-6 relative">
-        
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[999]">
+      <div className="bg-card rounded-xl w-full max-w-lg max-h-[90vh] overflow-y-auto p-6 relative shadow-xl">
+
         <button
           onClick={onClose}
           className="absolute top-3 right-3 text-xl font-bold"
@@ -22,14 +23,14 @@ function Modal({ tower, onClose }: any) {
           ✕
         </button>
 
-        <h3 className="text-2xl font-bold mb-4">{tower.name}</h3>
+        <h3 className="text-2xl font-bold mb-4">{data.name}</h3>
 
         {/* Status */}
-        {tower.status?.length > 0 && (
+        {data.status?.length > 0 && (
           <div className="mb-6">
             <h4 className="font-semibold mb-2">Current Status</h4>
-            <ul className="list-disc pl-5">
-              {tower.status.map((s: string, i: number) => (
+            <ul className="list-disc pl-5 space-y-1">
+              {data.status.map((s: string, i: number) => (
                 <li key={i}>{s}</li>
               ))}
             </ul>
@@ -37,11 +38,11 @@ function Modal({ tower, onClose }: any) {
         )}
 
         {/* Achieved */}
-        {tower.achieved?.length > 0 && (
+        {data.achieved?.length > 0 && (
           <div className="mb-6 border-t pt-4">
             <h4 className="font-semibold mb-2">Achieved Milestones</h4>
-            <ul className="list-disc pl-5">
-              {tower.achieved.map((s: string, i: number) => (
+            <ul className="list-disc pl-5 space-y-1">
+              {data.achieved.map((s: string, i: number) => (
                 <li key={i}>{s}</li>
               ))}
             </ul>
@@ -49,11 +50,11 @@ function Modal({ tower, onClose }: any) {
         )}
 
         {/* Upcoming */}
-        {tower.upcoming?.length > 0 && (
+        {data.upcoming?.length > 0 && (
           <div className="mb-6 border-t pt-4">
             <h4 className="font-semibold mb-2">Upcoming Milestones</h4>
-            <ul className="list-disc pl-5">
-              {tower.upcoming.map((s: string, i: number) => (
+            <ul className="list-disc pl-5 space-y-1">
+              {data.upcoming.map((s: string, i: number) => (
                 <li key={i}>{s}</li>
               ))}
             </ul>
@@ -64,7 +65,6 @@ function Modal({ tower, onClose }: any) {
   );
 }
 
-// ===== Main Component =====
 export default function ConstructionStatus({ updates, onCtaClick }: any) {
   if (!updates?.length) return null;
 
@@ -85,11 +85,15 @@ export default function ConstructionStatus({ updates, onCtaClick }: any) {
             {updates.map((tower: any, i: number) => (
               <div
                 key={i}
-                className="flex-[0_0_80%] md:flex-[0_0_45%] lg:flex-[0_0_32%] bg-card rounded-2xl shadow cursor-pointer"
                 onClick={() => setSelected(tower)}
+                className="flex-[0_0_80%] md:flex-[0_0_45%] lg:flex-[0_0_32%] bg-card rounded-2xl shadow cursor-pointer"
               >
                 <div className="aspect-video bg-muted rounded-t-2xl overflow-hidden">
-                  <img src={tower.image} alt={tower.name} className="w-full h-full object-cover" />
+                  <img
+                    src={tower.image}
+                    alt={tower.name}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
 
                 <div className="p-5 flex items-center justify-between">
@@ -97,7 +101,6 @@ export default function ConstructionStatus({ updates, onCtaClick }: any) {
                     <Building2 className="text-primary" />
                     <h3 className="font-bold">{tower.name}</h3>
                   </div>
-
                   <ChevronRight className="text-primary" />
                 </div>
               </div>
@@ -112,7 +115,7 @@ export default function ConstructionStatus({ updates, onCtaClick }: any) {
 
         {/* Modal */}
         {selected && (
-          <Modal tower={selected} onClose={() => setSelected(null)} />
+          <Modal data={selected} onClose={() => setSelected(null)} />
         )}
       </div>
     </section>
