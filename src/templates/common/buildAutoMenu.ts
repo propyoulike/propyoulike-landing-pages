@@ -4,7 +4,7 @@ import type { ProjectData } from "@/content/schema/project.schema";
 export type AutoMenuItem = {
   id: string;
   label: string;
-  order?: number; // NEW ⭐ for deterministic ordering
+  icon?: string;
   children?: AutoMenuItem[];
 };
 
@@ -24,6 +24,7 @@ const CLEAN_MAP: Record<string, string> = {
   FAQ: "FAQ",
 };
 
+// Optional: sub-menu extraction
 function extractChildrenFor(name: string, project: ProjectData) {
   if (name === "FloorPlansSection" && project.floorPlansSection?.unitPlans) {
     return project.floorPlansSection.unitPlans.map((u, i) => ({
@@ -34,38 +35,50 @@ function extractChildrenFor(name: string, project: ProjectData) {
 }
 
 export function buildAutoMenuFromResolved(
-  resolved: { name: string; id: string; label: string; order?: number }[],
+  resolved: { name: string; id: string; label: string }[],
   project: ProjectData
 ) {
+  // 1) Base items from resolved sections
+  let base: AutoMenuItem[] = resolved.map((r) => {
+    const cleaned = CLEAN_MAP[r.name] ?? r.label;
 
-  let base: AutoMenuItem[] = resolved.map((r) => ({
-    id: r.id || r.name.toLowerCase(),
-    label: CLEAN_MAP[r.name] ?? r.label,
-    order: (SECTIONS as any)[r.name]?.menuOrder ?? 999,
-    children: extractChildrenFor(r.name, project),
-  }));
+    return {
+      id: r.id || r.name.toLowerCase(), // fallback ID
+      label: cleaned,
+      children: extractChildrenFor(r.name, project),
+    };
+  });
 
+  // 2) Optional navbarConfig overrides from project
   const cfg = (project as any).navbarConfig;
 
-  if (cfg && Object.keys(cfg).length > 0) {
+  if (cfg && typeof cfg === "object") {
+    const { hidden, visible, order } = cfg as {
+      hidden?: string[];
+      visible?: string[];
+      order?: string[];
+    };
 
-    if (cfg.hidden && cfg.hidden.length > 0) {
-      base = base.filter((b) => !cfg.hidden.includes(b.id));
+    // If "visible" is set & non-empty → only keep those ids
+    if (Array.isArray(visible) && visible.length > 0) {
+      base = base.filter((item) => visible.includes(item.id));
     }
 
-    if (cfg.visible && cfg.visible.length > 0) {
-      base = base.filter((b) => cfg.visible.includes(b.id));
+    // If "hidden" is set & non-empty → drop those ids
+    if (Array.isArray(hidden) && hidden.length > 0) {
+      base = base.filter((item) => !hidden.includes(item.id));
     }
 
-    if (cfg.order && cfg.order.length > 0) {
-      const order = new Map<string, number>(
-        cfg.order.map((val: string, idx: number) => [val, idx])
+    // If "order" is set & non-empty → sort by that id order
+    if (Array.isArray(order) && order.length > 0) {
+      const pos = new Map<string, number>(
+        order.map((id, idx) => [id, idx])
       );
-      base.sort((a, b) => (order.get(a.label) ?? 999) - (order.get(b.label) ?? 999));
+      base.sort(
+        (a, b) => (pos.get(a.id) ?? 999) - (pos.get(b.id) ?? 999)
+      );
     }
   }
-
-  base.sort((a, b) => (a.order ?? 999) - (b.order ?? 999));
 
   return base;
 }
