@@ -36,7 +36,7 @@
     "locationUI": "LocationUI.json",
     "construction": "construction.json",
     "paymentPlans": "paymentPlans.json",
-    "testimonials": "testimonials.json",
+    "customerSpeaks": "testimonials.json",
     "brochure": "brochure.json",
     "faq": "faq.json",
     "builderAbout": "../aboutbuilder.json"
