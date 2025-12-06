@@ -2,121 +2,140 @@ import {
   Building2,
   CheckCircle2,
   Clock,
-  ChevronRight,
+  ChevronDown,
+  ChevronUp,
 } from "lucide-react";
-
 import CTAButtons from "@/components/CTAButtons";
-import useEmblaCarousel from "embla-carousel-react";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
-function Modal({ data, onClose }: { data: any; onClose: () => void }) {
-  if (!data) return null;
-
-  return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[999]">
-      <div className="bg-card rounded-xl w-full max-w-lg max-h-[90vh] overflow-y-auto p-6 relative shadow-xl">
-
-        <button
-          onClick={onClose}
-          className="absolute top-3 right-3 text-xl font-bold"
-        >
-          ✕
-        </button>
-
-        <h3 className="text-2xl font-bold mb-4">{data.name}</h3>
-
-        {/* Status */}
-        {data.status?.length > 0 && (
-          <div className="mb-6">
-            <h4 className="font-semibold mb-2">Current Status</h4>
-            <ul className="list-disc pl-5 space-y-1">
-              {data.status.map((s: string, i: number) => (
-                <li key={i}>{s}</li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        {/* Achieved */}
-        {data.achieved?.length > 0 && (
-          <div className="mb-6 border-t pt-4">
-            <h4 className="font-semibold mb-2">Achieved Milestones</h4>
-            <ul className="list-disc pl-5 space-y-1">
-              {data.achieved.map((s: string, i: number) => (
-                <li key={i}>{s}</li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        {/* Upcoming */}
-        {data.upcoming?.length > 0 && (
-          <div className="mb-6 border-t pt-4">
-            <h4 className="font-semibold mb-2">Upcoming Milestones</h4>
-            <ul className="list-disc pl-5 space-y-1">
-              {data.upcoming.map((s: string, i: number) => (
-                <li key={i}>{s}</li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </div>
-    </div>
-  );
+interface ConstructionTower {
+  name: string;
+  image: string;
+  status?: string[];
+  achieved?: string[];
+  upcoming?: string[];
 }
 
-export default function ConstructionStatus({ updates, onCtaClick }: any) {
-  if (!updates?.length) return null;
+interface Props {
+  id?: string;
+  title?: string;
+  subtitle?: string;
+  updates: ConstructionTower[];
+  onCtaClick: () => void;
+}
 
-  const [emblaRef] = useEmblaCarousel({ align: "start" });
-  const [selected, setSelected] = useState<any>(null);
+export default function ConstructionStatus({
+  id = "construction",
+  title = "Construction Progress",
+  subtitle = "Stay updated with the work happening on-site.",
+  updates = [],
+  onCtaClick,
+}: Props) {
+
+  const [expanded, setExpanded] = useState<number | null>(null);
 
   return (
-    <section className="py-20">
+    <section id={id} className="py-20 bg-background">
       <div className="container mx-auto px-4">
 
-        <h2 className="text-3xl font-bold mb-10 text-center">
-          Construction Progress
-        </h2>
+        {/* Header */}
+        <div className="text-center max-w-3xl mx-auto mb-12">
+          <h2 className="text-3xl lg:text-5xl font-bold mb-6">{title}</h2>
+          {subtitle && <p className="text-lg text-muted-foreground">{subtitle}</p>}
+        </div>
 
-        {/* Carousel */}
-        <div className="overflow-hidden" ref={emblaRef}>
-          <div className="flex gap-6">
-            {updates.map((tower: any, i: number) => (
+        {/* Accordion List */}
+        <div className="space-y-6">
+          {updates.map((tower, i) => {
+            const isOpen = expanded === i;
+
+            return (
               <div
                 key={i}
-                onClick={() => setSelected(tower)}
-                className="flex-[0_0_80%] md:flex-[0_0_45%] lg:flex-[0_0_32%] bg-card rounded-2xl shadow cursor-pointer"
+                className="bg-card rounded-2xl shadow p-6 transition-all"
               >
-                <div className="aspect-video bg-muted rounded-t-2xl overflow-hidden">
-                  <img
-                    src={tower.image}
-                    alt={tower.name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-
-                <div className="p-5 flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <Building2 className="text-primary" />
-                    <h3 className="font-bold">{tower.name}</h3>
+                {/* Header Row */}
+                <button
+                  onClick={() => setExpanded(isOpen ? null : i)}
+                  className="flex w-full items-center justify-between"
+                >
+                  <div className="flex items-center gap-3 text-left">
+                    <Building2 className="text-primary w-7 h-7" />
+                    <h3 className="text-xl font-bold">{tower.name}</h3>
                   </div>
-                  <ChevronRight className="text-primary" />
-                </div>
+
+                  {isOpen ? (
+                    <ChevronUp className="text-primary" />
+                  ) : (
+                    <ChevronDown className="text-primary" />
+                  )}
+                </button>
+
+                {/* Content */}
+                {isOpen && (
+                  <div className="mt-6 space-y-6 animate-accordion-down">
+
+                    {/* Image */}
+                    <div className="aspect-video">
+                      <img
+                        src={tower.image}
+                        alt={tower.name}
+                        className="w-full h-full object-cover rounded-xl"
+                      />
+                    </div>
+
+                    {/* Status */}
+                    {tower.status?.length > 0 && (
+                      <div>
+                        <h4 className="font-semibold mb-2">Current Status</h4>
+                        <ul className="list-disc pl-6 space-y-1">
+                          {tower.status.map((s, idx) => (
+                            <li key={idx}>{s}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {/* Achieved */}
+                    {tower.achieved?.length > 0 && (
+                      <div>
+                        <h4 className="font-semibold mb-2 flex items-center gap-2">
+                          <CheckCircle2 className="text-green-500 w-4 h-4" />
+                          Achieved Milestones
+                        </h4>
+                        <ul className="list-disc pl-6 space-y-1">
+                          {tower.achieved.map((a, idx) => (
+                            <li key={idx}>{a}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {/* Upcoming */}
+                    {tower.upcoming?.length > 0 && (
+                      <div>
+                        <h4 className="font-semibold mb-2 flex items-center gap-2">
+                          <Clock className="text-orange-500 w-4 h-4" />
+                          Upcoming Milestones
+                        </h4>
+                        <ul className="list-disc pl-6 space-y-1">
+                          {tower.upcoming.map((u, idx) => (
+                            <li key={idx}>{u}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
-            ))}
-          </div>
+            );
+          })}
         </div>
 
         {/* CTA */}
-        <div className="flex justify-center mt-10">
+        <div className="flex justify-center mt-16">
           <CTAButtons onFormOpen={onCtaClick} variant="compact" />
         </div>
-
-        {/* Modal */}
-        {selected && (
-          <Modal data={selected} onClose={() => setSelected(null)} />
-        )}
       </div>
     </section>
   );
