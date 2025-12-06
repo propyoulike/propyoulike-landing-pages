@@ -1,17 +1,18 @@
-[
-     {
-        "name": "Resident Family 1",
-        "videoId": "k-dD6PtfrC8",
-        "quote": "The amenities and green spaces are exactly what we were looking for. Our kids love it here!"
-      },
-      {
-        "name": "Resident Family 2",
-        "videoId": "iwLw1Xu312s",
-        "quote": "Great connectivity and peaceful environment. Best decision we made for our family."
-      },
-      {
-        "name": "Resident Family 3",
-        "videoId": "MxtoYCTGaCE",
-        "quote": "The construction quality and attention to detail is impressive. Highly recommended!"
-      }
-]
+"customerSpeaks": {
+  "title": "What Our Customers Say",
+  "subtitle": "Here’s what our customers shared about their experience",
+  "testimonials": [
+    {
+      "name": "Rahul Sharma",
+      "videoId": "mU4jU5J-UzU",
+      "quote": "Very smooth buying experience!",
+      "thumbUrl": "/images/customers/rahul.jpg"
+    },
+    {
+      "name": "Priya Menon",
+      "videoId": "pC0b8y7TnCE",
+      "quote": "The support team is excellent.",
+      "thumbUrl": "/images/customers/priya.jpg"
+    }
+  ]
+}
