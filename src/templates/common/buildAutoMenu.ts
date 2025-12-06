@@ -67,6 +67,7 @@ console.log("[MenuBuilder] resolved input:", resolved);
       );
     }
   }
+console.log("[MenuBuilder] final autoMenu:", base);
 
   return base;
 }
