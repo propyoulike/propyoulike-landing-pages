@@ -1,85 +1,51 @@
 import { Button } from "@/components/ui/button";
-import { Phone, Download, Mail } from "lucide-react";
+import { Phone } from "lucide-react";
+import { trackCTAClick, trackWhatsAppClick } from "@/hooks/useScrollTracking";
+import { useLeadCTAContext } from "@/components/lead/LeadCTAProvider";
+import React, { memo, useCallback } from "react";
 
-export interface CTAButtonsProps {
-  onFormOpen?: () => void;
-  variant?: "default" | "compact";
-  label?: string;
-}
+const CTAButtons = memo(({ variant = "default" }: { variant?: "default" | "compact" }) => {
+  const { openCTA } = useLeadCTAContext();
 
-const CTAButtons = ({ onFormOpen, variant = "default" }: CTAButtonsProps) => {
-  const handleCallNow = () => {
-    window.location.href = "tel:+919876543210";
-  };
+  const handleFormClick = useCallback(
+    (label: string) => {
+      trackCTAClick(label, "CTAButtons");
+      openCTA(label);
+    },
+    [openCTA]
+  );
 
-  const handleDownloadBrochure = () => {
-    if (onFormOpen) {
-      onFormOpen();
-    } else {
-      console.log("Download brochure");
-    }
-  };
+  const handleWhatsAppClick = useCallback(() => {
+    trackWhatsAppClick("CTAButtons");
+    window.open(
+      "https://wa.me/919379822010?text=Hi,%20I'd%20like%20more%20details.",
+      "_blank",
+      "noopener,noreferrer"
+    );
+  }, []);
 
-  const handleEnquiry = () => {
-    if (onFormOpen) {
-      onFormOpen();
-    } else {
-      window.location.href = "mailto:info@propyoulike.com";
-    }
-  };
-
-  const buttons = (
-    <div className="flex flex-wrap justify-center gap-4">
+  return (
+    <div className="flex flex-wrap gap-4 w-full">
       <Button
         size="lg"
-        onClick={handleCallNow}
-        className="bg-accent hover:bg-accent-light text-accent-foreground font-semibold px-8 shadow-lg"
+        variant="outline"
+        className="flex-1 min-w-[180px] rounded-full font-semibold"
+        onClick={() => handleFormClick("Site Visit")}
       >
-        <Phone className="w-5 h-5 mr-2" />
-        Call Now
+        Site Visit
       </Button>
 
       <Button
         size="lg"
-        variant="outline"
-        onClick={handleDownloadBrochure}
-        className="bg-white/10 hover:bg-white/20 text-white border-white/30 font-semibold px-8"
+        variant="secondary"
+        className="flex-1 min-w-[180px] rounded-full font-semibold flex items-center justify-center"
+        onClick={handleWhatsAppClick}
       >
-        <Download className="w-5 h-5 mr-2" />
-        Download Brochure
-      </Button>
-
-      <Button
-        size="lg"
-        variant="outline"
-        onClick={handleEnquiry}
-        className="bg-white/10 hover:bg-white/20 text-white border-white/30 font-semibold px-8"
-      >
-        <Mail className="w-5 h-5 mr-2" />
-        Send Enquiry
+        <Phone className="mr-2 h-5 w-5" />
+        WhatsApp
       </Button>
     </div>
   );
-
-  if (variant === "compact") {
-    return buttons;
-  }
-
-  return (
-    <section className="py-16 bg-primary">
-      <div className="container mx-auto px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-primary-foreground mb-4">
-            Ready to Own Your Dream Home?
-          </h2>
-          <p className="text-primary-foreground/80 text-lg mb-8">
-            Contact us today for exclusive offers and personalized assistance
-          </p>
-          {buttons}
-        </div>
-      </div>
-    </section>
-  );
-};
+});
 
 export default CTAButtons;
