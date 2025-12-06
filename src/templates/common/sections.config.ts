@@ -50,6 +50,7 @@ export const SECTIONS = {
     Component: Hero,
     menuVisible: false,
     menuLabel: "Hero",
+    menuOrder: 1,
     props: (project: ProjectData) => ({
       videoUrl: project.hero?.videoUrl,
       images: project.hero?.images,
@@ -64,6 +65,7 @@ Navbar: {
   id: "navbar",
   menuVisible: false,
   menuLabel: "Home", // override label if needed
+  menuOrder: 2,
   Component: Navbar,
   props: (project: ProjectData, openCTA: () => void, autoMenu: any[]) => ({
     logo: project.navbar?.logo,
@@ -77,6 +79,7 @@ Navbar: {
     Component: Summary,
     menuVisible: true,
     menuLabel: "Overview",
+    menuOrder: 3,
     props: (project, openCTA) => ({
       title: project.summary?.title,
       subtitle: project.summary?.subtitle,
@@ -90,6 +93,7 @@ Navbar: {
     id: "floor-plans",
     menuVisible: true,
     menuLabel: "Floor Plans",
+    menuOrder: 4,
     Component: FloorPlans,
     props: (project, openCTA) => ({
       section: project.floorPlansSection,
@@ -101,6 +105,7 @@ Navbar: {
     id: "amenities",
     menuVisible: true,
     menuLabel: "Amenities",
+    menuOrder: 5,
     Component: Amenities,
     props: (project) => ({
       heroTitle: project.amenities?.heroTitle,
@@ -114,6 +119,7 @@ Navbar: {
     id: "views",
     menuVisible: false,
     menuLabel: "Gallery",
+    menuOrder: 6,
     Component: Views,
     props: (project, openCTA) => ({
       id: "views",
@@ -142,6 +148,7 @@ LocationUI: {
 
     menuVisible: true,
     menuLabel: "Location",
+  menuOrder: 7,
   Component: LocationUI,
 
   props: (project: ProjectData, openCTA: () => void) => ({
@@ -163,6 +170,7 @@ LocationUI: {
     id: "construction",
     menuVisible: false,
     menuLabel: "Status",
+    menuOrder: 8,
     Component: Construction,
     props: (project) => ({
       updates: project.construction,
@@ -173,6 +181,7 @@ LocationUI: {
     id: "payment-plans",
     menuVisible: false,
     menuLabel: "Pricing",
+    menuOrder: 9,
     Component: PaymentPlans,
     props: (project, openCTA) => ({
       sectionId: project.paymentPlans?.sectionId,
@@ -191,6 +200,7 @@ LoanEligibility: {
   id: "loan-eligibility",
   menuVisible: false,
   menuLabel: "Eligibility",
+  menuOrder: 10,
   Component: LoanEligibility,
   props: (project: ProjectData, openCTA: () => void) => ({
     onCtaClick: openCTA,
@@ -202,6 +212,7 @@ LoanEligibility: {
     id: "customer-speaks",
     menuVisible: true,
     menuLabel: "Testimonials",
+    menuOrder: 11,
     Component: CustomerSpeaks,
     props: (project, openCTA) => ({
       id: "customerspeaks",
@@ -216,6 +227,7 @@ LoanEligibility: {
     id: "brochure",
     menuVisible: false,
     menuLabel: "Brochure",
+    menuOrder: 12,
     Component: Brochure,
     props: (project) => ({
       heroTitle: project.brochure?.heroTitle,
@@ -228,6 +240,7 @@ LoanEligibility: {
   BuilderAbout: {
     id: "about-builder",
     menuVisible: false,
+    menuOrder: 13,
     Component: BuilderAbout,
     props: (project, openCTA) => ({
       title: project.builderAbout?.title,
@@ -243,6 +256,7 @@ LoanEligibility: {
     id: "faq",
     menuVisible: true,
     menuLabel: "FAQ",
+    menuOrder: 14,
     Component: FAQ,
     props: (project, openCTA) => ({
       id: "faq",
