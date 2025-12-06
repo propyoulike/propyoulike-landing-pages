@@ -17,7 +17,7 @@ interface ConstructionTower {
   status?: string[];
   achieved?: string[];
   upcoming?: string[];
-  timeline?: string[]; // <-- ADDED this
+  timeline?: string[];
 }
 
 interface Props {
@@ -37,7 +37,7 @@ export default function ConstructionStatus({ updates, onCtaClick }: Props) {
     <section id="construction" className="py-20 bg-background scroll-mt-32">
       <div className="container mx-auto px-4">
 
-        {/* HEADER */}
+        {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl lg:text-5xl font-bold mb-6">
             Construction Progress
@@ -47,7 +47,7 @@ export default function ConstructionStatus({ updates, onCtaClick }: Props) {
           </p>
         </div>
 
-        {/* CAROUSEL */}
+        {/* Carousel */}
         <div className="overflow-visible mb-12" ref={emblaRef}>
           <div className="flex gap-6 overflow-visible">
 
@@ -60,8 +60,9 @@ export default function ConstructionStatus({ updates, onCtaClick }: Props) {
                   className="flex-[0_0_90%] md:flex-[0_0_55%] lg:flex-[0_0_40%] self-start"
                 >
                   <div className="bg-card rounded-2xl shadow overflow-hidden">
-                    {/* Tower Image */}
-                    <div className="aspect-video rounded-t-2xl overflow-hidden">
+
+                    {/* Image */}
+                    <div className="aspect-video overflow-hidden">
                       <img
                         src={tower.image}
                         alt={tower.name}
@@ -69,10 +70,8 @@ export default function ConstructionStatus({ updates, onCtaClick }: Props) {
                       />
                     </div>
 
-                    {/* Content */}
+                    {/* Title */}
                     <div className="p-6">
-
-                      {/* Title row */}
                       <button
                         onClick={() => setExpanded(isOpen ? null : i)}
                         className="flex items-center justify-between w-full"
@@ -81,6 +80,7 @@ export default function ConstructionStatus({ updates, onCtaClick }: Props) {
                           <Building2 className="text-primary w-7 h-7" />
                           <h3 className="text-xl font-bold">{tower.name}</h3>
                         </div>
+
                         {isOpen ? (
                           <ChevronUp className="text-primary" />
                         ) : (
@@ -88,11 +88,11 @@ export default function ConstructionStatus({ updates, onCtaClick }: Props) {
                         )}
                       </button>
 
-                      {/* EXPANDED PANEL */}
+                      {/* PANEL */}
                       {isOpen && (
                         <div className="mt-6 space-y-8 w-full block text-sm">
 
-                          {/* STATUS */}
+                          {/* Status */}
                           {tower.status?.length > 0 && (
                             <div>
                               <h4 className="font-semibold mb-1">Current Status</h4>
@@ -104,7 +104,7 @@ export default function ConstructionStatus({ updates, onCtaClick }: Props) {
                             </div>
                           )}
 
-                          {/* ACHIEVED */}
+                          {/* Achieved */}
                           {tower.achieved?.length > 0 && (
                             <div>
                               <h4 className="font-semibold mb-1 flex items-center gap-2">
@@ -119,7 +119,7 @@ export default function ConstructionStatus({ updates, onCtaClick }: Props) {
                             </div>
                           )}
 
-                          {/* UPCOMING */}
+                          {/* Upcoming */}
                           {tower.upcoming?.length > 0 && (
                             <div>
                               <h4 className="font-semibold mb-1 flex items-center gap-2">
@@ -134,10 +134,10 @@ export default function ConstructionStatus({ updates, onCtaClick }: Props) {
                             </div>
                           )}
 
-                          {/* TIMELINE */}
+                          {/* Timeline */}
                           {tower.timeline?.length > 0 && (
                             <div>
-                              <h4 className="font-semibold mb-3">Progress Timeline</h4>
+                              <h4 className="font-semibold mb-2">Progress Timeline</h4>
                               <div className="flex gap-3 overflow-x-auto">
                                 {tower.timeline.map((img, idx) => (
                                   <div
@@ -146,7 +146,6 @@ export default function ConstructionStatus({ updates, onCtaClick }: Props) {
                                   >
                                     <img
                                       src={img}
-                                      alt="Timeline"
                                       className="w-full h-full object-cover"
                                     />
                                   </div>
@@ -162,6 +161,7 @@ export default function ConstructionStatus({ updates, onCtaClick }: Props) {
                 </div>
               );
             })}
+
           </div>
         </div>
 
@@ -169,6 +169,7 @@ export default function ConstructionStatus({ updates, onCtaClick }: Props) {
         <div className="flex justify-center">
           <CTAButtons onFormOpen={onCtaClick} variant="compact" />
         </div>
+
       </div>
     </section>
   );
