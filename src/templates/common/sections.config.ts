@@ -172,9 +172,9 @@ Construction: {
   menuLabel: "Construction",
   menuOrder: 8,
   Component: Construction,
-  props: () => ({
-    updates: constructionData,
-    onCtaClick: () => {},
+  props: (project, openCTA) => ({
+    updates: project.construction ?? [],   // IMPORTANT
+    onCtaClick: openCTA,
   }),
 },
 
