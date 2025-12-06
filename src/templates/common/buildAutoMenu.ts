@@ -45,7 +45,7 @@ export function buildAutoMenuFromResolved(
     const cleaned = CLEAN_MAP[r.name] ?? r.label;
 
     return {
-      id: r.id,
+      id: r.id || r.name.toLowerCase(),   // fallback prevents empty id
       label: cleaned,
       children: extractChildrenFor(r.name, project),
     };
