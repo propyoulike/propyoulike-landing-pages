@@ -55,6 +55,7 @@ export function buildAutoMenuFromResolved(
 
   // ⭐ FIX: Only apply filtering if config has real settings
   const cfg = (project as any).navbarConfig;
+  console.log("[MenuBuilder] cfg:", cfg);  
   if (cfg && Object.keys(cfg).length > 0) {
 
     if (cfg.hidden) {
