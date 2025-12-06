@@ -25,22 +25,18 @@ export default function ProjectRenderer({ project }: { project: ProjectData }) {
       if (!resolvedId) return null;
 
       return {
-        name: normalized,   // ⭐ REQUIRED for buildAutoMenu
+        name: normalized, // ⭐ REQUIRED for buildAutoMenu
         id: String(resolvedId).trim(),
-        label: def.menuLabel ??
+        label:
+          def.menuLabel ??
           normalized.replace(/([A-Z])/g, " $1").trim(), // "FloorPlansSection" → "Floor Plans Section"
       };
     })
     .filter(Boolean);
 
-  // 1️⃣ Build resolved section map
-const resolvedSectionMap = sections
-  .map(...)
-  .filter(Boolean);
-
-console.log("[Renderer] sections input:", sections);
-console.log("[Renderer] resolvedSectionMap:", resolvedSectionMap);
-
+  // 🔍 DEBUG LOGS
+  console.log("[Renderer] sections input:", sections);
+  console.log("[Renderer] resolvedSectionMap:", resolvedSectionMap);
 
   // -----------------------------------------
   // 2️⃣ Build auto menu
