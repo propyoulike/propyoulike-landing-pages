@@ -20,6 +20,7 @@ interface NavbarProps {
  */
 
 export default function Navbar({ logo, autoMenu = [], ctaLabel, onCtaClick }: NavbarProps) {
+console.log("Navbar autoMenu:", autoMenu);
   const [sticky, setSticky] = useState(false);
   const [shrink, setShrink] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
