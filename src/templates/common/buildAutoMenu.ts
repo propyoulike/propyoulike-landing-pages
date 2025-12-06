@@ -53,20 +53,25 @@ export function buildAutoMenuFromResolved(
     };
   });
 
-  // ⭐ FIX: Only apply filtering if config has real settings
+  // ⭐ DEBUG: Show navbar config coming from project
   const cfg = (project as any).navbarConfig;
-  console.log("[MenuBuilder] cfg:", cfg);  
+  console.log("[MenuBuilder] cfg:", cfg);
+
+  // ⭐ FIX: Only apply filtering if config has real valid entries
   if (cfg && Object.keys(cfg).length > 0) {
 
-    if (cfg.hidden) {
+    // ⭐ FIX: Only filter hidden if list is non-empty
+    if (cfg.hidden && Array.isArray(cfg.hidden) && cfg.hidden.length > 0) {
       base = base.filter((b) => !cfg.hidden.includes(b.id));
     }
 
-    if (cfg.visible) {
+    // ⭐ FIX: Only filter visible if list is non-empty
+    if (cfg.visible && Array.isArray(cfg.visible) && cfg.visible.length > 0) {
       base = base.filter((b) => cfg.visible.includes(b.id));
     }
 
-    if (cfg.order) {
+    // ⭐ FIX: Only sort if order list is non-empty
+    if (cfg.order && Array.isArray(cfg.order) && cfg.order.length > 0) {
       const order = new Map<string, number>(
         cfg.order.map((val: string, idx: number) => [val, idx])
       );
