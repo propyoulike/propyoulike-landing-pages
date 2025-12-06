@@ -38,12 +38,9 @@ export function buildAutoMenuFromResolved(
   resolved: { name: string; id: string; label: string }[],
   project: ProjectData
 ) {
-  console.log("[MenuBuilder] resolved input:", resolved);
 
   let base: AutoMenuItem[] = resolved.map((r) => {
     const cleaned = CLEAN_MAP[r.name] ?? r.label;
-
-    console.log("[MenuBuilder] entry:", r.name, "→ id:", r.id);
 
     return {
       // ⭐ FIX: Ensure ID never becomes empty
@@ -55,7 +52,6 @@ export function buildAutoMenuFromResolved(
 
   // ⭐ DEBUG: Show navbar config coming from project
   const cfg = (project as any).navbarConfig;
-  console.log("[MenuBuilder] cfg:", cfg);
 
   // ⭐ FIX: Only apply filtering if config has real valid entries
   if (cfg && Object.keys(cfg).length > 0) {
@@ -84,6 +80,5 @@ export function buildAutoMenuFromResolved(
     }
   }
 
-  console.log("[MenuBuilder] final autoMenu:", base);
   return base;
 }
