@@ -11,15 +11,13 @@ import {
 
 import LeadForm from "./LeadForm";
 
-interface LeadFormModalProps {
+export interface LeadFormModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 
   projectName: string;
   projectId?: string;
   whatsappNumber: string;
-
-  trackEvent?: (name: string, data?: any) => void;
 }
 
 export default function LeadFormModal({
@@ -29,23 +27,8 @@ export default function LeadFormModal({
   projectName,
   projectId,
   whatsappNumber,
-
-  trackEvent,
 }: LeadFormModalProps) {
   
-  /** -------------------------------------------------
-   * Track modal open (GA4, Ads, Pixel via LeadPipeline)
-   * ------------------------------------------------ */
-  useEffect(() => {
-    if (open && trackEvent) {
-      trackEvent("lead_form_opened", {
-        source: "LeadFormModal",
-        project: projectName,
-        project_id: projectId || "UNKNOWN",
-      });
-    }
-  }, [open]);
-
   /** -------------------------------------------------
    * Prevent & restore body scroll (mobile fix)
    * ------------------------------------------------ */
@@ -105,8 +88,6 @@ export default function LeadFormModal({
             projectName={projectName}
             projectId={projectId}
             whatsappNumber={whatsappNumber}
-
-            trackEvent={trackEvent}
             onSuccess={() => onOpenChange(false)}
           />
         </DialogContent>

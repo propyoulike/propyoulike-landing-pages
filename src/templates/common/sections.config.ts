@@ -8,7 +8,7 @@ import Views from "@/templates/common/Views";
 import LocationUI from "@/templates/common/LocationUI";
 import Construction from "@/templates/common/ConstructionStatus";
 import PaymentPlans from "@/templates/common/PaymentPlans";
-import LoanEligibility from "@/components/widgets/LoanEligibilityWidget";
+import LoanEligibility from "@/components/Widgets/LoanEligibilityWidget";
 import CustomerSpeaks from "@/templates/common/CustomerSpeaks";
 import Brochure from "@/templates/common/Brochure";
 import BuilderAbout from "@/templates/common/BuilderAbout";

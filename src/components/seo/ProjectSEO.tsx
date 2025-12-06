@@ -11,9 +11,8 @@ export default function ProjectSEO({ project }: SEOProps) {
   /* -----------------------------------------------
       SAFE FALLBACKS
   ----------------------------------------------- */
-  const city = project.location?.city || "";
-  const state = project.location?.state || "";
-  const address = project.location?.address || "";
+  const locationUI = project.locationUI;
+  const city = locationUI?.title?.split(",").pop()?.trim() || "";
 
   const title = `${project.projectName}${
     city ? " | " + city : ""
@@ -26,13 +25,9 @@ export default function ProjectSEO({ project }: SEOProps) {
   const heroImage = project.hero?.images?.[0] || "/default-og.jpg";
 
   /* -----------------------------------------------
-      SAFE FAQ RESOLVER (fix for the crash)
+      SAFE FAQ RESOLVER
   ----------------------------------------------- */
-  const faqList = Array.isArray(project.faqs)
-    ? project.faqs
-    : Array.isArray(project.faqs?.items)
-    ? project.faqs.items
-    : [];
+  const faqList = Array.isArray(project.faq) ? project.faq : [];
 
   const faqSchema =
     faqList.length > 0
@@ -61,9 +56,7 @@ export default function ProjectSEO({ project }: SEOProps) {
     image: heroImage,
     address: {
       "@type": "PostalAddress",
-      streetAddress: address,
       addressLocality: city,
-      addressRegion: state,
       addressCountry: "IN",
     },
     amenityFeature:
@@ -78,7 +71,7 @@ export default function ProjectSEO({ project }: SEOProps) {
   /* -----------------------------------------------
       PRICING SCHEMA (SAFE)
   ----------------------------------------------- */
-  const pricingList = project.pricing?.configurations || [];
+  const pricingList = project.floorPlansSection?.unitPlans || [];
 
   const pricingSchema =
     pricingList.length > 0
@@ -89,9 +82,9 @@ export default function ProjectSEO({ project }: SEOProps) {
           brand: project.builder,
           offers: pricingList.map((conf) => ({
             "@type": "Offer",
-            priceCurrency: project.pricing?.currency || "INR",
+            priceCurrency: "INR",
             price: conf.price,
-            description: conf.type,
+            description: conf.title,
           })),
         }
       : null;
@@ -144,7 +137,7 @@ export default function ProjectSEO({ project }: SEOProps) {
 
       {/* Preload hero */}
       {heroImage && (
-        <link rel="preload" as="image" href={heroImage} fetchpriority="high" />
+        <link rel="preload" as="image" href={heroImage} fetchPriority="high" />
       )}
 
       {/* JSON-LD */}

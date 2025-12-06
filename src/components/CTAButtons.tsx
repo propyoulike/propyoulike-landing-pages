@@ -1,8 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Phone, Download, Mail } from "lucide-react";
 
-interface CTAButtonsProps {
+export interface CTAButtonsProps {
   onFormOpen?: () => void;
+  variant?: "default" | "compact";
+  label?: string;
 }
 
 const CTAButtons = ({ onFormOpen }: CTAButtonsProps) => {

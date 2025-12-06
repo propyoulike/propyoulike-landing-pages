@@ -1,4 +1,4 @@
-// src/components/lead/LeadDrawer.tsx
+// src/components/lead/LeadFormDrawer.tsx
 
 import {
   Sheet,
@@ -10,26 +10,22 @@ import {
 
 import LeadForm from "./LeadForm";
 
-interface LeadDrawerProps {
+export interface LeadDrawerProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 
   projectName: string;
   projectId?: string;
   whatsappNumber: string;
-
-  trackEvent?: (name: string, data?: any) => void;
 }
 
-export default function LeadDrawer({
+export default function LeadFormDrawer({
   open,
   onOpenChange,
 
   projectName,
   projectId,
   whatsappNumber,
-
-  trackEvent,
 }: LeadDrawerProps) {
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
@@ -47,7 +43,6 @@ export default function LeadDrawer({
           projectName={projectName}
           projectId={projectId}
           whatsappNumber={whatsappNumber}
-          trackEvent={trackEvent}
           onSuccess={() => onOpenChange(false)}
         />
 

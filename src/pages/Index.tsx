@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Building2, MapPin, Home } from "lucide-react";
 import { Link } from "react-router-dom";
-import Footer from "@/components/Footer/Footer";
+import Footer from "@/components/footer/Footer";
 import { Helmet } from "react-helmet";
 
 const Index = () => {

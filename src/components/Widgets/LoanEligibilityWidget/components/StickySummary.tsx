@@ -2,7 +2,13 @@
 import React, { useEffect, useState } from "react";
 import SummaryCard from "./SummaryCard";
 
-export default function StickySummary({ computed, interestRate, hasCoApplicant, onCta }) {
+export default function StickySummary({ computed, interestRate, coActive, onCta, banks = [] }: {
+  computed: any;
+  interestRate: any;
+  coActive: boolean;
+  onCta: any;
+  banks?: any[];
+}) {
   const [isSticky, setSticky] = useState(false);
 
   useEffect(() => {
@@ -19,8 +25,9 @@ export default function StickySummary({ computed, interestRate, hasCoApplicant, 
       <SummaryCard
         computed={computed}
         interestRate={interestRate}
-        hasCoApplicant={hasCoApplicant}
+        coActive={coActive}
         onCta={onCta}
+        banks={banks}
       />
     </div>
   );
