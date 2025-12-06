@@ -34,10 +34,6 @@ export default function ProjectRenderer({ project }: { project: ProjectData }) {
     })
     .filter(Boolean);
 
-  // 🔍 DEBUG LOGS
-  console.log("[Renderer] sections input:", sections);
-  console.log("[Renderer] resolvedSectionMap:", resolvedSectionMap);
-
   // -----------------------------------------
   // 2️⃣ Build auto menu
   // -----------------------------------------
