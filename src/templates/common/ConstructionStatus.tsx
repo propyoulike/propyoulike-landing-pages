@@ -23,7 +23,7 @@ interface ConstructionStatusProps {
   id?: string;
   title?: string;
   subtitle?: string;
-  updates?: ConstructionTower[]; // <-- updates may be undefined
+  updates?: ConstructionTower[];
   onCtaClick: () => void;
 }
 
@@ -35,7 +35,6 @@ export default function ConstructionStatus({
   onCtaClick,
 }: ConstructionStatusProps) {
 
-  // ---- FIXED GUARD ----
   if (!Array.isArray(updates) || updates.length === 0) {
     return null;
   }
@@ -113,17 +112,17 @@ export default function ConstructionStatus({
 
                       {/* Expanded Content */}
                       {isOpen && (
-                        <div className="space-y-6 mt-4">
+                        <div className="mt-4 space-y-6 bg-muted/40 p-4 rounded-xl border border-border">
 
                           {/* Status */}
                           {!!tower.status?.length && (
                             <div>
-                              <h4 className="text-sm font-semibold uppercase mb-2">
+                              <h4 className="text-sm font-semibold flex items-center gap-2 text-primary">
                                 Current Status
                               </h4>
-                              <ul className="space-y-1 text-sm">
+                              <ul className="mt-2 space-y-1 text-sm text-foreground/90 list-disc pl-5">
                                 {tower.status.map((s, idx) => (
-                                  <li key={idx}>• {s}</li>
+                                  <li key={idx}>{s}</li>
                                 ))}
                               </ul>
                             </div>
@@ -131,12 +130,11 @@ export default function ConstructionStatus({
 
                           {/* Achieved */}
                           {!!tower.achieved?.length && (
-                            <div className="border-t pt-4">
-                              <h4 className="text-sm font-semibold uppercase mb-2 flex items-center gap-2">
-                                <CheckCircle2 className="text-green-600 w-4 h-4" />
+                            <div className="pt-3 border-t border-border">
+                              <h4 className="text-sm font-semibold flex items-center gap-2 text-green-600">
                                 Achieved Milestones
                               </h4>
-                              <ul className="space-y-1 text-sm">
+                              <ul className="mt-2 space-y-1 text-sm text-foreground/90 list-disc pl-5">
                                 {tower.achieved.map((a, idx) => (
                                   <li key={idx}>{a}</li>
                                 ))}
@@ -146,12 +144,11 @@ export default function ConstructionStatus({
 
                           {/* Upcoming */}
                           {!!tower.upcoming?.length && (
-                            <div className="border-t pt-4">
-                              <h4 className="text-sm font-semibold uppercase mb-2 flex items-center gap-2">
-                                <Clock className="text-orange-600 w-4 h-4" />
+                            <div className="pt-3 border-t border-border">
+                              <h4 className="text-sm font-semibold flex items-center gap-2 text-orange-500">
                                 Upcoming Milestones
                               </h4>
-                              <ul className="space-y-1 text-sm">
+                              <ul className="mt-2 space-y-1 text-sm text-foreground/90 list-disc pl-5">
                                 {tower.upcoming.map((u, idx) => (
                                   <li key={idx}>{u}</li>
                                 ))}
