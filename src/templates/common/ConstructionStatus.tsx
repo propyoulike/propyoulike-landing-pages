@@ -9,7 +9,7 @@ import {
 import CTAButtons from "@/components/CTAButtons";
 import useEmblaCarousel from "embla-carousel-react";
 import AutoScroll from "embla-carousel-auto-scroll";
-import { useEffect, useState, useRef } from "react";
+import { useState } from "react";
 
 interface ConstructionTower {
   name: string;
@@ -20,21 +20,14 @@ interface ConstructionTower {
 }
 
 interface ConstructionStatusProps {
-  id?: string;
-  title?: string;
-  subtitle?: string;
   updates: ConstructionTower[];
   onCtaClick: () => void;
 }
 
 export default function ConstructionStatus({
-  id = "construction",
-  title = "Construction Progress",
-  subtitle = "Stay updated with the work happening on-site.",
-  updates = [],
+  updates,
   onCtaClick,
 }: ConstructionStatusProps) {
-  if (!updates.length) return null;
 
   const [emblaRef] = useEmblaCarousel(
     { loop: true, align: "start" },
@@ -44,20 +37,18 @@ export default function ConstructionStatus({
   const [expanded, setExpanded] = useState<number | null>(null);
 
   return (
-    <section id={id} className="py-20 lg:py-28 bg-background scroll-mt-32">
+    <section className="py-20 bg-background">
       <div className="container mx-auto px-4">
 
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-3xl lg:text-5xl font-bold mb-6 text-foreground">
-            {title}
-          </h2>
-          {subtitle && (
-            <p className="text-lg text-muted-foreground">{subtitle}</p>
-          )}
+        <div className="text-center max-w-3xl mx-auto mb-12">
+          <h2 className="text-3xl lg:text-5xl font-bold mb-6">Construction Progress</h2>
+          <p className="text-lg text-muted-foreground">
+            Stay updated with the work happening on-site.
+          </p>
         </div>
 
-        {/* CAROUSEL */}
+        {/* Carousel */}
         <div className="overflow-visible mb-12" ref={emblaRef}>
           <div className="flex gap-6 overflow-visible">
             {updates.map((tower, i) => {
@@ -68,11 +59,10 @@ export default function ConstructionStatus({
                   key={i}
                   className="flex-[0_0_90%] md:flex-[0_0_55%] lg:flex-[0_0_40%] self-start"
                 >
-                  <div
-                    className="bg-card rounded-2xl shadow"
-                    style={{ boxShadow: "var(--shadow-strong)" }}
-                  >
-                    <div className="aspect-video bg-muted rounded-t-2xl overflow-hidden">
+                  <div className="bg-card rounded-2xl shadow overflow-hidden">
+
+                    {/* Image */}
+                    <div className="aspect-video bg-muted">
                       <img
                         src={tower.image}
                         alt={tower.name}
@@ -80,37 +70,34 @@ export default function ConstructionStatus({
                       />
                     </div>
 
+                    {/* Content */}
                     <div className="p-6">
-                      {/* Title Row */}
-                      <div className="flex items-center justify-between mb-4">
+                      {/* Header */}
+                      <button
+                        onClick={() => setExpanded(isOpen ? null : i)}
+                        className="flex items-center justify-between w-full"
+                      >
                         <div className="flex items-center gap-3">
                           <Building2 className="text-primary w-7 h-7" />
                           <h3 className="text-xl font-bold">{tower.name}</h3>
                         </div>
 
-                        <button
-                          onClick={() => setExpanded(isOpen ? null : i)}
-                          className="p-2 rounded-full hover:bg-muted"
-                        >
-                          {isOpen ? (
-                            <ChevronUp className="text-primary" />
-                          ) : (
-                            <ChevronDown className="text-primary" />
-                          )}
-                        </button>
-                      </div>
+                        {isOpen ? (
+                          <ChevronUp className="text-primary" />
+                        ) : (
+                          <ChevronDown className="text-primary" />
+                        )}
+                      </button>
 
-                      {/* Animated Panel */}
+                      {/* Accordion Panel */}
                       <div
                         className="overflow-hidden transition-[max-height] duration-500 ease-in-out"
-                        style={{
-                          maxHeight: isOpen ? "1000px" : "0px",
-                        }}
+                        style={{ maxHeight: isOpen ? "500px" : "0px" }}
                       >
-                        <div className="mt-4 space-y-6">
+                        <div className="mt-6 space-y-6">
 
                           {/* Status */}
-                          {tower.status && tower.status.length > 0 && (
+                          {tower.status?.length > 0 && (
                             <div>
                               <h4 className="font-semibold mb-1">Current Status</h4>
                               <ul className="list-disc pl-5 space-y-1 text-sm">
@@ -122,7 +109,7 @@ export default function ConstructionStatus({
                           )}
 
                           {/* Achieved */}
-                          {tower.achieved && tower.achieved.length > 0 && (
+                          {tower.achieved?.length > 0 && (
                             <div>
                               <h4 className="font-semibold mb-1 flex items-center gap-2">
                                 <CheckCircle2 className="text-green-500 w-4 h-4" />
@@ -137,7 +124,7 @@ export default function ConstructionStatus({
                           )}
 
                           {/* Upcoming */}
-                          {tower.upcoming && tower.upcoming.length > 0 && (
+                          {tower.upcoming?.length > 0 && (
                             <div>
                               <h4 className="font-semibold mb-1 flex items-center gap-2">
                                 <Clock className="text-orange-500 w-4 h-4" />
@@ -150,6 +137,7 @@ export default function ConstructionStatus({
                               </ul>
                             </div>
                           )}
+
                         </div>
                       </div>
 
@@ -165,7 +153,6 @@ export default function ConstructionStatus({
         <div className="flex justify-center">
           <CTAButtons onFormOpen={onCtaClick} variant="compact" />
         </div>
-
       </div>
     </section>
   );
