@@ -98,7 +98,7 @@ export default function ConstructionStatus({
         </div>
 
         {/* CAROUSEL */}
-        <div className="overflow-hidden mb-12" ref={emblaRef}>
+        <div className="mb-12" ref={emblaRef}>
           <div className="flex gap-6">
             {updates.map((tower, i) => {
               const isOpen = expanded === i;
