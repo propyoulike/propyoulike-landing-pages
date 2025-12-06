@@ -45,29 +45,26 @@ export default function ConstructionStatus({
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const hasTrackedView = useRef(false);
 
-  /* ------------------- TRACK SECTION VIEW ------------------- */
+  /* Track Section View */
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         if (!hasTrackedView.current && entries[0].isIntersecting) {
           hasTrackedView.current = true;
-
           window?.dataLayer?.push({
             event: "section_view",
             section: id,
           });
-
           window?.fbq?.("trackCustom", "ConstructionStatusViewed");
         }
       },
       { threshold: 0.3 }
     );
-
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
 
-  /* ------------------- TOGGLE PANEL ------------------- */
+  /* Toggle Panel */
   const handleToggle = (i: number, name: string) => {
     setExpanded(expanded === i ? null : i);
 
@@ -80,14 +77,10 @@ export default function ConstructionStatus({
   };
 
   return (
-    <section
-      id={id}
-      ref={sectionRef}
-      className="py-20 lg:py-28 bg-background scroll-mt-32"
-    >
+    <section id={id} ref={sectionRef} className="py-20 lg:py-28 bg-background scroll-mt-32">
       <div className="container mx-auto px-4">
         
-        {/* HEADER */}
+        {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl lg:text-5xl font-bold mb-6 text-foreground">
             {title}
@@ -97,18 +90,19 @@ export default function ConstructionStatus({
           )}
         </div>
 
-        {/* CAROUSEL */}
-        <div className="mb-12" ref={emblaRef}>
-          <div className="flex gap-6">
+        {/* Carousel */}
+        <div className="mb-12 overflow-visible" ref={emblaRef}>
+          <div className="flex gap-6 overflow-visible">
             {updates.map((tower, i) => {
               const isOpen = expanded === i;
+
               return (
                 <div
                   key={i}
                   className="flex-[0_0_90%] md:flex-[0_0_55%] lg:flex-[0_0_40%]"
                 >
                   <div
-                    className="bg-card rounded-2xl overflow-hidden h-full"
+                    className="bg-card rounded-2xl h-full"
                     style={{ boxShadow: "var(--shadow-strong)" }}
                   >
                     <div className="aspect-video bg-muted">
@@ -144,7 +138,7 @@ export default function ConstructionStatus({
                         <div className="space-y-6 animate-accordion-down">
 
                           {/* Status */}
-                          {tower.status && tower.status.length > 0 &&  (
+                          {tower.status && tower.status.length > 0 && (
                             <div>
                               <h4 className="text-sm text-muted-foreground uppercase mb-2">
                                 Current Status
@@ -160,7 +154,7 @@ export default function ConstructionStatus({
                           )}
 
                           {/* Achieved */}
-                          {tower.achieved?.length && (
+                          {tower.achieved && tower.achieved.length > 0 && (
                             <div className="border-t pt-4">
                               <div className="flex items-center gap-2 mb-2">
                                 <CheckCircle2 className="text-green-600 w-4 h-4" />
@@ -179,7 +173,7 @@ export default function ConstructionStatus({
                           )}
 
                           {/* Upcoming */}
-                          {tower.upcoming?.length && (
+                          {tower.upcoming && tower.upcoming.length > 0 && (
                             <div className="border-t pt-4">
                               <div className="flex items-center gap-2 mb-2">
                                 <Clock className="text-orange-600 w-4 h-4" />
