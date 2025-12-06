@@ -144,7 +144,7 @@ export default function ConstructionStatus({
                         <div className="space-y-6 animate-accordion-down">
 
                           {/* Status */}
-                          {tower.status?.length && (
+                          {tower.status && tower.status.length > 0 &&  (
                             <div>
                               <h4 className="text-sm text-muted-foreground uppercase mb-2">
                                 Current Status
