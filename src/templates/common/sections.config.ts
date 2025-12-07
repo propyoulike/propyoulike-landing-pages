@@ -107,7 +107,7 @@ Navbar: {
     menuVisible: true,
     menuLabel: "Amenities",
     menuOrder: 5,
-    Component: Amenities,
+    Component: React.lazy(() => import("@/templates/common/Amenities")),
     props: (project) => ({
       heroTitle: project.amenities?.heroTitle,
       heroSubtitle: project.amenities?.heroSubtitle,
@@ -172,7 +172,7 @@ Construction: {
   menuVisible: true,
   menuLabel: "Construction",
   menuOrder: 8,
-  Component: Construction,
+  Component: React.lazy(() => import("@/templates/common/ConstructionStatus")),
   props: (project, openCTA) => ({
     updates: project.construction ?? [],   // IMPORTANT
     onCtaClick: openCTA,
