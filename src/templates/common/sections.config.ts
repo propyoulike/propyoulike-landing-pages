@@ -67,7 +67,7 @@ Navbar: {
   menuVisible: false,
   menuLabel: "Home", // override label if needed
   menuOrder: 2,
-  Component: Navbar,
+  Component: React.lazy(() => import("@/templates/common/Navbar")),
   props: (project: ProjectData, openCTA: () => void, autoMenu: any[]) => ({
     logo: project.navbar?.logo,
     autoMenu,
@@ -77,7 +77,7 @@ Navbar: {
 
   Summary: {
     id: "summary",
-    Component: Summary,
+    Component: React.lazy(() => import("@/templates/common/ProjectSummary")),
     menuVisible: true,
     menuLabel: "Overview",
     menuOrder: 3,
@@ -243,7 +243,7 @@ LoanEligibility: {
     id: "about-builder",
     menuVisible: false,
     menuOrder: 13,
-    Component: BuilderAbout,
+    Component: React.lazy(() => import("@/templates/common/BuilderAbout")),
     props: (project, openCTA) => ({
       title: project.builderAbout?.title,
       subtitle: project.builderAbout?.subtitle,
@@ -259,7 +259,7 @@ LoanEligibility: {
     menuVisible: true,
     menuLabel: "FAQ",
     menuOrder: 14,
-    Component: FAQ,
+    Component: React.lazy(() => import("@/templates/common/FAQ")),
     props: (project, openCTA) => ({
       id: "faq",
       title: project.faqTitle,

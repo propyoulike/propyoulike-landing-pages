@@ -1,85 +1,73 @@
-#!/usr/bin/env node
+/**
+ * NEW ROOT-LEVEL SITEMAP GENERATOR (CommonJS version)
+ */
 
 const fs = require("fs");
 const path = require("path");
 
-const BASE_URL = "https://propyoulike.com";
-const INDEX_FILE = path.join(__dirname, "../src/data/projects-index.json");
-const DIST_DIR = path.join(__dirname, "../dist");
+const DOMAIN = "https://propyoulike.com";
 
-const BATCH_SIZE = 50;
+// ---------------------------------------------
+// Scan project folders
+// ---------------------------------------------
+function getProjectSlugs() {
+  const base = path.resolve("src/content/projects");
+  const slugs = [];
 
-function escape(str) {
-  return str.replace(/&/g, "&amp;").replace(/</g, "&lt;");
-}
+  for (const builder of fs.readdirSync(base)) {
+    const builderDir = path.join(base, builder);
+    if (!fs.statSync(builderDir).isDirectory()) continue;
 
-// Load projects index
-function loadProjects() {
-  if (!fs.existsSync(INDEX_FILE)) return [];
-  return JSON.parse(fs.readFileSync(INDEX_FILE, "utf8"));
-}
+    for (const projectSlug of fs.readdirSync(builderDir)) {
+      const projectDir = path.join(builderDir, projectSlug);
 
-// Write XML to dist
-function writeXml(filename, content) {
-  fs.writeFileSync(path.join(DIST_DIR, filename), content);
-  console.log(`📁 Generated: ${filename}`);
-}
-
-// Build URL from project entry
-function urlFor(p) {
-  return `${BASE_URL}/projects/${p.builder}-${p.slug}`;
-}
-
-// Build sitemap chunks
-function generateProjectSitemaps(projects) {
-  const chunks = [];
-
-  for (let i = 0; i < projects.length; i += BATCH_SIZE) {
-    chunks.push(projects.slice(i, i + BATCH_SIZE));
+      if (fs.existsSync(path.join(projectDir, "index.json"))) {
+        slugs.push(`${builder}-${projectSlug}`);
+      }
+    }
   }
 
-  let indexXml = `<?xml version="1.0" encoding="UTF-8"?>
-<sitemapindex xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">
-`;
+  return slugs;
+}
 
-  chunks.forEach((chunk, i) => {
-    const filename = `sitemap-projects-${i + 1}.xml`;
-    let xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">
-`;
+const slugs = getProjectSlugs();
 
-    chunk.forEach((p) => {
-      xml += `
+// ---------------------------------------------
+// Build sitemap XML
+// ---------------------------------------------
+const projectEntries = slugs
+  .map(
+    (slug) => `
   <url>
-    <loc>${escape(urlFor(p))}</loc>
-    <lastmod>${new Date().toISOString().split("T")[0]}</lastmod>
+    <loc>${DOMAIN}/${slug}/</loc>
     <changefreq>weekly</changefreq>
-  </url>
+    <priority>0.85</priority>
+  </url>`
+  )
+  .join("\n");
+
+const projectSitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset 
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+>
+${projectEntries}
+</urlset>
 `;
-    });
 
-    xml += `</urlset>\n`;
-    writeXml(filename, xml);
-
-    indexXml += `
+const rootSitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex 
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+>
   <sitemap>
-    <loc>${BASE_URL}/${filename}</loc>
+    <loc>${DOMAIN}/sitemap-projects.xml</loc>
   </sitemap>
+</sitemapindex>
 `;
-  });
 
-  indexXml += `</sitemapindex>\n`;
-  writeXml("sitemap.xml", indexXml);
-}
+if (!fs.existsSync("dist")) fs.mkdirSync("dist");
 
-// Main
-(function () {
-  if (!fs.existsSync(DIST_DIR)) {
-    console.error("❌ dist not found. Run build first.");
-    process.exit(1);
-  }
+fs.writeFileSync("dist/sitemap-projects.xml", projectSitemapXml);
+fs.writeFileSync("dist/sitemap.xml", rootSitemapXml);
 
-  const projects = loadProjects();
-  generateProjectSitemaps(projects);
-  console.log(`\n📌 Sitemap generation complete (${projects.length} URLs)`);
-})();
+console.log("📄 Generated sitemap.xml + sitemap-projects.xml");
+console.log(`📌 Found ${slugs.length} projects\n`);
