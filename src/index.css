@@ -101,19 +101,23 @@
   }
   
   .animate-fade-in {
-    animation: fadeIn 0.6s ease-out;
+    animation: fadeIn 0.6s ease-out forwards;
+    opacity: 0;
   }
   
   .animate-slide-up {
-    animation: slideUp 0.6s ease-out;
+    animation: slideUp 0.6s ease-out forwards;
+    opacity: 0;
   }
   
   .animate-slide-in-left {
-    animation: slideInLeft 0.6s ease-out;
+    animation: slideInLeft 0.6s ease-out forwards;
+    opacity: 0;
   }
   
   .animate-slide-in-right {
-    animation: slideInRight 0.6s ease-out;
+    animation: slideInRight 0.6s ease-out forwards;
+    opacity: 0;
   }
 }
 
@@ -159,12 +163,4 @@
   }
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
-
-  body {
-    @apply bg-background text-foreground;
-  }
-}
+/* Remove duplicate base layer - already defined above */
