@@ -1,1 +1,12 @@
-[]
+[
+  {
+    "slug": "sunworth-city",
+    "name": "Provident Sunworth City",
+    "builder": "provident",
+    "locality": null,
+    "type": "apartment",
+    "heroImage": null,
+    "priceRange": null,
+    "status": "Upcoming"
+  }
+]

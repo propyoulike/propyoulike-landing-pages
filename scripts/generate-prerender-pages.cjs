@@ -1,19 +1,20 @@
 #!/usr/bin/env node
 
 /**
- * Pre-render project pages with OG tags
- * Run AFTER: npm run build
+ * Recursive pre-render of project pages with OG tags
  */
 
 const fs = require("fs");
 const path = require("path");
 
 const DIST_DIR = path.join(__dirname, "../dist");
-const PROJECTS_DIR = path.join(__dirname, "../src/content/projects");
+const CONTENT_DIR = path.join(__dirname, "../src/content/projects");
 const BASE_HTML = path.join(DIST_DIR, "index.html");
 const BASE_URL = "https://propyoulike.com";
 
-/* ------------ UTILITIES ------------ */
+/* ------------------------------------- */
+/* Utilities                             */
+/* ------------------------------------- */
 
 function escapeHtml(str = "") {
   return String(str)
@@ -42,60 +43,62 @@ function extractOgImage(project) {
   );
 }
 
-/* ------------ META GENERATION ------------ */
+/* ------------------------------------- */
+/* Meta Generator                        */
+/* ------------------------------------- */
 
 function generateMetaTags(project) {
-  const title = escapeHtml(project.name);
-  const desc = escapeHtml(project.description || "Premium real estate project in Bangalore");
+  const title = escapeHtml(project.projectName || project.name);
+  const desc = escapeHtml(project.description || "Premium real estate project");
   const ogImage = absolutize(extractOgImage(project));
   const canonicalUrl = `${BASE_URL}/projects/${project.slug}`;
 
-  let meta = `
-    <title>${title} | PropYouLike</title>
-    <meta name="description" content="${desc}">
-    <link rel="canonical" href="${canonicalUrl}" />
+  return `
+<title>${title} | PropYouLike</title>
+<meta name="description" content="${desc}">
+<link rel="canonical" href="${canonicalUrl}" />
 
-    <!-- Open Graph -->
-    <meta property="og:title" content="${title}">
-    <meta property="og:description" content="${desc}">
-    <meta property="og:url" content="${canonicalUrl}">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="PropYouLike">
-    <meta property="og:image" content="${ogImage}">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
+<meta property="og:title" content="${title}">
+<meta property="og:description" content="${desc}">
+<meta property="og:url" content="${canonicalUrl}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="PropYouLike">
+<meta property="og:image" content="${ogImage}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="${title}">
-    <meta name="twitter:description" content="${desc}">
-    <meta name="twitter:image" content="${ogImage}">
-  `;
-
-  if (project.shareVideo) {
-    const videoUrl = absolutize(project.shareVideo);
-    meta += `
-    <!-- Video Preview -->
-    <meta property="og:video" content="${videoUrl}">
-    <meta property="og:video:secure_url" content="${videoUrl}">
-    <meta property="og:video:type" content="text/html">
-    <meta property="og:video:width" content="1280">
-    <meta property="og:video:height" content="720">
-    `;
-  }
-
-  if (project.seo?.index === false) {
-    meta += `<meta name="robots" content="noindex,nofollow">`;
-  }
-
-  return meta.trim();
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${title}">
+<meta name="twitter:description" content="${desc}">
+<meta name="twitter:image" content="${ogImage}">
+  `.trim();
 }
 
-/* ------------ MAIN SCRIPT ------------ */
+/* ------------------------------------- */
+/* Recursive Project Scanner             */
+/* ------------------------------------- */
 
-function prerenderProjectPages() {
+function findConfigFiles(dir, results = []) {
+  const items = fs.readdirSync(dir, { withFileTypes: true });
+
+  for (const item of items) {
+    const full = path.join(dir, item.name);
+    if (item.isDirectory()) {
+      findConfigFiles(full, results);
+    } else if (item.name === "config.json") {
+      results.push(full);
+    }
+  }
+  return results;
+}
+
+/* ------------------------------------- */
+/* Main Render                           */
+/* ------------------------------------- */
+
+function prerender() {
   if (!fs.existsSync(DIST_DIR)) {
-    console.error("❌ No dist folder. Run build first.");
+    console.error("❌ No dist folder. Build first.");
     process.exit(1);
   }
 
@@ -106,27 +109,26 @@ function prerenderProjectPages() {
     process.exit(1);
   }
 
-  const projectFiles = fs.readdirSync(PROJECTS_DIR).filter((f) => f.endsWith(".json"));
+  const configPaths = findConfigFiles(CONTENT_DIR);
+  let count = 0;
 
-  projectFiles.forEach((file) => {
-    const project = JSON.parse(
-      fs.readFileSync(path.join(PROJECTS_DIR, file), "utf8")
-    );
-
+  for (const configPath of configPaths) {
+    const project = JSON.parse(fs.readFileSync(configPath, "utf8"));
     const metaTags = generateMetaTags(project);
 
-    const projectHtml = baseHtml.replace("<!--__SOCIAL_META__-->", metaTags);
+    const renderedHtml = baseHtml.replace("<!--__SOCIAL_META__-->", metaTags);
 
     const projectDir = path.join(DIST_DIR, "projects", project.slug);
     fs.mkdirSync(projectDir, { recursive: true });
 
-    fs.writeFileSync(path.join(projectDir, "index.html"), projectHtml);
+    fs.writeFileSync(path.join(projectDir, "index.html"), renderedHtml);
 
-    console.log(`✅ Pre-rendered: ${project.slug}`);
-  });
+    console.log(`✓ Pre-rendered: ${project.slug}`);
+    count++;
+  }
 
-  console.log(`\n✨ Completed prerender of ${projectFiles.length} project pages.`);
+  console.log(`\n✨ Completed prerender of ${count} project ${count === 1 ? "page" : "pages"}.`);
   console.log("📁 Output: dist/projects/<slug>/index.html");
 }
 
-prerenderProjectPages();
+prerender();

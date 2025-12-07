@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Script to generate projects-index.json from all project JSON files
- * Run: node scripts/generate-projects-index.js
+ * Recursively scan all projects and generate projects-index.json
  */
 
 const fs = require("fs");
@@ -10,6 +9,22 @@ const path = require("path");
 
 const PROJECTS_DIR = path.join(__dirname, "../src/content/projects");
 const OUTPUT_FILE = path.join(__dirname, "../src/data/projects-index.json");
+
+// Detect all config.json files recursively
+function findProjectConfigs(dir, results = []) {
+  const items = fs.readdirSync(dir, { withFileTypes: true });
+
+  for (const item of items) {
+    const full = path.join(dir, item.name);
+
+    if (item.isDirectory()) {
+      findProjectConfigs(full, results);
+    } else if (item.name === "config.json") {
+      results.push(full);
+    }
+  }
+  return results;
+}
 
 function extractPriceRange(project) {
   if (project.priceRange) return String(project.priceRange);
@@ -25,7 +40,6 @@ function extractPriceRange(project) {
     }
     if (prices.length === 1) return prices[0];
   }
-
   return null;
 }
 
@@ -40,39 +54,38 @@ function extractHeroImage(project) {
 
 function generateProjectsIndex() {
   try {
-    const files = fs.readdirSync(PROJECTS_DIR).filter((f) => f.endsWith(".json"));
+    const configFiles = findProjectConfigs(PROJECTS_DIR);
+    const projects = [];
 
-    const projects = files.map((file) => {
-      const filePath = path.join(PROJECTS_DIR, file);
-      const content = fs.readFileSync(filePath, "utf8");
-      const project = JSON.parse(content);
+    for (const configPath of configFiles) {
+      const raw = fs.readFileSync(configPath, "utf8");
+      const project = JSON.parse(raw);
 
-      return {
+      projects.push({
         slug: project.slug,
-        name: project.name,
+        name: project.projectName || project.name,
         builder: project.builder,
-        locality: project.locality,
-        type: project.type,
+        locality: project.locality || null,
+        type: project.type || null,
         heroImage: extractHeroImage(project),
         priceRange: extractPriceRange(project),
         status: project.status || "Upcoming",
-      };
-    });
+      });
+    }
 
-    // Sort projects alphabetically by name
     projects.sort((a, b) => a.name.localeCompare(b.name));
 
-    // Ensure dir exists
+    // Ensure output folder exists
     const outputDir = path.dirname(OUTPUT_FILE);
     if (!fs.existsSync(outputDir)) {
       fs.mkdirSync(outputDir, { recursive: true });
     }
 
     fs.writeFileSync(OUTPUT_FILE, JSON.stringify(projects, null, 2));
-    console.log(`✅ Generated projects index (${projects.length} projects)`);
+    console.log(`\n✅ Generated projects index (${projects.length} project${projects.length === 1 ? "" : "s"})`);
     console.log(`📁 Output: ${OUTPUT_FILE}`);
   } catch (err) {
-    console.error("❌ Error generating projects index:", err);
+    console.error("\n❌ Error generating projects index:", err);
     process.exit(1);
   }
 }
