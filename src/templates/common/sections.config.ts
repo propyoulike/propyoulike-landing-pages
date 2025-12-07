@@ -1,4 +1,5 @@
 // -------------------sections.config.ts------------------------------
+import React from "react";
 import Hero from "@/templates/common/Hero";
 import Navbar from "@/templates/common/Navbar";
 import Summary from "@/templates/common/ProjectSummary";
@@ -94,7 +95,7 @@ Navbar: {
     menuVisible: true,
     menuLabel: "Floor Plans",
     menuOrder: 4,
-    Component: FloorPlans,
+    Component: React.lazy(() => import("@/templates/common/FloorPlans")),
     props: (project, openCTA) => ({
       section: project.floorPlansSection,
       onCtaClick: openCTA,
@@ -120,7 +121,7 @@ Navbar: {
     menuVisible: false,
     menuLabel: "Gallery",
     menuOrder: 6,
-    Component: Views,
+    Component: React.lazy(() => import("@/templates/common/Views")),
     props: (project, openCTA) => ({
       id: "views",
       title: project.views?.title,
@@ -149,7 +150,7 @@ LocationUI: {
     menuVisible: true,
     menuLabel: "Location",
   menuOrder: 7,
-  Component: LocationUI,
+  Component: React.lazy(() => import("@/templates/common/LocationUI")),
 
   props: (project: ProjectData, openCTA: () => void) => ({
     section: {
@@ -183,7 +184,7 @@ Construction: {
     menuVisible: false,
     menuLabel: "Pricing",
     menuOrder: 9,
-    Component: PaymentPlans,
+    Component: React.lazy(() => import("@/templates/common/PaymentPlans")),
     props: (project, openCTA) => ({
       sectionId: project.paymentPlans?.sectionId,
       sectionTitle: project.paymentPlans?.sectionTitle,
@@ -202,7 +203,7 @@ LoanEligibility: {
   menuVisible: false,
   menuLabel: "Eligibility",
   menuOrder: 10,
-  Component: LoanEligibility,
+  Component: React.lazy(() => import("@/components/Widgets/LoanEligibilityWidget")),
   props: (project: ProjectData, openCTA: () => void) => ({
     onCtaClick: openCTA,
     banks: (project as any).loanBanks ?? [],
@@ -214,7 +215,7 @@ LoanEligibility: {
     menuVisible: true,
     menuLabel: "Testimonials",
     menuOrder: 11,
-    Component: CustomerSpeaks,
+    Component: React.lazy(() => import("@/templates/common/CustomerSpeaks")),
     props: (project, openCTA) => ({
       id: "customerspeaks",
       title: project.customerSpeaks?.title,
@@ -229,7 +230,7 @@ LoanEligibility: {
     menuVisible: false,
     menuLabel: "Brochure",
     menuOrder: 12,
-    Component: Brochure,
+    Component: React.lazy(() => import("@/templates/common/Brochure")),
     props: (project) => ({
       heroTitle: project.brochure?.heroTitle,
       heroSubtitle: project.brochure?.heroSubtitle,

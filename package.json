@@ -8,7 +8,7 @@
   "build": "vite build && npm run postbuild",
   "build:dev": "vite build --mode development && npm run postbuild",
   "build:bigrock": "vite build --mode bigrock && npm run postbuild",
-  "postbuild": "node scripts/generate-projects-index.cjs && node scripts/generate-prerender-pages.cjs",
+  "postbuild": "node scripts/generate-projects-index.cjs && node scripts/generate-prerender-pages.cjs && node scripts/generate-sitemap.cjs",
   "lint": "eslint .",
   "preview": "vite preview",
   "start": "vite"
