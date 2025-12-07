@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { memo, useEffect, useState, useRef } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import AutoScroll from "embla-carousel-auto-scroll";
 import { Play } from "lucide-react";
@@ -8,7 +8,7 @@ interface Testimonial {
   name: string;
   videoId: string;
   quote?: string;
-  thumbUrl?: string; // optional custom thumbnail
+  thumbUrl?: string;
 }
 
 interface CustomerSpeaksProps {
@@ -20,19 +20,19 @@ interface CustomerSpeaksProps {
   onCtaClick: () => void;
 }
 
-export default function CustomerSpeaks({
+const CustomerSpeaks = memo(function CustomerSpeaks({
   id = "customer-speaks",
   title = "What Our Customers Say",
   subtitle = "",
   testimonials = [],
-  autoScrollSpeed = 0.8,
+  autoScrollSpeed = 0.6,
   onCtaClick,
 }: CustomerSpeaksProps) {
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
 
   const [emblaRef, emblaApi] = useEmblaCarousel(
-    { loop: true, align: "start" },
+    { loop: true, align: "start", dragFree: true },
     [
       AutoScroll({
         playOnInit: true,
@@ -87,34 +87,37 @@ export default function CustomerSpeaks({
 
         {/* Carousel */}
         <div className="overflow-hidden mb-12" ref={emblaRef}>
-          <div className="flex gap-6">
+          <div className="flex gap-4 md:gap-6 will-change-transform">
             {testimonials.map((t, i) => (
               <div
                 key={i}
-                className="flex-[0_0_100%] md:flex-[0_0_80%] lg:flex-[0_0_60%]"
+                className="flex-[0_0_85%] sm:flex-[0_0_70%] md:flex-[0_0_60%] lg:flex-[0_0_50%] transform-gpu"
               >
                 <div
-                  className="bg-card rounded-2xl overflow-hidden h-full"
+                  className="bg-card rounded-xl md:rounded-2xl overflow-hidden h-full border border-border"
                   style={{ boxShadow: "var(--shadow-strong)" }}
                 >
                   {/* Video/Thumbnail */}
                   <div className="relative aspect-video group cursor-pointer">
                     {activeVideo === t.videoId ? (
                       <iframe
-                        src={`https://www.youtube.com/embed/${t.videoId}?autoplay=1`}
+                        src={`https://www.youtube-nocookie.com/embed/${t.videoId}?autoplay=1`}
                         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                         allowFullScreen
                         className="w-full h-full"
+                        loading="lazy"
                       />
                     ) : (
                       <>
                         <img
                           src={
                             t.thumbUrl ||
-                            `https://img.youtube.com/vi/${t.videoId}/maxresdefault.jpg`
+                            `https://img.youtube.com/vi/${t.videoId}/mqdefault.jpg`
                           }
                           alt={t.name}
                           className="w-full h-full object-cover"
+                          loading="lazy"
+                          decoding="async"
                         />
 
                         <button
@@ -122,23 +125,24 @@ export default function CustomerSpeaks({
                             setActiveVideo(t.videoId);
                             trackVideoPlay(t.name);
                           }}
-                          className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition"
+                          className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-colors"
+                          aria-label={`Play video from ${t.name}`}
                         >
-                          <div className="w-20 h-20 bg-primary rounded-full flex items-center justify-center group-hover:scale-110 transition">
-                            <Play className="w-10 h-10 text-white ml-1" />
+                          <div className="w-14 h-14 md:w-16 md:h-16 bg-primary rounded-full flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
+                            <Play className="w-6 h-6 md:w-8 md:h-8 text-white ml-1" />
                           </div>
                         </button>
                       </>
                     )}
                   </div>
 
-                  <div className="p-6">
+                  <div className="p-4 md:p-5">
                     {t.quote && (
-                      <p className="text-muted-foreground italic text-lg mb-3">
+                      <p className="text-muted-foreground italic text-sm md:text-base mb-2 line-clamp-2">
                         "{t.quote}"
                       </p>
                     )}
-                    <p className="font-semibold text-foreground">— {t.name}</p>
+                    <p className="font-semibold text-foreground text-sm md:text-base">— {t.name}</p>
                   </div>
                 </div>
               </div>
@@ -153,4 +157,6 @@ export default function CustomerSpeaks({
       </div>
     </section>
   );
-}
+});
+
+export default CustomerSpeaks;

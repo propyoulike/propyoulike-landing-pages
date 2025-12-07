@@ -1,17 +1,9 @@
 // src/templates/common/ConstructionStatus.tsx
-import {
-  Building2,
-  X,
-  CheckCircle2,
-  Clock,
-  ChevronDown,
-  ChevronUp,
-} from "lucide-react";
-
+import { memo, useEffect, useState, useRef } from "react";
+import { Building2, X } from "lucide-react";
 import CTAButtons from "@/components/CTAButtons";
 import useEmblaCarousel from "embla-carousel-react";
 import AutoScroll from "embla-carousel-auto-scroll";
-import { useEffect, useState, useRef } from "react";
 
 interface ConstructionTower {
   name: string;
@@ -29,7 +21,7 @@ interface ConstructionStatusProps {
   onCtaClick: () => void;
 }
 
-export default function ConstructionStatus({
+const ConstructionStatus = memo(function ConstructionStatus({
   id = "construction",
   title = "Construction Progress",
   subtitle = "Stay updated with the work happening on-site.",
@@ -39,8 +31,8 @@ export default function ConstructionStatus({
   if (!Array.isArray(updates) || updates.length === 0) return null;
 
   const [emblaRef] = useEmblaCarousel(
-    { loop: true, align: "start" },
-    [AutoScroll({ playOnInit: true, stopOnInteraction: true, speed: 0.5 })]
+    { loop: true, align: "center", dragFree: true },
+    [AutoScroll({ playOnInit: true, stopOnInteraction: true, speed: 0.4 })]
   );
 
   const sectionRef = useRef<HTMLDivElement | null>(null);
@@ -120,35 +112,37 @@ export default function ConstructionStatus({
 
         {/* CAROUSEL */}
         <div className="overflow-hidden mb-12" ref={emblaRef}>
-          <div className="flex gap-6">
+          <div className="flex gap-4 md:gap-6 will-change-transform">
             {updates.map((tower, i) => (
               <div
                 key={i}
-                className="flex-[0_0_100%]" // full width slide
+                className="flex-[0_0_90%] sm:flex-[0_0_80%] md:flex-[0_0_70%] lg:flex-[0_0_60%] transform-gpu"
               >
                 <button
                   type="button"
                   onClick={() => openImage(i, tower)}
-                  className="w-full text-left group"
+                  className="w-full text-left group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-2xl"
                 >
                   {/* IMAGE */}
-                  <div className="relative aspect-video rounded-2xl overflow-hidden shadow-lg">
+                  <div className="relative aspect-video rounded-xl md:rounded-2xl overflow-hidden shadow-lg">
                     <img
                       src={tower.image}
                       alt={tower.name}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300"
                     />
 
                     {/* Name overlay */}
                     <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent px-4 py-3 flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <Building2 className="w-5 h-5 text-white/90" />
+                        <Building2 className="w-4 h-4 md:w-5 md:h-5 text-white/90" />
                         <span className="text-white font-semibold text-sm md:text-base">
                           {tower.name}
                         </span>
                       </div>
-                      <span className="text-xs md:text-sm text-white/80">
-                        Click to view photo
+                      <span className="text-xs text-white/80 hidden sm:inline">
+                        Tap to view
                       </span>
                     </div>
                   </div>
@@ -166,45 +160,46 @@ export default function ConstructionStatus({
         {/* IMAGE MODAL */}
         {activeTower && (
           <div
-            className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center"
+            className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4"
             onClick={closeImage}
           >
             <div
-              className="bg-background rounded-2xl max-w-4xl w-[90%] md:w-[80%] max-h-[90vh] overflow-hidden shadow-xl flex flex-col"
+              className="bg-background rounded-xl md:rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-2xl flex flex-col"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Header */}
-              <div className="flex items-center justify-between px-4 py-3 border-b">
+              <div className="flex items-center justify-between px-4 py-3 border-b border-border">
                 <div className="flex items-center gap-2">
                   <Building2 className="w-5 h-5 text-primary" />
-                  <span className="font-semibold text-sm md:text-base">
+                  <span className="font-semibold text-sm md:text-base text-foreground">
                     {activeTower.name}
                   </span>
                 </div>
                 <button
                   type="button"
                   onClick={closeImage}
-                  className="p-2 rounded-full hover:bg-muted"
+                  className="p-2 rounded-full hover:bg-muted transition-colors"
+                  aria-label="Close"
                 >
                   <X className="w-5 h-5" />
                 </button>
               </div>
 
               {/* Image */}
-              <div className="flex-1 bg-black flex items-center justify-center">
+              <div className="flex-1 bg-black flex items-center justify-center overflow-hidden">
                 <img
                   src={activeTower.image}
                   alt={activeTower.name}
-                  className="max-h-[80vh] w-auto object-contain"
+                  className="max-h-[70vh] w-auto object-contain"
                 />
               </div>
 
               {/* Footer */}
-              <div className="px-4 py-3 border-t flex justify-end">
+              <div className="px-4 py-3 border-t border-border flex justify-end">
                 <button
                   type="button"
                   onClick={closeImage}
-                  className="px-4 py-2 text-sm font-medium rounded-lg bg-primary text-primary-foreground hover:opacity-90"
+                  className="px-5 py-2.5 text-sm font-medium rounded-xl bg-primary text-primary-foreground hover:opacity-90 transition-opacity"
                 >
                   Done
                 </button>
@@ -215,4 +210,6 @@ export default function ConstructionStatus({
       </div>
     </section>
   );
-}
+});
+
+export default ConstructionStatus;
