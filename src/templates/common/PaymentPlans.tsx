@@ -48,7 +48,9 @@ const PaymentPlans = ({
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) line.classList.add("timeline-grow");
+        if (entry.isIntersecting) {
+          line.setAttribute("data-visible", "true");
+        }
       },
       { threshold: 0.3 }
     );
@@ -122,7 +124,7 @@ const PaymentPlans = ({
 
               <div
                 ref={lineRef}
-                className="absolute top-0 left-2 w-1 bg-primary/20 rounded-full timeline-line"
+                className="absolute top-0 left-2 w-1 bg-primary/20 rounded-full h-0 transition-all duration-1000 ease-out data-[visible=true]:h-full"
               />
 
               <div className="space-y-10">
@@ -130,7 +132,7 @@ const PaymentPlans = ({
                   const open = openStage === i;
                   const expandable = !!stage.items;
                   return (
-                    <div key={i} className="relative fade-stage">
+                    <div key={i} className="relative animate-fade-in" style={{ animationDelay: `${i * 150}ms` }}>
                       <button
                         className="w-full flex items-center justify-between"
                         onClick={() => expandable ? setOpenStage(open ? null : i) : null}
@@ -177,19 +179,6 @@ const PaymentPlans = ({
         </div>
       </div>
 
-      {/* Animations */}
-      <style>{`
-        .timeline-line { height: 0%; transition: height 1.4s ease-out; }
-        .timeline-grow { height: 100%; }
-        .fade-stage {
-          opacity: 0;
-          transform: translateY(30px);
-          animation: fadeUpStage 0.6s forwards ease-out;
-        }
-        @keyframes fadeUpStage {
-          to { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
     </section>
   );
 };

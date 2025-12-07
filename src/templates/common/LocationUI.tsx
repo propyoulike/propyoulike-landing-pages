@@ -6,7 +6,6 @@ import {
   AccordionContent,
 } from "@/components/ui/accordion";
 import CTAButtons from "@/components/CTAButtons";
-import { ChevronDown } from "lucide-react";
 
 interface Category {
   title: string;
@@ -135,14 +134,13 @@ export default function LocationUI({ section, onCtaClick }: LocationUIProps) {
               <AccordionItem
                 key={i}
                 value={`item-${i}`}
-                className="border border-border rounded-2xl bg-card shadow-sm"
+                className="border border-border rounded-2xl bg-card shadow-sm px-2"
               >
-                <AccordionTrigger className="px-4 py-2 flex justify-between text-lg font-semibold [&>svg]:hidden">
-                  <span>{category.title}</span>
-                  <ChevronDown className="h-4 w-4 transition-transform duration-300 data-[state=open]:rotate-180" />
+                <AccordionTrigger className="px-4 py-4 text-lg font-semibold hover:no-underline">
+                  {category.title}
                 </AccordionTrigger>
 
-                <AccordionContent className="px-4 pb-2">
+                <AccordionContent className="px-4 pb-4">
                   <ul className="list-disc ml-5 text-muted-foreground space-y-1">
                     {category.items.map((item, j) => (
                       <li key={j}>{item}</li>

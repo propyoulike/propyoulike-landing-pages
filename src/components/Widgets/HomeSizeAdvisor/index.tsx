@@ -2,11 +2,12 @@
 import React, { useMemo, useState } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Users, Briefcase, Layers, Info } from "lucide-react";
+import { Users, Briefcase, Layers, Info, RotateCcw, MessageCircle } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 /* -------------------------------------------------------------------------- */
 /* HomeSizeAdvisor — household-only widget
-   - Finance & tenure logic removed
+   - Uses semantic design tokens
    - Self-contained and portable for immediate use
 -------------------------------------------------------------------------- */
 
@@ -108,22 +109,44 @@ function calculateRecommendation(hh: HouseholdInput, lifestyle: LifestyleInput):
 function CounterInput({ label, value, setValue, info }: { label: string; value: number; setValue: (v: number) => void; info: string }) {
   return (
     <div className="flex flex-col">
-      <label className="text-sm text-[#4A5568] mb-1">{label}</label>
+      <label className="text-sm text-muted-foreground mb-1">{label}</label>
       <div className="flex items-center gap-3">
-        <Button variant="outline" size="sm" onClick={() => setValue(Math.max(0, value - 1))}>-</Button>
-        <div className="min-w-[44px] text-center">{value}</div>
-        <Button variant="outline" size="sm" onClick={() => setValue(value + 1)}>+</Button>
-        <div className="relative group ml-1">
-          <button className="cursor-pointer text-[#A0AEC0] text-xs p-1" type="button"><Info className="w-3 h-3" /></button>
-          <div className="absolute hidden group-hover:block bg-black text-white text-xs rounded px-2 py-1 left-0 top-8 z-10">{info}</div>
-        </div>
+        <Button 
+          variant="outline" 
+          size="sm" 
+          onClick={() => setValue(Math.max(0, value - 1))}
+          className="h-8 w-8 p-0"
+        >
+          -
+        </Button>
+        <div className="min-w-[44px] text-center font-medium text-foreground">{value}</div>
+        <Button 
+          variant="outline" 
+          size="sm" 
+          onClick={() => setValue(value + 1)}
+          className="h-8 w-8 p-0"
+        >
+          +
+        </Button>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button className="text-muted-foreground hover:text-foreground transition-colors p-1" type="button">
+                <Info className="w-4 h-4" />
+              </button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>{info}</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
     </div>
   );
 }
 
 /* -------------------- Main Component -------------------- */
-export default function HomeSizeAdvisor({ className = "" }: { className?: string }) {
+export default function HomeSizeAdvisor({ className = "", onCtaClick }: { className?: string; onCtaClick?: () => void }) {
   const [adults, setAdults] = useState(2);
   const [kids, setKids] = useState(0);
   const [elderly, setElderly] = useState(0);
@@ -144,137 +167,212 @@ export default function HomeSizeAdvisor({ className = "" }: { className?: string
     setGuests("rare");
   };
 
-  const meterValue = () => {
-    if (calc.primary.type.includes("2 BHK")) return 33;
-    if (calc.primary.type.includes("3 BHK Royale")) return 100;
-    return 66;
-  };
-
   return (
-    <div className={`w-full flex justify-center bg-[#F5F7FA] p-4 md:p-8 ${className}`}>
-      <Card className="w-full max-w-4xl p-4 md:p-6 rounded-2xl shadow-sm border border-gray-200">
-        <CardHeader>
-          <CardTitle className="text-xl md:text-2xl font-semibold text-[#1A365D]">Home Size Advisor</CardTitle>
-        </CardHeader>
+    <section id="home-size-advisor" className={`py-20 lg:py-28 bg-muted/30 scroll-mt-32 ${className}`}>
+      <div className="container mx-auto px-4">
+        
+        {/* Header */}
+        <div className="text-center max-w-3xl mx-auto mb-12">
+          <h2 className="text-3xl lg:text-5xl font-bold mb-6 text-foreground">
+            Home Size Advisor
+          </h2>
+          <p className="text-lg text-muted-foreground leading-relaxed">
+            Find the perfect home size based on your household composition and lifestyle needs.
+          </p>
+        </div>
 
-        <CardContent className="md:flex md:gap-6 md:items-start">
-          {/* LEFT */}
-          <div className="md:w-1/2 space-y-6">
-            {/* Household */}
-            <div className="border rounded-lg p-3 bg-white">
-              <div className="flex items-center justify-between">
-                <h4 className="font-medium flex items-center gap-2 text-[#2D3748]"><Users className="w-4 h-4" /> Household</h4>
-                <span className="text-sm text-[#4A5568]">Enter composition</span>
-              </div>
+        <Card className="max-w-5xl mx-auto rounded-2xl border shadow-lg">
+          <CardContent className="p-6 md:p-8">
+            <div className="grid lg:grid-cols-2 gap-8">
+              
+              {/* LEFT - Inputs */}
+              <div className="space-y-6">
+                {/* Household */}
+                <div className="border border-border rounded-xl p-5 bg-card">
+                  <div className="flex items-center justify-between mb-4">
+                    <h4 className="font-semibold flex items-center gap-2 text-foreground">
+                      <Users className="w-5 h-5 text-primary" /> Household
+                    </h4>
+                    <span className="text-sm text-muted-foreground">Enter composition</span>
+                  </div>
 
-              <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
-                <CounterInput label="Adults" value={adults} setValue={setAdults} info={`${Math.max(1, Math.ceil(adults / 2))} Adult room(s)`} />
-                <CounterInput label="Kids" value={kids} setValue={setKids} info={`${Math.ceil(kids / 2)} Kid room(s)`} />
-                <CounterInput label="Elderly" value={elderly} setValue={setElderly} info={`${Math.ceil(elderly / 2)} Elderly room(s)`} />
-              </div>
-            </div>
-
-            {/* Lifestyle */}
-            <div className="border rounded-lg p-3 bg-white space-y-3">
-              <div className="flex items-center gap-2">
-                <Briefcase className="w-4 h-4" />
-                <h4 className="font-medium text-[#2D3748]">Lifestyle</h4>
-              </div>
-
-              <label className="inline-flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" checked={wfh} onChange={() => setWfh(!wfh)} />
-                <span className="text-sm">Work from home</span>
-              </label>
-
-              <div>
-                <div className="text-sm text-[#4A5568] mb-2">Guest Frequency</div>
-                <div className="flex gap-2 flex-wrap">
-                  {(["rare", "sometimes", "frequent"] as const).map((g) => (
-                    <Button key={g} variant={guests === g ? "default" : "outline"} onClick={() => setGuests(g)}>
-                      {g === "rare" ? "Rarely" : g === "sometimes" ? "Sometimes" : "Frequently"}
-                    </Button>
-                  ))}
-                </div>
-              </div>
-
-            </div>
-
-            <div className="flex gap-3">
-              <Button className="flex-1 h-12 bg-[#1A365D] text-white" onClick={() => { /* track event / lead */ }}>Discuss with an expert</Button>
-              <Button className="flex-1 h-12" onClick={resetForm}>Reset</Button>
-            </div>
-          </div>
-
-          {/* RIGHT */}
-          <div className="md:w-1/2 md:sticky md:top-6 h-fit mt-6 md:mt-0 hsa-sticky-summary">
-            <div className="p-4 border rounded-xl bg-white shadow">
-              <div className="flex items-start justify-between">
-                <div className="flex items-center gap-3">
-                  <Layers className="w-5 h-5 text-[#2D3748]" />
-                  <div>
-                    <div className="text-sm text-[#4A5568]">Recommended Unit</div>
-                    <div className="text-lg font-semibold text-[#1A365D]">{calc.primary.type}</div>
-                    <div className="text-xs text-[#718096]">{calc.primary.size}</div>
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+                    <CounterInput label="Adults" value={adults} setValue={setAdults} info={`${Math.max(1, Math.ceil(adults / 2))} Adult room(s)`} />
+                    <CounterInput label="Kids" value={kids} setValue={setKids} info={`${Math.ceil(kids / 2)} Kid room(s)`} />
+                    <CounterInput label="Elderly" value={elderly} setValue={setElderly} info={`${Math.ceil(elderly / 2)} Elderly room(s)`} />
                   </div>
                 </div>
 
-                <span className={`px-2 py-1 rounded text-xs ${calc.primary.type.includes("2 BHK") ? "bg-yellow-100 text-yellow-800" : "bg-green-100 text-green-800"}`}>
-                  {calc.primary.type.includes("2 BHK") ? "Stretch Fit" : "Best Fit"}
-                </span>
-              </div>
+                {/* Lifestyle */}
+                <div className="border border-border rounded-xl p-5 bg-card space-y-4">
+                  <div className="flex items-center gap-2">
+                    <Briefcase className="w-5 h-5 text-primary" />
+                    <h4 className="font-semibold text-foreground">Lifestyle</h4>
+                  </div>
 
-              <div className="mt-4">
-                <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
-                  <div style={{ width: `${Math.min(100, calc.spacePressureScore)}%` }} className="h-2 bg-gradient-to-r from-indigo-500 to-teal-400" />
-                </div>
-                <div className="flex justify-between text-xs mt-2 text-[#4A5568]"><span>2 BHK</span><span>3 BHK</span><span>3 BHK Royale</span></div>
-              </div>
+                  <label className="inline-flex items-center gap-3 cursor-pointer">
+                    <input 
+                      type="checkbox" 
+                      checked={wfh} 
+                      onChange={() => setWfh(!wfh)} 
+                      className="w-4 h-4 rounded border-border text-primary focus:ring-primary"
+                    />
+                    <span className="text-sm text-foreground">Work from home</span>
+                  </label>
 
-              <div className="mt-4 text-sm text-[#4A5568]">
-                <ul className="list-disc list-inside space-y-1">
-                  {calc.primary.rationale.map((r, i) => (
-                    <li key={i}>{r}</li>
-                  ))}
-                </ul>
-              </div>
-
-              {calc.multiUnitSuggestion && (
-                <div className="mt-4 p-3 bg-orange-50 border border-orange-200 rounded-lg">
-                  <div className="text-sm font-semibold text-orange-800">Multi-Unit Recommendation</div>
-                  <div className="text-sm text-orange-700 mt-1">{calc.multiUnitSuggestion}</div>
-                </div>
-              )}
-
-              <div className="mt-4 p-3 bg-white rounded-lg border">
-                <div className="flex items-center justify-between mb-2">
-                  <div className="text-sm font-medium text-[#2D3748]">Space Pressure Score</div>
-                  <div className="text-sm text-[#4A5568]">{calc.spacePressureScore}%</div>
-                </div>
-
-                <div className="w-full bg-gray-200 h-2 rounded-full overflow-hidden">
-                  <div style={{ width: `${calc.spacePressureScore}%` }} className={`${calc.spacePressureScore < 60 ? "bg-green-500" : calc.spacePressureScore < 90 ? "bg-yellow-500" : "bg-red-500"} h-2`} />
+                  <div>
+                    <div className="text-sm text-muted-foreground mb-3">Guest Frequency</div>
+                    <div className="flex gap-2 flex-wrap">
+                      {(["rare", "sometimes", "frequent"] as const).map((g) => (
+                        <Button 
+                          key={g} 
+                          variant={guests === g ? "default" : "outline"} 
+                          size="sm"
+                          onClick={() => setGuests(g)}
+                          className="rounded-full"
+                        >
+                          {g === "rare" ? "Rarely" : g === "sometimes" ? "Sometimes" : "Frequently"}
+                        </Button>
+                      ))}
+                    </div>
+                  </div>
                 </div>
 
-                {calc.spacePressureScore >= 100 && (
-                  <div className="mt-3 p-3 bg-red-50 border border-red-200 rounded text-red-700 text-sm">Your needs exceed available capacity even with combos. Consider revising or exploring additional inventory.</div>
-                )}
+                {/* Action Buttons */}
+                <div className="flex gap-3">
+                  <Button 
+                    className="flex-1 h-12 bg-primary text-primary-foreground hover:bg-primary-dark" 
+                    onClick={onCtaClick}
+                  >
+                    <MessageCircle className="w-4 h-4 mr-2" />
+                    Discuss with an expert
+                  </Button>
+                  <Button 
+                    variant="outline"
+                    className="h-12 px-6" 
+                    onClick={resetForm}
+                  >
+                    <RotateCcw className="w-4 h-4 mr-2" />
+                    Reset
+                  </Button>
+                </div>
               </div>
 
-              <div className="mt-4 p-3 bg-white rounded-lg border">
-                <div className="text-sm font-medium text-[#2D3748] mb-2">Needs Summary</div>
-                <ul className="text-sm text-[#4A5568] space-y-1 list-disc list-inside">
-                  <li>Adults: {adults} — {Math.max(1, Math.ceil(adults / 2))} Adult room(s)</li>
-                  <li>Kids: {kids} — {Math.ceil(kids / 2)} Kid room(s)</li>
-                  <li>Elderly: {elderly} — {Math.ceil(elderly / 2)} Elderly room(s)</li>
-                  <li>WFH: {wfh ? "Yes" : "No"}</li>
-                  <li>Guests: {guests === "rare" ? "Occasional" : guests === "sometimes" ? "Sometimes" : "Frequent"}</li>
-                  <li className="font-semibold">Total rooms needed: {calc.roomsNeeded}</li>
-                </ul>
+              {/* RIGHT - Summary */}
+              <div className="lg:sticky lg:top-24 h-fit space-y-4">
+                <div className="p-5 border border-border rounded-xl bg-card shadow-sm">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                        <Layers className="w-5 h-5 text-primary" />
+                      </div>
+                      <div>
+                        <div className="text-sm text-muted-foreground">Recommended Unit</div>
+                        <div className="text-xl font-bold text-foreground">{calc.primary.type}</div>
+                        <div className="text-sm text-muted-foreground">{calc.primary.size}</div>
+                      </div>
+                    </div>
+
+                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${
+                      calc.primary.type.includes("2 BHK") 
+                        ? "bg-warning/10 text-warning" 
+                        : "bg-success/10 text-success"
+                    }`}>
+                      {calc.primary.type.includes("2 BHK") ? "Stretch Fit" : "Best Fit"}
+                    </span>
+                  </div>
+
+                  {/* Unit Meter */}
+                  <div className="mb-4">
+                    <div className="w-full bg-muted rounded-full h-2 overflow-hidden">
+                      <div 
+                        style={{ width: `${Math.min(100, calc.spacePressureScore)}%` }} 
+                        className="h-2 bg-gradient-to-r from-primary to-accent transition-all duration-500" 
+                      />
+                    </div>
+                    <div className="flex justify-between text-xs mt-2 text-muted-foreground">
+                      <span>2 BHK</span>
+                      <span>3 BHK</span>
+                      <span>3 BHK Royale</span>
+                    </div>
+                  </div>
+
+                  {/* Rationale */}
+                  {calc.primary.rationale.length > 0 && (
+                    <ul className="text-sm text-muted-foreground list-disc list-inside space-y-1 mb-4">
+                      {calc.primary.rationale.map((r, i) => (
+                        <li key={i}>{r}</li>
+                      ))}
+                    </ul>
+                  )}
+
+                  {/* Multi-Unit Suggestion */}
+                  {calc.multiUnitSuggestion && (
+                    <div className="p-3 bg-warning/5 border border-warning/20 rounded-lg mb-4">
+                      <div className="text-sm font-semibold text-warning">Multi-Unit Recommendation</div>
+                      <div className="text-sm text-muted-foreground mt-1">{calc.multiUnitSuggestion}</div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Space Pressure Score */}
+                <div className="p-5 border border-border rounded-xl bg-card">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="text-sm font-medium text-foreground">Space Pressure Score</div>
+                    <div className="text-sm font-semibold text-foreground">{calc.spacePressureScore}%</div>
+                  </div>
+
+                  <div className="w-full bg-muted h-2 rounded-full overflow-hidden">
+                    <div 
+                      style={{ width: `${calc.spacePressureScore}%` }} 
+                      className={`h-2 transition-all duration-500 ${
+                        calc.spacePressureScore < 60 
+                          ? "bg-success" 
+                          : calc.spacePressureScore < 90 
+                            ? "bg-warning" 
+                            : "bg-destructive"
+                      }`} 
+                    />
+                  </div>
+
+                  {calc.spacePressureScore >= 100 && (
+                    <div className="mt-3 p-3 bg-destructive/5 border border-destructive/20 rounded-lg text-destructive text-sm">
+                      Your needs exceed available capacity. Consider revising or exploring additional options.
+                    </div>
+                  )}
+                </div>
+
+                {/* Needs Summary */}
+                <div className="p-5 border border-border rounded-xl bg-card">
+                  <div className="text-sm font-medium text-foreground mb-3">Needs Summary</div>
+                  <ul className="text-sm text-muted-foreground space-y-2">
+                    <li className="flex justify-between">
+                      <span>Adults ({adults})</span>
+                      <span className="font-medium">{Math.max(1, Math.ceil(adults / 2))} room(s)</span>
+                    </li>
+                    <li className="flex justify-between">
+                      <span>Kids ({kids})</span>
+                      <span className="font-medium">{Math.ceil(kids / 2)} room(s)</span>
+                    </li>
+                    <li className="flex justify-between">
+                      <span>Elderly ({elderly})</span>
+                      <span className="font-medium">{Math.ceil(elderly / 2)} room(s)</span>
+                    </li>
+                    <li className="flex justify-between">
+                      <span>Work from Home</span>
+                      <span className="font-medium">{wfh ? "Yes (+1)" : "No"}</span>
+                    </li>
+                    <li className="flex justify-between border-t border-border pt-2 mt-2">
+                      <span className="font-semibold text-foreground">Total Rooms Needed</span>
+                      <span className="font-bold text-primary">{calc.roomsNeeded}</span>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+          </CardContent>
+        </Card>
+      </div>
+    </section>
   );
 }
