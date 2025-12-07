@@ -1,6 +1,6 @@
+import { memo, useEffect, useRef, useCallback } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import AutoScroll from "embla-carousel-auto-scroll";
-import { useEffect, useRef } from "react";
 import CTAButtons from "@/components/CTAButtons";
 
 interface ViewImage {
@@ -16,16 +16,16 @@ interface ViewsProps {
   onCtaClick: () => void;
 }
 
-const Views = ({
+const Views = memo(function Views({
   id = "views",
   title = "Mesmerizing Views",
   subtitle = "",
   images = [],
   onCtaClick,
-}: ViewsProps) => {
-  const [emblaRef] = useEmblaCarousel(
-    { loop: true, align: "start" },
-    [AutoScroll({ playOnInit: true, stopOnInteraction: true, speed: 1 })]
+}: ViewsProps) {
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    { loop: true, align: "start", dragFree: true },
+    [AutoScroll({ playOnInit: true, stopOnInteraction: true, speed: 0.8 })]
   );
 
   const sectionRef = useRef<HTMLDivElement | null>(null);
@@ -117,26 +117,27 @@ const Views = ({
 
         {/* Carousel */}
         <div className="overflow-hidden mb-12" ref={emblaRef}>
-          <div className="flex gap-6">
+          <div className="flex gap-4 md:gap-6 will-change-transform">
             {images.map((view, index) => (
               <div
                 key={index}
-                className="relative rounded-2xl overflow-hidden flex-[0_0_85%] md:flex-[0_0_60%] lg:flex-[0_0_45%]"
+                className="relative rounded-xl md:rounded-2xl overflow-hidden flex-[0_0_80%] sm:flex-[0_0_60%] md:flex-[0_0_50%] lg:flex-[0_0_40%] transform-gpu"
                 onClick={() => handleImageClick(view.title)}
                 style={{ boxShadow: "var(--shadow-strong)" }}
               >
                 <div className="aspect-video overflow-hidden">
                   <img
                     src={view.src}
-                    alt={view.title || ""}
+                    alt={view.title || "Project view"}
                     loading="lazy"
-                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-110 cursor-pointer"
+                    decoding="async"
+                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-105 cursor-pointer"
                   />
                 </div>
 
                 {view.title && (
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
-                    <p className="text-white font-semibold text-lg">{view.title}</p>
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3 md:p-4">
+                    <p className="text-white font-semibold text-base md:text-lg">{view.title}</p>
                   </div>
                 )}
               </div>
@@ -151,6 +152,6 @@ const Views = ({
       </div>
     </section>
   );
-};
+});
 
 export default Views;
