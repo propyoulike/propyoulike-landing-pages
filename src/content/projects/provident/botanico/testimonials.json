@@ -5,15 +5,18 @@
     "testimonials": [
       {
         "name": "1",
-        "videoId": "fHVs9sb92EA"
+        "videoId": "fHVs9sb92EA",
+	"quote": ""
       },
       {
         "name": "2",
-        "videoId": "JzHlmaKKReo"
+        "videoId": "JzHlmaKKReo",
+	"quote": ""
       },
       {
         "name": "3",
-        "videoId": "wWnBVhY4jm8"
+        "videoId": "wWnBVhY4jm8",
+	"quote": ""
       }
     ]
   }

@@ -20,12 +20,6 @@ export default function ProjectPage() {
   const [Template, setTemplate] = useState(null);
   const [templateError, setTemplateError] = useState(null);
 
-  // 🔍 Debug
-  console.log("DEBUG URL:", window.location.pathname);
-  console.log("DEBUG routeSlug:", routeSlug);
-  console.log("DEBUG resolvedSlug:", resolvedSlug);
-  console.log("DEBUG loaded project:", project);
-
   useEffect(() => {
     if (!project) return;
 
