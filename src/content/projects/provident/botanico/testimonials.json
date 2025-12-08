@@ -1,0 +1,20 @@
+{
+  "customerSpeaks": {
+    "title": "What Our Customers Say",
+    "subtitle": "Hear from families living here",
+    "testimonials": [
+      {
+        "name": "1",
+        "videoId": "fHVs9sb92EA"
+      },
+      {
+        "name": "2",
+        "videoId": "JzHlmaKKReo"
+      },
+      {
+        "name": "3",
+        "videoId": "wWnBVhY4jm8"
+      }
+    ]
+  }
+}
