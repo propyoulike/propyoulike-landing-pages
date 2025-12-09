@@ -8,6 +8,21 @@
 import React, { useEffect, useRef, useState } from "react";
 import CTAButtons from "@/components/CTAButtons";
 
+interface HeroProps {
+  videoUrl?: string;
+  images?: string[];
+  overlayTitle?: string;
+  overlaySubtitle?: string;
+  ctaEnabled?: boolean;
+  quickInfo?: {
+    price?: string;
+    typology?: string;
+    location?: string;
+    size?: string;
+  };
+  onCtaClick?: () => void;
+}
+
 export default function HeroStaticAware({
   videoUrl,
   images = [],
@@ -16,7 +31,7 @@ export default function HeroStaticAware({
   ctaEnabled = true,
   quickInfo,
   onCtaClick,
-}) {
+}: HeroProps) {
   const [iframeVisible, setIframeVisible] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
@@ -56,52 +71,52 @@ export default function HeroStaticAware({
       <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/30 to-black/80" />
 
       {/* Title + subtitle STATIC */}
-      <div className="absolute top-[24vh] left-1/2 -translate-x-1/2 text-center max-w-3xl text-white px-6">
+      <div className="absolute top-[18vh] md:top-[24vh] left-1/2 -translate-x-1/2 text-center max-w-3xl text-white px-6">
         {overlayTitle && (
-          <h1 className="text-4xl md:text-6xl font-bold drop-shadow-xl mb-3">
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold drop-shadow-xl mb-3">
             {overlayTitle}
           </h1>
         )}
         {overlaySubtitle && (
-          <p className="text-lg text-white/90 max-w-xl mx-auto">
+          <p className="text-base md:text-lg text-white/90 max-w-xl mx-auto">
             {overlaySubtitle}
           </p>
         )}
-      </div>
 
-      {/* CTA (hydrated) */}
-      {ctaEnabled && (
-        <div className="absolute left-1/2 bottom-[24vh] -translate-x-1/2">
-          <CTAButtons onFormOpen={onCtaClick} variant="hero" />
-        </div>
-      )}
+        {/* CTA in hero - moved here for better visibility */}
+        {ctaEnabled && (
+          <div className="mt-8 md:mt-10">
+            <CTAButtons onFormOpen={onCtaClick} variant="hero" />
+          </div>
+        )}
+      </div>
 
       {/* Quick-info (STATIC) */}
       {quickInfo && (
-        <div className="absolute bottom-0 w-full bg-background/85 backdrop-blur-md border-t border-border py-4">
-          <div className="container grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+        <div className="absolute bottom-0 w-full bg-background/85 backdrop-blur-md border-t border-border py-3 md:py-4">
+          <div className="container grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-4 text-center">
             {quickInfo.price && (
               <div>
                 <p className="text-xs text-muted-foreground">Price</p>
-                <p className="text-lg font-semibold">{quickInfo.price}</p>
+                <p className="text-sm md:text-lg font-semibold">{quickInfo.price}</p>
               </div>
             )}
             {quickInfo.typology && (
               <div>
                 <p className="text-xs text-muted-foreground">Typology</p>
-                <p className="text-lg font-semibold">{quickInfo.typology}</p>
+                <p className="text-sm md:text-lg font-semibold">{quickInfo.typology}</p>
               </div>
             )}
             {quickInfo.location && (
               <div>
                 <p className="text-xs text-muted-foreground">Location</p>
-                <p className="text-lg font-semibold">{quickInfo.location}</p>
+                <p className="text-sm md:text-lg font-semibold">{quickInfo.location}</p>
               </div>
             )}
             {quickInfo.size && (
               <div>
                 <p className="text-xs text-muted-foreground">Size</p>
-                <p className="text-lg font-semibold">{quickInfo.size}</p>
+                <p className="text-sm md:text-lg font-semibold">{quickInfo.size}</p>
               </div>
             )}
           </div>
