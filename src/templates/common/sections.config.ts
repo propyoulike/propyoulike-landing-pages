@@ -4,8 +4,7 @@ import Hero from "@/templates/common/Hero";
 import Navbar from "@/templates/common/Navbar";
 import Summary from "@/templates/common/ProjectSummary";
 import FloorPlans from "@/templates/common/FloorPlans";
-import Amenities from "@/templates/common/Amenities";
-import Views from "@/templates/common/Views";
+import AmenitiesViewsTabs from "@/templates/common/AmenitiesViewsTabs";
 import LocationUI from "@/templates/common/LocationUI";
 import Construction from "@/templates/common/ConstructionStatus";
 import PaymentPlans from "@/templates/common/PaymentPlans";
@@ -14,6 +13,8 @@ import CustomerSpeaks from "@/templates/common/CustomerSpeaks";
 import Brochure from "@/templates/common/Brochure";
 import BuilderAbout from "@/templates/common/BuilderAbout";
 import FAQ from "@/templates/common/FAQ";
+import BuilderOtherProjects from "@/components/Widgets/BuilderOtherProjects";
+import LocalityOtherProjects from "@/components/Widgets/LocalityOtherProjects";
 
 import type { ProjectData } from "@/content/schema/project.schema";
 
@@ -52,28 +53,30 @@ export const SECTIONS = {
     menuVisible: false,
     menuLabel: "Hero",
     menuOrder: 1,
-    props: (project: ProjectData) => ({
+    props: (project: ProjectData, openCTA: () => void) => ({
       videoUrl: project.hero?.videoUrl,
       images: project.hero?.images,
       overlayTitle: project.hero?.overlayTitle,
       overlaySubtitle: project.hero?.overlaySubtitle,
       ctaEnabled: project.hero?.ctaEnabled,
       quickInfo: project.hero?.quickInfo,
+      onCtaClick: openCTA,
     }),
   },
 
-Navbar: {
-  id: "navbar",
-  menuVisible: false,
-  menuLabel: "Home", // override label if needed
-  menuOrder: 2,
-  Component: React.lazy(() => import("@/templates/common/Navbar")),
-  props: (project: ProjectData, openCTA: () => void, autoMenu: any[]) => ({
-    logo: project.navbar?.logo,
-    autoMenu,
-    onCtaClick: openCTA,
-  }),
-},
+  Navbar: {
+    id: "navbar",
+    menuVisible: false,
+    menuLabel: "Home",
+    menuOrder: 2,
+    Component: React.lazy(() => import("@/templates/common/Navbar")),
+    props: (project: ProjectData, openCTA: () => void, autoMenu: any[]) => ({
+      logo: project.navbar?.logo,
+      builderLogo: project.navbar?.builderLogo,
+      autoMenu,
+      onCtaClick: openCTA,
+    }),
+  },
 
   Summary: {
     id: "summary",
@@ -99,37 +102,38 @@ Navbar: {
     Component: React.lazy(() => import("@/templates/common/FloorPlans")),
     props: (project, openCTA) => ({
       section: project.floorPlansSection,
+      paymentPlans: project.paymentPlans,
       onCtaClick: openCTA,
     }),
   },
 
+  // Combined Amenities + Views as tabs
   Amenities: {
     id: "amenities",
     menuVisible: true,
     menuLabel: "Amenities",
     menuOrder: 5,
-    Component: React.lazy(() => import("@/templates/common/Amenities")),
-    props: (project) => ({
-      heroTitle: project.amenities?.heroTitle,
-      heroSubtitle: project.amenities?.heroSubtitle,
+    Component: React.lazy(() => import("@/templates/common/AmenitiesViewsTabs")),
+    props: (project, openCTA) => ({
+      amenitiesTitle: project.amenities?.heroTitle,
+      amenitiesSubtitle: project.amenities?.heroSubtitle,
       amenityImages: project.amenities?.amenityImages,
       amenityCategories: project.amenities?.amenityCategories,
+      viewsTitle: project.views?.title || "Model Flats & Views",
+      viewsSubtitle: project.views?.subtitle,
+      viewImages: project.views?.images,
+      onCtaClick: openCTA,
     }),
   },
 
+  // Keep Views as separate section but hidden from menu (merged into Amenities tabs)
   Views: {
     id: "views",
     menuVisible: false,
     menuLabel: "Gallery",
     menuOrder: 6,
-    Component: React.lazy(() => import("@/templates/common/Views")),
-    props: (project, openCTA) => ({
-      id: "views",
-      title: project.views?.title,
-      subtitle: project.views?.subtitle,
-      images: project.views?.images,
-      onCtaClick: openCTA,
-    }),
+    Component: () => null, // No longer renders separately
+    props: () => ({}),
   },
 
 LocationUI: {
@@ -267,6 +271,30 @@ LoanEligibility: {
       subtitle: project.faqSubtitle,
       faqs: project.faq,
       onCtaClick: openCTA,
+    }),
+  },
+
+  // Builder Widget
+  BuilderWidget: {
+    id: "builder-projects",
+    menuVisible: false,
+    menuLabel: "More Projects",
+    menuOrder: 15,
+    Component: React.lazy(() => import("@/components/Widgets/BuilderOtherProjects")),
+    props: (project: ProjectData) => ({
+      projects: (project as any).builderProjects ?? [],
+    }),
+  },
+
+  // Locality Widget
+  LocalityWidget: {
+    id: "locality-projects",
+    menuVisible: false,
+    menuLabel: "Nearby Projects",
+    menuOrder: 16,
+    Component: React.lazy(() => import("@/components/Widgets/LocalityOtherProjects")),
+    props: (project: ProjectData) => ({
+      projects: (project as any).localityProjects ?? [],
     }),
   },
 } as const;

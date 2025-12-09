@@ -24,14 +24,10 @@ const CLEAN_MAP: Record<string, string> = {
   FAQ: "FAQ",
 };
 
-// Optional: sub-menu extraction
+// Optional: sub-menu extraction - disabled floor plan submenu per requirements
 function extractChildrenFor(name: string, project: ProjectData) {
-  if (name === "FloorPlansSection" && project.floorPlansSection?.unitPlans) {
-    return project.floorPlansSection.unitPlans.map((u, i) => ({
-      id: `unitplan-${i}`,
-      label: u.title,
-    }));
-  }
+  // Floor plan submenu disabled for now
+  return undefined;
 }
 
 export function buildAutoMenuFromResolved(

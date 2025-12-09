@@ -5,12 +5,13 @@ import type { AutoMenuItem } from "./buildAutoMenu";
 
 interface NavbarProps {
   logo?: string | null;
+  builderLogo?: string | null;
   autoMenu?: AutoMenuItem[];
   ctaLabel?: string | null;
   onCtaClick?: () => void;
 }
 
-const Navbar = memo(function Navbar({ logo, autoMenu = [], ctaLabel, onCtaClick }: NavbarProps) {
+const Navbar = memo(function Navbar({ logo, builderLogo, autoMenu = [], ctaLabel, onCtaClick }: NavbarProps) {
   const [sticky, setSticky] = useState(false);
   const [shrink, setShrink] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -116,22 +117,40 @@ const Navbar = memo(function Navbar({ logo, autoMenu = [], ctaLabel, onCtaClick 
           shrink ? "py-2" : "py-3 md:py-4"
         }`}>
           
-          {/* Logo */}
+          {/* Logo Section with Builder Logo */}
           <button 
-            className="flex items-center gap-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded"
+            className="flex items-center gap-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded"
             onClick={() => scrollTo("hero")}
             aria-label="Go to top"
           >
+            {/* Builder Logo */}
+            {builderLogo && (
+              <img
+                src={builderLogo}
+                alt="Builder logo"
+                className={`transition-all duration-300 ${shrink ? "h-7" : "h-9"}`}
+                loading="eager"
+                width="auto"
+                height={shrink ? 28 : 36}
+              />
+            )}
+            
+            {/* Divider */}
+            {builderLogo && logo && (
+              <div className={`w-px bg-border transition-all duration-300 ${shrink ? "h-6" : "h-8"}`} />
+            )}
+            
+            {/* Project Logo */}
             {logo ? (
               <img
                 src={logo}
-                alt="logo"
+                alt="Project logo"
                 className={`transition-all duration-300 ${shrink ? "h-8" : "h-10"}`}
                 loading="eager"
                 width="auto"
                 height={shrink ? 32 : 40}
               />
-            ) : (
+            ) : !builderLogo && (
               <span className={`font-bold text-foreground ${shrink ? "text-base" : "text-lg"}`}>
                 Project
               </span>

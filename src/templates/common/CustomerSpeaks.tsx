@@ -50,6 +50,8 @@ const CustomerSpeaks = memo(function CustomerSpeaks({
 
   if (!testimonials.length) return null;
 
+  const isSingleTestimonial = testimonials.length === 1;
+
   /* Tracking */
   const trackVideoPlay = (name: string) => {
     window?.gtag?.("event", "testimonial_video_play", {
@@ -62,6 +64,95 @@ const CustomerSpeaks = memo(function CustomerSpeaks({
     });
   };
 
+  // Single testimonial layout
+  if (isSingleTestimonial) {
+    const t = testimonials[0];
+    return (
+      <section
+        id={id}
+        ref={sectionRef}
+        className="py-20 lg:py-28 scroll-mt-32 bg-background"
+      >
+        <div className="container mx-auto px-4">
+          {/* Heading */}
+          <div className="text-center max-w-3xl mx-auto mb-12">
+            {title && (
+              <h2 className="text-3xl lg:text-5xl font-bold mb-6 text-foreground">
+                {title}
+              </h2>
+            )}
+            {subtitle && (
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                {subtitle}
+              </p>
+            )}
+          </div>
+
+          {/* Single Featured Testimonial */}
+          <div className="max-w-3xl mx-auto">
+            <div
+              className="bg-card rounded-2xl overflow-hidden border border-border"
+              style={{ boxShadow: "var(--shadow-strong)" }}
+            >
+              {/* Video */}
+              <div className="relative aspect-video group cursor-pointer">
+                {activeVideo === t.videoId ? (
+                  <iframe
+                    src={`https://www.youtube-nocookie.com/embed/${t.videoId}?autoplay=1`}
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    className="w-full h-full"
+                    loading="lazy"
+                  />
+                ) : (
+                  <>
+                    <img
+                      src={
+                        t.thumbUrl ||
+                        `https://img.youtube.com/vi/${t.videoId}/maxresdefault.jpg`
+                      }
+                      alt={t.name}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    <button
+                      onClick={() => {
+                        setActiveVideo(t.videoId);
+                        trackVideoPlay(t.name);
+                      }}
+                      className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-colors"
+                      aria-label={`Play video from ${t.name}`}
+                    >
+                      <div className="w-16 h-16 md:w-20 md:h-20 bg-primary rounded-full flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
+                        <Play className="w-8 h-8 md:w-10 md:h-10 text-white ml-1" />
+                      </div>
+                    </button>
+                  </>
+                )}
+              </div>
+
+              <div className="p-6 md:p-8 text-center">
+                {t.quote && (
+                  <p className="text-muted-foreground italic text-lg md:text-xl mb-4">
+                    "{t.quote}"
+                  </p>
+                )}
+                <p className="font-semibold text-foreground text-lg">— {t.name}</p>
+              </div>
+            </div>
+          </div>
+
+          {/* CTA */}
+          <div className="flex justify-center mt-12">
+            <CTAButtons onFormOpen={onCtaClick} variant="compact" />
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // Multiple testimonials - carousel layout
   return (
     <section
       id={id}

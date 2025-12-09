@@ -15,7 +15,6 @@
     "Summary",
     "FloorPlansSection",
     "Amenities",
-    "Views",
     "LocationUI",
     "Construction",
     "PaymentPlans",
@@ -23,7 +22,9 @@
     "CustomerSpeaks",
     "Brochure",
     "BuilderAbout",
-    "FAQ"
+    "FAQ",
+    "BuilderWidget",
+    "LocalityWidget"
   ],
 
   "files": {

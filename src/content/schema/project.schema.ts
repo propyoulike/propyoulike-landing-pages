@@ -29,6 +29,7 @@ const HeroSchema = z
 const NavbarSchema = z
   .object({
     logo: z.string().optional(),
+    builderLogo: z.string().optional(),
     menu: z
       .array(
         z.object({
