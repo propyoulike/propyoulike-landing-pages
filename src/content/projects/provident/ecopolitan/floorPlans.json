@@ -3,10 +3,12 @@
     "title": "Meticulously Designed Homes",
     "subtitle": "Explore our thoughtfully designed homes with virtual walkthroughs and detailed floor plans",
 
+    "modelFlats": [ ],
+
+
     "unitPlans": [
       {
         "title": "1BHK",
-        "videoUrl": "",
         "description": "1 Bedroom Condo - Type 2",
         "sba": "539 sq.ft",
         "ca": "329.81 sq.ft",
@@ -17,7 +19,6 @@
       },
       {
         "title": "2BHK",
-        "videoUrl": "",
         "description": "2 BHK Grand Type 1",
         "sba": "1057 sq.ft",
         "ca": "665.43 sq.ft",
@@ -28,7 +29,6 @@
       },
       {
         "title": "3BHK",
-        "videoUrl": "",
         "description": "3 BHK Grand Type 2",
         "sba": "1416 sq.ft",
         "ca": "917.74 sq.ft",
@@ -39,7 +39,6 @@
       },
       {
         "title": "3.5BHK + Staff",
-        "videoUrl": "",
         "description": "3.5BHK + Staff",
         "sba": "1793 + 121 (Staff) sq.ft",
         "ca": "1118.16 + 73.20 sq.ft",

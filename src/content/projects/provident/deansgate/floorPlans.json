@@ -3,10 +3,16 @@
     "title": "Meticulously Designed Homes",
     "subtitle": "Explore our thoughtfully designed homes with virtual walkthroughs and detailed floor plans",
 
+    "modelFlats": [
+      {
+        "title": "Type 1",
+        "videoUrl": "https://youtu.be/j8KYbgyGCXk"
+      }
+    ],
+
     "unitPlans": [
       {
         "title": "Type 1",
-        "videoUrl": "https://youtu.be/j8KYbgyGCXk",
         "description": "",
         "sba": "",
         "ca": "",
@@ -17,7 +23,6 @@
       },
       {
         "title": "Type 2",
-        "videoUrl": "https://youtu.be/j8KYbgyGCXk",
         "description": "",
         "sba": "",
         "ca": "",
@@ -28,7 +33,6 @@
       },
       {
         "title": "Type 3",
-        "videoUrl": "https://youtu.be/j8KYbgyGCXk",
         "description": "",
         "sba": "",
         "ca": "",

@@ -3,10 +3,24 @@
     "title": "Meticulously Designed Homes",
     "subtitle": "Explore our thoughtfully designed homes with virtual walkthroughs and detailed floor plans",
 
+    "modelFlats": [
+      {
+        "title": "2 BHK Flat",
+        "videoUrl": "https://www.youtube.com/shorts/z6-d5uB4rRA"
+      },
+      {
+        "title": "3 BHK Regular Flat",
+        "videoUrl": "https://youtube.com/shorts/QEtUBt1Ac3U"
+      },
+      {
+        "title": "3 BHK Royale Flat",
+        "videoUrl": "https://youtu.be/B2izuPDFLak"
+      }
+    ],
+
     "unitPlans": [
       {
         "title": "2 BHK Flat",
-        "videoUrl": "https://www.youtube.com/shorts/z6-d5uB4rRA",
         "description": "Experience the thoughtful design and smart use of space",
         "sba": "883 sq.ft",
         "ca": "628 sq.ft",
@@ -17,7 +31,6 @@
       },
       {
         "title": "3 BHK Regular Flat",
-        "videoUrl": "https://youtube.com/shorts/QEtUBt1Ac3U",
         "description": "Explore premium homes designed for growing families",
         "sba": "1082 sq.ft",
         "ca": "779 sq.ft",
@@ -28,7 +41,6 @@
       },
       {
         "title": "3 BHK Royale Flat",
-        "videoUrl": "https://youtu.be/B2izuPDFLak",
         "description": "Discover luxurious living with premium finishes",
         "sba": "1779 sq.ft",
         "ca": "1287 sq.ft",

@@ -86,6 +86,7 @@ Navbar: {
       subtitle: project.summary?.subtitle,
       description: project.summary?.description,
       highlights: project.summary?.highlights,
+      modelFlats: project.floorPlansSection?.modelFlats,
       onCtaClick: openCTA,
     }),
   },

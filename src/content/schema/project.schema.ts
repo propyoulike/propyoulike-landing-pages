@@ -97,10 +97,16 @@ const FloorPlansSectionSchema = z
     title: z.string(),
     subtitle: z.string(),
 
-    unitPlans: z.array(
+    modelFlats: z.array(
       z.object({
         title: z.string(),
         videoUrl: z.string(),
+      })
+    ),
+
+    unitPlans: z.array(
+      z.object({
+        title: z.string(),
         description: z.string(),
         sba: z.string(),
         ca: z.string(),

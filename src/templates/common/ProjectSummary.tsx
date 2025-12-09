@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import * as Icons from "lucide-react";
 import { Card } from "@/components/ui/card";
 import CTAButtons from "@/components/CTAButtons";
+import ModelVideos from "./ModelVideos";
 
 interface HighlightItem {
   icon?: string;
@@ -14,6 +15,7 @@ interface ProjectSummaryProps {
   subtitle?: string;
   description?: string;
   highlights?: HighlightItem[];
+  modelFlats?: { title: string; videoUrl: string }[]; // NEW
   onCtaClick: () => void;
 }
 
@@ -22,8 +24,10 @@ const ProjectSummary = ({
   subtitle,
   description,
   highlights = [],
+  modelFlats = [],
   onCtaClick,
 }: ProjectSummaryProps) => {
+
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const hasTrackedView = useRef(false);
 
@@ -64,8 +68,6 @@ const ProjectSummary = ({
     return () => observer.disconnect();
   }, []);
 
-  /* ---------------- RENDER ---------------- */
-
   return (
     <section
       id="project-summary"
@@ -92,22 +94,18 @@ const ProjectSummary = ({
           {/* HIGHLIGHTS */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
             {highlights.map((item, index) => {
-              // Get icon safely - default to Circle if not found
               const iconName = item.icon as string;
-              const LucideIcon = iconName && iconName in Icons 
-                ? (Icons as unknown as Record<string, React.ComponentType<{ className?: string }>>)[iconName]
-                : null;
+              const LucideIcon =
+                iconName && iconName in Icons
+                  ? (Icons as any)[iconName]
+                  : Icons.Circle;
 
               return (
                 <Card
                   key={index}
                   className="p-6 text-center hover:shadow-lg transition-shadow"
                 >
-                  {LucideIcon ? (
-                    <LucideIcon className="w-12 h-12 mx-auto mb-4 text-primary" />
-                  ) : (
-                    <Icons.Circle className="w-12 h-12 mx-auto mb-4 text-primary" />
-                  )}
+                  <LucideIcon className="w-12 h-12 mx-auto mb-4 text-primary" />
                   <h3 className="font-semibold text-foreground mb-2">
                     {item.label}
                   </h3>
@@ -125,6 +123,13 @@ const ProjectSummary = ({
               {description}
             </div>
           )}
+
+          {/* 👇 NEW: MODEL FLAT SECTION (only if videos exist) */}
+{Array.isArray(modelFlats) && modelFlats.length > 0 && (
+  <div className="mb-16">
+    <ModelVideos modelFlats={modelFlats} />
+  </div>
+)}
 
           {/* CTA */}
           <div className="mt-12 flex justify-center">
