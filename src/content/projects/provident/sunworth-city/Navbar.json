@@ -1,5 +1,5 @@
 {
-  "logo": "https://www.providenthousing.com/wp-content/themes/provident/assets/images/Provident_logo_final_blacks.png",
+  "logo": null,
   "builderLogo": "https://www.providenthousing.com/wp-content/themes/provident/assets/images/Provident_logo_final_blacks.png",
   "menu": [
     { "label": "Overview", "targetId": "project-summary" },
