@@ -1,0 +1,15 @@
+
+   {
+    "heroTitle": "Your Leisure Adorned With Opulence",
+    "heroSubtitle": "From sports to leisure, wellness to education...",
+    "amenityImages": [
+      { "src": "https://www.providenthousing.com/wp-content/uploads/2023/08/Amphitheater_View-1.webp", "title": "Amphitheatre", "description": "Amphitheatre" },
+      { "src": "https://www.providenthousing.com/wp-content/uploads/2023/08/Deans_Clubhouse_Pool_night_view-1.webp", "title": "Swimming Pool", "description": "Pool for all ages" },
+      { "src": "https://www.providenthousing.com/wp-content/uploads/2023/08/Multipurpose-Court-and-Fottball-1.webp", "title": "Sports Court", "description": "Premium sports facilities" },
+      { "src": "https://www.providenthousing.com/wp-content/uploads/2023/08/Childrens_park-1.webp", "title": "Childrens Play Area", "description": "Safe and fun play zones for kids" },
+      { "src": "https://www.providenthousing.com/wp-content/uploads/2023/08/CLuhouse-with-Clock-tower-1.webp", "title": "Clocktower", "description": "Clocktower" },
+      { "src": "https://www.providenthousing.com/wp-content/uploads/2023/08/Heaton-Park-1.webp", "title": "Heaton Park", "description": "Scenic nature trails within the township" }
+    ],
+    "amenityCategories": [
+    ]
+  }

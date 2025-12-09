@@ -1,0 +1,15 @@
+{
+    "heroTitle": "A lifestyle project that suits your needs.",
+    "heroSubtitle": "Explore detailed information on floor plans, amenities, pricing, layout plans and official project documents.",
+    "coverImage": "https://www.providenthousing.com/wp-content/uploads/2023/08/PROVIDENT-DEANSGATE-MOCKUP-front.webp",
+    "documents": [
+      {
+        "title": "RERA Certificate",
+        "url": "https://www.providenthousing.com/wp-content/uploads/2023/08/Provident-Deansgate-RERA-1.pdf"
+      },
+      {
+        "title": "EC Certificate",
+        "url": "https://www.providenthousing.com/wp-content/themes/provident/assets/images/pdf.png"
+      }
+    ]
+  }

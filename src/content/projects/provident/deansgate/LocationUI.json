@@ -1,0 +1,78 @@
+{
+  "title": "The Perfect Setting",
+  "subtitle": "Everything you need within easy reach — schools, hospitals, connectivity & more.",
+  "tagline": "Life. Convenience. Future-ready.",
+
+  "videoUrl": "https://www.youtube.com/embed/3wkUObyTLdQ?autoplay=1&mute=1&controls=0&loop=1&playlist=3wkUObyTLdQ&rel=0&modestbranding=1",
+
+  "mapUrl": "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7767.780709844857!2d77.651902!3d13.232197!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1f156e4bf947%3A0x99ff9175bc295b0b!2sProvident%20Deansgate!5e0!3m2!1sen!2sin!4v1765174543804!5m2!1sen!2sin",
+
+  "categories": [
+    {
+      "title": "Commute",
+      "items": [
+        "IVC Road - 1 min",
+        "Sadahalli Main Road - 2 mins",
+        "NH-44 - 6 mins",
+        "Doddaballapur Main Road - 16 mins",
+        "Kempegowda International Airport - 16 mins",
+        "Yehalanka Railway Station - 30 mins"
+      ]
+    },
+    {
+      "title": "Corporate",
+      "items": [
+        "Prestige Tech Cloud Park - 10 mins",
+        "ITC Factory - 13 mins",
+        "Ecopolis - 19 mins",
+        "North Gate - 25 mins",
+        "KIADB SEZ - 29 mins",
+        "Manyata Tech Park - 37 mins"
+      ]
+    },
+    {
+      "title": "Hospitals",
+      "items": [
+        "Akash Multispeciality Hospital - 17 mins",
+        "Cytecare Hospital - 24 mins",
+        "Aster CMI Hospital - 34 mins",
+        "Omega Multispeciality Hospital - 35 mins",
+        "Manipal Hospital - 35 mins"
+      ]
+    },
+    {
+      "title": "Shopping & Entertainment",
+      "items": [
+        "The School of Ancient Wisdom - 6 mins",
+        "Clarks Exotica - 13 mins",
+        "Padukone-Dravid Centre for Sports Excellence - 16 mins",
+        "D-Mart - 20 mins",
+        "RMZ Galleria Mall - 35 mins",
+        "Phoenix Mall of Asia - 35 mins",
+        "Nandi Hills - 48 mins"
+      ]
+    },
+    {
+      "title": "Schools",
+      "items": [
+        "NAFL-North Urbana - 12 mins",
+        "Stonehill International School - 15 mins",
+        "Vidyashilp Academy - 22 mins",
+        "Chrysalis High School - 25 mins",
+        "Sterling English School - 25 mins"
+      ]
+    },
+    {
+      "title": "Colleges",
+      "items": [
+        "Akash Medical College - 17 mins",
+        "Government First College -17 mins",
+        "MVIT - 22 mins",
+        "Nitte Meenakshi Institute of Technology - 25 mins",
+        "Vogue Insititute of Fashion Technology - 30 mins"
+      ]
+    }
+  ],
+
+  "ctaText": "Schedule a site visit today"
+}
