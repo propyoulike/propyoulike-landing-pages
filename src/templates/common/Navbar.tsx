@@ -6,12 +6,13 @@ import type { AutoMenuItem } from "./buildAutoMenu";
 interface NavbarProps {
   logo?: string | null;
   builderLogo?: string | null;
+  projectName?: string;
   autoMenu?: AutoMenuItem[];
   ctaLabel?: string | null;
   onCtaClick?: () => void;
 }
 
-const Navbar = memo(function Navbar({ logo, builderLogo, autoMenu = [], ctaLabel, onCtaClick }: NavbarProps) {
+const Navbar = memo(function Navbar({ logo, builderLogo, projectName, autoMenu = [], ctaLabel, onCtaClick }: NavbarProps) {
   const [sticky, setSticky] = useState(false);
   const [shrink, setShrink] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -140,7 +141,7 @@ const Navbar = memo(function Navbar({ logo, builderLogo, autoMenu = [], ctaLabel
               <div className={`w-px bg-border transition-all duration-300 ${shrink ? "h-6" : "h-8"}`} />
             )}
             
-            {/* Project Logo */}
+            {/* Project Logo or Name */}
             {logo ? (
               <img
                 src={logo}
@@ -150,11 +151,11 @@ const Navbar = memo(function Navbar({ logo, builderLogo, autoMenu = [], ctaLabel
                 width="auto"
                 height={shrink ? 32 : 40}
               />
-            ) : !builderLogo && (
-              <span className={`font-bold text-foreground ${shrink ? "text-base" : "text-lg"}`}>
-                Project
+            ) : projectName ? (
+              <span className={`font-bold text-foreground transition-all duration-300 ${shrink ? "text-sm" : "text-base"}`}>
+                {projectName}
               </span>
-            )}
+            ) : null}
           </button>
 
           {/* Desktop menu */}

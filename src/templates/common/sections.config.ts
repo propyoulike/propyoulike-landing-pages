@@ -73,6 +73,7 @@ export const SECTIONS = {
     props: (project: ProjectData, openCTA: () => void, autoMenu: any[]) => ({
       logo: project.navbar?.logo,
       builderLogo: project.navbar?.builderLogo,
+      projectName: project.projectName,
       autoMenu,
       onCtaClick: openCTA,
     }),
