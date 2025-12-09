@@ -1,7 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
 import CTAButtons from "@/components/CTAButtons";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 
 interface FloorPlansProps {
   onCtaClick: () => void;
@@ -44,26 +44,43 @@ const FloorPlans = ({ onCtaClick, trackGA, trackFB, section }: FloorPlansProps) 
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [zoomImage, setZoomImage] = useState<string | null>(null);
 
+
+  // CHANGE: safer parsing for all YouTube URL formats
+  // WHY: avoids thumbnail failures and autoplay embed errors
+  const getYoutubeId = useCallback((url: string) => {
+    try {
+      const u = new URL(url);
+      return u.searchParams.get("v") || u.pathname.split("/").pop() || "";
+    } catch {
+      return url.split("/").pop() || "";
+    }
+  }, []);
+
+  // CHANGE: reuse extracted ID instead of splitting URL
   const convertToEmbed = (url: string) => {
-    if (url.includes("shorts")) return url.replace("shorts/", "embed/");
-    if (url.includes("youtu.be")) return url.replace("youtu.be/", "youtube.com/embed/");
-    if (url.includes("watch?v=")) return url.replace("watch?v=", "embed/");
-    return url;
+    const id = getYoutubeId(url);
+    return `https://www.youtube.com/embed/${id}`;
   };
 
+
+  // CHANGE: ESC cleanup now stable with useCallback
+  // WHY: avoids unnecessary re-binds
+  const handleEsc = useCallback((e: KeyboardEvent) => {
+    if (e.key === "Escape") {
+      setZoomImage(null);
+      setIsFullscreen(false);
+    }
+  }, []);
+
   useEffect(() => {
-    const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        setZoomImage(null);
-        setIsFullscreen(false);
-      }
-    };
     window.addEventListener("keydown", handleEsc);
     return () => window.removeEventListener("keydown", handleEsc);
-  }, []);
+  }, [handleEsc]);
+
 
   const observerRef = useRef<IntersectionObserver | null>(null);
   const videoRefs = useRef<(HTMLDivElement | null)[]>([]);
+
 
   useEffect(() => {
     observerRef.current = new IntersectionObserver(
@@ -91,7 +108,8 @@ const FloorPlans = ({ onCtaClick, trackGA, trackFB, section }: FloorPlansProps) 
     });
 
     return () => observerRef.current?.disconnect();
-  }, []);
+  }, [section.unitPlans.length]);
+
 
   return (
     <section
@@ -111,15 +129,73 @@ const FloorPlans = ({ onCtaClick, trackGA, trackFB, section }: FloorPlansProps) 
           </p>
         </div>
 
-        <Tabs defaultValue="unit-plans" className="max-w-7xl mx-auto">
+        <Tabs defaultValue="master-plan" className="max-w-7xl mx-auto">
           <TabsList className="grid w-full grid-cols-3 mb-12 h-auto">
-            <TabsTrigger value="unit-plans">Unit Plans</TabsTrigger>
-            <TabsTrigger value="floor-plans">Floor Plans</TabsTrigger>
             <TabsTrigger value="master-plan">Master Plan</TabsTrigger>
+            <TabsTrigger value="floor-plans">Floor Plans</TabsTrigger>
+            <TabsTrigger value="unit-plans">Unit Plans</TabsTrigger>
           </TabsList>
+
+
+          {/* MASTER PLAN */}
+          <TabsContent value="master-plan" className="space-y-8">
+            <Card className="p-8">
+              <img
+                src={section.masterPlan.image}
+                alt={section.masterPlan.title}
+
+                // CHANGE: Lazy load images
+                loading="lazy"
+              />
+              <div className="text-center mt-6 space-y-3">
+                <h3 className="text-2xl font-bold text-foreground">
+                  {section.masterPlan.title}
+                </h3>
+                <p className="text-muted-foreground max-w-3xl mx-auto">
+                  {section.masterPlan.description}
+                </p>
+              </div>
+            </Card>
+          </TabsContent>
+
+
+          {/* FLOOR PLANS */}
+          <TabsContent value="floor-plans" className="space-y-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {section.floorPlans.map((plan, i) => (
+                <Card key={i} className="p-6 hover:shadow-xl transition-shadow">
+                  <button
+                    onClick={() => setZoomImage(plan.image)}
+                    className="w-full p-0 bg-transparent border-0 text-left"
+                    type="button"
+                  >
+                    <img
+                      src={plan.image}
+                      alt={plan.title}
+
+                      // CHANGE: Lazy load
+                      loading="lazy"
+
+                      className="w-full h-auto rounded-lg cursor-zoom-in"
+                    />
+                  </button>
+                  <h3 className="text-2xl font-bold my-3 text-foreground">
+                    {plan.description}
+                  </h3>
+                </Card>
+              ))}
+            </div>
+          </TabsContent>
+
 
           {/* UNIT PLANS */}
           <TabsContent value="unit-plans" className="space-y-8">
+
+            {/* CHANGE: mobile UX hint */}
+            <div className="text-center text-xs text-muted-foreground md:hidden">
+              ← Swipe to explore →
+            </div>
+
             <div className="flex gap-6 overflow-x-auto py-4">
               {section.unitPlans.map((video, i) => {
                 const isOpen = expanded === i;
@@ -134,6 +210,7 @@ const FloorPlans = ({ onCtaClick, trackGA, trackFB, section }: FloorPlansProps) 
                     ref={(el) => (videoRefs.current[i] = el)}
                     data-index={i}
                   >
+
                     {/* Thumbnail / Video */}
                     <div
                       className="w-full h-40 bg-black mb-3 rounded-lg overflow-hidden cursor-pointer"
@@ -149,12 +226,14 @@ const FloorPlans = ({ onCtaClick, trackGA, trackFB, section }: FloorPlansProps) 
                         />
                       ) : (
                         <img
-                          src={`https://img.youtube.com/vi/${video.videoUrl.split("/").pop()}/hqdefault.jpg`}
+                          src={`https://img.youtube.com/vi/${getYoutubeId(video.videoUrl)}/hqdefault.jpg`}
                           alt={video.title}
+                          loading="lazy"
                           className="w-full h-full object-cover"
                         />
                       )}
                     </div>
+
 
                     {/* Expand button */}
                     <button
@@ -180,6 +259,8 @@ const FloorPlans = ({ onCtaClick, trackGA, trackFB, section }: FloorPlansProps) 
                       </span>
                     </button>
 
+
+
                     {/* Expanded content */}
                     {isOpen && (
                       <div className="mt-3 text-sm text-muted-foreground">
@@ -197,6 +278,8 @@ const FloorPlans = ({ onCtaClick, trackGA, trackFB, section }: FloorPlansProps) 
                           <img
                             src={video.floorPlanImage}
                             alt=""
+                            loading="lazy"
+
                             className="mt-3 w-full rounded-lg cursor-zoom-in"
                             onClick={() => setZoomImage(video.floorPlanImage)}
                           />
@@ -208,50 +291,8 @@ const FloorPlans = ({ onCtaClick, trackGA, trackFB, section }: FloorPlansProps) 
               })}
             </div>
           </TabsContent>
-
-          {/* FLOOR PLANS */}
-          <TabsContent value="floor-plans" className="space-y-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {section.floorPlans.map((plan, i) => (
-                <Card key={i} className="p-6 hover:shadow-xl transition-shadow">
-                  <button
-                    onClick={() => setZoomImage(plan.image)}
-                    className="w-full p-0 bg-transparent border-0 text-left"
-                    type="button"
-                  >
-                    <img
-                      src={plan.image}
-                      alt={plan.title}
-                      className="w-full h-auto rounded-lg cursor-zoom-in"
-                    />
-                  </button>
-                  <h3 className="text-2xl font-bold my-3 text-foreground">
-                    {plan.description}
-                  </h3>
-                </Card>
-              ))}
-            </div>
-          </TabsContent>
-
-          {/* MASTER PLAN */}
-          <TabsContent value="master-plan" className="space-y-8">
-            <Card className="p-8">
-              <img
-                src={section.masterPlan.image}
-                alt={section.masterPlan.title}
-                className="w-full h-auto rounded-xl"
-              />
-              <div className="text-center mt-6 space-y-3">
-                <h3 className="text-2xl font-bold text-foreground">
-                  {section.masterPlan.title}
-                </h3>
-                <p className="text-muted-foreground max-w-3xl mx-auto">
-                  {section.masterPlan.description}
-                </p>
-              </div>
-            </Card>
-          </TabsContent>
         </Tabs>
+
 
         {/* CTA */}
         <div className="mt-12 text-center">
@@ -262,6 +303,7 @@ const FloorPlans = ({ onCtaClick, trackGA, trackFB, section }: FloorPlansProps) 
         </div>
       </div>
 
+
       {/* IMAGE ZOOM */}
       {zoomImage && (
         <div
@@ -270,14 +312,17 @@ const FloorPlans = ({ onCtaClick, trackGA, trackFB, section }: FloorPlansProps) 
         >
           <img
             src={zoomImage}
+            loading="lazy"  // CHANGE: lazy load
             className="max-w-[95%] max-h-[95%] rounded-lg shadow-lg"
             alt=""
           />
         </div>
       )}
 
+
       {/* FULLSCREEN VIDEO */}
-      {isFullscreen && (
+      {isFullscreen && section.unitPlans[activeIndex] && (
+        // CHANGE: defensive guard so fullscreen can't crash when empty
         <div
           className="fixed inset-0 bg-black/90 flex items-center justify-center z-50"
           onClick={() => setIsFullscreen(false)}
