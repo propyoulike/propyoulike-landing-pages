@@ -1,0 +1,22 @@
+
+   {
+    "heroTitle": "Your Leisure Adorned With Opulence",
+    "heroSubtitle": "From sports to leisure, wellness to education...",
+    "amenityImages": [
+      { "src": "https://www.providenthousing.com/wp-content/uploads/2024/02/amenitie-barbeque-1.jpg", "title": "Barbeque Deck", "description": "" },
+      { "src": "https://www.providenthousing.com/wp-content/uploads/2024/02/amenitie-chess-1.jpg", "title": "Chess Court", "description": "" },
+      { "src": "https://www.providenthousing.com/wp-content/uploads/2024/02/amenitie-climbing-1.jpg", "title": "Climbing Wall", "description": "" },
+      { "src": "https://www.providenthousing.com/wp-content/uploads/2024/02/amenitie-criket-1-1.jpg", "title": "Cricket Practice Pitch", "description": "" },
+      { "src": "https://www.providenthousing.com/wp-content/uploads/2024/02/amenitie-dry-fountain-1-1.jpg", "title": "Dry Deck Fountain", "description": "" },
+      { "src": "https://www.providenthousing.com/wp-content/uploads/2024/02/amenitie-forest-1-1.jpg", "title": "Forest Trail", "description": "" },
+      { "src": "https://www.providenthousing.com/wp-content/uploads/2024/02/amenitie-kabbadi-1-1.jpg", "title": "Kabaddi Court", "description": "" },
+      { "src": "https://www.providenthousing.com/wp-content/uploads/2024/02/amenitie-scating-ring-1.jpg", "title": "Skating Rink", "description": "" },
+      { "src": "https://www.providenthousing.com/wp-content/uploads/2024/02/amenitie-senior-citizen-1.jpg", "title": "Senior Citizen Court", "description": "" },
+      { "src": "https://www.providenthousing.com/wp-content/uploads/2024/02/child-play-area-5.png", "title": "Childrens Play Area", "description": "" },
+      { "src": "https://www.providenthousing.com/wp-content/uploads/2024/02/hopscotch-2.png", "title": "Hopscotch", "description": "" },
+      { "src": "https://www.providenthousing.com/wp-content/uploads/2024/02/jogging-track-5.png", "title": "Jogging Track", "description": "" },
+      { "src": "https://www.providenthousing.com/wp-content/uploads/2024/02/paw-park-3.png", "title": "Paw Park", "description": "" }
+    ],
+    "amenityCategories": [
+    ]
+  }

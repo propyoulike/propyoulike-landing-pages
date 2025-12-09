@@ -1,0 +1,97 @@
+{
+  "sectionId": "payment-plans",
+  "sectionTitle": "Pricing & Payment Plans",
+  "sectionSubtitle": "Transparent costing • Milestone-based • RERA compliant",
+
+  "pricingTitle": "Pricing Computation",
+  "pricingComputation": [
+    {
+      "title": "Sales Consideration",
+      "points": [
+        "Flat/Unit Cost - Size × Base Rate",
+        "Club Development Charges – ₹3,00,000",
+        "Premium Location Charges – 0/-",
+        "Floor Rise Charges – 0/-",
+        "Car Park Charges – 0/-"
+      ]
+    },
+    {
+      "title": "GST on Sale Consideration",
+      "points": [
+        "Under-Construction Units: 5% GST",
+        "Ready-to-Move Units: No GST",
+        "Charged as per IT Act",
+        "Applied milestone-wise"
+      ]
+    },
+    {
+      "title": "Other / Possession Charges",
+      "points": [
+        "Advance Maintenance (Actuals) roughly 6 per month per sft (SBA)",
+        "Electricity & Water Infra Charges: Roughly 350 per sft (SBA)",
+        "Corpus Fund – 0/-",
+        "Legal Charges – approx ₹50,000",
+        "Modifications (if applicable)",
+        "Stamp / Admin Fees (if applicable)",
+        "GST on Other Charges – 18%"
+      ]
+    },
+    {
+      "title": "Stamp Duty & Registration",
+      "points": [
+        "Approx. total: 7.6% of Agreement Value",
+        "Stamp Duty – 5%",
+        "Cess – 10% on stamp duty",
+        "Surcharge – 2% on stamp duty",
+        "Registration – 2%"
+      ]
+    }
+  ],
+
+  "scheduleTitle": "Construction Payment Schedule",
+  "paymentSchedule": [
+    {
+      "title": "Agreement Stage",
+      "percentage": "20%",
+      "items": [
+        "Initial Advance – ₹2,00,000",
+        "Balance Advance – 9%",
+        "Post Agreement Execution – 11%"
+      ]
+    },
+    {
+      "title": "Excavation Complete",
+      "percentage": "10%"
+    },
+    {
+      "title": "Foundation Complete",
+      "percentage": "15%"
+    },
+    {
+      "title": "Structure Completion",
+      "percentage": "35%",
+      "items": [
+        "Ground/Stilt Slab – 7%",
+        "Third Floor Slab – 7%",
+        "Sixth Floor Slab – 7%",
+        "Ninth Floor Slab – 7%",
+        "Terrace Slab – 7%"
+      ]
+    },
+    {
+      "title": "Unit Completion",
+      "percentage": "15%",
+      "items": [
+        "Flooring Completion – 5%",
+        "External Windows – 5%",
+        "Lift Erection – 5%"
+      ]
+    },
+    {
+      "title": "Possession",
+      "percentage": "5%"
+    }
+  ],
+
+  "ctaText": "Get detailed pricing and payment breakdown"
+}

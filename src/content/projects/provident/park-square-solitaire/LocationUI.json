@@ -1,0 +1,98 @@
+{
+  "title": "The Perfect Setting",
+  "subtitle": "Everything you need within easy reach — schools, hospitals, connectivity & more.",
+  "tagline": "Life. Convenience. Future-ready.",
+
+  "videoUrl": "https://www.youtube.com/embed/lsvKT2kx-As?autoplay=1&mute=1&controls=0&loop=1&playlist=lsvKT2kx-As&rel=0&modestbranding=1",
+  "mapUrl": "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d31117.660149977582!2d77.541299!3d12.862158!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae417a8e22df31%3A0xf75cab391d57204e!2sProvident%20Park%20Square!5e0!3m2!1sen!2sin!4v1765260640924!5m2!1sen!2sin",
+
+  "categories": [
+    {
+      "title": "Commute",
+      "items": [
+        "Banashankari Circle - 8.5 Km",
+        "Outer Ring Road - 7.5 Km",
+        "Nice Road - 1.8 Km",
+        "Metro Station - 1.2 Km",
+        "Bus stop - 0.1 Km",
+        "Auto Stand - 0.7 Km"
+      ]
+    },
+    {
+      "title": "Entertainment & Worship",
+      "items": [
+        "Forum Value Mall - 5.7Km",
+        "Arena Mall - 4.1Km",
+        "Metro Cash and Carry - 5.8Km",
+        "D’mart - 1.8Km",
+        "Vega City - 10.6Km",
+        "Tata Chroma - 3.3Km",
+        "Empire restaurant - 3.5Km",
+        "Absolute Barbeque - 3.3Km",
+        "Barbeque Nation - 3.6Km",
+        "Adyar Ananda Bhavan - 3.4Km",
+        "Banashankari Temple - 8.5Km",
+        "ISKCON Krishna Leela Theme Park - 5.2Km",
+        "Sri Sri Ravi Shankar Art of Living - 5.9Km",
+        "Marikamba Temple - 2.6Km",
+        "Shree Vajramunishwara Temple - 2.5Km",
+        "Pratyangira Devi Temple - 4.5Km"
+      ]
+    },
+    {
+      "title": "Schools",
+      "items": [
+        "Sri Kumaran’s Public School - 1.1Km",
+        "Delhi Public School - 6.1Km",
+        "Valley International - 4.5Km",
+        "Yashasvi International School - 1.1Km",
+        "Alpine Public School - 6.4Km",
+        "Jyothi Kendriya Vidyalaya - 6.6Km",
+        "Jnana Sweekar Public School - 0.9Km",
+        "Rashtrotthana Vidya Kendra - 7.5Km",
+        "National Public School BSK 5th Stage - 6.1Km",
+        "Deeksha School - 0.3Km",
+        "Presidency School Banashankari - 5.9Km",
+        "Vidyashilp School - Banashankari - 2.4Km"
+      ]
+    },
+    {
+      "title": "Colleges",
+      "items": [
+        "KSIT Engineering College - 2.8Km",
+        "CREST (Centre for Research, Education, Sadhana and Training) - 9.4Km",
+        "Yellamma Dasappa Institute of Technology - 4.4Km",
+        "Dayanand Sagar College of Engineering - 6.3Km",
+        "APS institutions - 12.7Km",
+        "Jyothi institute of Technology - 5.1Km",
+        "RV College of Architecture - 5.2Km",
+        "KSEM Engineering & Architecture College - 0.3Km"
+      ]
+    },
+    {
+      "title": "Hospitals",
+      "items": [
+        "Cura Multispeciality hospital - 4.9Km",
+        "Cloud 9 hospital - 3.2Km",
+        "Shankar super Speciality Hospital - 2.3Km",
+        "Astra super Speciality Hospital - 5.4Km",
+        "Sagar Hospital - 7.6Km",
+        "Apollo Hospital - 10.8Km",
+        "Manipal Hospital (Upcoming) opp to Metro Cash and Carry - 5.9Km",
+        "Vasavi Hospital - 6.9Km",
+        "BGS Global Hospital - 9.6Km",
+        "Fortis Hospital - 9.8Km"
+      ]
+    },
+    {
+      "title": "Corporates",
+      "items": [
+        "Subramanya Arcade - 13Km",
+        "Kalyani Magnum - 10.9Km",
+        "Global Village Technology Park - 10.6Km"
+      ]
+    }
+  ],
+
+  "ctaText": "Schedule a site visit today"
+}

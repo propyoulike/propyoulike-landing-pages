@@ -1,0 +1,62 @@
+{
+  "title": "The Perfect Setting",
+  "subtitle": "Everything you need within easy reach — schools, hospitals, connectivity & more.",
+  "tagline": "Life. Convenience. Future-ready.",
+
+  "videoUrl": "https://www.youtube.com/embed/TtlN6-cGOzE?autoplay=1&mute=1&controls=0&loop=1&playlist=TtlN6-cGOzE&rel=0&modestbranding=1",
+
+  "mapUrl": "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d971.9182054497142!2d77.806034!3d12.992766!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae0f426171efe5%3A0x7c46453cb4fe95be!2sProvident%20Capella!5e0!3m2!1sen!2sin!4v1765277062943!5m2!1sen!2sin",
+
+  "categories": [
+    {
+      "title": "Commute",
+      "items": [
+        "ITPL - 8 km",
+        "Devanagudi Railway Station - 3 km",
+        "Upcoming Metro Station @ HopeFarm Junction - 6 km",
+        "KR Puram Railway Station - 17 km",
+        "Kempegowda International Airport - 39 km",
+        "Satellite Town Ring Road - Immediate proximity"
+      ]
+    },
+    {
+      "title": "Entertainment & Worship",
+      "items": [
+        "Ascendas Park Square Mall - 8 km",
+        "Nexus Shantiniketan Mall - 9 km",
+        "Phoenix Market City - 12 km",
+        "VR Bengaluru Mall - 12 km"
+      ]
+    },
+    {
+      "title": "Schools",
+      "items": [
+        "Bangalore International Academy - 1km",
+        "Winmore Academy - 8 km"
+      ]
+    },
+    {
+      "title": "Colleges",
+      "items": [
+        "MVJ College of Engineering - 6 km",
+        "Samruddhi PU & Degree College - 10 km",
+        "Govt ITI College - 6 km"
+      ]
+    },
+    {
+      "title": "Hospitals",
+      "items": [
+        "Sri Sathya Sai General Hospital - 9 km",
+        "Manipal Hospital - 9 km"
+      ]
+    },
+    {
+      "title": "Corporates",
+      "items": [
+        "Over 350 IT companies are here in Whitefield"
+      ]
+    }
+  ],
+
+  "ctaText": "Schedule a site visit today"
+}

@@ -1,0 +1,26 @@
+
+   {
+    "heroTitle": "Your Leisure Adorned With Opulence",
+    "heroSubtitle": "From sports to leisure, wellness to education...",
+    "amenityImages": [
+      { "src": "https://www.providenthousing.com/wp-content/uploads/2023/08/Gallery.webp", "title": "Sports Viewing Deck", "description": "" },
+      { "src": "https://www.providenthousing.com/wp-content/uploads/2023/08/Entrance_view.webp", "title": "Entrance Portal", "description": "" },
+      { "src": "https://www.providenthousing.com/wp-content/uploads/2023/08/birdwacthingarea.webp", "title": "Bird Watching Deck", "description": "" },
+      { "src": "https://www.providenthousing.com/wp-content/uploads/2023/08/Amphitheatre-1.webp", "title": "Amphitheatre", "description": "" },
+      { "src": "https://www.providenthousing.com/wp-content/uploads/2023/08/AerialMLCP.webp", "title": "Sports Court", "description": "" },
+      { "src": "https://www.providenthousing.com/wp-content/uploads/2023/08/sunken_Seating.webp", "title": "Bonfire Pit", "description": "" },
+      { "src": "https://www.providenthousing.com/wp-content/uploads/2023/08/Skating_area.webp", "title": "Skating Track", "description": "" },
+      { "src": "https://www.providenthousing.com/wp-content/uploads/2023/08/security_Cabin_A.webp", "title": "Security Guard Cabin", "description": "" },
+      { "src": "https://www.providenthousing.com/wp-content/uploads/2023/08/Seating_Area.webp", "title": "Multipurpose Lawn", "description": "" },
+      { "src": "https://www.providenthousing.com/wp-content/uploads/2023/08/Refelxology_Gradern.webp", "title": "Landscaped Garden", "description": "" },
+      { "src": "https://www.providenthousing.com/wp-content/uploads/2023/08/Outdoor_Gym.webp", "title": "Outdoor Gym", "description": "" },
+      { "src": "https://www.providenthousing.com/wp-content/uploads/2023/08/Nature_trail.webp", "title": "Elevation", "description": "" },
+      { "src": "https://www.providenthousing.com/wp-content/uploads/2023/08/Multipurpose_court.webp", "title": "Multiplay Court", "description": "" },
+      { "src": "https://www.providenthousing.com/wp-content/uploads/2023/08/MiniSoccer.webp", "title": "Soccer Court", "description": "" },
+      { "src": "https://www.providenthousing.com/wp-content/uploads/2023/08/gallery-2-2-2.webp", "title": "Clubhouse", "description": "" },
+      { "src": "https://www.providenthousing.com/wp-content/uploads/2023/08/swimming_pool_B.webp", "title": "Swimming Pool", "description": "" },
+      { "src": "https://www.providenthousing.com/wp-content/uploads/2023/08/swimming_pool_A.webp", "title": "Kids Pool", "description": "" }
+    ],
+    "amenityCategories": [
+    ]
+  }

@@ -3,13 +3,11 @@
     "heroTitle": "Your Leisure Adorned With Opulence",
     "heroSubtitle": "From sports to leisure, wellness to education...",
     "amenityImages": [
-      { "src": "https://www.providenthousing.com/wp-content/uploads/2024/03/Prvdnt_Btnco_Treehut_view.webp", "title": "Tree House", "description": "Tree house" },
-      { "src": "https://www.providenthousing.com/wp-content/uploads/2024/03/Prvdnt_Btnco_Silent_zone_view.webp", "title": "Meditation Pavillion", "description": "Meditation Pavillion to keep you calm and peaceful" },
-      { "src": "https://www.providenthousing.com/wp-content/uploads/2024/03/Prvdnt_Btnco_Pool_day_view.webp", "title": "Swimming Pool", "description": "Olympic-size pool for all ages" },
-      { "src": "https://www.providenthousing.com/wp-content/uploads/2024/03/Prvdnt_Btnco_Open-ground_view.webp", "title": "Multipurpose Ground", "description": "Multipurpose ground for sporing and other facilities" },
-      { "src": "https://www.providenthousing.com/wp-content/uploads/2024/03/Prvdnt_Btnco_kids-play-area_view.webp", "title": "Childrens Play Area", "description": "Safe and fun play zones for kids" },
-      { "src": "https://www.providenthousing.com/wp-content/uploads/2024/03/Prvdnt_Btnco_Volleyball-Court_View.webp", "title": "Beach Volleyball Court", "description": "Beach volleyball court" },
-      { "src": "https://www.providenthousing.com/wp-content/uploads/2024/03/Prvdnt_Btnco_Clubhouse_Night-view.webp", "title": "Clubhouse", "description": "Clubhouse within the township" }
+      { "src": "https://www.providenthousing.com/wp-content/uploads/2022/12/reading-room-amenitie-1-2.jpg", "title": "Library", "description": "" },
+      { "src": "https://www.providenthousing.com/wp-content/uploads/2022/12/amenitie-kabbadi-1-1-2.jpg", "title": "Kabbadi Court", "description": "" },
+      { "src": "https://www.providenthousing.com/wp-content/uploads/2022/12/amenitie-swimming-2-2-2.jpg", "title": "Swimming Pool", "description": "" },
+      { "src": "https://www.providenthousing.com/wp-content/uploads/2022/12/child-play-area-5-3.png", "title": "Kids Play Area", "description": "" },
+      { "src": "https://www.providenthousing.com/wp-content/uploads/2022/12/amenitie-yoga-3-1.jpg", "title": "Gym & Aerobics", "description": "" }
     ],
     "amenityCategories": [
     ]

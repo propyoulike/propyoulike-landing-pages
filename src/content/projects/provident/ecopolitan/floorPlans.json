@@ -1,0 +1,99 @@
+{
+  "floorPlansSection": {
+    "title": "Meticulously Designed Homes",
+    "subtitle": "Explore our thoughtfully designed homes with virtual walkthroughs and detailed floor plans",
+
+    "unitPlans": [
+      {
+        "title": "1BHK",
+        "videoUrl": "",
+        "description": "1 Bedroom Condo - Type 2",
+        "sba": "539 sq.ft",
+        "ca": "329.81 sq.ft",
+        "usable": "356 sq.ft",
+        "uds": "TBC sq.ft",
+        "price": "₹TBC*",
+        "floorPlanImage": "https://www.providenthousing.com/wp-content/uploads/2023/08/1-Bedroom-condo-type-2-scaled.webp"
+      },
+      {
+        "title": "2BHK",
+        "videoUrl": "",
+        "description": "2 BHK Grand Type 1",
+        "sba": "1057 sq.ft",
+        "ca": "665.43 sq.ft",
+        "usable": "736 sq.ft",
+        "uds": "TBC sq.ft",
+        "price": "₹TBC*",
+        "floorPlanImage": "https://www.providenthousing.com/wp-content/uploads/2023/08/2-BHK-Grand-type-1-scaled.webp"
+      },
+      {
+        "title": "3BHK",
+        "videoUrl": "",
+        "description": "3 BHK Grand Type 2",
+        "sba": "1416 sq.ft",
+        "ca": "917.74 sq.ft",
+        "usable": "996 sq.ft",
+        "uds": "TBC sq.ft",
+        "price": "₹TBC L*",
+        "floorPlanImage": "https://www.providenthousing.com/wp-content/uploads/2023/08/3-BHK-Grand-Type2-scaled.webp"
+      },
+      {
+        "title": "3.5BHK + Staff",
+        "videoUrl": "",
+        "description": "3.5BHK + Staff",
+        "sba": "1793 + 121 (Staff) sq.ft",
+        "ca": "1118.16 + 73.20 sq.ft",
+        "usable": "1261 + 73 sq.ft",
+        "uds": "TBC sq.ft",
+        "price": "₹TBC L*",
+        "floorPlanImage": "https://www.providenthousing.com/wp-content/uploads/2023/08/3.5-BHK-Staff-scaled.webp"
+      }
+    ],
+
+    "floorPlans": [
+      {
+        "title": "Wing 1 1",
+        "image": "https://www.providenthousing.com/wp-content/uploads/2023/08/Block-C-Wing1-1st-Floor-scaled.webp",
+        "description": ""
+      },
+      {
+        "title": "Wing 2",
+        "image": "https://www.providenthousing.com/wp-content/uploads/2023/08/Block-C-WING-2-1st-FLOOR-scaled.webp",
+        "description": ""
+      },
+      {
+        "title": "Wing 3",
+        "image": "https://www.providenthousing.com/wp-content/uploads/2023/09/BLOCK-C-WING-3-2nd-to-5th-FLOOR-copy.webp",
+        "description": ""
+      },
+      {
+        "title": "Wing 4",
+        "image": "https://www.providenthousing.com/wp-content/uploads/2023/08/Block-C-WING-4-2nd-5th-floor-scaled.webp",
+        "description": ""
+      },
+      {
+        "title": "Wing 5",
+        "image": "https://www.providenthousing.com/wp-content/uploads/2023/08/Block-C-WING-5-7th-19th-floor-scaled.webp",
+        "description": ""
+      },
+      {
+        "title": "Wing 6",
+        "image": "https://www.providenthousing.com/wp-content/uploads/2023/09/BLOCK-C-WING-6-3rd-to-5th-FLOOR-copy.webp",
+        "description": ""
+      },
+      {
+        "title": "Wing 7",
+        "image": "https://www.providenthousing.com/wp-content/uploads/2023/08/Block-C-WING-7-1st-floor-scaled.webp",
+        "description": ""
+      }
+    ],
+
+    "masterPlan": {
+      "image": "https://www.providenthousing.com/wp-content/uploads/2023/08/Master-Plan-scaled.webp",
+      "title": "",
+      "description": ""
+    },
+
+    "ctaText": "Get detailed floor plans and pricing for your preferred configuration"
+  }
+}

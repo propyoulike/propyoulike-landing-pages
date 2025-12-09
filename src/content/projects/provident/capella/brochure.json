@@ -1,0 +1,11 @@
+{
+    "heroTitle": "A lifestyle project that suits your needs.",
+    "heroSubtitle": "Explore detailed information on floor plans, amenities, pricing, layout plans and official project documents.",
+    "coverImage": "https://www.providenthousing.com/wp-content/uploads/2022/12/494771652-capella-1-new.webp",
+    "documents": [
+      {
+        "title": "RERA Certificate",
+        "url": "https://www.providenthousing.com/wp-content/uploads/2022/12/provident-capella-RERA.pdf"
+      }
+    ]
+  }

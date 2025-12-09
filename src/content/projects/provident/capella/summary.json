@@ -1,0 +1,22 @@
+{
+    "title": "Provident Capella",
+    "subtitle": "Experience the perfect blend of modern living and nature in Bangalore's most promising residential township.",
+    "description": "Provident Capella is “A CHILD ENGAGING HOME THAT APPEALS TO ADULTS LIKE YOU” located near the Hope Farm Junction, Whitefield. Thoughtfully designed for working professionals like you, we understand that your lives revolve around your children.",
+    "highlights": [
+      {
+        "icon": "home",
+        "label": "2. BHK",
+        "value": ""
+      },
+      {
+        "icon": "mapPin",
+        "label": "Prime Location",
+        "value": "Whitefield, Bengaluru North"
+      },
+      {
+        "icon": "award",
+        "label": "Amenities",
+        "value": "Premium Facilities"
+      }
+    ]
+  }

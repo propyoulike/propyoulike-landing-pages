@@ -1,0 +1,54 @@
+{
+  "title": "The Perfect Setting",
+  "subtitle": "Everything you need within easy reach — schools, hospitals, connectivity & more.",
+  "tagline": "Life. Convenience. Future-ready.",
+
+  "videoUrl": "https://www.youtube.com/embed/agRpo7L_H_0?autoplay=1&mute=1&controls=0&loop=1&playlist=agRpo7L_H_0&rel=0&modestbranding=1",
+  "mapUrl": "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7770.510401966074!2d77.681751!3d13.146296!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1b2cdde70eb7%3A0x92f603ce3b3f0cdc!2sProvident%20Ecopolitan%20Aerospace!5e0!3m2!1sen!2sin!4v1765249345992!5m2!1sen!2sin",
+
+  "categories": [
+    {
+      "title": "Tech Parks",
+      "items": [
+        "Ecopolis IT/ITES SEZ - 20 mins*",
+        "Manyata Tech Park - 22mins*",
+        "L&T Tech Park - 24 mins*",
+        "Kirloskar Tech Park - 28 mins*"
+      ]
+    },
+    {
+      "title": "Companies in Aerospace Park",
+      "items": [
+        "Shell research - 5 mins*",
+        "Autoliv  - 7 mins*",
+        "Boeing - 14 mins*"
+      ]
+    },
+    {
+      "title": "Hospitals",
+      "items": [
+        "Aster CMI Hospital - 28 mins*",
+        "Manipal Hospital - 35 mins*"
+      ]
+    },
+    {
+      "title": "Lifestyle & Retail",
+      "items": [
+        "Mall of Bengaluru - 20 mins*",
+        "Club Cabana Amusement Park - 21 mins*",
+        "The Galleria Mall - 22 mins*",
+        "Devanhalli Fort - 24 mins*"
+      ]
+    },
+    {
+      "title": "Schools and Colleges",
+      "items": [
+        "Jawahar Navodaya Vidyalaya - 6 mins*",
+        "Brindavan Group of institutions - 18 mins*",
+        "Air Force School - 20 mins*"
+      ]
+    }
+  ],
+
+  "ctaText": "Schedule a site visit today"
+}
