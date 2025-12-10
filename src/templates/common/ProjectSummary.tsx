@@ -15,7 +15,7 @@ interface ProjectSummaryProps {
   subtitle?: string;
   description?: string;
   highlights?: HighlightItem[];
-  modelFlats?: { title: string; videoUrl: string }[]; // NEW
+  modelFlats?: { title: string; id: string }[];
   onCtaClick: () => void;
 }
 

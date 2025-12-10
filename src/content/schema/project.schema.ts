@@ -101,7 +101,7 @@ const FloorPlansSectionSchema = z
     modelFlats: z.array(
       z.object({
         title: z.string(),
-        videoUrl: z.string(),
+        id: z.string(), // YouTube video ID only
       })
     ),
 

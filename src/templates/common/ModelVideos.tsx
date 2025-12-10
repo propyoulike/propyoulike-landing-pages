@@ -1,11 +1,13 @@
-import { useState, useRef, useEffect, useCallback, memo } from "react";
+import { useState, useRef, useEffect, memo } from "react";
 import { ChevronLeft, ChevronRight, X, Play } from "lucide-react";
 
+interface ModelFlat {
+  title: string;
+  id: string; // YouTube video ID only
+}
+
 interface ModelVideosProps {
-  modelFlats: {
-    title: string;
-    videoUrl: string;
-  }[];
+  modelFlats: ModelFlat[];
 }
 
 const ModelVideos = memo(({ modelFlats }: ModelVideosProps) => {
@@ -13,30 +15,12 @@ const ModelVideos = memo(({ modelFlats }: ModelVideosProps) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [fullscreenIndex, setFullscreenIndex] = useState<number | null>(null);
 
-  /* ---------- YouTube ID ---------- */
-  const getYoutubeId = useCallback((url: string) => {
-    try {
-      const u = new URL(url);
-      // Handle youtube.com/shorts/ID
-      if (u.pathname.includes("/shorts/")) {
-        return u.pathname.split("/shorts/")[1]?.split("?")[0] || "";
-      }
-      // Handle youtu.be/ID
-      if (u.hostname.includes("youtu.be")) {
-        return u.pathname.split("/").pop()?.split("?")[0] || "";
-      }
-      // Handle youtube.com/watch?v=ID
-      return u.searchParams.get("v") || u.pathname.split("/").pop()?.split("?")[0] || "";
-    } catch {
-      return url.split("/").pop()?.split("?")[0] || "";
-    }
-  }, []);
+  /* ---------- YouTube helpers using ID directly ---------- */
+  const getThumbnail = (id: string) =>
+    `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
 
-  const getThumbnail = (url: string) => 
-    `https://img.youtube.com/vi/${getYoutubeId(url)}/maxresdefault.jpg`;
-
-  const convertToEmbed = (url: string) =>
-    `https://www.youtube.com/embed/${getYoutubeId(url)}`;
+  const getEmbedUrl = (id: string) =>
+    `https://www.youtube.com/embed/${id}`;
 
   /* ---------- Navigation ---------- */
   const scrollToIndex = (index: number) => {
@@ -140,7 +124,7 @@ const ModelVideos = memo(({ modelFlats }: ModelVideosProps) => {
               {/* Thumbnail with Play Button */}
               <div className="aspect-video relative">
                 <img
-                  src={getThumbnail(video.videoUrl)}
+                  src={getThumbnail(video.id)}
                   alt={video.title}
                   className="w-full h-full object-cover"
                   loading="lazy"
@@ -195,7 +179,7 @@ const ModelVideos = memo(({ modelFlats }: ModelVideosProps) => {
           <div className="w-full max-w-5xl" onClick={(e) => e.stopPropagation()}>
             <div className="aspect-video rounded-xl overflow-hidden">
               <iframe
-                src={convertToEmbed(modelFlats[fullscreenIndex].videoUrl) + "?autoplay=1&rel=0"}
+                src={getEmbedUrl(modelFlats[fullscreenIndex].id) + "?autoplay=1&rel=0"}
                 allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
                 className="w-full h-full"
