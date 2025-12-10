@@ -5,10 +5,15 @@ import type { ProjectData } from "@/content/schema/project.schema";
 import { useLeadCTAContext } from "@/components/lead/LeadCTAProvider";
 import { buildAutoMenuFromResolved } from "@/templates/common/buildAutoMenu";
 import FloatingQuickNav from "@/templates/common/FloatingQuickNav";
+import { getRelatedProjects } from "@/lib/getRelatedProjects";
 
 export default function ProjectRenderer({ project }: { project: ProjectData }) {
   const { openCTA } = useLeadCTAContext();
-  const sections = project.sections || [];
+const sections = [
+  ...(project.sections || []),
+ ...(project.builderProjects?.length ? ["BuilderWidget"] : []),
+...(project.localityProjects?.length ? ["LocalityWidget"] : []),
+];
 
   // Apply per-builder theme via data attribute
   useEffect(() => {
@@ -68,7 +73,8 @@ export default function ProjectRenderer({ project }: { project: ProjectData }) {
         }
 
         const Component = def.Component;
-        const props = def.props(project, openCTA, autoMenu);
+	const related = getRelatedProjects(project);
+        const props = def.props(project, openCTA, autoMenu, related);
 
         // inject autoMenu only into Navbar
         const extraProps =

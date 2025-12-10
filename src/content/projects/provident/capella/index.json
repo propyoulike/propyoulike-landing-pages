@@ -1,7 +1,13 @@
 {
-  "slug": "provident-capella",
+  "slug": "capella",
   "projectName": "Provident Capella",
   "builder": "provident",
+
+  "locationMeta": {
+  "locality": "Whitefield",
+  "city": "Bengaluru",
+  "zone": "East"
+},
 
 "navbarConfig": {
   "hidden": ["Top", "Brochure"],

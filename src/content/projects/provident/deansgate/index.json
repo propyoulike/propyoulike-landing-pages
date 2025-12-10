@@ -1,7 +1,13 @@
 {
-  "slug": "provident-deansgate",
+  "slug": "deansgate",
   "projectName": "Provident Deansgate",
   "builder": "provident",
+
+  "locationMeta": {
+  "locality": "Devanahalli",
+  "city": "Bengaluru",
+  "zone": "North"
+},
 
 "navbarConfig": {
   "hidden": ["Top", "Brochure"],

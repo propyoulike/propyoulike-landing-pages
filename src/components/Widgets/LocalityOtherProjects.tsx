@@ -1,47 +1,37 @@
 import { Link } from "react-router-dom";
 
-interface LocalityOtherProjectsProps {
-  projects?: Array<{
-    name: string;
-    slug: string;
-    builder?: string;
-    price?: string;
-    status?: string;
-  }>;
-}
-
-export default function LocalityOtherProjects({ projects = [] }: LocalityOtherProjectsProps) {
+export default function LocalityOtherProjects({ projects = [] }) {
   if (!projects.length) return null;
 
   return (
-    <section className="py-12 bg-muted/60">
+    <section className="py-10 bg-muted/30">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold mb-6">Other Projects in This Locality</h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {projects.map((p, i) => (
-            <Link
-              key={i}
-              to={`/project/${p.slug}`}
-              className="block p-6 rounded-xl bg-background shadow hover:shadow-xl transition"
-            >
-              <h3 className="text-xl font-semibold">{p.name}</h3>
+        <h2 className="text-2xl font-bold mb-6">Nearby Projects</h2>
 
-              {p.builder && (
-                <p className="text-sm text-muted-foreground">By {p.builder}</p>
-              )}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {projects.map((p, i) => {
+            const img = p.heroVideoId
+              ? `https://img.youtube.com/vi/${p.heroVideoId}/hqdefault.jpg`
+              : p.heroImage || `https://picsum.photos/seed/${p.slug}/800/450`;
 
-              {p.price && (
-                <p className="text-sm font-medium mt-2">Starting {p.price}</p>
-              )}
+            return (
+              <Link
+                key={i}
+                to={`/${p.slug}`}
+                className="block rounded-xl overflow-hidden bg-background border hover:border-primary shadow hover:shadow-lg transition"
+              >
+                <img src={img} className="w-full h-48 object-cover" />
 
-              {p.status && (
-                <p className="text-xs mt-2 uppercase text-muted-foreground">
-                  {p.status}
-                </p>
-              )}
-            </Link>
-          ))}
+                <div className="p-4">
+                  <h3 className="text-lg font-semibold">{p.name}</h3>
+                  <p className="text-sm text-muted-foreground">
+                    {p.locality} • {p.city}
+                  </p>
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </div>
     </section>

@@ -1,7 +1,13 @@
 {
-  "slug": "provident-sunworth-city",
+  "slug": "sunworth-city",
   "projectName": "Provident Sunworth City",
   "builder": "provident",
+
+  "locationMeta": {
+  "locality": "Kengeri",
+  "city": "Bengaluru",
+  "zone": "West"
+},
 
 "navbarConfig": {
   "hidden": ["Top", "Brochure"],
@@ -22,9 +28,7 @@
     "CustomerSpeaks",
     "Brochure",
     "FAQ",
-    "BuilderAbout",
-    "BuilderWidget",
-    "LocalityWidget"
+    "BuilderAbout"
   ],
 
   "files": {

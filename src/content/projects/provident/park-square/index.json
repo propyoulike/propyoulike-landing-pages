@@ -1,7 +1,13 @@
 {
-  "slug": "provident-park-square",
+  "slug": "park-square",
   "projectName": "Provident Park Square",
   "builder": "provident",
+
+  "locationMeta": {
+  "locality": "Kanakpura Road",
+  "city": "Bengaluru",
+  "zone": "South"
+},
 
 "navbarConfig": {
   "hidden": ["Top", "Brochure"],

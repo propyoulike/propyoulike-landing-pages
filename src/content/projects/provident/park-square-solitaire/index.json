@@ -1,7 +1,13 @@
 {
-  "slug": "provident-park-square-solitaire",
+  "slug": "park-square-solitaire",
   "projectName": "Provident Park Square Solitaire",
   "builder": "provident",
+
+  "locationMeta": {
+  "locality": "Kanakpura Road",
+  "city": "Bengaluru",
+  "zone": "South"
+},
 
 "navbarConfig": {
   "hidden": ["Top", "Brochure"],

@@ -260,20 +260,20 @@ LoanEligibility: {
     }),
   },
 
-  FAQ: {
-    id: "faq",
-    menuVisible: true,
-    menuLabel: "FAQ",
-    menuOrder: 14,
-    Component: React.lazy(() => import("@/templates/common/FAQ")),
-    props: (project, openCTA) => ({
-      id: "faq",
-      title: project.faqTitle,
-      subtitle: project.faqSubtitle,
-      faqs: project.faq,
-      onCtaClick: openCTA,
-    }),
-  },
+FAQ: {
+  id: "faq",
+  menuVisible: true,
+  menuLabel: "FAQ",
+  menuOrder: 14,
+
+  // The new FAQ system from: src/templates/common/faq/FaqSection.tsx
+  Component: React.lazy(() => import("@/templates/common/faq/FaqSection")),
+
+  props: (project: ProjectData) => ({
+    builder: project.builder,
+    projectId: project.slug || project.projectId || project.id,
+  }),
+},
 
   // Builder Widget
   BuilderWidget: {
@@ -282,8 +282,8 @@ LoanEligibility: {
     menuLabel: "More Projects",
     menuOrder: 15,
     Component: React.lazy(() => import("@/components/Widgets/BuilderOtherProjects")),
-    props: (project: ProjectData) => ({
-      projects: (project as any).builderProjects ?? [],
+  props: (project: ProjectData) => ({
+    projects: project.builderProjects ?? [],
     }),
   },
 
@@ -294,8 +294,8 @@ LoanEligibility: {
     menuLabel: "Nearby Projects",
     menuOrder: 16,
     Component: React.lazy(() => import("@/components/Widgets/LocalityOtherProjects")),
-    props: (project: ProjectData) => ({
-      projects: (project as any).localityProjects ?? [],
+  props: (project: ProjectData) => ({
+    projects: project.localityProjects ?? [],
     }),
   },
 } as const;

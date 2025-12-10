@@ -1,7 +1,13 @@
 {
-  "slug": "provident-botanico",
+  "slug": "botanico",
   "projectName": "Provident Botanico",
   "builder": "provident",
+
+  "locationMeta": {
+  "locality": "Whitefield",
+  "city": "Bengaluru",
+  "zone": "East"
+},
 
 "navbarConfig": {
   "hidden": ["Top", "Brochure"],

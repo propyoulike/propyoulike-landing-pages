@@ -1,7 +1,13 @@
 {
-  "slug": "provident-ecopolitan",
+  "slug": "ecopolitan",
   "projectName": "Provident Ecopolitan",
   "builder": "provident",
+
+  "locationMeta": {
+  "locality": "Bagalur",
+  "city": "Bengaluru",
+  "zone": "North"
+},
 
 "navbarConfig": {
   "hidden": ["Top", "Brochure"],
