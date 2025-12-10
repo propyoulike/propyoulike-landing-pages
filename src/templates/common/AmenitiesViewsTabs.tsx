@@ -3,7 +3,7 @@ import { memo, useState, useRef } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import useEmblaCarousel from "embla-carousel-react";
 import AutoScroll from "embla-carousel-auto-scroll";
-import { ChevronDown, ChevronUp, Images, Sparkles } from "lucide-react";
+import { ChevronDown, ChevronUp, Images, Sparkles, Play, X } from "lucide-react";
 import CTAButtons from "@/components/CTAButtons";
 
 interface AmenityImage {
@@ -17,6 +17,14 @@ interface AmenityCategory {
   items: string[];
 }
 
+// Support both images and videos
+interface MediaItem {
+  type: "image" | "video";
+  src?: string; // For images
+  videoId?: string; // YouTube video ID
+  title?: string;
+}
+
 interface ViewImage {
   src: string;
   title?: string;
@@ -28,10 +36,11 @@ interface AmenitiesViewsTabsProps {
   amenitiesSubtitle?: string;
   amenityImages?: AmenityImage[];
   amenityCategories?: AmenityCategory[];
-  // Views props
+  // Views props - now supports mixed media
   viewsTitle?: string;
   viewsSubtitle?: string;
   viewImages?: ViewImage[];
+  viewMedia?: MediaItem[]; // New: mixed images and videos
   // Common
   onCtaClick?: () => void;
 }
@@ -44,10 +53,17 @@ const AmenitiesViewsTabs = memo(function AmenitiesViewsTabs({
   viewsTitle = "Model Flats & Views",
   viewsSubtitle,
   viewImages = [],
+  viewMedia = [],
   onCtaClick,
 }: AmenitiesViewsTabsProps) {
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const [expandedCategory, setExpandedCategory] = useState<number | null>(null);
+  const [activeVideoId, setActiveVideoId] = useState<string | null>(null);
+
+  // Combine viewImages with viewMedia for backward compatibility
+  const allMedia: MediaItem[] = viewMedia.length > 0 
+    ? viewMedia 
+    : viewImages.map(img => ({ type: "image" as const, src: img.src, title: img.title }));
 
   // Amenities carousel
   const [amenitiesEmblaRef] = useEmblaCarousel(
@@ -60,6 +76,9 @@ const AmenitiesViewsTabs = memo(function AmenitiesViewsTabs({
     { loop: true, align: "center", dragFree: true },
     [AutoScroll({ playOnInit: true, stopOnInteraction: true, speed: 0.6 })]
   );
+
+  const getThumbnail = (videoId: string) =>
+    `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
 
   return (
     <section
@@ -180,7 +199,7 @@ const AmenitiesViewsTabs = memo(function AmenitiesViewsTabs({
             </div>
           </TabsContent>
 
-          {/* Views/Model Flats Tab - World Class Design */}
+          {/* Views/Model Flats Tab - Supports both images and videos */}
           <TabsContent value="views" className="mt-0">
             {/* Header */}
             <div className="text-center max-w-3xl mx-auto mb-12">
@@ -194,41 +213,62 @@ const AmenitiesViewsTabs = memo(function AmenitiesViewsTabs({
               )}
             </div>
 
-            {/* Premium Gallery Carousel */}
+            {/* Premium Gallery Carousel - Mixed Media */}
             <div className="overflow-hidden mb-12" ref={viewsEmblaRef}>
               <div className="flex gap-6 md:gap-8 will-change-transform py-4">
-                {viewImages.map((view, index) => (
+                {allMedia.map((item, index) => (
                   <div
                     key={index}
                     className="relative rounded-2xl md:rounded-3xl overflow-hidden flex-[0_0_85%] sm:flex-[0_0_70%] md:flex-[0_0_60%] lg:flex-[0_0_50%] transform-gpu group"
                   >
                     {/* Premium Card with Glow Effect */}
                     <div className="relative bg-card border border-border/50 rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl transition-all duration-500 group-hover:shadow-primary/20 group-hover:border-primary/30">
-                      {/* Image Container */}
-                      <div className="aspect-[16/10] overflow-hidden">
-                        <img
-                          src={view.src}
-                          alt={view.title || "Model flat view"}
-                          loading="lazy"
-                          decoding="async"
-                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                        />
+                      {/* Image or Video Container */}
+                      <div className="aspect-[16/10] overflow-hidden relative">
+                        {item.type === "video" && item.videoId ? (
+                          <>
+                            <img
+                              src={getThumbnail(item.videoId)}
+                              alt={item.title || "Video thumbnail"}
+                              loading="lazy"
+                              decoding="async"
+                              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                            />
+                            {/* Play button overlay */}
+                            <button
+                              onClick={() => setActiveVideoId(item.videoId!)}
+                              className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-colors"
+                            >
+                              <div className="w-16 h-16 md:w-20 md:h-20 bg-primary rounded-full flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
+                                <Play className="w-8 h-8 md:w-10 md:h-10 text-primary-foreground ml-1" fill="currentColor" />
+                              </div>
+                            </button>
+                          </>
+                        ) : (
+                          <img
+                            src={item.src}
+                            alt={item.title || "Model flat view"}
+                            loading="lazy"
+                            decoding="async"
+                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                          />
+                        )}
                       </div>
 
                       {/* Gradient Overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity pointer-events-none" />
 
                       {/* Title Badge */}
-                      {view.title && (
-                        <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6">
+                      {item.title && (
+                        <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 pointer-events-none">
                           <div className="flex items-center gap-3">
                             <div className="w-1 h-8 bg-primary rounded-full" />
                             <div>
                               <p className="text-white font-bold text-lg md:text-xl">
-                                {view.title}
+                                {item.title}
                               </p>
                               <p className="text-white/70 text-sm">
-                                Click to explore
+                                {item.type === "video" ? "Click to play" : "Click to explore"}
                               </p>
                             </div>
                           </div>
@@ -249,7 +289,7 @@ const AmenitiesViewsTabs = memo(function AmenitiesViewsTabs({
             <div className="flex justify-center mb-8">
               <div className="inline-flex items-center gap-2 px-4 py-2 bg-muted rounded-full text-sm text-muted-foreground">
                 <Images className="w-4 h-4" />
-                <span>{viewImages.length} premium model flat views</span>
+                <span>{allMedia.length} premium model flat views</span>
               </div>
             </div>
           </TabsContent>
@@ -260,6 +300,33 @@ const AmenitiesViewsTabs = memo(function AmenitiesViewsTabs({
           </div>
         </Tabs>
       </div>
+
+      {/* Video Modal */}
+      {activeVideoId && (
+        <div
+          className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4 animate-in fade-in duration-200"
+          onClick={() => setActiveVideoId(null)}
+        >
+          <button
+            className="absolute top-4 right-4 lg:top-6 lg:right-6 w-12 h-12 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors z-50"
+            onClick={() => setActiveVideoId(null)}
+            aria-label="Close"
+          >
+            <X className="w-6 h-6 text-white" />
+          </button>
+
+          <div className="w-full max-w-5xl" onClick={(e) => e.stopPropagation()}>
+            <div className="aspect-video rounded-xl overflow-hidden">
+              <iframe
+                src={`https://www.youtube-nocookie.com/embed/${activeVideoId}?autoplay=1&rel=0`}
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="w-full h-full"
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 });

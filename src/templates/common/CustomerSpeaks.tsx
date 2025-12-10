@@ -1,13 +1,14 @@
 import { memo, useEffect, useState, useRef } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import AutoScroll from "embla-carousel-auto-scroll";
-import { Play } from "lucide-react";
+import { Play, Star } from "lucide-react";
 import CTAButtons from "@/components/CTAButtons";
 
 interface Testimonial {
   name: string;
-  videoId: string;
+  videoId?: string; // YouTube video ID (optional - can be text-only review)
   quote?: string;
+  rating?: number; // 1-5 star rating
   thumbUrl?: string;
 }
 
@@ -19,6 +20,24 @@ interface CustomerSpeaksProps {
   autoScrollSpeed?: number;
   onCtaClick: () => void;
 }
+
+// Star rating component
+const StarRating = ({ rating }: { rating: number }) => {
+  return (
+    <div className="flex items-center gap-1">
+      {[1, 2, 3, 4, 5].map((star) => (
+        <Star
+          key={star}
+          className={`w-4 h-4 md:w-5 md:h-5 ${
+            star <= rating
+              ? "text-accent fill-accent"
+              : "text-muted-foreground/30"
+          }`}
+        />
+      ))}
+    </div>
+  );
+};
 
 const CustomerSpeaks = memo(function CustomerSpeaks({
   id = "customer-speaks",
@@ -64,6 +83,80 @@ const CustomerSpeaks = memo(function CustomerSpeaks({
     });
   };
 
+  // Render a single testimonial card (used in both layouts)
+  const TestimonialCard = ({ t, isLarge = false }: { t: Testimonial; isLarge?: boolean }) => {
+    const hasVideo = !!t.videoId;
+    
+    return (
+      <div
+        className={`bg-card rounded-2xl overflow-hidden border border-border ${isLarge ? "" : "h-full"}`}
+        style={{ boxShadow: "var(--shadow-strong)" }}
+      >
+        {/* Video (if available) */}
+        {hasVideo && (
+          <div className="relative aspect-video group cursor-pointer">
+            {activeVideo === t.videoId ? (
+              <iframe
+                src={`https://www.youtube-nocookie.com/embed/${t.videoId}?autoplay=1`}
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="w-full h-full"
+                loading="lazy"
+              />
+            ) : (
+              <>
+                <img
+                  src={
+                    t.thumbUrl ||
+                    `https://img.youtube.com/vi/${t.videoId}/maxresdefault.jpg`
+                  }
+                  alt={t.name}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <button
+                  onClick={() => {
+                    setActiveVideo(t.videoId!);
+                    trackVideoPlay(t.name);
+                  }}
+                  className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-colors"
+                  aria-label={`Play video from ${t.name}`}
+                >
+                  <div className={`${isLarge ? "w-16 h-16 md:w-20 md:h-20" : "w-14 h-14 md:w-16 md:h-16"} bg-primary rounded-full flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg`}>
+                    <Play className={`${isLarge ? "w-8 h-8 md:w-10 md:h-10" : "w-6 h-6 md:w-8 md:h-8"} text-white ml-1`} />
+                  </div>
+                </button>
+              </>
+            )}
+          </div>
+        )}
+
+        {/* Content */}
+        <div className={`${isLarge ? "p-6 md:p-8" : "p-4 md:p-5"} ${!hasVideo ? "pt-6" : ""}`}>
+          {/* Rating */}
+          {t.rating && (
+            <div className={`${isLarge ? "mb-4" : "mb-3"} ${!hasVideo && isLarge ? "flex justify-center" : ""}`}>
+              <StarRating rating={t.rating} />
+            </div>
+          )}
+          
+          {/* Quote */}
+          {t.quote && (
+            <p className={`text-muted-foreground italic ${isLarge ? "text-lg md:text-xl mb-4 text-center" : "text-sm md:text-base mb-2 line-clamp-3"}`}>
+              "{t.quote}"
+            </p>
+          )}
+          
+          {/* Name */}
+          <p className={`font-semibold text-foreground ${isLarge ? "text-lg text-center" : "text-sm md:text-base"}`}>
+            — {t.name}
+          </p>
+        </div>
+      </div>
+    );
+  };
+
   // Single testimonial layout
   if (isSingleTestimonial) {
     const t = testimonials[0];
@@ -90,57 +183,7 @@ const CustomerSpeaks = memo(function CustomerSpeaks({
 
           {/* Single Featured Testimonial */}
           <div className="max-w-3xl mx-auto">
-            <div
-              className="bg-card rounded-2xl overflow-hidden border border-border"
-              style={{ boxShadow: "var(--shadow-strong)" }}
-            >
-              {/* Video */}
-              <div className="relative aspect-video group cursor-pointer">
-                {activeVideo === t.videoId ? (
-                  <iframe
-                    src={`https://www.youtube-nocookie.com/embed/${t.videoId}?autoplay=1`}
-                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    className="w-full h-full"
-                    loading="lazy"
-                  />
-                ) : (
-                  <>
-                    <img
-                      src={
-                        t.thumbUrl ||
-                        `https://img.youtube.com/vi/${t.videoId}/maxresdefault.jpg`
-                      }
-                      alt={t.name}
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                    <button
-                      onClick={() => {
-                        setActiveVideo(t.videoId);
-                        trackVideoPlay(t.name);
-                      }}
-                      className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-colors"
-                      aria-label={`Play video from ${t.name}`}
-                    >
-                      <div className="w-16 h-16 md:w-20 md:h-20 bg-primary rounded-full flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
-                        <Play className="w-8 h-8 md:w-10 md:h-10 text-white ml-1" />
-                      </div>
-                    </button>
-                  </>
-                )}
-              </div>
-
-              <div className="p-6 md:p-8 text-center">
-                {t.quote && (
-                  <p className="text-muted-foreground italic text-lg md:text-xl mb-4">
-                    "{t.quote}"
-                  </p>
-                )}
-                <p className="font-semibold text-foreground text-lg">— {t.name}</p>
-              </div>
-            </div>
+            <TestimonialCard t={t} isLarge />
           </div>
 
           {/* CTA */}
@@ -184,58 +227,7 @@ const CustomerSpeaks = memo(function CustomerSpeaks({
                 key={i}
                 className="flex-[0_0_85%] sm:flex-[0_0_70%] md:flex-[0_0_60%] lg:flex-[0_0_50%] transform-gpu"
               >
-                <div
-                  className="bg-card rounded-xl md:rounded-2xl overflow-hidden h-full border border-border"
-                  style={{ boxShadow: "var(--shadow-strong)" }}
-                >
-                  {/* Video/Thumbnail */}
-                  <div className="relative aspect-video group cursor-pointer">
-                    {activeVideo === t.videoId ? (
-                      <iframe
-                        src={`https://www.youtube-nocookie.com/embed/${t.videoId}?autoplay=1`}
-                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                        className="w-full h-full"
-                        loading="lazy"
-                      />
-                    ) : (
-                      <>
-                        <img
-                          src={
-                            t.thumbUrl ||
-                            `https://img.youtube.com/vi/${t.videoId}/mqdefault.jpg`
-                          }
-                          alt={t.name}
-                          className="w-full h-full object-cover"
-                          loading="lazy"
-                          decoding="async"
-                        />
-
-                        <button
-                          onClick={() => {
-                            setActiveVideo(t.videoId);
-                            trackVideoPlay(t.name);
-                          }}
-                          className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-colors"
-                          aria-label={`Play video from ${t.name}`}
-                        >
-                          <div className="w-14 h-14 md:w-16 md:h-16 bg-primary rounded-full flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
-                            <Play className="w-6 h-6 md:w-8 md:h-8 text-white ml-1" />
-                          </div>
-                        </button>
-                      </>
-                    )}
-                  </div>
-
-                  <div className="p-4 md:p-5">
-                    {t.quote && (
-                      <p className="text-muted-foreground italic text-sm md:text-base mb-2 line-clamp-2">
-                        "{t.quote}"
-                      </p>
-                    )}
-                    <p className="font-semibold text-foreground text-sm md:text-base">— {t.name}</p>
-                  </div>
-                </div>
+                <TestimonialCard t={t} />
               </div>
             ))}
           </div>

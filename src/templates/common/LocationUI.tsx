@@ -19,7 +19,7 @@ interface LocationUISection {
   subtitle?: string;
   tagline?: string;
 
-  videoUrl?: string;
+  videoId?: string; // YouTube video ID only
   mapUrl?: string;
 
   categories: Category[];
@@ -38,7 +38,7 @@ export default function LocationUI({ section, onCtaClick }: LocationUIProps) {
     title,
     subtitle,
     tagline,
-    videoUrl,
+    videoId,
     mapUrl,
     categories = [],
     ctaText = "Enquire Now",
@@ -49,6 +49,11 @@ export default function LocationUI({ section, onCtaClick }: LocationUIProps) {
 
   const videoRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<HTMLDivElement | null>(null);
+
+  // Build embed URL from video ID
+  const videoEmbedUrl = videoId
+    ? `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${videoId}&rel=0&modestbranding=1`
+    : null;
 
   /* ---------------- Lazy Load Video + Map ---------------- */
   useEffect(() => {
@@ -103,9 +108,9 @@ export default function LocationUI({ section, onCtaClick }: LocationUIProps) {
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
 
           <div ref={videoRef} className="w-full h-[260px] md:h-[420px] rounded-xl overflow-hidden">
-            {videoVisible && videoUrl && (
+            {videoVisible && videoEmbedUrl && (
               <iframe
-                src={videoUrl}
+                src={videoEmbedUrl}
                 className="w-full h-full rounded-xl shadow-lg"
                 title="Location Video"
                 allow="accelerometer; autoplay; encrypted-media; gyroscope"
