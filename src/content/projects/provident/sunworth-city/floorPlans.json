@@ -6,15 +6,15 @@
     "modelFlats": [
       {
         "title": "2 BHK Flat",
-        "videoUrl": "https://www.youtube.com/shorts/z6-d5uB4rRA"
+        "id": "z6-d5uB4rRA"
       },
       {
         "title": "3 BHK Regular Flat",
-        "videoUrl": "https://youtube.com/shorts/QEtUBt1Ac3U"
+        "id": "QEtUBt1Ac3U"
       },
       {
         "title": "3 BHK Royale Flat",
-        "videoUrl": "https://youtu.be/B2izuPDFLak"
+        "id": "B2izuPDFLak"
       }
     ],
 

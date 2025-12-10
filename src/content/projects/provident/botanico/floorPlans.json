@@ -6,19 +6,19 @@
     "modelFlats": [
       {
         "title": "2BHK COMFORT",
-        "videoUrl": "https://www.youtube.com/shorts/z6-d5uB4rRA"
+        "id": "z6-d5uB4rRA"
       },
       {
         "title": "2BHK GRAND",
-        "videoUrl": "https://youtube.com/shorts/QEtUBt1Ac3U"
+        "id": "QEtUBt1Ac3U"
       },
       {
         "title": "3BHK COMFORT",
-        "videoUrl": "https://youtube.com/shorts/QEtUBt1Ac3U"
+        "id": "QEtUBt1Ac3U"
       },
       {
         "title": "3BHK GRAND",
-        "videoUrl": "https://youtu.be/B2izuPDFLak"
+        "id": "B2izuPDFLak"
       }
     ],
 

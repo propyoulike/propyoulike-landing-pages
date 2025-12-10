@@ -1,4 +1,5 @@
 // src/templates/common/ProjectRenderer.tsx
+import { useEffect } from "react";
 import { SECTIONS } from "@/templates/common/sections.config";
 import type { ProjectData } from "@/content/schema/project.schema";
 import { useLeadCTAContext } from "@/components/lead/LeadCTAProvider";
@@ -8,6 +9,16 @@ import FloatingQuickNav from "@/templates/common/FloatingQuickNav";
 export default function ProjectRenderer({ project }: { project: ProjectData }) {
   const { openCTA } = useLeadCTAContext();
   const sections = project.sections || [];
+
+  // Apply per-builder theme via data attribute
+  useEffect(() => {
+    if (project.builder) {
+      document.documentElement.setAttribute("data-builder", project.builder);
+    }
+    return () => {
+      document.documentElement.removeAttribute("data-builder");
+    };
+  }, [project.builder]);
 
   // -----------------------------------------
   // 1️⃣ Build resolved section map
