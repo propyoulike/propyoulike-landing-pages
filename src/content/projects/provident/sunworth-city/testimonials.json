@@ -6,17 +6,20 @@
       {
         "name": "Resident Family 1",
         "videoId": "k-dD6PtfrC8",
-        "quote": "The amenities and green spaces are exactly what we were looking for. Our kids love it here!"
+        "quote": "The amenities and green spaces are exactly what we were looking for. Our kids love it here!",
+        "rating": 5
       },
       {
         "name": "Resident Family 2",
         "videoId": "iwLw1Xu312s",
-        "quote": "Great connectivity and peaceful environment. Best decision we made for our family."
+        "quote": "Great connectivity and peaceful environment. Best decision we made for our family.",
+        "rating": 5
       },
       {
         "name": "Resident Family 3",
         "videoId": "MxtoYCTGaCE",
-        "quote": "The construction quality and attention to detail is impressive. Highly recommended!"
+        "quote": "The construction quality and attention to detail is impressive. Highly recommended!",
+        "rating": 4
       }
     ]
   }

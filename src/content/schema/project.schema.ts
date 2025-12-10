@@ -11,7 +11,7 @@ import { z } from "zod";
 
 const HeroSchema = z
   .object({
-    videoUrl: z.string().optional(),
+    videoId: z.string().optional(), // YouTube video ID only
     images: z.array(z.string()).optional(),
     overlayTitle: z.string().optional(),
     overlaySubtitle: z.string().optional(),
@@ -86,6 +86,17 @@ const ViewsSchema = z
         })
       )
       .optional(),
+    // Mixed media support - can have both images and videos
+    media: z
+      .array(
+        z.object({
+          type: z.enum(["image", "video"]),
+          src: z.string().optional(), // For images
+          videoId: z.string().optional(), // YouTube video ID for videos
+          title: z.string().optional(),
+        })
+      )
+      .optional(),
   })
   .optional();
 
@@ -145,7 +156,7 @@ const LocationUISchema = z.object({
   title: z.string(),
   subtitle: z.string().optional(),
   tagline: z.string().optional(),
-  videoUrl: z.string().optional(),
+  videoId: z.string().optional(), // YouTube video ID only
   mapUrl: z.string().optional(),
 
   categories: z
@@ -241,8 +252,10 @@ const CustomerSpeaksSchema = z
       .array(
         z.object({
           name: z.string(),
-          videoId: z.string().optional(),
+          videoId: z.string().optional(), // YouTube video ID (optional for text-only reviews)
           quote: z.string().optional(),
+          rating: z.number().min(1).max(5).optional(), // 1-5 star rating
+          thumbUrl: z.string().optional(),
         })
       )
       .optional(),

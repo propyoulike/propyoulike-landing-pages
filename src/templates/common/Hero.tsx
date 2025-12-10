@@ -9,7 +9,7 @@ import React, { useEffect, useRef, useState } from "react";
 import CTAButtons from "@/components/CTAButtons";
 
 interface HeroProps {
-  videoUrl?: string;
+  videoId?: string; // YouTube video ID only
   images?: string[];
   overlayTitle?: string;
   overlaySubtitle?: string;
@@ -24,7 +24,7 @@ interface HeroProps {
 }
 
 export default function HeroStaticAware({
-  videoUrl,
+  videoId,
   images = [],
   overlayTitle,
   overlaySubtitle,
@@ -40,17 +40,16 @@ export default function HeroStaticAware({
 
   // Activate iframe 0.8 seconds after load
   useEffect(() => {
-    if (!videoUrl) return;
+    if (!videoId) return;
 
     const t = setTimeout(() => {
       setIframeVisible(true);
     }, 800);
 
     return () => clearTimeout(t);
-  }, [videoUrl]);
+  }, [videoId]);
 
-  // YouTube embed safe-privacy link
-  const videoId = extractId(videoUrl);
+  // YouTube embed safe-privacy link using ID directly
   const embedSrc = videoId
     ? `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&mute=1&controls=0&playsinline=1&loop=1&playlist=${videoId}`
     : null;
@@ -135,14 +134,4 @@ export default function HeroStaticAware({
       )}
     </section>
   );
-}
-
-/** Extract YouTube ID safely */
-function extractId(url?: string) {
-  if (!url) return null;
-  const m =
-    url.match(/youtu\.be\/([^?]+)/) ||
-    url.match(/youtube\.com\/watch\?v=([^&]+)/) ||
-    url.match(/embed\/([^?]+)/);
-  return m ? m[1] : null;
 }

@@ -54,7 +54,7 @@ export const SECTIONS = {
     menuLabel: "Hero",
     menuOrder: 1,
     props: (project: ProjectData, openCTA: () => void) => ({
-      videoUrl: project.hero?.videoUrl,
+      videoId: project.hero?.videoId,
       images: project.hero?.images,
       overlayTitle: project.hero?.overlayTitle,
       overlaySubtitle: project.hero?.overlaySubtitle,
@@ -164,7 +164,7 @@ LocationUI: {
       title: project.locationUI?.title ?? "",
       subtitle: project.locationUI?.subtitle ?? "",
       tagline: project.locationUI?.tagline ?? "",
-      videoUrl: project.locationUI?.videoUrl ?? "",
+      videoId: project.locationUI?.videoId ?? "",
       mapUrl: project.locationUI?.mapUrl ?? "",
       categories: project.locationUI?.categories ?? [],
       ctaText: project.locationUI?.ctaText ?? "Enquire Now",
