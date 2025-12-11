@@ -6,7 +6,7 @@ const projectFiles = import.meta.glob("/src/content/**/*.json", {
 }) as Record<string, any>;
 
 /* --------------------------------------------------------------
-   Helper: safe fallback image generator (NO : allowed)
+   Helper: safe fallback image generator
 --------------------------------------------------------------- */
 function fallbackImg(label: string) {
   const safe = encodeURIComponent(label.replace(/[:]/g, ""));
@@ -29,20 +29,53 @@ type ProjectMeta = {
 
 const allProjectMetas: ProjectMeta[] = Object.entries(projectFiles)
   .filter(([path]) =>
-    path.startsWith("/src/content/projects/") &&
-    path.endsWith("/index.json")
+    path.startsWith("/src/content/projects/") && path.endsWith("/index.json")
   )
-  .map(([_, mod]) => {
+  .map(([path, mod]) => {
     const raw = mod.default ?? mod;
 
     const builder = raw.builder;
     const innerSlug = raw.slug;
-    const fullSlug = builder && innerSlug ? `${builder}-${innerSlug}` : innerSlug || "";
+    const fullSlug =
+      builder && innerSlug ? `${builder}-${innerSlug}` : innerSlug || "";
 
-    const heroImage =
-      raw.hero?.images?.[0] ||
-      raw.hero?.image ||
-      null;
+    /* ------------------------------------------------------
+       Load hero.json (multiple filename support)
+    --------------------------------------------------------- */
+    const baseDir = path.replace("index.json", "");
+
+    const possibleHeroFiles = [
+      baseDir + "hero.json",
+      baseDir + "Hero.json",
+      baseDir + "hero/index.json",
+      baseDir + "Hero/index.json",
+    ];
+
+    let hero: any = null;
+
+    for (const candidate of possibleHeroFiles) {
+      if (projectFiles[candidate]) {
+        hero = projectFiles[candidate].default ?? projectFiles[candidate];
+        break;
+      }
+    }
+
+    /* ------------------------------------------------------
+       Normalize heroImage to string
+    --------------------------------------------------------- */
+    let heroImage: string | null = null;
+
+    if (Array.isArray(hero?.images)) {
+      const first = hero.images[0];
+      if (typeof first === "string") heroImage = first;
+      else if (first?.url) heroImage = first.url;
+    }
+
+    if (!heroImage && typeof hero?.image === "string") {
+      heroImage = hero.image;
+    }
+
+    const heroVideoId = hero?.videoId ?? hero?.videoUrl ?? null;
 
     return {
       slug: fullSlug,
@@ -52,7 +85,7 @@ const allProjectMetas: ProjectMeta[] = Object.entries(projectFiles)
       city: raw.locationMeta?.city ?? raw.city,
       zone: raw.locationMeta?.zone ?? raw.zone,
       heroImage,
-      heroVideoId: raw.hero?.videoId ?? raw.hero?.videoUrl ?? null,
+      heroVideoId,
     };
   })
   .filter((p) => !!p.slug);
@@ -82,7 +115,9 @@ export async function loadProject(
 
   const baseData = structuredClone(indexModule.default ?? indexModule);
 
-  /* ------- AUTO MERGE extra JSON files -------- */
+  /* ------------------------------------------------------
+     AUTO MERGE extra JSON
+  --------------------------------------------------------- */
   if (baseData.files && typeof baseData.files === "object") {
     for (const key of Object.keys(baseData.files)) {
       const fileName = baseData.files[key];
@@ -94,7 +129,6 @@ export async function loadProject(
       for (const c of attempts) {
         if (projectFiles[c]) {
           const raw = projectFiles[c].default ?? projectFiles[c];
-
           if (typeof raw === "object" && raw !== null && Object.keys(raw).length === 1 && raw[key]) {
             baseData[key] = raw[key];
           } else {
@@ -106,11 +140,15 @@ export async function loadProject(
     }
   }
 
-  /* ------- Optional builder overrides -------- */
+  /* ------------------------------------------------------
+     Optional builder overrides
+  --------------------------------------------------------- */
   const builderOverrideKey = `/src/content/builders/${builder}.json`;
   const builderData = projectFiles[builderOverrideKey]?.default ?? null;
 
-  /* ------- Validate schema -------- */
+  /* ------------------------------------------------------
+     Validate schema
+  --------------------------------------------------------- */
   const parsed = ProjectSchema.safeParse(baseData);
   if (!parsed.success) {
     console.error("❌ Project schema validation failed:", parsed.error);
@@ -120,49 +158,55 @@ export async function loadProject(
   const project: ProjectData = parsed.data;
 
   /* ------------------------------------------------------
-     Build = "Other projects by this builder"
-  -------------------------------------------------------- */
-  const builderProjects =
-    allProjectMetas
-      .filter((p) => p.builder === project.builder && p.slug !== slug)
-      .map((p) => ({
-        name: p.projectName ?? p.slug,
-        slug: p.slug,
-        locality: p.locality,
-        city: p.city,
-        zone: p.zone,
-        thumb: p.heroImage || fallbackImg(p.projectName ?? p.slug),
-      }));
+     Builder Projects (clean strings)
+  --------------------------------------------------------- */
+  const builderProjects = allProjectMetas
+    .filter((p) => p.builder === project.builder && p.slug !== slug)
+    .map((p) => ({
+      name: p.projectName ?? p.slug,
+      slug: p.slug,
+      location: p.locality || p.city || "",
+      locality: p.locality,
+      city: p.city,
+      zone: p.zone,
+      heroImage: typeof p.heroImage === "string" ? p.heroImage : null,
+      heroVideoId: p.heroVideoId,
+    }));
 
   /* ------------------------------------------------------
-     Build = “Locality Nearby Recommendations”
-  -------------------------------------------------------- */
+     ⭐ CHANGED: Locality Recommendations (ONLY score = 6)
+     Meaning:
+     locality match = +3
+     zone match = +2
+     city match = +1
+     ONLY include if all match → score === 6
+  --------------------------------------------------------- */
   let localityProjects: any[] = [];
   const currentMeta = allProjectMetas.find((p) => p.slug === slug);
 
-  if (currentMeta?.city && (currentMeta.locality || currentMeta.zone)) {
-    localityProjects =
-      allProjectMetas
-        .filter((p) => p.slug !== slug)
-        .filter((p) => p.city === currentMeta.city)
-        .map((p) => {
-          let score = 0;
-          if (p.locality && currentMeta.locality && p.locality === currentMeta.locality) score += 3;
-          if (p.zone && currentMeta.zone && p.zone === currentMeta.zone) score += 2;
-          if (p.city === currentMeta.city) score += 1;
+  if (currentMeta?.city && currentMeta.locality && currentMeta.zone) {
+    localityProjects = allProjectMetas
+      .filter((p) => p.slug !== slug)
+      .map((p) => {
+        let score = 0;
+        if (p.locality === currentMeta.locality) score += 3;
+        if (p.zone === currentMeta.zone) score += 2;
+        if (p.city === currentMeta.city) score += 1;
 
-          return { meta: p, score };
-        })
-        .filter((x) => x.score > 0)
-        .sort((a, b) => b.score - a.score)
-        .map(({ meta }) => ({
-          name: meta.projectName ?? meta.slug,
-          slug: meta.slug,
-          locality: meta.locality,
-          city: meta.city,
-          zone: meta.zone,
-          thumb: meta.heroImage || fallbackImg(meta.projectName ?? meta.slug),
-        }));
+        return { meta: p, score };
+      })
+      .filter((x) => x.score === 6) // ⭐ CHANGED: only exact matches
+      .map(({ meta }) => ({
+        name: meta.projectName ?? meta.slug,
+        slug: meta.slug,
+        location: meta.locality || meta.city || "",
+        locality: meta.locality,
+        city: meta.city,
+        zone: meta.zone,
+
+        heroImage: typeof meta.heroImage === "string" ? meta.heroImage : null,
+        heroVideoId: meta.heroVideoId,
+      }));
   }
 
   return {

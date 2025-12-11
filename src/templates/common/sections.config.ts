@@ -295,7 +295,11 @@ FAQ: {
     menuOrder: 16,
     Component: React.lazy(() => import("@/components/Widgets/LocalityOtherProjects")),
   props: (project: ProjectData) => ({
-    projects: project.localityProjects ?? [],
+  projects: (project.localityProjects ?? []).filter(p =>
+    typeof p.slug === "string" &&
+    typeof p.name === "string" &&
+    (!p.heroImage || typeof p.heroImage === "string")
+  ),
     }),
   },
 } as const;
