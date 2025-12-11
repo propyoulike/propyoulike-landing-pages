@@ -311,8 +311,11 @@ export const ProjectSchema = z.object({
   slug: z.string(),
   projectName: z.string(),
   type: z.string().optional(),
-  locality: z.string().optional(),   // 👈 NEW
-  city: z.string().optional(),       // 👈 OPTIONAL
+  area: z.string().optional(),
+  locality: z.string().optional(),
+  city: z.string().optional(),
+  state: z.string().optional(),
+  country: z.string().optional(),
   zone: z.enum(["East", "West", "North", "South", "Central"]).optional(),
 
   meta: z

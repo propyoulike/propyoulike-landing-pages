@@ -4,47 +4,11 @@
   "builder": "provident",
 
   "locationMeta": {
+  "area": "Soukya Road",
   "locality": "Whitefield",
   "city": "Bengaluru",
+  "state": "Karnataka",
+  "city": "India",
   "zone": "East"
-},
-
-"navbarConfig": {
-  "hidden": ["Top", "Brochure"],
-  "visible": [],
-  "order": ["Home", "Summary", "Location", "Payment Plans", "FAQ"],
-  "ctaLabel": ""
-},
-  "sections": [
-    "Hero",
-    "Navbar",
-    "Summary",
-    "FloorPlansSection",
-    "Amenities",
-    "Views",
-    "LocationUI",
-    "Construction",
-    "PaymentPlans",
-    "LoanEligibility",
-    "CustomerSpeaks",
-    "Brochure",
-    "BuilderAbout",
-    "FAQ"
-  ],
-
-  "files": {
-    "hero": "hero.json",
-    "summary": "summary.json",
-    "navbar": "Navbar.json",
-    "floorPlansSection": "floorPlans.json",
-    "amenities": "amenities.json",
-    "views": "views.json",
-    "locationUI": "LocationUI.json",
-    "construction": "construction.json",
-    "paymentPlans": "paymentPlans.json",
-    "customerSpeaks": "testimonials.json",
-    "brochure": "brochure.json",
-    "faq": "faq.json",
-    "builderAbout": "../aboutbuilder.json"
-  }
+   }
 }

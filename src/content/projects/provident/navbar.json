@@ -1,0 +1,7 @@
+{
+  "navbarConfig": {
+    "hidden": ["Top"],
+    "order": ["Home", "Summary", "Amenities", "Location", "FAQ"],
+    "ctaLabel": "Enquire Now"
+  }
+}

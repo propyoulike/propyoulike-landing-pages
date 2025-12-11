@@ -1,12 +1,19 @@
 // src/lib/data/loadProject.ts
+
 import { ProjectSchema, type ProjectData } from "@/content/schema/project.schema";
 
+// GLOBAL CONFIG
+import globalFiles from "@/content/global/globalFiles.json";
+import globalSections from "@/content/global/globalSections.json";
+import globalNavbar from "@/content/global/globalNavbar.json";
+
+// Load all JSON files
 const projectFiles = import.meta.glob("/src/content/**/*.json", {
   eager: true,
 }) as Record<string, any>;
 
 /* --------------------------------------------------------------
-   Helper: safe fallback image generator
+   Helper: safe fallback image
 --------------------------------------------------------------- */
 function fallbackImg(label: string) {
   const safe = encodeURIComponent(label.replace(/[:]/g, ""));
@@ -14,14 +21,17 @@ function fallbackImg(label: string) {
 }
 
 /* --------------------------------------------------------------
-   Collect metadata for ALL projects — used for widgets
+   Collect metadata for all projects
 --------------------------------------------------------------- */
 type ProjectMeta = {
   slug: string;
   builder?: string;
   projectName?: string;
+  area?: string;
   locality?: string;
   city?: string;
+  state?: string;
+  country?: string;
   zone?: string;
   heroImage?: string | null;
   heroVideoId?: string | null;
@@ -39,11 +49,9 @@ const allProjectMetas: ProjectMeta[] = Object.entries(projectFiles)
     const fullSlug =
       builder && innerSlug ? `${builder}-${innerSlug}` : innerSlug || "";
 
-    /* ------------------------------------------------------
-       Load hero.json (multiple filename support)
-    --------------------------------------------------------- */
     const baseDir = path.replace("index.json", "");
 
+    // Try hero files
     const possibleHeroFiles = [
       baseDir + "hero.json",
       baseDir + "Hero.json",
@@ -52,7 +60,6 @@ const allProjectMetas: ProjectMeta[] = Object.entries(projectFiles)
     ];
 
     let hero: any = null;
-
     for (const candidate of possibleHeroFiles) {
       if (projectFiles[candidate]) {
         hero = projectFiles[candidate].default ?? projectFiles[candidate];
@@ -60,15 +67,12 @@ const allProjectMetas: ProjectMeta[] = Object.entries(projectFiles)
       }
     }
 
-    /* ------------------------------------------------------
-       Normalize heroImage to string
-    --------------------------------------------------------- */
+    // Extract hero image
     let heroImage: string | null = null;
 
     if (Array.isArray(hero?.images)) {
       const first = hero.images[0];
-      if (typeof first === "string") heroImage = first;
-      else if (first?.url) heroImage = first.url;
+      heroImage = typeof first === "string" ? first : first?.url ?? null;
     }
 
     if (!heroImage && typeof hero?.image === "string") {
@@ -81,8 +85,11 @@ const allProjectMetas: ProjectMeta[] = Object.entries(projectFiles)
       slug: fullSlug,
       builder,
       projectName: raw.projectName,
+      area: raw.locationMeta?.area ?? raw.area,
       locality: raw.locationMeta?.locality ?? raw.locality,
       city: raw.locationMeta?.city ?? raw.city,
+      state: raw.locationMeta?.state ?? raw.state,
+      country: raw.locationMeta?.country ?? raw.country,
       zone: raw.locationMeta?.zone ?? raw.zone,
       heroImage,
       heroVideoId,
@@ -91,7 +98,7 @@ const allProjectMetas: ProjectMeta[] = Object.entries(projectFiles)
   .filter((p) => !!p.slug);
 
 /* --------------------------------------------------------------
-   MAIN LOADER
+   Project loader — full JSON assembly
 --------------------------------------------------------------- */
 export async function loadProject(
   slug?: string
@@ -115,41 +122,89 @@ export async function loadProject(
 
   const baseData = structuredClone(indexModule.default ?? indexModule);
 
-  /* ------------------------------------------------------
-     AUTO MERGE extra JSON
-  --------------------------------------------------------- */
-  if (baseData.files && typeof baseData.files === "object") {
-    for (const key of Object.keys(baseData.files)) {
-      const fileName = baseData.files[key];
-      const attempts = [
-        `${baseDir}${fileName}`,
-        `${baseDir}${fileName.replace(/^\.\.\//, "")}`,
-      ];
+  /* --------------------------------------------------------------
+      Builder overrides
+  --------------------------------------------------------------- */
+  const builderFiles =
+    projectFiles[`/src/content/builders/${builder}/files.json`]?.default ?? null;
 
-      for (const c of attempts) {
-        if (projectFiles[c]) {
-          const raw = projectFiles[c].default ?? projectFiles[c];
-          if (typeof raw === "object" && raw !== null && Object.keys(raw).length === 1 && raw[key]) {
-            baseData[key] = raw[key];
-          } else {
-            baseData[key] = raw;
-          }
-          break;
+  const builderSections =
+    projectFiles[`/src/content/builders/${builder}/sections.json`]?.default ??
+    null;
+
+  const builderNavbar =
+    projectFiles[`/src/content/builders/${builder}/navbar.json`]?.default ??
+    null;
+
+  /* --------------------------------------------------------------
+      Merge FILES
+  --------------------------------------------------------------- */
+  baseData.files = {
+    ...(globalFiles.files || {}),
+    ...(builderFiles?.files || {}),
+    ...(baseData.files || {}),
+  };
+
+  /* --------------------------------------------------------------
+      Merge SECTIONS
+  --------------------------------------------------------------- */
+  baseData.sections = [
+    ...(globalSections.sections || []),
+    ...(builderSections?.sections || []),
+    ...(baseData.sections || []),
+  ];
+
+  /* --------------------------------------------------------------
+      Merge NAVBAR
+  --------------------------------------------------------------- */
+  baseData.navbarConfig = {
+    ...(globalNavbar.navbarConfig || {}),
+    ...(builderNavbar?.navbarConfig || {}),
+    ...(baseData.navbarConfig || {}),
+  };
+
+  /* --------------------------------------------------------------
+      Auto-load referenced section files
+  --------------------------------------------------------------- */
+  for (const key of Object.keys(baseData.files)) {
+    const fileName = baseData.files[key];
+
+    const attempts = [
+      `${baseDir}${fileName}`,
+      `${baseDir}${fileName.replace(/^\.\.\//, "")}`,
+    ];
+
+    for (const c of attempts) {
+      if (projectFiles[c]) {
+        const raw = projectFiles[c].default ?? projectFiles[c];
+
+        if (
+          typeof raw === "object" &&
+          raw !== null &&
+          Object.keys(raw).length === 1 &&
+          raw[key]
+        ) {
+          baseData[key] = raw[key];
+        } else {
+          baseData[key] = raw;
         }
+
+        break;
       }
     }
   }
 
-  /* ------------------------------------------------------
-     Optional builder overrides
-  --------------------------------------------------------- */
+  /* --------------------------------------------------------------
+      Legacy builder.json if exists
+  --------------------------------------------------------------- */
   const builderOverrideKey = `/src/content/builders/${builder}.json`;
   const builderData = projectFiles[builderOverrideKey]?.default ?? null;
 
-  /* ------------------------------------------------------
-     Validate schema
-  --------------------------------------------------------- */
+  /* --------------------------------------------------------------
+      Validate schema
+  --------------------------------------------------------------- */
   const parsed = ProjectSchema.safeParse(baseData);
+
   if (!parsed.success) {
     console.error("❌ Project schema validation failed:", parsed.error);
     return null;
@@ -157,56 +212,102 @@ export async function loadProject(
 
   const project: ProjectData = parsed.data;
 
-  /* ------------------------------------------------------
-     Builder Projects (clean strings)
-  --------------------------------------------------------- */
+  /* --------------------------------------------------------------
+      Builder sibling projects
+  --------------------------------------------------------------- */
   const builderProjects = allProjectMetas
     .filter((p) => p.builder === project.builder && p.slug !== slug)
-    .map((p) => ({
-      name: p.projectName ?? p.slug,
-      slug: p.slug,
-      location: p.locality || p.city || "",
-      locality: p.locality,
-      city: p.city,
-      zone: p.zone,
-      heroImage: typeof p.heroImage === "string" ? p.heroImage : null,
-      heroVideoId: p.heroVideoId,
+    .map((meta) => ({
+      name: meta.projectName ?? meta.slug,
+      slug: meta.slug,
+      builder: meta.builder,
+      area: meta.area,
+      locality: meta.locality,
+      city: meta.city,
+      state: meta.state,
+      country: meta.country,
+      zone: meta.zone,
+      heroImage: meta.heroImage || null,
+      heroVideoId: meta.heroVideoId,
+      location:
+        meta.area ||
+        meta.locality ||
+        meta.city ||
+        meta.state ||
+        meta.country ||
+        "",
     }));
 
-  /* ------------------------------------------------------
-     ⭐ CHANGED: Locality Recommendations (ONLY score = 6)
-     Meaning:
-     locality match = +3
-     zone match = +2
-     city match = +1
-     ONLY include if all match → score === 6
-  --------------------------------------------------------- */
+  /* --------------------------------------------------------------
+      Hierarchical locality recommendation
+  --------------------------------------------------------------- */
   let localityProjects: any[] = [];
   const currentMeta = allProjectMetas.find((p) => p.slug === slug);
 
-  if (currentMeta?.city && currentMeta.locality && currentMeta.zone) {
-    localityProjects = allProjectMetas
-      .filter((p) => p.slug !== slug)
-      .map((p) => {
-        let score = 0;
-        if (p.locality === currentMeta.locality) score += 3;
-        if (p.zone === currentMeta.zone) score += 2;
-        if (p.city === currentMeta.city) score += 1;
+  if (currentMeta) {
+    const levels = [
+      (p: ProjectMeta) =>
+        p.country === currentMeta.country &&
+        p.state === currentMeta.state &&
+        p.city === currentMeta.city &&
+        p.zone === currentMeta.zone &&
+        p.locality === currentMeta.locality &&
+        p.area === currentMeta.area,
 
-        return { meta: p, score };
-      })
-      .filter((x) => x.score === 6) // ⭐ CHANGED: only exact matches
-      .map(({ meta }) => ({
-        name: meta.projectName ?? meta.slug,
-        slug: meta.slug,
-        location: meta.locality || meta.city || "",
-        locality: meta.locality,
-        city: meta.city,
-        zone: meta.zone,
+      (p: ProjectMeta) =>
+        p.country === currentMeta.country &&
+        p.state === currentMeta.state &&
+        p.city === currentMeta.city &&
+        p.zone === currentMeta.zone &&
+        p.locality === currentMeta.locality,
 
-        heroImage: typeof meta.heroImage === "string" ? meta.heroImage : null,
-        heroVideoId: meta.heroVideoId,
-      }));
+      (p: ProjectMeta) =>
+        p.country === currentMeta.country &&
+        p.state === currentMeta.state &&
+        p.city === currentMeta.city &&
+        p.zone === currentMeta.zone,
+
+      (p: ProjectMeta) =>
+        p.country === currentMeta.country &&
+        p.state === currentMeta.state &&
+        p.city === currentMeta.city,
+
+      (p: ProjectMeta) =>
+        p.country === currentMeta.country &&
+        p.state === currentMeta.state,
+
+      (p: ProjectMeta) => p.country === currentMeta.country,
+    ];
+
+    for (const matchFn of levels) {
+      const matches = allProjectMetas
+        .filter((p) => p.slug !== slug && matchFn(p))
+        .map((m) => ({
+          name: m.projectName ?? m.slug,
+          slug: m.slug,
+          builder: m.builder,
+          area: m.area,
+          locality: m.locality,
+          city: m.city,
+          state: m.state,
+          country: m.country,
+          zone: m.zone,
+          heroImage: m.heroImage || null,
+          heroVideoId: m.heroVideoId,
+          location:
+            m.area ||
+            m.locality ||
+            m.city ||
+            m.state ||
+            m.country ||
+            "",
+        }));
+
+      if (matches.length > 0) {
+        localityProjects = matches;
+        break;
+      }
+    }
   }
 
   return {
@@ -216,3 +317,85 @@ export async function loadProject(
     localityProjects,
   };
 }
+
+/* --------------------------------------------------------------
+   Public API: Get projects by CITY
+--------------------------------------------------------------- */
+export function getProjectsByCity(city: string) {
+  if (!city) return [];
+
+  const cityLower = city.toLowerCase();
+
+  return allProjectMetas
+    .filter((p) => p.city?.toLowerCase() === cityLower)
+    .map((m) => ({
+      name: m.projectName ?? m.slug,
+      slug: m.slug,
+      builder: m.builder,
+      area: m.area,
+      locality: m.locality,
+      city: m.city,
+      state: m.state,
+      country: m.country,
+      zone: m.zone,
+      heroImage: m.heroImage || null,
+      heroVideoId: m.heroVideoId,
+      location:
+        m.area ||
+        m.locality ||
+        m.city ||
+        m.state ||
+        m.country ||
+        "",
+    }));
+}
+
+/* --------------------------------------------------------------
+   Public API: Get projects by ZONE
+--------------------------------------------------------------- */
+export function getProjectsByZone(city: string, zone: string) {
+  if (!city || !zone) return [];
+
+  const cityLower = city.toLowerCase();
+  const zoneLower = zone.toLowerCase();
+
+  return allProjectMetas
+    .filter(
+      (p) =>
+        p.city?.toLowerCase() === cityLower &&
+        p.zone?.toLowerCase() === zoneLower
+    )
+    .map((m) => ({
+      name: m.projectName ?? m.slug,
+      slug: m.slug,
+      builder: m.builder,
+      area: m.area,
+      locality: m.locality,
+      city: m.city,
+      state: m.state,
+      country: m.country,
+      zone: m.zone,
+      heroImage: m.heroImage || null,
+      heroVideoId: m.heroVideoId,
+      location:
+        m.area ||
+        m.locality ||
+        m.city ||
+        m.state ||
+        m.country ||
+        "",
+    }));
+}
+
+/* --------------------------------------------------------------
+   Public API: Check if slug belongs to a project
+--------------------------------------------------------------- */
+export function isProjectSlug(slug: string) {
+  if (!slug) return false;
+  return allProjectMetas.some((p) => p.slug === slug);
+}
+
+/* --------------------------------------------------------------
+   Export meta list for Breadcrumbs + SEO
+--------------------------------------------------------------- */
+export { allProjectMetas };

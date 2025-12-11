@@ -1,0 +1,17 @@
+{
+  "sections": [
+    "Hero",
+    "Navbar",
+    "Summary",
+    "FloorPlansSection",
+    "Amenities",
+    "LocationUI",
+    "Construction",
+    "PaymentPlans",
+    "LoanEligibility",
+    "CustomerSpeaks",
+    "Brochure",
+    "FAQ",
+    "BuilderAbout"
+  ]
+}

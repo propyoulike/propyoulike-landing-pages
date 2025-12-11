@@ -1,0 +1,8 @@
+{
+  "navbarConfig": {
+    "hidden": ["Top", "Brochure"],
+    "visible": [],
+    "order": ["Home", "Summary", "Location", "Payment Plans", "FAQ"],
+    "ctaLabel": ""
+  }
+}

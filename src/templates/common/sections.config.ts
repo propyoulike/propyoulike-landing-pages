@@ -19,31 +19,6 @@ import LocalityOtherProjects from "@/components/Widgets/LocalityOtherProjects";
 import type { ProjectData } from "@/content/schema/project.schema";
 
 // --------------------------------------------------------------------
-// AUTO MENU GENERATOR → builds navbar menu from sections[]
-// --------------------------------------------------------------------
-function autoMenuFromSections(project: ProjectData) {
-  const sections = project.sections || [];
-
-  return sections
-    .filter(
-      (name) =>
-        !["Hero", "Navbar"].includes(name) // exclude sections not needed in menu
-    )
-    .map((name) => {
-      const normalized = name.charAt(0).toUpperCase() + name.slice(1);
-      const def = SECTIONS[normalized as keyof typeof SECTIONS];
-
-      const id =
-        typeof def.id === "function" ? def.id(project) : def.id;
-
-      // Convert "LocationUI" → "Location UI"
-      const label = normalized.replace(/([A-Z])/g, " $1").trim();
-
-      return { label, targetId: id };
-    });
-}
-
-// --------------------------------------------------------------------
 // COMPLETE SECTIONS REGISTRY
 // --------------------------------------------------------------------
 export const SECTIONS = {
@@ -53,14 +28,14 @@ export const SECTIONS = {
     menuVisible: false,
     menuLabel: "Hero",
     menuOrder: 1,
-    props: (project: ProjectData, openCTA: () => void) => ({
+    props: (project: ProjectData, ctx) => ({
       videoId: project.hero?.videoId,
       images: project.hero?.images,
       overlayTitle: project.hero?.overlayTitle,
       overlaySubtitle: project.hero?.overlaySubtitle,
       ctaEnabled: project.hero?.ctaEnabled,
       quickInfo: project.hero?.quickInfo,
-      onCtaClick: openCTA,
+      onCtaClick: ctx.openCTA,
     }),
   },
 
@@ -70,12 +45,12 @@ export const SECTIONS = {
     menuLabel: "Home",
     menuOrder: 2,
     Component: React.lazy(() => import("@/templates/common/Navbar")),
-    props: (project: ProjectData, openCTA: () => void, autoMenu: any[]) => ({
+    props: (project: ProjectData, ctx) => ({
       logo: project.navbar?.logo,
       builderLogo: project.navbar?.builderLogo,
       projectName: project.projectName,
-      autoMenu,
-      onCtaClick: openCTA,
+      autoMenu: ctx.autoMenu,
+      onCtaClick: ctx.openCTA,
     }),
   },
 
@@ -85,13 +60,13 @@ export const SECTIONS = {
     menuVisible: true,
     menuLabel: "Overview",
     menuOrder: 3,
-    props: (project, openCTA) => ({
+    props: (project, ctx) => ({
       title: project.summary?.title,
       subtitle: project.summary?.subtitle,
       description: project.summary?.description,
       highlights: project.summary?.highlights,
       modelFlats: project.floorPlansSection?.modelFlats,
-      onCtaClick: openCTA,
+      onCtaClick: ctx.openCTA,
     }),
   },
 
@@ -101,21 +76,20 @@ export const SECTIONS = {
     menuLabel: "Floor Plans",
     menuOrder: 4,
     Component: React.lazy(() => import("@/templates/common/FloorPlans")),
-    props: (project, openCTA) => ({
+    props: (project, ctx) => ({
       section: project.floorPlansSection,
       paymentPlans: project.paymentPlans,
-      onCtaClick: openCTA,
+      onCtaClick: ctx.openCTA,
     }),
   },
 
-  // Combined Amenities + Views as tabs
   Amenities: {
     id: "amenities",
     menuVisible: true,
     menuLabel: "Amenities",
     menuOrder: 5,
     Component: React.lazy(() => import("@/templates/common/AmenitiesViewsTabs")),
-    props: (project, openCTA) => ({
+    props: (project, ctx) => ({
       amenitiesTitle: project.amenities?.heroTitle,
       amenitiesSubtitle: project.amenities?.heroSubtitle,
       amenityImages: project.amenities?.amenityImages,
@@ -123,67 +97,54 @@ export const SECTIONS = {
       viewsTitle: project.views?.title || "Model Flats & Views",
       viewsSubtitle: project.views?.subtitle,
       viewImages: project.views?.images,
-      onCtaClick: openCTA,
+      onCtaClick: ctx.openCTA,
     }),
   },
 
-  // Keep Views as separate section but hidden from menu (merged into Amenities tabs)
   Views: {
     id: "views",
     menuVisible: false,
     menuLabel: "Gallery",
     menuOrder: 6,
-    Component: () => null, // No longer renders separately
+    Component: () => null,
     props: () => ({}),
   },
 
-LocationUI: {
-  id: (project: ProjectData) => {
-    const sid = project.locationUI?.sectionId;
-
-    if (typeof sid === "string" && sid.trim().length > 0) {
-      return sid.trim();
-    }
-
-    console.warn(
-      "%c[LocationUI] Missing or invalid sectionId → using fallback 'location-ui'",
-      "color: orange; font-weight: bold;"
-    );
-
-    return "location-ui";
-  },
+  LocationUI: {
+    id: (project: ProjectData) =>
+      project.locationUI?.sectionId?.trim() || "location-ui",
 
     menuVisible: true,
     menuLabel: "Location",
-  menuOrder: 7,
-  Component: React.lazy(() => import("@/templates/common/LocationUI")),
+    menuOrder: 7,
+    Component: React.lazy(() => import("@/templates/common/LocationUI")),
 
-  props: (project: ProjectData, openCTA: () => void) => ({
-    section: {
-      id: project.locationUI?.sectionId ?? "location-ui",
-      title: project.locationUI?.title ?? "",
-      subtitle: project.locationUI?.subtitle ?? "",
-      tagline: project.locationUI?.tagline ?? "",
-      videoId: project.locationUI?.videoId ?? "",
-      mapUrl: project.locationUI?.mapUrl ?? "",
-      categories: project.locationUI?.categories ?? [],
-      ctaText: project.locationUI?.ctaText ?? "Enquire Now",
-    },
-    onCtaClick: openCTA,
-  }),
-},
+    props: (project: ProjectData, ctx) => ({
+      section: {
+        id: project.locationUI?.sectionId ?? "location-ui",
+        title: project.locationUI?.title ?? "",
+        subtitle: project.locationUI?.subtitle ?? "",
+        tagline: project.locationUI?.tagline ?? "",
+        videoId: project.locationUI?.videoId ?? "",
+        mapUrl: project.locationUI?.mapUrl ?? "",
+        categories: project.locationUI?.categories ?? [],
+        ctaText: project.locationUI?.ctaText ?? "Enquire Now",
+      },
+      onCtaClick: ctx.openCTA,
+    }),
+  },
 
-Construction: {
-  id: "construction",
-  menuVisible: true,
-  menuLabel: "Construction",
-  menuOrder: 8,
-  Component: React.lazy(() => import("@/templates/common/ConstructionStatus")),
-  props: (project, openCTA) => ({
-    updates: project.construction ?? [],   // IMPORTANT
-    onCtaClick: openCTA,
-  }),
-},
+  Construction: {
+    id: "construction",
+    menuVisible: true,
+    menuLabel: "Construction",
+    menuOrder: 8,
+    Component: React.lazy(() => import("@/templates/common/ConstructionStatus")),
+    props: (project, ctx) => ({
+      updates: project.construction ?? [],
+      onCtaClick: ctx.openCTA,
+    }),
+  },
 
   PaymentPlans: {
     id: "payment-plans",
@@ -191,7 +152,7 @@ Construction: {
     menuLabel: "Pricing",
     menuOrder: 9,
     Component: React.lazy(() => import("@/templates/common/PaymentPlans")),
-    props: (project, openCTA) => ({
+    props: (project, ctx) => ({
       sectionId: project.paymentPlans?.sectionId,
       sectionTitle: project.paymentPlans?.sectionTitle,
       sectionSubtitle: project.paymentPlans?.sectionSubtitle,
@@ -200,21 +161,23 @@ Construction: {
       scheduleTitle: project.paymentPlans?.scheduleTitle,
       paymentSchedule: project.paymentPlans?.paymentSchedule,
       ctaText: project.paymentPlans?.ctaText,
-      onCtaClick: openCTA,
+      onCtaClick: ctx.openCTA,
     }),
   },
 
-LoanEligibility: {
-  id: "loan-eligibility",
-  menuVisible: false,
-  menuLabel: "Eligibility",
-  menuOrder: 10,
-  Component: React.lazy(() => import("@/components/Widgets/LoanEligibilityWidget")),
-  props: (project: ProjectData, openCTA: () => void) => ({
-    onCtaClick: openCTA,
-    banks: (project as any).loanBanks ?? [],
-  }),
-},
+  LoanEligibility: {
+    id: "loan-eligibility",
+    menuVisible: false,
+    menuLabel: "Eligibility",
+    menuOrder: 10,
+    Component: React.lazy(
+      () => import("@/components/Widgets/LoanEligibilityWidget")
+    ),
+    props: (project: ProjectData, ctx) => ({
+      onCtaClick: ctx.openCTA,
+      banks: (project as any).loanBanks ?? [],
+    }),
+  },
 
   CustomerSpeaks: {
     id: "customer-speaks",
@@ -222,12 +185,12 @@ LoanEligibility: {
     menuLabel: "Testimonials",
     menuOrder: 11,
     Component: React.lazy(() => import("@/templates/common/CustomerSpeaks")),
-    props: (project, openCTA) => ({
+    props: (project, ctx) => ({
       id: "customerspeaks",
       title: project.customerSpeaks?.title,
       subtitle: project.customerSpeaks?.subtitle,
       testimonials: project.customerSpeaks?.testimonials,
-      onCtaClick: openCTA,
+      onCtaClick: ctx.openCTA,
     }),
   },
 
@@ -250,56 +213,51 @@ LoanEligibility: {
     menuVisible: false,
     menuOrder: 13,
     Component: React.lazy(() => import("@/templates/common/BuilderAbout")),
-    props: (project, openCTA) => ({
+    props: (project, ctx) => ({
       title: project.builderAbout?.title,
       subtitle: project.builderAbout?.subtitle,
       description: project.builderAbout?.description,
       descriptionExpanded: project.builderAbout?.descriptionExpanded,
       stats: project.builderAbout?.stats || [],
-      onCtaClick: openCTA,
+      onCtaClick: ctx.openCTA,
     }),
   },
 
-FAQ: {
-  id: "faq",
-  menuVisible: true,
-  menuLabel: "FAQ",
-  menuOrder: 14,
+  FAQ: {
+    id: "faq",
+    menuVisible: true,
+    menuLabel: "FAQ",
+    menuOrder: 14,
+    Component: React.lazy(() => import("@/templates/common/faq/FaqSection")),
+    props: (project: ProjectData) => ({
+      builder: project.builder,
+      projectId: project.slug || project.projectId || project.id,
+    }),
+  },
 
-  // The new FAQ system from: src/templates/common/faq/FaqSection.tsx
-  Component: React.lazy(() => import("@/templates/common/faq/FaqSection")),
-
-  props: (project: ProjectData) => ({
-    builder: project.builder,
-    projectId: project.slug || project.projectId || project.id,
-  }),
-},
-
-  // Builder Widget
   BuilderWidget: {
     id: "builder-projects",
     menuVisible: false,
     menuLabel: "More Projects",
     menuOrder: 15,
     Component: React.lazy(() => import("@/components/Widgets/BuilderOtherProjects")),
-  props: (project: ProjectData) => ({
-    projects: project.builderProjects ?? [],
+    props: (project: ProjectData) => ({
+      projects: project.builderProjects ?? [],
     }),
   },
 
-  // Locality Widget
   LocalityWidget: {
     id: "locality-projects",
     menuVisible: false,
     menuLabel: "Nearby Projects",
     menuOrder: 16,
     Component: React.lazy(() => import("@/components/Widgets/LocalityOtherProjects")),
-  props: (project: ProjectData) => ({
-  projects: (project.localityProjects ?? []).filter(p =>
-    typeof p.slug === "string" &&
-    typeof p.name === "string" &&
-    (!p.heroImage || typeof p.heroImage === "string")
-  ),
+    props: (project: ProjectData) => ({
+      projects: (project.localityProjects ?? []).filter((p) =>
+        typeof p.slug === "string" &&
+        typeof p.name === "string" &&
+        (!p.heroImage || typeof p.heroImage === "string")
+      ),
     }),
   },
 } as const;

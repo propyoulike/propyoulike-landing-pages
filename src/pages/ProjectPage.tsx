@@ -1,16 +1,23 @@
 import { useEffect, useState, useMemo } from "react";
 import { useParams } from "react-router-dom";
-import { Helmet } from "react-helmet";
 import { useProject } from "@/lib/data/useProject";
 import { getTemplate } from "@/templates/getTemplate";
 import { LeadCTAProvider } from "@/components/lead/LeadCTAProvider";
 
+import ProjectSEO from "@/components/seo/ProjectSEO";
+import Breadcrumbs from "@/components/navigation/Breadcrumbs";
+
 export default function ProjectPage() {
   const { slug: routeSlug } = useParams();
 
-  // 🔥 Correct routing slug resolver
+  /**
+   * RESOLVE FINAL SLUG
+   * - Works for /slug
+   * - Works even if router didn't pass slug (DynamicRouter fallback)
+   */
   const resolvedSlug = useMemo(() => {
     if (routeSlug && routeSlug.trim() !== "") return routeSlug;
+
     const cleaned = window.location.pathname.replace(/^\/|\/$/g, "");
     return cleaned !== "" ? cleaned : null;
   }, [routeSlug]);
@@ -36,35 +43,36 @@ export default function ProjectPage() {
     }
   }, [project]);
 
-// --------------------------
-// Correct render flow
-// --------------------------
-if (!resolvedSlug) {
-  return <div>Invalid project URL</div>;
-}
+  // -------------------------------------------------------------
+  // RENDER FLOW
+  // -------------------------------------------------------------
+  if (!resolvedSlug) {
+    return <div>Invalid project URL</div>;
+  }
 
-if (loading || !project) {
-  return <div>Loading…</div>;
-}
+  if (loading || !project) {
+    return <div>Loading…</div>;
+  }
 
-if (error) {
-  return <div>{error}</div>;
-}
+  if (error) {
+    return <div>{error}</div>;
+  }
 
-if (templateError) {
-  return <div>{templateError}</div>;
-}
+  if (templateError) {
+    return <div>{templateError}</div>;
+  }
 
-if (!Template) {
-  return <div>Loading template…</div>;
-}
+  if (!Template) {
+    return <div>Loading template…</div>;
+  }
 
   return (
     <>
-      <Helmet>
-        <title>{project.meta?.title || project.projectName}</title>
-        <meta name="description" content={project.meta?.description || ""} />
-      </Helmet>
+      {/* ⭐ Full SEO for project */}
+      <ProjectSEO project={project} />
+
+      {/* ⭐ Auto Breadcrumbs */}
+      <Breadcrumbs />
 
       <LeadCTAProvider
         projectName={project.projectName}

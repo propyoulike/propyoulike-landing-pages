@@ -1,0 +1,11 @@
+{
+  "sections": [
+    "Hero",
+    "Navbar",
+    "Summary",
+    "Amenities",
+    "LocationUI",
+    "FAQ",
+    "BuilderAbout"
+  ]
+}

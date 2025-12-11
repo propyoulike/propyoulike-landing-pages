@@ -6,26 +6,39 @@ interface SEOProps {
 }
 
 export default function ProjectSEO({ project }: SEOProps) {
-  const url = `https://propyoulike.com/${project.builder}-${project.slug}`;
+  if (!project) return null;
 
   /* -----------------------------------------------
-      SAFE FALLBACKS
+      URL & CANONICAL
   ----------------------------------------------- */
-  const locationUI = project.locationUI;
-  const city = locationUI?.title?.split(",").pop()?.trim() || "";
+  const origin = "https://propyoulike.com";
+  const url = `${origin}/${project.slug}`;
 
-  const title = `${project.projectName}${
-    city ? " | " + city : ""
-  } | Price, Floor Plans, Brochure`;
+  /* -----------------------------------------------
+      TITLE + DESCRIPTION
+  ----------------------------------------------- */
+  const city =
+    project.locationMeta?.city ||
+    project.city ||
+    project.locationUI?.title?.split(",").pop()?.trim() ||
+    "";
+
+  const title = `${project.projectName}${city ? " | " + city : ""} | Price, Floor Plans, Brochure`;
 
   const desc =
     project.summary?.description ||
     `Explore ${project.projectName} – pricing, floor plans, amenities, location and brochure.`;
 
-  const heroImage = project.hero?.images?.[0] || "/default-og.jpg";
+  /* -----------------------------------------------
+      HERO IMAGE FALLBACK
+  ----------------------------------------------- */
+  const heroImage =
+    project.hero?.images?.[0] ||
+    project.heroImage ||
+    "https://via.placeholder.com/1200x630?text=Project+Image";
 
   /* -----------------------------------------------
-      SAFE FAQ RESOLVER
+      FAQ JSON-LD
   ----------------------------------------------- */
   const faqList = Array.isArray(project.faq) ? project.faq : [];
 
@@ -46,7 +59,7 @@ export default function ProjectSEO({ project }: SEOProps) {
       : null;
 
   /* -----------------------------------------------
-      PROJECT SCHEMA
+      PROJECT SCHEMA (ApartmentComplex)
   ----------------------------------------------- */
   const projectSchema = {
     "@context": "https://schema.org",
@@ -59,38 +72,34 @@ export default function ProjectSEO({ project }: SEOProps) {
       addressLocality: city,
       addressCountry: "IN",
     },
-    amenityFeature:
-      project.amenities?.amenityCategories?.flatMap((c) =>
-        c.items.map((item) => ({
-          "@type": "LocationFeatureSpecification",
-          name: item,
-        }))
-      ) || [],
+    brand: project.builder,
+    description: desc,
   };
 
   /* -----------------------------------------------
-      PRICING SCHEMA (SAFE)
+      PRICING SCHEMA SAFELY
   ----------------------------------------------- */
-  const pricingList = project.floorPlansSection?.unitPlans || [];
+  const pricing = project.floorPlansSection?.unitPlans || [];
 
   const pricingSchema =
-    pricingList.length > 0
+    Array.isArray(pricing) && pricing.length > 0
       ? {
           "@context": "https://schema.org",
           "@type": "Product",
           name: project.projectName,
           brand: project.builder,
-          offers: pricingList.map((conf) => ({
+          offers: pricing.map((p) => ({
             "@type": "Offer",
             priceCurrency: "INR",
-            price: conf.price,
-            description: conf.title,
+            price: p.price || undefined,
+            description: p.title || "",
+            availability: "https://schema.org/InStock",
           })),
         }
       : null;
 
   /* -----------------------------------------------
-      BREADCRUMB SCHEMA
+      BREADCRUMB SCHEMA (City → Project)
   ----------------------------------------------- */
   const breadcrumbSchema = {
     "@context": "https://schema.org",
@@ -99,22 +108,24 @@ export default function ProjectSEO({ project }: SEOProps) {
       {
         "@type": "ListItem",
         position: 1,
-        name: "Projects",
-        item: "https://yourdomain.com/projects",
+        name: "Home",
+        item: origin,
       },
+      city
+        ? {
+            "@type": "ListItem",
+            position: 2,
+            name: city,
+            item: `${origin}/${encodeURIComponent(city)}`,
+          }
+        : null,
       {
         "@type": "ListItem",
-        position: 2,
-        name: project.builder,
-        item: `https://yourdomain.com/projects/${project.builder}`,
-      },
-      {
-        "@type": "ListItem",
-        position: 3,
+        position: city ? 3 : 2,
         name: project.projectName,
         item: url,
       },
-    ],
+    ].filter(Boolean),
   };
 
   return (
@@ -122,10 +133,9 @@ export default function ProjectSEO({ project }: SEOProps) {
       {/* Primary Meta */}
       <title>{title}</title>
       <meta name="description" content={desc} />
-
       <link rel="canonical" href={url} />
 
-      {/* OG */}
+      {/* OpenGraph */}
       <meta property="og:title" content={title} />
       <meta property="og:description" content={desc} />
       <meta property="og:image" content={heroImage} />
@@ -135,10 +145,8 @@ export default function ProjectSEO({ project }: SEOProps) {
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
 
-      {/* Preload hero */}
-      {heroImage && (
-        <link rel="preload" as="image" href={heroImage} fetchPriority="high" />
-      )}
+      {/* Preload hero image */}
+      {heroImage && <link rel="preload" as="image" href={heroImage} fetchPriority="high" />}
 
       {/* JSON-LD */}
       <script type="application/ld+json">

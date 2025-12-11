@@ -1,0 +1,334 @@
+Folder PATH listing for volume Windows-SSD
+Volume serial number is 2EF4-0C29
+C:.
+|   App.css
+|   App.tsx
+|   index.css
+|   main.tsx
+|   project-structure.txt
+|   projectEntry.tsx
+|   vite-env.d.ts
+|   
++---components
+|   |   CTAButtons.tsx
+|   |   
+|   +---footer
+|   |       Footer.tsx
+|   |       
+|   +---lead
+|   |       FloatingCTA.tsx
+|   |       LeadCTAProvider.tsx
+|   |       LeadForm.tsx
+|   |       LeadFormDrawer.tsx
+|   |       LeadFormModal.tsx
+|   |       LeadPipeline.ts
+|   |       useLeadCTA.tsx
+|   |       
+|   +---seo
+|   |       ProjectSEO.tsx
+|   |       
+|   +---ui
+|   |       accordion.tsx
+|   |       alert-dialog.tsx
+|   |       alert.tsx
+|   |       aspect-ratio.tsx
+|   |       avatar.tsx
+|   |       badge.tsx
+|   |       breadcrumb.tsx
+|   |       button.tsx
+|   |       calendar.tsx
+|   |       card.tsx
+|   |       carousel.tsx
+|   |       chart.tsx
+|   |       checkbox.tsx
+|   |       collapsible.tsx
+|   |       command.tsx
+|   |       context-menu.tsx
+|   |       dialog.tsx
+|   |       drawer.tsx
+|   |       dropdown-menu.tsx
+|   |       form.tsx
+|   |       hover-card.tsx
+|   |       input-otp.tsx
+|   |       input.tsx
+|   |       label.tsx
+|   |       menubar.tsx
+|   |       navigation-menu.tsx
+|   |       pagination.tsx
+|   |       popover.tsx
+|   |       progress.tsx
+|   |       radio-group.tsx
+|   |       resizable.tsx
+|   |       scroll-area.tsx
+|   |       select.tsx
+|   |       separator.tsx
+|   |       sheet.tsx
+|   |       sidebar.tsx
+|   |       skeleton.tsx
+|   |       slider.tsx
+|   |       sonner.tsx
+|   |       switch.tsx
+|   |       table.tsx
+|   |       tabs.tsx
+|   |       textarea.tsx
+|   |       toast.tsx
+|   |       toaster.tsx
+|   |       toggle-group.tsx
+|   |       toggle.tsx
+|   |       tooltip.tsx
+|   |       use-toast.ts
+|   |       
+|   \---Widgets
+|       |   BuilderOtherProjects.tsx
+|       |   LocalityOtherProjects.tsx
+|       |   
+|       +---HomeSizeAdvisor
+|       |   |   calculator.ts
+|       |   |   index.tsx
+|       |   |   styles.css
+|       |   |   Tooltip.tsx
+|       |   |   types.ts
+|       |   |   
+|       |   \---calculator
+|       \---LoanEligibilityWidget
+|           |   AnalyticsProvider.tsx
+|           |   index.tsx
+|           |   styles.css
+|           |   types.ts
+|           |   
+|           +---components
+|           |       ApplicantCard.tsx
+|           |       BankOffers.tsx
+|           |       BankStrip.tsx
+|           |       Card.tsx
+|           |       CoApplicantCard.tsx
+|           |       ExpandableCard.tsx
+|           |       Field.tsx
+|           |       InfoNotes.tsx
+|           |       LoanParameters.tsx
+|           |       SectionHeader.tsx
+|           |       Slider.tsx
+|           |       StickySummary.tsx
+|           |       SummaryCard.tsx
+|           |       SupportedBanks.tsx
+|           |       
+|           +---hooks
+|           |       useLoanCalculator.ts
+|           |       
+|           \---utils
+|                   format.ts
+|                   math.ts
+|                   tenure.ts
+|                   tracking.ts
+|                   
++---content
+|   |   getAllProjects.ts
+|   |   
+|   +---global
+|   |       globalFiles.json
+|   |       globalNavbar.json
+|   |       globalSections.json
+|   |       
+|   +---projects
+|   |   |   faq.json
+|   |   |   
+|   |   +---provident
+|   |   |   |   aboutbuilder.json
+|   |   |   |   builder_faq.json
+|   |   |   |   files.json
+|   |   |   |   navbar.json
+|   |   |   |   sections.json
+|   |   |   |   
+|   |   |   +---botanico
+|   |   |   |       amenities.json
+|   |   |   |       brochure.json
+|   |   |   |       config.json
+|   |   |   |       construction.json
+|   |   |   |       floorPlans.json
+|   |   |   |       hero.json
+|   |   |   |       index.json
+|   |   |   |       loan.json
+|   |   |   |       LocationUI.json
+|   |   |   |       paymentPlans.json
+|   |   |   |       project_faq.json
+|   |   |   |       summary.json
+|   |   |   |       testimonials.json
+|   |   |   |       views.json
+|   |   |   |       
+|   |   |   +---capella
+|   |   |   |       amenities.json
+|   |   |   |       brochure.json
+|   |   |   |       config.json
+|   |   |   |       construction.json
+|   |   |   |       floorPlans.json
+|   |   |   |       hero.json
+|   |   |   |       index.json
+|   |   |   |       loan.json
+|   |   |   |       LocationUI.json
+|   |   |   |       paymentPlans.json
+|   |   |   |       summary.json
+|   |   |   |       testimonials.json
+|   |   |   |       views.json
+|   |   |   |       
+|   |   |   +---deansgate
+|   |   |   |       amenities.json
+|   |   |   |       brochure.json
+|   |   |   |       config.json
+|   |   |   |       construction.json
+|   |   |   |       floorPlans.json
+|   |   |   |       hero.json
+|   |   |   |       index.json
+|   |   |   |       loan.json
+|   |   |   |       LocationUI.json
+|   |   |   |       paymentPlans.json
+|   |   |   |       summary.json
+|   |   |   |       testimonials.json
+|   |   |   |       views.json
+|   |   |   |       
+|   |   |   +---ecopolitan
+|   |   |   |       amenities.json
+|   |   |   |       brochure.json
+|   |   |   |       config.json
+|   |   |   |       construction.json
+|   |   |   |       floorPlans.json
+|   |   |   |       hero.json
+|   |   |   |       index.json
+|   |   |   |       loan.json
+|   |   |   |       LocationUI.json
+|   |   |   |       paymentPlans.json
+|   |   |   |       summary.json
+|   |   |   |       testimonials.json
+|   |   |   |       views.json
+|   |   |   |       
+|   |   |   +---park-square
+|   |   |   |       amenities.json
+|   |   |   |       brochure.json
+|   |   |   |       config.json
+|   |   |   |       construction.json
+|   |   |   |       floorPlans.json
+|   |   |   |       hero.json
+|   |   |   |       index.json
+|   |   |   |       loan.json
+|   |   |   |       LocationUI.json
+|   |   |   |       paymentPlans.json
+|   |   |   |       summary.json
+|   |   |   |       testimonials.json
+|   |   |   |       views.json
+|   |   |   |       
+|   |   |   +---park-square-solitaire
+|   |   |   |       amenities.json
+|   |   |   |       brochure.json
+|   |   |   |       config.json
+|   |   |   |       construction.json
+|   |   |   |       floorPlans.json
+|   |   |   |       hero.json
+|   |   |   |       index.json
+|   |   |   |       loan.json
+|   |   |   |       LocationUI.json
+|   |   |   |       paymentPlans.json
+|   |   |   |       summary.json
+|   |   |   |       testimonials.json
+|   |   |   |       views.json
+|   |   |   |       
+|   |   |   \---sunworth-city
+|   |   |           amenities.json
+|   |   |           brochure.json
+|   |   |           config.json
+|   |   |           construction.json
+|   |   |           floorPlans.json
+|   |   |           hero.json
+|   |   |           index.json
+|   |   |           loan.json
+|   |   |           LocationUI.json
+|   |   |           paymentPlans.json
+|   |   |           summary.json
+|   |   |           testimonials.json
+|   |   |           views.json
+|   |   |           
+|   |   \---puravankara
+|   |           aboutbuilder.json
+|   |           builder_faq.json
+|   |           files.json
+|   |           navbar.json
+|   |           sections.json
+|   |           
+|   \---schema
+|           builder.schema.ts
+|           project.schema.ts
+|           
++---data
+|       projects-index.json
+|       
++---hooks
+|       use-mobile.tsx
+|       use-toast.ts
+|       useScrollTracking.ts
+|       
++---lib
+|   |   getRelatedProjects.ts
+|   |   projectsRegistry.ts
+|   |   utils.ts
+|   |   
+|   \---data
+|           loadBuilder.ts
+|           loadProject.ts
+|           useProject.ts
+|           
++---pages
+|       BuilderPage.tsx
+|       Index.tsx
+|       LocalityPage.tsx
+|       NotFound.tsx
+|       ProjectPage.tsx
+|       
++---templates
+|   |   getTemplate.ts
+|   |   
+|   +---builders
+|   |   \---provident
+|   |           ApartmentProvident.tsx
+|   |           
+|   +---common
+|   |   |   AboutSection.tsx
+|   |   |   Amenities.tsx
+|   |   |   AmenitiesViewsTabs.tsx
+|   |   |   Brochure.tsx
+|   |   |   buildAutoMenu.ts
+|   |   |   BuilderAbout.tsx
+|   |   |   ConstructionStatus.tsx
+|   |   |   CTAButtons.tsx
+|   |   |   CustomerSpeaks.tsx
+|   |   |   FAQ.tsx
+|   |   |   FloatingQuickNav.tsx
+|   |   |   FloorPlans.tsx
+|   |   |   Hero.tsx
+|   |   |   HomeSizeAdvisor.tsx
+|   |   |   LocationUI.tsx
+|   |   |   ModelVideos.tsx
+|   |   |   Navbar.tsx
+|   |   |   PaymentPlans.tsx
+|   |   |   ProjectRenderer.tsx
+|   |   |   ProjectSummary.tsx
+|   |   |   sections.config.ts
+|   |   |   sections.ts
+|   |   |   Tracking.tsx
+|   |   |   Views.tsx
+|   |   |   
+|   |   \---faq
+|   |           FaqList.tsx
+|   |           faqLoader.ts
+|   |           faqSchema.ts
+|   |           FaqSection.tsx
+|   |           faqTypes.ts
+|   |           index.ts
+|   |           
+|   \---default
+|           ApartmentDefault.tsx
+|           PlotDefault.tsx
+|           VillaDefault.tsx
+|           
++---themes
+|   \---builders
+\---types
+        global.d.ts
+        
