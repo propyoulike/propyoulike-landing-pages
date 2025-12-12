@@ -5,3 +5,123 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/****************************************************
+ PREMIUM ACCORDION OVERRIDES FOR SHADCN ACCORDION
+*****************************************************/
+
+/* 🚫 1. REMOVE SHADCN'S DEFAULT ARROW (latest version injects an SVG automatically) */
+.accordion-trigger > svg:not(.custom-arrow) {
+  display: none !important;
+}
+
+/****************************************************
+ PREMIUM CARD UI
+*****************************************************/
+
+/* 2. Premium accordion card using your design tokens */
+.accordion-card {
+  background: hsl(var(--card));
+  border-radius: var(--radius-xl);
+  border: 1px solid hsl(var(--border));
+  box-shadow: var(--shadow-md);
+  backdrop-filter: blur(12px);
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.accordion-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-1px);
+}
+
+/****************************************************
+ TRIGGER (HEADER AREA)
+*****************************************************/
+
+/* 3. Trigger typography & layout */
+.accordion-trigger {
+  font-family: var(--font-family);
+  font-weight: var(--heading-weight);
+  color: hsl(var(--foreground));
+  padding: 1.25rem 1.5rem;
+}
+
+/* 4. Premium arrow transition */
+.accordion-trigger .custom-arrow {
+  transition: transform 0.3s ease;
+}
+
+/* Rotate on open */
+[data-state="open"] .accordion-trigger .custom-arrow {
+  transform: rotate(180deg);
+}
+
+/****************************************************
+ CONTENT STYLING
+*****************************************************/
+
+/* 5. Content text styling */
+.accordion-content-item {
+  font-family: var(--font-family);
+  font-weight: var(--body-weight);
+  font-size: 1rem;
+  color: hsl(var(--muted-foreground));
+  line-height: 1.6;
+}
+
+/* 6. Premium bullet for list items */
+.accordion-bullet {
+  width: 6px;
+  height: 6px;
+  background: hsl(var(--primary));
+  border-radius: 50%;
+  margin-top: 6px;
+  flex-shrink: 0;
+}
+
+/* --- ULTRA LUXURY EFFECTS --- */
+
+/* Spotlight hover shine */
+.amenity-spotlight {
+  position: relative;
+  overflow: hidden;
+}
+
+.amenity-spotlight::after {
+  content: "";
+  position: absolute;
+  top: var(--y);
+  left: var(--x);
+  width: 0px;
+  height: 0px;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(255,255,255,0.25), transparent 40%);
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.amenity-spotlight:hover::after {
+  width: 250px;
+  height: 250px;
+  opacity: 1;
+}
+
+/* Fade-in reveal */
+.fade-up {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-up.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 3D tilt */
+.tilt-card {
+  transform-style: preserve-3d;
+  transition: transform 0.2s ease;
+}
+

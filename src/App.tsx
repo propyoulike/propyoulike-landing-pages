@@ -17,6 +17,10 @@ import LocalityPage from "./pages/LocalityPage";
 import CityPage from "./pages/CityPage";
 import ZonePage from "./pages/ZonePage";
 
+import PrivacyPage from "@/components/legal/PrivacyPage";
+import TermsPage from "@/components/legal/TermsPage";
+import ReraPage from "@/components/legal/ReraPage";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -44,6 +48,11 @@ const App = () => (
           <Route path="/:slug" element={<DynamicRouter />} />
 
           <Route path="*" element={<NotFound />} />
+
+	  <Route path="/legal/privacy" element={<PrivacyPage />} />
+	  <Route path="/legal/terms" element={<TermsPage />} />
+	  <Route path="/legal/rera" element={<ReraPage />} />
+
         </Routes>
       </TooltipProvider>
     </QueryClientProvider>

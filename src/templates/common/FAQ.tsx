@@ -1,200 +1,253 @@
-// src/components/FAQ.tsx
-import React from "react";
+// ----------------------------------------------------------
+// ULTIMATE NEXT-GEN FAQ (Free, Premium, SEO-friendly)
+// ----------------------------------------------------------
+
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   Accordion,
-  AccordionContent,
   AccordionItem,
   AccordionTrigger,
+  AccordionContent,
 } from "@/components/ui/accordion";
+import { Input } from "@/components/ui/input";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import CTAButtons from "@/components/CTAButtons";
 
-/* WhatsApp SVG icon */
-const WhatsAppIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    fill="currentColor"
-    viewBox="0 0 24 24"
-    className="w-4 h-4 mr-2"
-  >
-    <path d="M20.52 3.48A11.8 11.8 0 0 0 12.07 0C5.5 0 .16 5.34.16 11.91c0 2.1.55 4.14 1.6 5.94L0 24l6.33-1.65a11.86 11.86 0 0 0 5.73 1.46h.01c6.56 0 11.9-5.34 11.9-11.91a11.85 11.85 0 0 0-3.47-8.4zM12.1 21.3a9.4 9.4 0 0 1-4.78-1.3l-.34-.2-3.75.98 1-3.65-.23-.38a9.4 9.4 0 0 1-1.43-4.96c0-5.19 4.23-9.42 9.42-9.42a9.35 9.35 0 0 1 6.66 2.76 9.36 9.36 0 0 1 2.76 6.66c0 5.2-4.24 9.43-9.42 9.43zm5.15-7.07c-.28-.14-1.65-.82-1.9-.92-.25-.1-.43-.14-.62.14-.2.28-.72.92-.88 1.11-.16.19-.32.21-.6.07-.28-.14-1.18-.43-2.24-1.38-.83-.74-1.39-1.65-1.55-1.93-.16-.28-.02-.43.12-.57.12-.12.28-.32.42-.48.14-.16.19-.28.28-.47.09-.19.05-.35-.02-.49-.07-.14-.62-1.5-.85-2.05-.22-.54-.45-.47-.62-.48-.16-.01-.35-.01-.54-.01a1.04 1.04 0 0 0-.75.35c-.26.28-.99.97-.99 2.36 0 1.39 1.02 2.73 1.17 2.92.14.19 2 3.05 4.88 4.27.68.29 1.2.46 1.61.59.67.21 1.28.18 1.76.11.54-.08 1.65-.67 1.89-1.32.23-.65.23-1.21.16-1.32-.07-.11-.25-.18-.53-.32z" />
-  </svg>
-);
+/* ---------- Utility Helpers ---------- */
+
+// Normalize string for matching
+const norm = (s: string) => s.toLowerCase().trim();
+
+// Highlight matches
+const highlight = (text: string, query: string) => {
+  if (!query) return text;
+
+  const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const regex = new RegExp(escaped, "gi");
+
+  return text.split(regex).reduce((acc: any[], part, i, arr) => {
+    acc.push(part);
+    if (i < arr.length - 1) {
+      acc.push(
+        <mark className="bg-yellow-200 px-1 rounded" key={i}>
+          {query}
+        </mark>
+      );
+    }
+    return acc;
+  }, []);
+};
+
+interface FAQItem {
+  question: string;
+  answer: string;
+  category?: string;
+}
 
 interface FAQProps {
-  id?: string;
   title?: string;
   subtitle?: string;
-  faqs: { question: string; answer: any }[]; // answer may come as string or HTML object
+  faqs: FAQItem[];
   onCtaClick: () => void;
 }
 
-export default function FAQ({
-  id = "faq",
+export default function PremiumFAQ({
   title = "Frequently Asked Questions",
   subtitle,
   faqs = [],
   onCtaClick,
 }: FAQProps) {
-  if (!faqs || !faqs.length) return null;
+  const [search, setSearch] = useState("");
+  const [activeTab, setActiveTab] = useState("All");
+  const [openCount, setOpenCount] = useState<Record<string, number>>({});
+  const scrollRef = useRef<HTMLDivElement | null>(null);
 
-  /* ---------- Helpers ---------- */
+  /* ---------- Categorization ---------- */
 
-  // Remove HTML tags (safe, quick)
-  const stripHTML = (s: string) => s.replace(/<\/?[^>]+(>|$)/g, "");
+  const categories = useMemo(() => {
+    const set = new Set(faqs.map((f) => f.category || "General"));
+    return ["All", ...Array.from(set)];
+  }, [faqs]);
 
-  // Unwrap URLs inside parentheses: (https://example.com) -> https://example.com
-  const unwrapParenthesizedUrls = (s: string) =>
-    s.replace(/\((https?:\/\/[^\s)]+)\)/gi, "$1").replace(/\((www\.[^\s)]+)\)/gi, "https://$1");
+  /* ---------- Smart Filtering ---------- */
 
-  // Force value to plain string and normalize
-  const normalizeAnswerString = (input: any) => {
-    if (input == null) return "";
-    // If it's already a string, use it; if not, convert to string
-    let s = typeof input === "string" ? input : String(input);
-    // Some CMS wrap links in <p>... or other tags; remove tag wrappers
-    s = stripHTML(s);
-    // Unwrap parenthesis wrapped urls
-    s = unwrapParenthesizedUrls(s);
-    // Trim extra whitespace
-    return s.trim();
-  };
+  const visibleFaqs = useMemo(() => {
+    let list = faqs;
 
-  // Linkify text into React nodes (WhatsApp placeholder, email, URL)
-  const linkifyText = (text: string): React.ReactNode[] => {
-    const parts: React.ReactNode[] = [];
-    // Combined regex:
-    // 1: whatsapp placeholder [whatsapp:+919...]
-    // 2: email
-    // 3: url with protocol or starting with www.
-    const REGEX =
-      /\[whatsapp:(\+?\d+)\]|([A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,})|\b((?:https?:\/\/|www\.)[^\s<>]+)\b/gi;
-
-    let last = 0;
-    let match: RegExpExecArray | null;
-
-    while ((match = REGEX.exec(text)) !== null) {
-      if (last < match.index) parts.push(text.slice(last, match.index));
-
-      if (match[1]) {
-        // WhatsApp placeholder
-        const phone = match[1].replace(/\D/g, "");
-        parts.push(
-          <a
-            key={`wa-${match.index}`}
-            href={`https://wa.me/${phone}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block"
-          >
-            <button className="flex items-center px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition font-medium text-sm">
-              <WhatsAppIcon />
-              Chat on WhatsApp
-            </button>
-          </a>
-        );
-      } else if (match[2]) {
-        // email
-        const email = match[2];
-        parts.push(
-          <a key={`email-${match.index}`} href={`mailto:${email}`} className="text-blue-600 underline">
-            {email}
-          </a>
-        );
-      } else if (match[3]) {
-        // URL
-        const raw = match[3];
-        const url = raw.startsWith("http") ? raw : `https://${raw}`;
-        parts.push(
-          <a
-            key={`url-${match.index}`}
-            href={url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-600 underline hover:text-blue-800 transition"
-            title={url}
-          >
-            {raw}
-          </a>
-        );
-      }
-
-      last = REGEX.lastIndex;
+    // Category filter
+    if (activeTab !== "All") {
+      list = list.filter((f) => (f.category || "General") === activeTab);
     }
 
-    if (last < text.length) parts.push(text.slice(last));
-    return parts;
-  };
-
-  // Render answer: split into paragraphs and linkify each line
-  const renderAnswer = (input: any): React.ReactNode => {
-    const str = normalizeAnswerString(input);
-    if (!str) return null;
-    // preserve paragraphs separated by two newlines or single newline
-    const lines = str.split(/\n+/).filter(Boolean);
-    return lines.map((line, idx) => (
-      <p className="mb-3" key={idx}>
-        {linkifyText(line)}
-      </p>
-    ));
-  };
-
-  /* ---------- Analytics / CTA handlers ---------- */
-
-  const trackFaqOpen = (question: string) => {
-    try {
-      window?.dataLayer?.push?.({
-        event: "select_content",
-        content_type: "faq_question",
-        item_id: question,
-      });
-      window?.fbq?.("trackCustom", "FAQOpened", { question });
-    } catch {
-      /* noop */
+    // Search filter
+    if (search.trim()) {
+      const q = norm(search);
+      list = list.filter(
+        (f) =>
+          norm(f.question).includes(q) || norm(f.answer).includes(q)
+      );
     }
-  };
 
-  const handleCtaClick = () => {
-    try {
-      window?.dataLayer?.push?.({ event: "cta_click", section: "faq" });
-      window?.fbq?.("trackCustom", "CTAClicked", { section: "FAQ" });
-    } catch {
-      /* noop */
+    return list;
+  }, [faqs, search, activeTab]);
+
+  /* ---------- Predictive Suggestions ---------- */
+
+  const suggestions = useMemo(() => {
+    if (!search.trim()) return [];
+    const q = norm(search);
+
+    return faqs
+      .filter((f) => norm(f.question).includes(q))
+      .slice(0, 5)
+      .map((f) => f.question);
+  }, [search, faqs]);
+
+  /* ---------- Deep Linking With Query ---------- */
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const q = params.get("query");
+    if (q) {
+      setSearch(q);
+      document.getElementById("faq")?.scrollIntoView({ behavior: "smooth" });
     }
-    onCtaClick?.();
-  };
+  }, []);
 
-  /* ---------- Render component ---------- */
+  /* ---------- Auto Scroll to First Result ---------- */
+
+  useEffect(() => {
+    if (visibleFaqs.length > 0 && search) {
+      scrollRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }, [visibleFaqs, search]);
+
+  /* ---------- Popular Questions Ranking ---------- */
+
+  const sortedByPopularity = useMemo(() => {
+    return [...faqs]
+      .sort((a, b) => (openCount[a.question] || 0) - (openCount[b.question] || 0))
+      .reverse()
+      .slice(0, 3);
+  }, [openCount]);
+
+  /* ---------- Render ---------- */
 
   return (
-    <section id={id} className="py-20 lg:py-28 bg-muted/30 scroll-mt-32">
-      <div className="container mx-auto px-4">
-        <div className="max-w-4xl mx-auto">
-          {/* Header */}
-          <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-5xl font-bold mb-6 text-foreground">{title}</h2>
-            {subtitle && <p className="text-lg text-muted-foreground">{subtitle}</p>}
-          </div>
+    <section id="faq" className="py-20 lg:py-28 bg-muted/20">
+      <div className="container mx-auto px-4 max-w-4xl">
 
-          {/* Accordion */}
-          <Accordion type="single" collapsible className="space-y-4">
-            {faqs.map((faq, i) => (
-              <AccordionItem key={i} value={`faq-${i}`} className="bg-background rounded-xl border px-6">
-                <AccordionTrigger onClick={() => trackFaqOpen(faq.question)} className="text-left hover:no-underline py-6">
-                  <span className="font-semibold text-foreground pr-4">{faq.question}</span>
-                </AccordionTrigger>
-
-                <AccordionContent className="pb-6 text-muted-foreground">
-                  {renderAnswer(faq.answer)}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-
-          {/* CTA */}
-          <div className="mt-12 flex justify-center">
-            <CTAButtons onFormOpen={handleCtaClick} variant="compact" />
-          </div>
+        {/* Header */}
+        <div className="text-center mb-10">
+          <h2 className="text-3xl lg:text-5xl font-bold">{title}</h2>
+          {subtitle && (
+            <p className="text-lg text-muted-foreground mt-3">{subtitle}</p>
+          )}
         </div>
+
+        {/* Search */}
+        <div className="relative mb-8">
+          <Input
+            placeholder="Search questions…"
+            className="h-12 text-lg"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+
+          {/* Suggestion Box */}
+          {suggestions.length > 0 && (
+            <div className="absolute z-20 left-0 right-0 bg-white shadow-xl border mt-1 rounded-lg">
+              {suggestions.map((s, i) => (
+                <div
+                  key={i}
+                  className="px-4 py-2 cursor-pointer hover:bg-muted/30"
+                  onClick={() => setSearch(s)}
+                >
+                  {highlight(s, search)}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Popular Section */}
+        {sortedByPopularity.length > 0 && (
+          <div className="mb-10">
+            <h3 className="font-semibold text-xl mb-4">Top Questions</h3>
+            <ul className="space-y-2">
+              {sortedByPopularity.map((f, i) => (
+                <li
+                  key={i}
+                  onClick={() => setSearch(f.question)}
+                  className="cursor-pointer underline hover:text-primary"
+                >
+                  {f.question}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {/* Category Tabs */}
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-10">
+          <TabsList className="flex flex-wrap justify-center gap-2 mb-8">
+            {categories.map((cat) => (
+              <TabsTrigger
+                key={cat}
+                value={cat}
+                className="px-5 py-2 rounded-full border shadow-sm data-[state=active]:bg-primary data-[state=active]:text-white"
+              >
+                {cat}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+
+          <TabsContent value={activeTab}>
+            <div ref={scrollRef}>
+              {visibleFaqs.length === 0 ? (
+                <p className="text-center text-muted-foreground">
+                  No questions found.
+                </p>
+              ) : (
+                <Accordion type="single" collapsible className="space-y-4">
+                  {visibleFaqs.map((faq, i) => (
+                    <AccordionItem
+                      key={faq.question}
+                      value={`faq-${i}`}
+                      className="bg-background rounded-xl border px-6 shadow-sm hover:shadow-md transition"
+                    >
+                      <AccordionTrigger
+                        className="py-5 text-left text-lg font-semibold"
+                        onClick={() =>
+                          setOpenCount((prev) => ({
+                            ...prev,
+                            [faq.question]: (prev[faq.question] || 0) + 1,
+                          }))
+                        }
+                      >
+                        {highlight(faq.question, search)}
+                      </AccordionTrigger>
+
+                      <AccordionContent className="pb-6 text-muted-foreground text-[15px] leading-relaxed">
+                        {highlight(faq.answer, search)}
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              )}
+            </div>
+          </TabsContent>
+        </Tabs>
+
+        {/* Desktop CTA */}
+        <div className="mt-16 flex justify-center">
+          <CTAButtons variant="premium" onFormOpen={onCtaClick} />
+        </div>
+      </div>
+
+      {/* Sticky Mobile CTA */}
+      <div className="fixed bottom-0 left-0 right-0 bg-background/90 backdrop-blur-lg border-t p-3 md:hidden">
+        <CTAButtons variant="sticky" onFormOpen={onCtaClick} />
       </div>
     </section>
   );

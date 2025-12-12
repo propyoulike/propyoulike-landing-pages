@@ -4,7 +4,8 @@ import Hero from "@/templates/common/Hero";
 import Navbar from "@/templates/common/Navbar";
 import Summary from "@/templates/common/ProjectSummary";
 import FloorPlans from "@/templates/common/FloorPlans";
-import AmenitiesViewsTabs from "@/templates/common/AmenitiesViewsTabs";
+import Amenities from "@/templates/common/Amenities";
+import Views from "@/templates/common/Views";
 import LocationUI from "@/templates/common/LocationUI";
 import Construction from "@/templates/common/ConstructionStatus";
 import PaymentPlans from "@/templates/common/PaymentPlans";
@@ -35,8 +36,8 @@ export const SECTIONS = {
       overlaySubtitle: project.hero?.overlaySubtitle,
       ctaEnabled: project.hero?.ctaEnabled,
       quickInfo: project.hero?.quickInfo,
-      onCtaClick: ctx.openCTA,
-    }),
+      onCtaClick: ctx.openCTA
+    })
   },
 
   Navbar: {
@@ -50,8 +51,8 @@ export const SECTIONS = {
       builderLogo: project.navbar?.builderLogo,
       projectName: project.projectName,
       autoMenu: ctx.autoMenu,
-      onCtaClick: ctx.openCTA,
-    }),
+      onCtaClick: ctx.openCTA
+    })
   },
 
   Summary: {
@@ -66,8 +67,8 @@ export const SECTIONS = {
       description: project.summary?.description,
       highlights: project.summary?.highlights,
       modelFlats: project.floorPlansSection?.modelFlats,
-      onCtaClick: ctx.openCTA,
-    }),
+      onCtaClick: ctx.openCTA
+    })
   },
 
   FloorPlansSection: {
@@ -79,8 +80,8 @@ export const SECTIONS = {
     props: (project, ctx) => ({
       section: project.floorPlansSection,
       paymentPlans: project.paymentPlans,
-      onCtaClick: ctx.openCTA,
-    }),
+      onCtaClick: ctx.openCTA
+    })
   },
 
   Amenities: {
@@ -88,37 +89,38 @@ export const SECTIONS = {
     menuVisible: true,
     menuLabel: "Amenities",
     menuOrder: 5,
-    Component: React.lazy(() => import("@/templates/common/AmenitiesViewsTabs")),
+    Component: React.lazy(() => import("@/templates/common/Amenities")),
     props: (project, ctx) => ({
-      amenitiesTitle: project.amenities?.heroTitle,
-      amenitiesSubtitle: project.amenities?.heroSubtitle,
+      heroTitle: project.amenities?.heroTitle,
+      heroSubtitle: project.amenities?.heroSubtitle,
       amenityImages: project.amenities?.amenityImages,
       amenityCategories: project.amenities?.amenityCategories,
-      viewsTitle: project.views?.title || "Model Flats & Views",
-      viewsSubtitle: project.views?.subtitle,
-      viewImages: project.views?.images,
-      onCtaClick: ctx.openCTA,
-    }),
+      onCtaClick: ctx.openCTA
+    })
   },
 
   Views: {
     id: "views",
-    menuVisible: false,
-    menuLabel: "Gallery",
+    menuVisible: true,
+    menuLabel: "Views",
     menuOrder: 6,
-    Component: () => null,
-    props: () => ({}),
+    Component: React.lazy(() => import("@/templates/common/Views")),
+    props: (project, ctx) => ({
+      id: "views",
+      title: project.views?.title,
+      subtitle: project.views?.subtitle,
+      images: project.views?.images,
+      onCtaClick: ctx.openCTA
+    })
   },
 
   LocationUI: {
     id: (project: ProjectData) =>
       project.locationUI?.sectionId?.trim() || "location-ui",
-
     menuVisible: true,
     menuLabel: "Location",
     menuOrder: 7,
     Component: React.lazy(() => import("@/templates/common/LocationUI")),
-
     props: (project: ProjectData, ctx) => ({
       section: {
         id: project.locationUI?.sectionId ?? "location-ui",
@@ -128,10 +130,10 @@ export const SECTIONS = {
         videoId: project.locationUI?.videoId ?? "",
         mapUrl: project.locationUI?.mapUrl ?? "",
         categories: project.locationUI?.categories ?? [],
-        ctaText: project.locationUI?.ctaText ?? "Enquire Now",
+        ctaText: project.locationUI?.ctaText ?? "Enquire Now"
       },
-      onCtaClick: ctx.openCTA,
-    }),
+      onCtaClick: ctx.openCTA
+    })
   },
 
   Construction: {
@@ -142,8 +144,8 @@ export const SECTIONS = {
     Component: React.lazy(() => import("@/templates/common/ConstructionStatus")),
     props: (project, ctx) => ({
       updates: project.construction ?? [],
-      onCtaClick: ctx.openCTA,
-    }),
+      onCtaClick: ctx.openCTA
+    })
   },
 
   PaymentPlans: {
@@ -161,8 +163,8 @@ export const SECTIONS = {
       scheduleTitle: project.paymentPlans?.scheduleTitle,
       paymentSchedule: project.paymentPlans?.paymentSchedule,
       ctaText: project.paymentPlans?.ctaText,
-      onCtaClick: ctx.openCTA,
-    }),
+      onCtaClick: ctx.openCTA
+    })
   },
 
   LoanEligibility: {
@@ -170,13 +172,12 @@ export const SECTIONS = {
     menuVisible: false,
     menuLabel: "Eligibility",
     menuOrder: 10,
-    Component: React.lazy(
-      () => import("@/components/Widgets/LoanEligibilityWidget")
+    Component: React.lazy(() =>
+      import("@/components/Widgets/LoanEligibilityWidget")
     ),
-    props: (project: ProjectData, ctx) => ({
-      onCtaClick: ctx.openCTA,
-      banks: (project as any).loanBanks ?? [],
-    }),
+    props: (project: ProjectData) => ({
+      banks: (project as any).loanBanks ?? []
+    })
   },
 
   CustomerSpeaks: {
@@ -186,12 +187,11 @@ export const SECTIONS = {
     menuOrder: 11,
     Component: React.lazy(() => import("@/templates/common/CustomerSpeaks")),
     props: (project, ctx) => ({
-      id: "customerspeaks",
       title: project.customerSpeaks?.title,
       subtitle: project.customerSpeaks?.subtitle,
       testimonials: project.customerSpeaks?.testimonials,
-      onCtaClick: ctx.openCTA,
-    }),
+      onCtaClick: ctx.openCTA
+    })
   },
 
   Brochure: {
@@ -204,23 +204,8 @@ export const SECTIONS = {
       heroTitle: project.brochure?.heroTitle,
       heroSubtitle: project.brochure?.heroSubtitle,
       coverImage: project.brochure?.coverImage,
-      documents: project.brochure?.documents,
-    }),
-  },
-
-  BuilderAbout: {
-    id: "about-builder",
-    menuVisible: false,
-    menuOrder: 13,
-    Component: React.lazy(() => import("@/templates/common/BuilderAbout")),
-    props: (project, ctx) => ({
-      title: project.builderAbout?.title,
-      subtitle: project.builderAbout?.subtitle,
-      description: project.builderAbout?.description,
-      descriptionExpanded: project.builderAbout?.descriptionExpanded,
-      stats: project.builderAbout?.stats || [],
-      onCtaClick: ctx.openCTA,
-    }),
+      documents: project.brochure?.documents
+    })
   },
 
   FAQ: {
@@ -231,8 +216,8 @@ export const SECTIONS = {
     Component: React.lazy(() => import("@/templates/common/faq/FaqSection")),
     props: (project: ProjectData) => ({
       builder: project.builder,
-      projectId: project.slug || project.projectId || project.id,
-    }),
+      projectId: project.slug || project.projectId || project.id
+    })
   },
 
   BuilderWidget: {
@@ -240,10 +225,12 @@ export const SECTIONS = {
     menuVisible: false,
     menuLabel: "More Projects",
     menuOrder: 15,
-    Component: React.lazy(() => import("@/components/Widgets/BuilderOtherProjects")),
+    Component: React.lazy(() =>
+      import("@/components/Widgets/BuilderOtherProjects")
+    ),
     props: (project: ProjectData) => ({
-      projects: project.builderProjects ?? [],
-    }),
+      projects: project.builderProjects ?? []
+    })
   },
 
   LocalityWidget: {
@@ -251,15 +238,30 @@ export const SECTIONS = {
     menuVisible: false,
     menuLabel: "Nearby Projects",
     menuOrder: 16,
-    Component: React.lazy(() => import("@/components/Widgets/LocalityOtherProjects")),
+    Component: React.lazy(() =>
+      import("@/components/Widgets/LocalityOtherProjects")
+    ),
     props: (project: ProjectData) => ({
-      projects: (project.localityProjects ?? []).filter((p) =>
-        typeof p.slug === "string" &&
-        typeof p.name === "string" &&
-        (!p.heroImage || typeof p.heroImage === "string")
-      ),
-    }),
+      projects: (project.localityProjects ?? []).filter(
+        (p) =>
+          typeof p.slug === "string" &&
+          typeof p.name === "string" &&
+          (!p.heroImage || typeof p.heroImage === "string")
+      )
+    })
   },
+
+  BuilderAbout: {
+    id: "about-builder",
+    menuVisible: false,
+    menuOrder: 13,
+    Component: React.lazy(() => import("@/templates/common/BuilderAbout")),
+    props: (project, ctx) => ({
+      ...project.builderAbout,
+      builderProjects: project.builderProjects,
+      onCtaClick: ctx.openCTA
+    })
+  }
 } as const;
 
 export type SectionName = keyof typeof SECTIONS;

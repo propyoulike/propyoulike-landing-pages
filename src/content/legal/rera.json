@@ -1,0 +1,18 @@
+{
+  "title": "RERA Disclaimer",
+  "updatedOn": "2025-01-01",
+  "content": [
+    {
+      "heading": "Regulatory Compliance",
+      "body": "PropYouLike operates as an Individual RERA registered real estate marketing partner."
+    },
+    {
+      "heading": "RERA Registration Details",
+      "body": "##RERA_DYNAMIC##"
+    },
+    {
+      "heading": "Verification",
+      "body": "Users may verify the registration on the state RERA portal."
+    }
+  ]
+}

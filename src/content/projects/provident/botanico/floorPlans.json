@@ -5,20 +5,8 @@
 
     "modelFlats": [
       {
-        "title": "2BHK COMFORT",
-        "id": "z6-d5uB4rRA"
-      },
-      {
-        "title": "2BHK GRAND",
-        "id": "QEtUBt1Ac3U"
-      },
-      {
-        "title": "3BHK COMFORT",
-        "id": "QEtUBt1Ac3U"
-      },
-      {
-        "title": "3BHK GRAND",
-        "id": "B2izuPDFLak"
+        "title": "Model Flat",
+        "id": "XmMnstP0dCY"
       }
     ],
 
@@ -65,10 +53,56 @@
       }
     ],
 
-    "floorPlans": [],
+    "floorPlans": [
+      {
+        "title": "Tower 1",
+        "image": "https://www.providenthousing.com/wp-content/uploads/2024/03/Tower1_GF-scaled.webp",
+        "description": ""
+      },
+      {
+        "title": "Tower 2",
+        "image": "https://www.providenthousing.com/wp-content/uploads/2024/03/Tower2_GF-scaled.webp",
+        "description": ""
+      },
+      {
+        "title": "Tower 3",
+        "image": "https://www.providenthousing.com/wp-content/uploads/2024/03/Tower-3-GF-scaled.webp",
+        "description": ""
+      },
+      {
+        "title": "Tower 4",
+        "image": "https://www.providenthousing.com/wp-content/uploads/2024/03/Tower-4_GF-scaled.webp",
+        "description": ""
+      },
+      {
+        "title": "Tower 5",
+        "image": "https://www.providenthousing.com/wp-content/uploads/2024/03/Tower-5-GF-scaled.webp",
+        "description": ""
+      },
+      {
+        "title": "Tower 6",
+        "image": "https://www.providenthousing.com/wp-content/uploads/2024/03/Tower-6_GF-scaled.webp",
+        "description": ""
+      },
+      {
+        "title": "Tower 7",
+        "image": "https://www.providenthousing.com/wp-content/uploads/2024/03/Tower-7-Ground-Floor-scaled.webp",
+        "description": ""
+      },
+      {
+        "title": "Tower 8",
+        "image": "https://www.providenthousing.com/wp-content/uploads/2024/03/Tower-8-_First-Floor-scaled.webp",
+        "description": ""
+      },
+      {
+        "title": "Tower 9",
+        "image": "https://www.providenthousing.com/wp-content/uploads/2024/03/Tower-9-FF-scaled.webp",
+        "description": ""
+      }
+],
 
     "masterPlan": {
-      "image": "",
+      "image": "https://www.providenthousing.com/wp-content/uploads/2024/03/Master-Plan.webp",
       "title": "",
       "description": ""
     },

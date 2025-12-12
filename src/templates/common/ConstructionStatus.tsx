@@ -1,11 +1,11 @@
 // src/templates/common/ConstructionStatus.tsx
-import { memo, useEffect, useState, useRef } from "react";
+import { memo, useEffect, useState, useRef, useCallback } from "react";
 import { Building2, X } from "lucide-react";
 import CTAButtons from "@/components/CTAButtons";
 import useEmblaCarousel from "embla-carousel-react";
 import AutoScroll from "embla-carousel-auto-scroll";
 
-interface ConstructionTower {
+export interface ConstructionTower {
   name: string;
   image: string;
   status?: string[];
@@ -13,7 +13,7 @@ interface ConstructionTower {
   upcoming?: string[];
 }
 
-interface ConstructionStatusProps {
+export interface ConstructionStatusProps {
   id?: string;
   title?: string;
   subtitle?: string;
@@ -28,71 +28,82 @@ const ConstructionStatus = memo(function ConstructionStatus({
   updates = [],
   onCtaClick,
 }: ConstructionStatusProps) {
-  if (!Array.isArray(updates) || updates.length === 0) return null;
+  const hasUpdates = Array.isArray(updates) && updates.length > 0;
 
+  // ---------------------------------------
+  // Embla Carousel (initialized only if updates exist)
+  // ---------------------------------------
   const [emblaRef] = useEmblaCarousel(
     { loop: true, align: "center", dragFree: true },
-    [AutoScroll({ playOnInit: true, stopOnInteraction: true, speed: 0.4 })]
+    hasUpdates
+      ? [AutoScroll({ playOnInit: true, stopOnInteraction: true, speed: 0.4 })]
+      : []
   );
 
+  // ---------------------------------------
+  // Section visibility tracking
+  // ---------------------------------------
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const hasTrackedView = useRef(false);
 
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
-
-  /* Track Section View (unchanged) */
   useEffect(() => {
+    if (!sectionRef.current) return;
+
     const observer = new IntersectionObserver(
-      (entries) => {
-        if (!hasTrackedView.current && entries[0].isIntersecting) {
+      ([entry]) => {
+        if (entry.isIntersecting && !hasTrackedView.current) {
           hasTrackedView.current = true;
+
           window?.dataLayer?.push({
             event: "section_view",
             section: id,
           });
+
           window?.fbq?.("trackCustom", "ConstructionStatusViewed");
         }
       },
       { threshold: 0.3 }
     );
-    if (sectionRef.current) observer.observe(sectionRef.current);
+
+    observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, [id]);
 
-  /* Close on ESC when modal open */
-  useEffect(() => {
-    if (activeIndex === null) return;
+  // ---------------------------------------
+  // Modal logic
+  // ---------------------------------------
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
-    const handleKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        setActiveIndex(null);
-      }
-    };
+  const openImage = useCallback(
+    (i: number, tower: ConstructionTower) => {
+      setActiveIndex(i);
+      window?.dataLayer?.push({
+        event: "tower_image_open",
+        tower: tower.name,
+      });
+      window?.fbq?.("trackCustom", "TowerImageOpened", { tower: tower.name });
+    },
+    []
+  );
 
-    window.addEventListener("keydown", handleKey);
-    return () => window.removeEventListener("keydown", handleKey);
-  }, [activeIndex]);
-
-  const openImage = (i: number, tower: ConstructionTower) => {
-    setActiveIndex(i);
-
-    window?.dataLayer?.push({
-      event: "tower_image_open",
-      tower: tower.name,
-    });
-
-    window?.fbq?.("trackCustom", "TowerImageOpened", { tower: tower.name });
-  };
-
-  const closeImage = () => {
-    setActiveIndex(null);
-  };
+  const closeImage = useCallback(() => setActiveIndex(null), []);
 
   const activeTower =
     activeIndex !== null && updates[activeIndex]
       ? updates[activeIndex]
       : null;
 
+  useEffect(() => {
+    if (activeIndex === null) return;
+
+    const handleEsc = (e: KeyboardEvent) => e.key === "Escape" && closeImage();
+    window.addEventListener("keydown", handleEsc);
+    return () => window.removeEventListener("keydown", handleEsc);
+  }, [activeIndex, closeImage]);
+
+  // ---------------------------------------
+  // Component Output
+  // ---------------------------------------
   return (
     <section
       id={id}
@@ -110,49 +121,57 @@ const ConstructionStatus = memo(function ConstructionStatus({
           )}
         </div>
 
-        {/* CAROUSEL */}
-        <div className="overflow-hidden mb-12" ref={emblaRef}>
-          <div className="flex gap-4 md:gap-6 will-change-transform">
-            {updates.map((tower, i) => (
-              <div
-                key={i}
-                className="flex-[0_0_90%] sm:flex-[0_0_80%] md:flex-[0_0_70%] lg:flex-[0_0_60%] transform-gpu"
-              >
-                <button
-                  type="button"
-                  onClick={() => openImage(i, tower)}
-                  className="w-full text-left group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-2xl"
-                >
-                  {/* IMAGE */}
-                  <div className="relative aspect-video rounded-xl md:rounded-2xl overflow-hidden shadow-lg">
-                    <img
-                      src={tower.image}
-                      alt={tower.name}
-                      loading="lazy"
-                      decoding="async"
-                      className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300"
-                    />
+        {/* If no updates, show placeholder */}
+        {!hasUpdates && (
+          <div className="text-center text-muted-foreground opacity-60">
+            No construction updates available.
+          </div>
+        )}
 
-                    {/* Name overlay */}
-                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent px-4 py-3 flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <Building2 className="w-4 h-4 md:w-5 md:h-5 text-white/90" />
-                        <span className="text-white font-semibold text-sm md:text-base">
-                          {tower.name}
+        {/* CAROUSEL */}
+        {hasUpdates && (
+          <div className="overflow-hidden mb-12" ref={emblaRef}>
+            <div className="flex gap-4 md:gap-6 will-change-transform">
+              {updates.map((tower, i) => (
+                <div
+                  key={`${i}-${tower.name || "tower"}`}
+                  className="flex-[0_0_90%] sm:flex-[0_0_80%] md:flex-[0_0_70%] lg:flex-[0_0_60%]"
+                >
+                  <button
+                    type="button"
+                    onClick={() => openImage(i, tower)}
+                    className="w-full text-left group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-2xl"
+                  >
+                    {/* IMAGE */}
+                    <div className="relative aspect-video rounded-xl md:rounded-2xl overflow-hidden shadow-lg">
+                      <img
+                        src={tower.image}
+                        alt={tower.name}
+                        loading="lazy"
+                        decoding="async"
+                        className="w-full h-full object-cover group-hover:scale-[1.02] transition duration-300"
+                      />
+                      {/* Overlay */}
+                      <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent px-4 py-3 flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <Building2 className="w-4 h-4 md:w-5 md:h-5 text-white/90" />
+                          <span className="text-white font-semibold text-sm md:text-base">
+                            {tower.name}
+                          </span>
+                        </div>
+                        <span className="text-xs text-white/80 hidden sm:inline">
+                          Tap to view
                         </span>
                       </div>
-                      <span className="text-xs text-white/80 hidden sm:inline">
-                        Tap to view
-                      </span>
                     </div>
-                  </div>
-                </button>
-              </div>
-            ))}
+                  </button>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
-        {/* CTA */}
+        {/* CTA Buttons */}
         <div className="flex justify-center">
           <CTAButtons onFormOpen={onCtaClick} variant="compact" />
         </div>
@@ -164,7 +183,7 @@ const ConstructionStatus = memo(function ConstructionStatus({
             onClick={closeImage}
           >
             <div
-              className="bg-background rounded-xl md:rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-2xl flex flex-col"
+              className="bg-background rounded-xl max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-2xl flex flex-col"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Header */}
@@ -199,7 +218,7 @@ const ConstructionStatus = memo(function ConstructionStatus({
                 <button
                   type="button"
                   onClick={closeImage}
-                  className="px-5 py-2.5 text-sm font-medium rounded-xl bg-primary text-primary-foreground hover:opacity-90 transition-opacity"
+                  className="px-5 py-2.5 text-sm font-medium rounded-xl bg-primary text-primary-foreground hover:opacity-90"
                 >
                   Done
                 </button>

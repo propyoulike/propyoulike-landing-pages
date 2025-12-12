@@ -2,6 +2,8 @@
   "slug": "capella",
   "projectName": "Provident Capella",
   "builder": "provident",
+  "type": "apartment",
+  "status": "Under Construction",
 
   "locationMeta": {
   "area": "Soukya Road",

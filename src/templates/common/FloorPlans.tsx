@@ -5,40 +5,13 @@ import { useState, useEffect } from "react";
 
 interface FloorPlansProps {
   onCtaClick: () => void;
-  section: {
-    title: string;
-    subtitle: string;
-    unitPlans: {
-      title: string;
-      videoUrl: string;
-      description: string;
-      sba: string;
-      ca: string;
-      usable: string;
-      uds: string;
-      price: string;
-      floorPlanImage?: string;
-    }[];
-    floorPlans: {
-      title: string;
-      image: string;
-      description: string;
-    }[];
-    masterPlan: {
-      image: string;
-      title: string;
-      description: string;
-    };
-    ctaText: string;
-  };
+  section: any;
 }
 
 const FloorPlans = ({ onCtaClick, section }: FloorPlansProps) => {
-
-  /* ---------- IMAGE ZOOM STATE ---------- */
   const [zoomImage, setZoomImage] = useState<string | null>(null);
 
-  /* ---------- ESC TO CLOSE ---------- */
+  // ESC closes zoom modal
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.key === "Escape") setZoomImage(null);
@@ -47,8 +20,19 @@ const FloorPlans = ({ onCtaClick, section }: FloorPlansProps) => {
     return () => window.removeEventListener("keydown", handler);
   }, []);
 
+  // Convert flat arrays → tab data
+  const floorTabs = section.floorPlans.map((item: any) => ({
+    label: item.title,
+    plans: [item],
+  }));
+
+  const unitTabs = section.unitPlans.map((item: any) => ({
+    label: item.title,
+    plans: [item],
+  }));
+
   return (
-    <section className="py-20 lg:py-28 scroll-mt-32 bg-background" id="floorplans">
+    <section className="py-20 lg:py-28 scroll-mt-32 bg-background relative" id="floorplans">
       <div className="container mx-auto px-4">
 
         {/* ---------- TITLE ---------- */}
@@ -61,114 +45,172 @@ const FloorPlans = ({ onCtaClick, section }: FloorPlansProps) => {
           </p>
         </div>
 
-        {/* ---------- TABS ---------- */}
-        <Tabs defaultValue="master-plan" className="max-w-7xl mx-auto">
-          <TabsList className="grid w-full grid-cols-3 mb-12 h-auto">
-            <TabsTrigger value="master-plan">Master Plan</TabsTrigger>
-            <TabsTrigger value="floor-plans">Floor Plans</TabsTrigger>
-            <TabsTrigger value="unit-plans">Unit Plans</TabsTrigger>
+        {/* ---------- MAIN TABS ---------- */}
+        <Tabs defaultValue="master-plan" className="max-w-5xl mx-auto">
+          <TabsList className="grid w-full grid-cols-3 mb-10 h-auto bg-gray-50 rounded-xl p-1">
+            <TabsTrigger value="master-plan" className="rounded-lg">Master Plan</TabsTrigger>
+            <TabsTrigger value="floor-plans" className="rounded-lg">Floor Plans</TabsTrigger>
+            <TabsTrigger value="unit-plans" className="rounded-lg">Unit Plans</TabsTrigger>
           </TabsList>
 
-          {/* ---------- MASTER PLAN ---------- */}
+          {/* ===================== MASTER PLAN ===================== */}
           <TabsContent value="master-plan">
-            <Card className="p-8">
-              <img
-                src={section.masterPlan.image}
-                alt={section.masterPlan.title}
-                className="w-full h-auto rounded-xl cursor-zoom-in"
-                onClick={() => setZoomImage(section.masterPlan.image)}
-              />
-              <div className="text-center mt-6 space-y-3">
-                <h3 className="text-2xl font-bold text-foreground">
-                  {section.masterPlan.title}
-                </h3>
-                <p className="text-muted-foreground max-w-3xl mx-auto">
-                  {section.masterPlan.description}
-                </p>
+            <Card className="p-6 lg:p-8 max-w-4xl mx-auto">
+              <div className="relative group cursor-zoom-in">
+                <img
+                  src={section.masterPlan.image}
+                  alt="Master Plan"
+                  className="w-full h-auto rounded-xl object-contain bg-gray-50"
+                  loading="lazy"
+                  onClick={() => setZoomImage(section.masterPlan.image)}
+                />
               </div>
             </Card>
           </TabsContent>
 
-          {/* ---------- FLOOR PLANS ---------- */}
-          <TabsContent value="floor-plans" className="space-y-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {section.floorPlans.map((plan, i) => (
-                <Card key={i} className="p-6 hover:shadow-xl transition-shadow">
-                  <img
-                    src={plan.image}
-                    alt={plan.title}
-                    className="w-full h-auto rounded-lg mb-4 cursor-zoom-in"
-                    onClick={() => setZoomImage(plan.image)}
-                  />
-                  <h3 className="text-xl font-bold">{plan.description}</h3>
-                </Card>
+          {/* ===================== FLOOR PLANS ===================== */}
+          <TabsContent value="floor-plans">
+            <Tabs defaultValue={floorTabs[0]?.label}>
+              
+              {/* Sub-tabs */}
+              <TabsList className="flex flex-wrap gap-2 mb-8 justify-center">
+                {floorTabs.map((tab: any, i: number) => (
+                  <TabsTrigger
+                    key={i}
+                    value={tab.label}
+                    className="rounded-lg px-4 py-2"
+                  >
+                    {tab.label}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+
+              {floorTabs.map((tab: any, i: number) => (
+                <TabsContent key={i} value={tab.label}>
+                  
+                  {/* CENTERED 2-COLUMN PREMIUM GRID */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-10 justify-center place-items-center">
+                    {tab.plans.map((plan: any, j: number) => (
+                      <Card
+                        key={j}
+                        className="p-6 rounded-2xl shadow-lg hover:shadow-xl transition-shadow bg-white max-w-md w-full"
+                      >
+                        <div className="relative cursor-zoom-in">
+                          <img
+                            src={plan.image}
+                            alt={plan.title}
+                            className="w-full aspect-[4/3] object-contain rounded-xl bg-gray-50"
+                            loading="lazy"
+                            onClick={() => setZoomImage(plan.image)}
+                          />
+                        </div>
+                      </Card>
+                    ))}
+                  </div>
+
+                </TabsContent>
               ))}
-            </div>
+            </Tabs>
           </TabsContent>
 
-          {/* ---------- UNIT PLANS ---------- */}
-          <TabsContent value="unit-plans" className="space-y-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {section.unitPlans.map((plan, i) => (
-                <Card key={i} className="p-6 hover:shadow-xl transition-shadow">
-                  {plan.floorPlanImage && (
-                    <img
-                      src={plan.floorPlanImage}
-                      alt=""
-                      className="w-full h-auto rounded-lg mb-4 cursor-zoom-in"
-                      onClick={() => setZoomImage(plan.floorPlanImage!)}
-                    />
-                  )}
-                  <h3 className="text-xl font-bold text-foreground mb-3">
-                    {plan.title}
-                  </h3>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    {plan.description}
-                  </p>
-                  <div className="text-sm text-foreground space-y-1">
-                    <p><strong>SBA:</strong> {plan.sba}</p>
-                    <p><strong>Carpet:</strong> {plan.ca}</p>
-                    <p><strong>Usable:</strong> {plan.usable}</p>
-                    <p><strong>UDS:</strong> {plan.uds}</p>
+          {/* ===================== UNIT PLANS ===================== */}
+          <TabsContent value="unit-plans">
+            <Tabs defaultValue={unitTabs[0]?.label}>
+
+              {/* Unit tabs */}
+              <TabsList className="flex flex-wrap gap-2 mb-8 justify-center">
+                {unitTabs.map((tab: any, i: number) => (
+                  <TabsTrigger
+                    key={i}
+                    value={tab.label}
+                    className="rounded-lg px-4 py-2"
+                  >
+                    {tab.label}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+
+              {unitTabs.map((tab: any, i: number) => (
+                <TabsContent key={i} value={tab.label}>
+                  
+                  {/* CENTERED 2-COLUMN GRID */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-10 justify-center place-items-center">
+                    {tab.plans.map((plan: any, j: number) => (
+                      <Card
+                        key={j}
+                        className="p-7 rounded-2xl shadow-lg hover:shadow-xl transition bg-white max-w-md w-full"
+                      >
+
+                        {/* Image */}
+                        <div className="relative mb-5 cursor-zoom-in">
+                          <img
+                            src={plan.floorPlanImage}
+                            alt={plan.title}
+                            className="w-full aspect-[4/3] object-contain rounded-xl bg-gray-50"
+                            loading="lazy"
+                            onClick={() => setZoomImage(plan.floorPlanImage)}
+                          />
+                        </div>
+
+                        {/* Content */}
+                        <h3 className="text-2xl font-bold mb-2">{plan.title}</h3>
+                        <p className="text-sm text-muted-foreground mb-4">{plan.description}</p>
+
+                        <div className="space-y-1 text-sm">
+                          <p><strong>SBA:</strong> {plan.sba}</p>
+                          <p><strong>Carpet:</strong> {plan.ca}</p>
+                          <p><strong>Usable:</strong> {plan.usable}</p>
+                          <p><strong>UDS:</strong> {plan.uds}</p>
+                        </div>
+
+                        {/* CTA */}
+                        <button
+                          onClick={onCtaClick}
+                          className="w-full mt-6 py-3 rounded-xl bg-primary text-white font-semibold hover:bg-primary/90 transition"
+                        >
+                          Schedule a Site Visit
+                        </button>
+
+                      </Card>
+                    ))}
                   </div>
-                  <p className="mt-3 text-primary font-semibold text-lg">
-                    ₹ {plan.price}
-                  </p>
-                </Card>
+
+                </TabsContent>
               ))}
-            </div>
+            </Tabs>
           </TabsContent>
         </Tabs>
 
-        {/* ---------- CTA ---------- */}
-        <div className="mt-12 text-center">
-          <p className="text-muted-foreground mb-6">{section.ctaText}</p>
-          <div className="flex justify-center">
-            <CTAButtons onFormOpen={onCtaClick} variant="compact" />
-          </div>
+        {/* ---------- SECTION CTA ---------- */}
+        <div className="mt-16 text-center">
+          <CTAButtons onFormOpen={onCtaClick} variant="compact" label="Schedule Your Free Site Visit" />
         </div>
       </div>
 
-      {/* ---------- IMAGE ZOOM MODAL ---------- */}
+      {/* ===================== ZOOM MODAL ===================== */}
       {zoomImage && (
-        <div
-          className="fixed inset-0 bg-black/85 z-50 flex items-center justify-center"
-          onClick={() => setZoomImage(null)}
-        >
-          <img
-            src={zoomImage}
-            className="max-w-[95%] max-h-[95%] rounded-lg shadow-xl"
-          />
-
-          {/* Close button */}
+        <div className="fixed inset-0 bg-black/90 z-[999] flex items-center justify-center">
+          <div className="absolute inset-0" onClick={() => setZoomImage(null)} />
           <button
-            className="absolute top-6 right-6 text-white text-3xl font-bold"
+            className="absolute top-5 right-5 text-4xl text-white"
             onClick={() => setZoomImage(null)}
           >
             ×
           </button>
+          <div className="max-w-[95%] max-h-[95%] rounded-xl overflow-hidden">
+            <img src={zoomImage} className="object-contain w-full h-full" />
+          </div>
         </div>
       )}
+
+      {/* ===================== GLOBAL STICKY CTA ===================== */}
+      <div
+        className="fixed bottom-0 left-0 right-0 z-[999] bg-primary text-white 
+                   text-center py-4 font-semibold text-lg cursor-pointer lg:hidden"
+        onClick={onCtaClick}
+      >
+        Book a Site Visit
+      </div>
     </section>
   );
 };

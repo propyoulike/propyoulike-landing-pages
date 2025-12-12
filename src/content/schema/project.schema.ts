@@ -78,6 +78,7 @@ const ViewsSchema = z
   .object({
     title: z.string().optional(),
     subtitle: z.string().optional(),
+
     images: z
       .array(
         z.object({
@@ -86,13 +87,14 @@ const ViewsSchema = z
         })
       )
       .optional(),
-    // Mixed media support - can have both images and videos
+
+    // Mixed media support
     media: z
       .array(
         z.object({
           type: z.enum(["image", "video"]),
-          src: z.string().optional(), // For images
-          videoId: z.string().optional(), // YouTube video ID for videos
+          src: z.string().optional(),
+          videoId: z.string().optional(),
           title: z.string().optional(),
         })
       )
@@ -148,7 +150,7 @@ const FloorPlansSectionSchema = z
   .optional();
 
 /* -----------------------------------------
-    LOCATION UI SECTION (NEW)
+    LOCATION UI SECTION
 ----------------------------------------- */
 
 const LocationUISchema = z.object({
@@ -156,14 +158,14 @@ const LocationUISchema = z.object({
   title: z.string(),
   subtitle: z.string().optional(),
   tagline: z.string().optional(),
-  videoId: z.string().optional(), // YouTube video ID only
+  videoId: z.string().optional(),
   mapUrl: z.string().optional(),
 
   categories: z
     .array(
       z.object({
         title: z.string(),
-        items: z.array(z.string())
+        items: z.array(z.string()),
       })
     )
     .default([]),
@@ -172,7 +174,7 @@ const LocationUISchema = z.object({
 });
 
 /* -----------------------------------------
-    OTHER SECTIONS
+    AMENITIES
 ----------------------------------------- */
 
 const AmenitiesSchema = z
@@ -197,6 +199,10 @@ const AmenitiesSchema = z
       .optional(),
   })
   .optional();
+
+/* -----------------------------------------
+    CONSTRUCTION STATUS
+----------------------------------------- */
 
 const ConstructionSchema = z
   .array(
@@ -248,13 +254,14 @@ const CustomerSpeaksSchema = z
   .object({
     title: z.string().optional(),
     subtitle: z.string().optional(),
+
     testimonials: z
       .array(
         z.object({
           name: z.string(),
-          videoId: z.string().optional(), // YouTube video ID (optional for text-only reviews)
+          videoId: z.string().optional(),
           quote: z.string().optional(),
-          rating: z.number().min(1).max(5).optional(), // 1-5 star rating
+          rating: z.number().min(1).max(5).optional(),
           thumbUrl: z.string().optional(),
         })
       )
@@ -263,7 +270,7 @@ const CustomerSpeaksSchema = z
   .optional();
 
 /* -----------------------------------------
-    FAQ (Array of Items)
+    FAQ
 ----------------------------------------- */
 
 const FAQItemSchema = z.object({
@@ -279,6 +286,8 @@ const FAQSchema = z.array(FAQItemSchema).optional();
 
 const BuilderAboutSchema = z
   .object({
+    id: z.string().optional(),
+    name: z.string().optional(),
     title: z.string().optional(),
     subtitle: z.string().optional(),
     description: z.string().optional(),
@@ -295,27 +304,36 @@ const BuilderAboutSchema = z
   })
   .optional();
 
-const NavbarConfigSchema = z.object({
-  visible: z.array(z.string()).optional(),
-  hidden: z.array(z.string()).optional(),
-  order: z.array(z.string()).optional(),
-  ctaLabel: z.string().optional()
-}).optional();
+/* -----------------------------------------
+    NAVBAR CONFIG
+----------------------------------------- */
+
+const NavbarConfigSchema = z
+  .object({
+    visible: z.array(z.string()).optional(),
+    hidden: z.array(z.string()).optional(),
+    order: z.array(z.string()).optional(),
+    ctaLabel: z.string().optional(),
+  })
+  .optional();
 
 /* -----------------------------------------
     TOP-LEVEL PROJECT SCHEMA
 ----------------------------------------- */
 
 export const ProjectSchema = z.object({
-  builder: z.string(),
   slug: z.string(),
   projectName: z.string(),
+  builder: z.string(),
   type: z.string().optional(),
+  status: z.string().optional(),
+
   area: z.string().optional(),
   locality: z.string().optional(),
   city: z.string().optional(),
   state: z.string().optional(),
   country: z.string().optional(),
+
   zone: z.enum(["East", "West", "North", "South", "Central"]).optional(),
 
   meta: z
@@ -341,6 +359,16 @@ export const ProjectSchema = z.object({
   customerSpeaks: CustomerSpeaksSchema,
 
   faq: FAQSchema,
+
+  /* -----------------------------------------
+      ✅ RERA SUPPORT ADDED
+  ----------------------------------------- */
+  rera: z
+    .object({
+      reraId: z.union([z.string(), z.array(z.string())]).optional(),
+      reraLink: z.string().optional(),
+    })
+    .optional(),
 
   builderAbout: BuilderAboutSchema,
 });

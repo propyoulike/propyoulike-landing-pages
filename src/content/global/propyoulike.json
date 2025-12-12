@@ -1,0 +1,88 @@
+{
+  "id": "PropYouLike",
+  "name": "PropYouLike",
+  "logo": "/images/brand/PropYouLikeLogo.png",
+  "favicon": "/images/brand/favicon.ico",
+
+  "about": "PropYouLike helps homebuyers discover verified properties with transparency & expert guidance.",
+
+  "contact": {
+    "phone": "+919379822010",
+    "whatsapp": "https://wa.me/919379822010",
+    "email": "propyoulike@gmail.com"
+  },
+
+  "address": {
+    "line1": "PropYouLike, Nandi Enclave",
+    "line2": "Banashankari 3rd Stage",
+    "city": "Bengaluru",
+    "state": "Karnataka",
+    "pincode": "560085",
+    "country": "India",
+    "mapUrl": "https://maps.app.goo.gl/MVo7p9SKgNkwcv8KA"
+  },
+
+  "rera": {
+    "id": "PRM/KA/RERA/1251/310/AG/250811/005899",
+    "state": "Karnataka",
+    "disclaimer": "PropYouLike is an Individual RERA registered real estate marketing partner. All project details are sourced from official developer materials.",
+    "verificationUrl": "https://rera.karnataka.gov.in/"
+  },
+
+  "business": {
+    "legalName": "PropYouLike (Brand)",
+    "cin": "NA",
+    "gst": "NA",
+    "udyam": "NA",
+    "pan": "AFHPP9208H",
+    "isoCertifications": [""]
+  },
+
+  "social": {
+    "facebook": "https://facebook.com/propyoulike",
+    "instagram": "https://instagram.com/propyoulike",
+    "youtube": "https://youtube.com/propyoulike",
+    "linkedin": "https://linkedin.com/company/propyoulike"
+  },
+
+  "privyrEndpoint": "https://www.privyr.com/api/v1/incoming-leads/0vZfjMQw/5xrM2juN#generic-webhook",
+
+  "tracking": {
+    "gtmId": "GTM-XXXXXXX",
+    "ga4MeasurementId": "G-XXXXXXXXXX",
+
+    "facebookPixel": {
+      "pixelId": "123456789012345",
+      "domainVerification": "facebook-domain-verification-code",
+      "enableAutomaticEvents": true
+    },
+
+    "linkedin": {
+      "partnerId": "8435844"
+    },
+
+    "microsoftAds": {
+      "uetTag": "XXXXXXXXXXXX"
+    },
+
+    "hotjar": {
+      "siteId": "1234567",
+      "version": "6"
+    },
+
+    "clarity": {
+      "projectId": "abcdefghij"
+    },
+
+    "customPixels": [
+      {
+        "name": "tiktok",
+        "pixelId": "TTP-XXXXXXXXXX"
+      },
+      {
+        "name": "quora",
+        "script": "<script>/* quora pixel */</script>"
+      }
+    ]
+  }
+}

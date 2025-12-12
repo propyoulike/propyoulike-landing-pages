@@ -1,38 +1,62 @@
-import { Link } from "react-router-dom";
+import ProjectCard from "@/components/project/ProjectCard";
+
+/**
+ * Props:
+ * - projects: Array of builder projects passed from loadProject()
+ * - Expected shape:
+ *   {
+ *     slug: string,
+ *     name: string,
+ *     builder: string,
+ *     heroImage?: string
+ *   }
+ */
 
 export default function BuilderOtherProjects({ projects = [] }) {
   if (!projects.length) return null;
 
+  const builderSlug = projects[0]?.builder || "";
+
+  // Format "provident" → "Provident"
+  const builderName =
+    builderSlug
+      ?.split("-")
+      .map((p) => p.charAt(0).toUpperCase() + p.slice(1))
+      .join(" ") || "the Builder";
+
   return (
-    <section className="py-10 bg-muted/40">
+    <section className="py-16 bg-gradient-to-b from-background via-background to-background/40">
       <div className="container mx-auto px-4">
 
-        <h2 className="text-2xl font-bold mb-6">Other Projects by the Builder</h2>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {projects.map((p, i) => {
-            const img = p.heroVideoId
-              ? `https://img.youtube.com/vi/${p.heroVideoId}/hqdefault.jpg`
-              : p.heroImage || `https://picsum.photos/seed/${p.slug}/800/450`;
-
-            return (
-              <Link
-                key={i}
-                to={`/${p.slug}`}
-                className="block rounded-xl overflow-hidden bg-background border hover:border-primary shadow hover:shadow-lg transition"
-              >
-                <img src={img} className="w-full h-48 object-cover" />
-
-                <div className="p-4">
-                  <h3 className="text-lg font-semibold">{p.name}</h3>
-                  {p.location && (
-                    <p className="text-sm text-muted-foreground">{p.location}</p>
-                  )}
-                </div>
-              </Link>
-            );
-          })}
+        {/* Heading */}
+        <div className="text-center mb-10">
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
+            Other Projects by {builderName}
+          </h2>
+          <p className="text-muted-foreground mt-2">
+            Explore more developments from {builderName}
+          </p>
         </div>
+
+        {/* All Projects — Scroll on Mobile / Grid on Desktop */}
+        <div
+          className="
+            flex lg:grid 
+            lg:grid-cols-3 gap-8 lg:gap-10 
+            overflow-x-auto lg:overflow-visible 
+            pb-4 hide-scrollbar
+          "
+        >
+          {projects.map((project) => (
+            <div
+              key={project.slug}
+              className="min-w-[280px] sm:min-w-[320px] lg:min-w-0"
+            >
+              <ProjectCard project={project} />
+            </div>
+          ))}
+        </div>
+
       </div>
     </section>
   );

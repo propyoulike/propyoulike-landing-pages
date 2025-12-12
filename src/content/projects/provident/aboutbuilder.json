@@ -1,10 +1,21 @@
 {
   "id": "Provident",
   "name": "Provident Housing",
+  "slug": "provident-housing",
+  "logo": "https://www.providenthousing.com/wp-content/themes/provident/assets/images/Provident_logo_final_blacks.png",
+
   "title": "About Provident Housing",
   "subtitle": "A trusted name in affordable luxury living",
+
   "description": "Provident Housing is a subsidiary of the Puravankara Group...",
   "descriptionExpanded": "Since its inception, Provident Housing has been committed...",
+
+  "badges": [
+    "ISO Certified Developer",
+    "Award Winning Design",
+    "On-Time Delivery Track Record"
+  ],
+
   "stats": [
     { "icon": "TrendingUp", "label": "Years Experience", "value": "16+" },
     { "icon": "Users", "label": "Happy Customers", "value": "55,000+" },

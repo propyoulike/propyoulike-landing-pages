@@ -2,6 +2,8 @@
   "slug": "ecopolitan",
   "projectName": "Provident Ecopolitan",
   "builder": "provident",
+  "type": "apartment",
+  "status": "Under Construction",
 
   "locationMeta": {
   "area": "Aerospace Road",

@@ -1,19 +1,12 @@
-// src/components/lead/LeadForm.tsx
 import { useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea"; // <-- You may need to create/import this
 
 import { useToast } from "@/hooks/use-toast";
 import { LeadPipeline } from "./LeadPipeline";
@@ -22,7 +15,7 @@ const formSchema = z.object({
   name: z.string().min(2, "Enter your name"),
   phone: z.string().regex(/^\d{10}$/, "Enter a valid 10-digit phone number"),
   email: z.string().email("Enter a valid email").optional().or(z.literal("")),
-  bhkPreference: z.string().min(1, "Select an option"),
+  message: z.string().min(2, "Enter your message"),
 });
 
 type FormData = z.infer<typeof formSchema>;
@@ -34,8 +27,6 @@ export interface LeadFormProps {
   projectId?: string;
   whatsappNumber: string;
 
-  bhkOptions?: string[];
-
   onSuccess?: () => void;
 }
 
@@ -43,10 +34,7 @@ export default function LeadForm({
   className = "",
   projectName,
   projectId = "UNKNOWN",
-
   whatsappNumber,
-  bhkOptions = ["2 BHK", "3 BHK", "Not Sure"],
-
   onSuccess,
 }: LeadFormProps) {
   const { toast } = useToast();
@@ -55,17 +43,13 @@ export default function LeadForm({
   const {
     register,
     handleSubmit,
-    control,
     reset,
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(formSchema),
-    defaultValues: { name: "", phone: "", email: "", bhkPreference: "" },
+    defaultValues: { name: "", phone: "", email: "", message: "" },
   });
 
-  /** ----------------------------------------------------
-   * FINAL PRODUCTION SUBMIT HANDLER USING LEAD PIPELINE
-   * -------------------------------------------------- */
   const onSubmit = async (data: FormData) => {
     setLoading(true);
 
@@ -81,7 +65,7 @@ export default function LeadForm({
 
       toast({
         title: "Connecting you on WhatsApp",
-        description: "An advisor will send you best units shortly.",
+        description: "An advisor will respond shortly.",
       });
 
       reset();
@@ -108,68 +92,41 @@ export default function LeadForm({
       </h3>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 mt-4">
-
+        
         {/* NAME */}
         <div>
           <Label>Name *</Label>
           <Input {...register("name")} placeholder="Your name" />
-          {errors.name && (
-            <p className="text-xs text-red-600">{errors.name.message}</p>
-          )}
+          {errors.name && <p className="text-xs text-red-600">{errors.name.message}</p>}
         </div>
 
         {/* PHONE */}
         <div>
           <Label>Phone *</Label>
           <Input {...register("phone")} placeholder="10-digit number" />
-          {errors.phone && (
-            <p className="text-xs text-red-600">{errors.phone.message}</p>
-          )}
+          {errors.phone && <p className="text-xs text-red-600">{errors.phone.message}</p>}
         </div>
 
         {/* EMAIL */}
         <div>
           <Label>Email</Label>
           <Input {...register("email")} placeholder="Optional" />
-          {errors.email && (
-            <p className="text-xs text-red-600">{errors.email.message}</p>
-          )}
+          {errors.email && <p className="text-xs text-red-600">{errors.email.message}</p>}
         </div>
 
-        {/* BHK PREFERENCE */}
+        {/* MESSAGE */}
         <div>
-          <Label>BHK Preference *</Label>
-          <Controller
-            name="bhkPreference"
-            control={control}
-            render={({ field }) => (
-              <Select onValueChange={field.onChange}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select BHK" />
-                </SelectTrigger>
-                <SelectContent>
-                  {bhkOptions.map((opt) => (
-                    <SelectItem key={opt} value={opt}>
-                      {opt}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            )}
+          <Label>Your Message *</Label>
+          <Textarea
+            {...register("message")}
+            placeholder="Tell us what you're looking for..."
+            className="min-h-[100px]"
           />
-          {errors.bhkPreference && (
-            <p className="text-xs text-red-600">
-              {errors.bhkPreference.message}
-            </p>
-          )}
+          {errors.message && <p className="text-xs text-red-600">{errors.message.message}</p>}
         </div>
 
         {/* SUBMIT BUTTON */}
-        <Button
-          className="w-full py-5 text-lg rounded-xl btn-gradient"
-          disabled={loading}
-          type="submit"
-        >
+        <Button className="w-full py-5 text-lg rounded-xl btn-gradient" disabled={loading} type="submit">
           {loading ? "Submitting…" : "Get Best Offers"}
         </Button>
 

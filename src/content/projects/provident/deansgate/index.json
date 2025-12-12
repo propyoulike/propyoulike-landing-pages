@@ -2,6 +2,8 @@
   "slug": "deansgate",
   "projectName": "Provident Deansgate",
   "builder": "provident",
+  "type": "apartment",
+  "status": "Under Construction",
 
   "locationMeta": {
   "area": "IVC Road",

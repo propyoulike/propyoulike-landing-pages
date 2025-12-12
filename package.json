@@ -3,16 +3,16 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-"scripts": {
-  "dev": "vite",
-  "build": "vite build && npm run postbuild",
-  "build:dev": "vite build --mode development && npm run postbuild",
-  "build:bigrock": "vite build --mode bigrock && npm run postbuild",
-  "postbuild": "node scripts/generate-sitemap.cjs && node scripts/generate-prerender-pages.cjs",
-  "lint": "eslint .",
-  "preview": "vite preview",
-  "start": "vite"
-},
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && npm run postbuild",
+    "build:dev": "vite build --mode development && npm run postbuild",
+    "build:bigrock": "vite build --mode bigrock && npm run postbuild",
+    "postbuild": "node scripts/generate-sitemap.cjs && node scripts/generate-prerender-pages.cjs",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "start": "vite"
+  },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
     "@radix-ui/react-accordion": "^1.2.11",
@@ -67,6 +67,7 @@
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
     "vaul": "^0.9.9",
+    "yet-another-react-lightbox": "^3.27.0",
     "zod": "^3.25.76"
   },
   "devDependencies": {

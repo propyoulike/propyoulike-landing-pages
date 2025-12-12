@@ -2,6 +2,8 @@
   "slug": "park-square",
   "projectName": "Provident Park Square",
   "builder": "provident",
+  "type": "apartment",
+  "status": "Under Construction",
 
   "locationMeta": {
   "area": "Judicial Layout",

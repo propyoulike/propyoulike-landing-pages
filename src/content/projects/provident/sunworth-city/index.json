@@ -2,13 +2,24 @@
   "slug": "sunworth-city",
   "projectName": "Provident Sunworth City",
   "builder": "provident",
+  "type": "apartment",
+  "status": "Under Construction",
 
   "locationMeta": {
-  "area": "Kengeri",
-  "locality": "Mysore Road",
-  "city": "Bengaluru",
-  "state": "Karnataka",
-  "country": "India",
-  "zone": "West"
-}
+    "area": "Kengeri",
+    "locality": "Mysore Road",
+    "city": "Bengaluru",
+    "state": "Karnataka",
+    "country": "India",
+    "zone": "West"
+  },
+
+  "rera": {
+    "reraId": [
+      "PRM/KA/RERA/1251/310/PR/171031/001825",
+      "PRM/KA/RERA/1251/310/PR/190208/002348"
+    ],
+    "reraLink": "https://rera.karnataka.gov.in",
+    "reraDisclaimer": "All information is as per the approved RERA filings. Please refer to the official RERA site for the most accurate details."
+  }
 }
