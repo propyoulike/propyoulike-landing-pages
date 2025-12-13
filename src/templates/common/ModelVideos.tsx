@@ -1,3 +1,4 @@
+// src/templates/common/ModelVideos.tsx
 import {
   useState,
   useRef,
@@ -7,6 +8,7 @@ import {
   useMemo,
 } from "react";
 import { ChevronLeft, ChevronRight, X, Play } from "lucide-react";
+import YouTubePlayer from "@/components/video/YouTubePlayer";
 
 interface ModelFlat {
   title: string;
@@ -34,10 +36,11 @@ const ModelVideos = memo(({ modelFlats }: ModelVideosProps) => {
       modelFlats.map((v) => ({
         ...v,
         thumbnail: `https://img.youtube.com/vi/${v.id}/hqdefault.jpg`,
-        embed: `https://www.youtube.com/embed/${v.id}?autoplay=1&rel=0`,
       })),
     [modelFlats]
   );
+
+  if (!videos.length) return null;
 
   /* ------------------ Scroll to index ------------------ */
   const scrollToIndex = useCallback((index: number) => {
@@ -52,24 +55,6 @@ const ModelVideos = memo(({ modelFlats }: ModelVideosProps) => {
 
     setActiveIndex(index);
   }, []);
-
-  /* ------------------ Swipe gestures for fullscreen close ------------------ */
-  const handleTouchStart = (e: React.TouchEvent) =>
-    setDragStart(e.touches[0].clientY);
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (dragStart === null) return;
-    const diff = e.touches[0].clientY - dragStart;
-    setDragY(diff);
-  };
-
-  const handleTouchEnd = () => {
-    if (dragY > 120) {
-      setFullscreenIndex(null); // close if swiped down
-    }
-    setDragStart(null);
-    setDragY(0);
-  };
 
   /* ------------------ Track active index ------------------ */
   useEffect(() => {
@@ -96,11 +81,26 @@ const ModelVideos = memo(({ modelFlats }: ModelVideosProps) => {
     return () => window.removeEventListener("keydown", esc);
   }, []);
 
-  /* ------------------ 3D Tilt on Hover (desktop) ------------------ */
+  /* ------------------ Swipe-to-close ------------------ */
+  const handleTouchStart = (e: React.TouchEvent) =>
+    setDragStart(e.touches[0].clientY);
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (dragStart === null) return;
+    const diff = e.touches[0].clientY - dragStart;
+    setDragY(diff);
+  };
+
+  const handleTouchEnd = () => {
+    if (dragY > 120) setFullscreenIndex(null);
+    setDragStart(null);
+    setDragY(0);
+  };
+
+  /* ------------------ Tilt (desktop only) ------------------ */
   const handleTilt = (e: any) => {
     const card = e.currentTarget;
     const rect = card.getBoundingClientRect();
-
     const x = e.clientX - rect.left - rect.width / 2;
     const y = e.clientY - rect.top - rect.height / 2;
 
@@ -111,12 +111,10 @@ const ModelVideos = memo(({ modelFlats }: ModelVideosProps) => {
   };
 
   const resetTilt = (e: any) => {
-    const card = e.currentTarget;
-    card.style.transform = "";
+    e.currentTarget.style.transform = "";
   };
 
-  if (!videos.length) return null;
-
+  /* ------------------ RENDER ------------------ */
   return (
     <section className="relative py-12">
       {/* Title */}
@@ -127,7 +125,7 @@ const ModelVideos = memo(({ modelFlats }: ModelVideosProps) => {
         Experience the interiors like you're already there
       </p>
 
-      {/* NAV BUTTONS (desktop) */}
+      {/* NAV BUTTONS */}
       {videos.length > 1 && (
         <>
           <button
@@ -148,7 +146,7 @@ const ModelVideos = memo(({ modelFlats }: ModelVideosProps) => {
         </>
       )}
 
-      {/* ------------------ CAROUSEL ------------------ */}
+      {/* CAROUSEL */}
       <div
         ref={scrollRef}
         className="flex gap-6 overflow-x-auto snap-x snap-mandatory no-scrollbar px-4 pb-4"
@@ -173,7 +171,6 @@ const ModelVideos = memo(({ modelFlats }: ModelVideosProps) => {
                 }
               `}
             >
-              {/* Thumbnail */}
               <div className="aspect-video relative">
                 <img
                   src={vid.thumbnail}
@@ -181,10 +178,8 @@ const ModelVideos = memo(({ modelFlats }: ModelVideosProps) => {
                   className="w-full h-full object-cover"
                 />
 
-                {/* Glow overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-70 group-hover:opacity-90 transition"></div>
 
-                {/* Play button */}
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="w-20 h-20 rounded-full bg-white/20 backdrop-blur-lg border border-white/40 shadow-xl flex items-center justify-center group-hover:scale-110 transition">
                     <Play className="w-10 h-10 text-white ml-1" />
@@ -200,7 +195,7 @@ const ModelVideos = memo(({ modelFlats }: ModelVideosProps) => {
         ))}
       </div>
 
-      {/* ------------------ DOTS ------------------ */}
+      {/* DOTS */}
       <div className="flex justify-center gap-2 mt-6">
         {videos.map((_, i) => (
           <div
@@ -216,13 +211,13 @@ const ModelVideos = memo(({ modelFlats }: ModelVideosProps) => {
         ))}
       </div>
 
-      {/* ------------------ FULLSCREEN MODAL (ULTRA PREMIUM) ------------------ */}
+      {/* FULLSCREEN MODAL */}
       {fullscreenIndex !== null && (
         <div
           className="fixed inset-0 z-[999] bg-black/90 backdrop-blur-xl flex items-center justify-center p-4"
           onClick={() => setFullscreenIndex(null)}
         >
-          {/* Floating close button */}
+          {/* Close button */}
           <button
             className="
               absolute bottom-8 right-8 lg:right-12 w-16 h-16
@@ -247,16 +242,14 @@ const ModelVideos = memo(({ modelFlats }: ModelVideosProps) => {
               transition: dragStart ? "none" : "transform 0.25s ease",
             }}
           >
-            <div className="aspect-video rounded-2xl overflow-hidden shadow-2xl">
-              <iframe
-                src={videos[fullscreenIndex].embed}
-                className="w-full h-full"
-                allow="autoplay; encrypted-media; picture-in-picture"
-                allowFullScreen
+            <div className="aspect-video rounded-2xl overflow-hidden shadow-2xl bg-black">
+              <YouTubePlayer
+                videoId={videos[fullscreenIndex].id}
+                mode="click"     // no autoplay unless clicked
+                autoPlay={true}  // autoplay only *inside modal*
               />
             </div>
 
-            {/* Title */}
             <p className="text-white text-center text-lg mt-4">
               {videos[fullscreenIndex].title}
             </p>

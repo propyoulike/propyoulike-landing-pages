@@ -1,5 +1,7 @@
 // -------------------sections.config.ts------------------------------
+
 import React from "react";
+
 import Hero from "@/templates/common/Hero";
 import Navbar from "@/templates/common/Navbar";
 import Summary from "@/templates/common/ProjectSummary";

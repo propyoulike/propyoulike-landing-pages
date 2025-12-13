@@ -1,3 +1,4 @@
+// src/templates/common/ProjectSummary.tsx
 import { useEffect, useRef, useMemo } from "react";
 import * as Icons from "lucide-react";
 import { Card } from "@/components/ui/card";

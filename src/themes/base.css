@@ -1,57 +1,241 @@
+/* -------------------------------------------------------
+   GLOBAL THEME — PROPYOULIKE V7 FOUNDATION
+   Base light theme. Dark theme optional.
+------------------------------------------------------- */
+
 :root {
-  /* Base Colors - Default Neutral Theme */
+  /* ---------------------------------------------------
+     CORE COLORS
+  --------------------------------------------------- */
+
   --background: 0 0% 100%;
   --foreground: 215 28% 17%;
 
-  /* Primary */
+  /* Primary Brand */
   --primary: 215 45% 25%;
   --primary-light: 215 40% 35%;
   --primary-dark: 215 50% 15%;
   --primary-foreground: 0 0% 100%;
 
-  /* Accent */
+  /* Accent / Highlight */
   --accent: 38 92% 50%;
   --accent-light: 38 92% 60%;
   --accent-dark: 38 92% 40%;
   --accent-foreground: 215 28% 17%;
 
-  /* Secondary */
+  /* Secondary Surfaces */
   --secondary: 220 15% 95%;
-  --secondary-foreground: 215 28% 17%;
+  --secondary-foreground: var(--foreground);
 
-  /* Muted */
+  /* Muted UI */
   --muted: 220 15% 97%;
   --muted-foreground: 215 15% 45%;
 
   /* Card */
   --card: 0 0% 100%;
-  --card-foreground: 215 28% 17%;
+  --card-foreground: var(--foreground);
 
-  /* Borders */
+  /* Borders / Inputs */
   --border: 220 13% 91%;
   --input: 220 13% 91%;
 
-  /* Status */
+  /* Status Colors */
   --success: 142 71% 45%;
   --warning: 38 92% 50%;
   --destructive: 0 84% 60%;
 
-  /* Gradients */
-  --gradient-primary: linear-gradient(135deg, hsl(215 45% 25%) 0%, hsl(215 50% 15%) 100%);
-  --gradient-accent: linear-gradient(135deg, hsl(38 92% 50%) 0%, hsl(38 92% 40%) 100%);
+  /* ---------------------------------------------------
+     GRADIENTS
+  --------------------------------------------------- */
+  --gradient-primary: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary-dark)) 100%);
+  --gradient-accent: linear-gradient(135deg, hsl(var(--accent)) 0%, hsl(var(--accent-dark)) 100%);
 
-  /* Shadows */
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+  --button-gradient: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary-dark)) 100%);
+  --button-accent-gradient: linear-gradient(135deg, hsl(var(--accent)) 0%, hsl(var(--accent-dark)) 100%);
 
-  /* Radius */
+  /* ---------------------------------------------------
+     SHADOW SYSTEM (V7 STANDARD)
+  --------------------------------------------------- */
+
+  --shadow-sm: 0 1px 3px rgb(0 0 0 / 0.06);
+  --shadow-md: 0 4px 12px rgb(0 0 0 / 0.08);
+  --shadow-lg: 0 10px 25px rgb(0 0 0 / 0.1);
+
+  --shadow-strong:
+    0 8px 20px rgba(0, 0, 0, 0.12),
+    0 16px 40px rgba(0, 0, 0, 0.08);
+
+  --shadow-soft:
+    0 0 20px rgba(0, 0, 0, 0.04),
+    0 0 40px rgba(0, 0, 0, 0.06);
+
+  /* ---------------------------------------------------
+     RADIUS / CORNER SYSTEM
+  --------------------------------------------------- */
   --radius: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
+  --radius-2xl: 24px;
+  --radius-3xl: 32px;
 
-  /* Typography */
+  /* ---------------------------------------------------
+     TYPOGRAPHY
+  --------------------------------------------------- */
   --font-family: 'Inter','Poppins',sans-serif;
   --heading-weight: 700;
   --body-weight: 400;
+
+  /* ---------------------------------------------------
+     SPECIAL EFFECT VARIABLES
+  --------------------------------------------------- */
+  --spotlight-size: 240px;
+  --spotlight-strength: rgba(255, 255, 255, 0.18);
+  --tilt-perspective: 900px;
+
+  /* ---------------------------------------------------
+     LAYOUT TOKENS
+  --------------------------------------------------- */
+  --max-container: 1280px;
+  --section-padding: 6rem;
+}
+
+/* -------------------------------------------------------
+   DARK THEME
+------------------------------------------------------- */
+[data-theme="dark"] {
+  --background: 215 28% 10%;
+  --foreground: 0 0% 100%;
+
+  --card: 215 28% 12%;
+  --card-foreground: 0 0% 100%;
+
+  --muted: 215 15% 18%;
+  --muted-foreground: 0 0% 80%;
+
+  --border: 215 15% 22%;
+
+  --shadow-strong:
+    0 8px 25px rgba(0, 0, 0, 0.45),
+    0 16px 40px rgba(0, 0, 0, 0.35);
+}
+
+/* -------------------------------------------------------
+   SCROLL ANCHOR FIX — stops Chrome from auto-scrolling
+------------------------------------------------------- */
+html {
+  overflow-anchor: none !important;
+}
+
+/****************************************************
+ PREMIUM ACCORDION OVERRIDES FOR SHADCN ACCORDION
+*****************************************************/
+
+/* 🚫 Remove ShadCN default arrow */
+.accordion-trigger > svg:not(.custom-arrow) {
+  display: none !important;
+}
+
+/****************************************************
+ PREMIUM CARD UI
+*****************************************************/
+.accordion-card {
+  background: hsl(var(--card));
+  border-radius: var(--radius-xl);
+  border: 1px solid hsl(var(--border));
+  box-shadow: var(--shadow-md);
+  backdrop-filter: blur(12px);
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.accordion-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-1px);
+}
+
+/****************************************************
+ TRIGGER (HEADER AREA)
+*****************************************************/
+.accordion-trigger {
+  font-family: var(--font-family);
+  font-weight: var(--heading-weight);
+  color: hsl(var(--foreground));
+  padding: 1.25rem 1.5rem;
+}
+
+.accordion-trigger .custom-arrow {
+  transition: transform 0.3s ease;
+}
+
+/* Rotate on open */
+[data-state="open"] .accordion-trigger .custom-arrow {
+  transform: rotate(180deg);
+}
+
+/****************************************************
+ CONTENT STYLING
+*****************************************************/
+.accordion-content-item {
+  font-family: var(--font-family);
+  font-weight: var(--body-weight);
+  font-size: 1rem;
+  color: hsl(var(--muted-foreground));
+  line-height: 1.6;
+}
+
+.accordion-bullet {
+  width: 6px;
+  height: 6px;
+  background: hsl(var(--primary));
+  border-radius: 50%;
+  margin-top: 6px;
+  flex-shrink: 0;
+}
+
+/****************************************************
+ ULTRA LUXURY EFFECTS
+*****************************************************/
+
+/* Spotlight hover shine */
+.amenity-spotlight {
+  position: relative;
+  overflow: hidden;
+}
+
+.amenity-spotlight::after {
+  content: "";
+  position: absolute;
+  top: var(--y);
+  left: var(--x);
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(255,255,255,0.25), transparent 40%);
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.amenity-spotlight:hover::after {
+  width: var(--spotlight-size);
+  height: var(--spotlight-size);
+  opacity: 1;
+}
+
+/* Fade-up reveal */
+.fade-up {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-up.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 3D tilt */
+.tilt-card {
+  transform-style: preserve-3d;
+  transition: transform 0.2s ease;
 }

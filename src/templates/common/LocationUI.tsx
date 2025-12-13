@@ -1,3 +1,5 @@
+// src/templates/common/LocationUI.tsx
+
 import { useState, useRef, useEffect } from "react";
 import {
   Accordion,
@@ -7,6 +9,7 @@ import {
 } from "@/components/ui/accordion";
 import CTAButtons from "@/components/CTAButtons";
 import { cn } from "@/lib/utils";
+import YouTubePlayer from "@/components/video/YouTubePlayer";
 
 interface Category {
   title: string;
@@ -49,10 +52,6 @@ export default function LocationUI({ section, onCtaClick }: LocationUIProps) {
   const videoRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<HTMLDivElement | null>(null);
 
-  const videoEmbedUrl = videoId
-    ? `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${videoId}&rel=0&modestbranding=1`
-    : null;
-
   /* Lazy-load Video + Map */
   useEffect(() => {
     const observe = (
@@ -78,7 +77,7 @@ export default function LocationUI({ section, onCtaClick }: LocationUIProps) {
     observe(mapRef, setMapVisible);
   }, []);
 
-  /* ICON MAP (Emoji fallback + SVG future-ready) */
+  /* ICON MAP */
   const iconMap: Record<string, string> = {
     Connectivity: "🚇",
     "IT Tech Parks": "💼",
@@ -99,9 +98,7 @@ export default function LocationUI({ section, onCtaClick }: LocationUIProps) {
           {title && (
             <h2 className="text-3xl md:text-4xl font-extrabold leading-tight">
               {title.split(" ").slice(0, -1).join(" ")}{" "}
-              <span className="text-primary">
-                {title.split(" ").slice(-1)}
-              </span>
+              <span className="text-primary">{title.split(" ").slice(-1)}</span>
             </h2>
           )}
 
@@ -117,6 +114,7 @@ export default function LocationUI({ section, onCtaClick }: LocationUIProps) {
         {/* VIDEO + MAP */}
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
 
+          {/* CLICK-TO-PLAY LOCATION VIDEO */}
           <div
             ref={videoRef}
             className={cn(
@@ -125,18 +123,21 @@ export default function LocationUI({ section, onCtaClick }: LocationUIProps) {
               videoVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
             )}
           >
-            {videoVisible && videoEmbedUrl && (
-              <iframe
-                src={videoEmbedUrl}
+            {videoVisible && videoId && (
+              <YouTubePlayer
+                videoId={videoId}
+                mode="click"
                 className="w-full h-[260px] md:h-[420px]"
-                title="Location Video"
-                allow="autoplay; encrypted-media; gyroscope"
-                allowFullScreen
+                rounded
+                privacyMode
+                controls
               />
             )}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent" />
+
+            <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent pointer-events-none" />
           </div>
 
+          {/* MAP EMBED */}
           <div
             ref={mapRef}
             className={cn(
@@ -154,14 +155,14 @@ export default function LocationUI({ section, onCtaClick }: LocationUIProps) {
                 allowFullScreen
               />
             )}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent" />
+
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent pointer-events-none" />
           </div>
         </div>
 
-        {/* ULTRA PREMIUM ACCORDION */}
+        {/* PREMIUM ACCORDION */}
         <div className="max-w-4xl mx-auto mb-16">
           <Accordion type="single" collapsible className="space-y-4">
-
             {categories.map((category, idx) => {
               const icon = iconMap[category.title] ?? "📍";
 
@@ -171,21 +172,12 @@ export default function LocationUI({ section, onCtaClick }: LocationUIProps) {
                   value={`item-${idx}`}
                   className="accordion-card group"
                 >
-                  <AccordionTrigger
-                    className="accordion-trigger flex items-center gap-4"
-                  >
-                    {/* ICON */}
+                  <AccordionTrigger className="accordion-trigger flex items-center gap-4">
                     <span className="text-2xl">{icon}</span>
-
-                    {/* TITLE */}
                     <span className="flex-1 text-left">{category.title}</span>
 
-                    {/* PREMIUM ARROW */}
                     <svg
-                      className="
-                        w-4 h-4 transition-transform duration-300
-                        group-data-[state=open]:rotate-180
-                      "
+                      className="w-4 h-4 transition-transform duration-300 group-data-[state=open]:rotate-180"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
                       strokeWidth="2"
@@ -195,21 +187,12 @@ export default function LocationUI({ section, onCtaClick }: LocationUIProps) {
                     </svg>
                   </AccordionTrigger>
 
-                  {/* CONTENT */}
-                  <AccordionContent
-                    className="
-                      px-6 pb-6 pt-2
-                      animate-in fade-in slide-in-from-top-2 duration-300
-                    "
-                  >
+                  <AccordionContent className="px-6 pb-6 pt-2 animate-in fade-in slide-in-from-top-2 duration-300">
                     <ul className="space-y-3">
                       {category.items.map((item, j) => (
                         <li
                           key={j}
-                          className="
-                            flex items-start gap-3
-                            text-[1rem] text-muted-foreground
-                          "
+                          className="flex items-start gap-3 text-[1rem] text-muted-foreground"
                         >
                           <span className="w-2 h-2 rounded-full bg-primary/70 mt-2"></span>
                           <span>{item}</span>
@@ -220,7 +203,6 @@ export default function LocationUI({ section, onCtaClick }: LocationUIProps) {
                 </AccordionItem>
               );
             })}
-
           </Accordion>
         </div>
 

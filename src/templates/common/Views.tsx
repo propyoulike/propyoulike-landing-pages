@@ -1,3 +1,4 @@
+// src/templates/common/Views.tsx
 import { memo, useEffect, useRef, useState, useCallback } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import AutoScroll from "embla-carousel-auto-scroll";

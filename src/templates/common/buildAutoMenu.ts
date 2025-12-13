@@ -14,7 +14,7 @@ const CLEAN_MAP: Record<string, string> = {
   Summary: "Summary",
   FloorPlansSection: "Floor Plans",
   Amenities: "Amenities",
-  Views: "Gallery",
+  Views: "Views",
   LocationUI: "Location",
   Construction: "Status",
   PaymentPlans: "Pricing",

@@ -3,8 +3,10 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Routes, Route } from "react-router-dom";
+
+import { Routes, Route, ScrollRestoration } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
+import { useResetScrollOnLoad } from "@/hooks/useResetScrollOnLoad";
 
 import Index from "./pages/Index";
 import ProjectPage from "./pages/ProjectPage";
@@ -23,40 +25,52 @@ import ReraPage from "@/components/legal/ReraPage";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <HelmetProvider>
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
+function DisableScrollRestoration() {
+  return <ScrollRestoration getKey={() => "always-new"} />;
+}
 
-        <Tracking />
+const App = () => {
+  // ✅ Hook must be inside the component body
+  useResetScrollOnLoad();
 
-        <Routes>
-          <Route path="/" element={<Index />} />
+  return (
+    <HelmetProvider>
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <Tracking />
 
-          {/* Builder */}
-          <Route path="/builder/:builder" element={<BuilderPage />} />
+          {/* Disable React Router scroll restore */}
+          <DisableScrollRestoration />
 
-          {/* Locality */}
-          <Route path="/locality/:locality" element={<LocalityPage />} />
+          <Routes>
+            <Route path="/" element={<Index />} />
 
-          {/* Zone pages (2 segments, must be BEFORE dynamic slug) */}
-          <Route path="/:city/:zone" element={<ZonePage />} />
+            {/* Legal */}
+            <Route path="/legal/privacy" element={<PrivacyPage />} />
+            <Route path="/legal/terms" element={<TermsPage />} />
+            <Route path="/legal/rera" element={<ReraPage />} />
 
-          {/* Dynamic resolver: project OR city */}
-          <Route path="/:slug" element={<DynamicRouter />} />
+            {/* Builder */}
+            <Route path="/builder/:builder" element={<BuilderPage />} />
 
-          <Route path="*" element={<NotFound />} />
+            {/* Locality */}
+            <Route path="/locality/:locality" element={<LocalityPage />} />
 
-	  <Route path="/legal/privacy" element={<PrivacyPage />} />
-	  <Route path="/legal/terms" element={<TermsPage />} />
-	  <Route path="/legal/rera" element={<ReraPage />} />
+            {/* City / Zone */}
+            <Route path="/:city/:zone" element={<ZonePage />} />
 
-        </Routes>
-      </TooltipProvider>
-    </QueryClientProvider>
-  </HelmetProvider>
-);
+            {/* Resolver */}
+            <Route path="/:slug" element={<DynamicRouter />} />
+
+            {/* Not found */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </TooltipProvider>
+      </QueryClientProvider>
+    </HelmetProvider>
+  );
+};
 
 export default App;

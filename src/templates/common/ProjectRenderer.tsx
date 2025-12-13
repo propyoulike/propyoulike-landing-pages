@@ -1,10 +1,11 @@
 // src/templates/common/ProjectRenderer.tsx
-import React, { Suspense } from "react";
+import React, { Suspense, useMemo, useEffect } from "react";
 import { SECTIONS } from "@/templates/common/sections.config";
 import type { ProjectData } from "@/content/schema/project.schema";
 
 import { useLeadCTAContext } from "@/components/lead/LeadCTAProvider";
 import { buildAutoMenuFromResolved } from "@/templates/common/buildAutoMenu";
+
 import FloatingQuickNav from "@/templates/common/FloatingQuickNav";
 
 import { getRelatedProjects } from "@/lib/getRelatedProjects";
@@ -17,22 +18,7 @@ import brand from "@/content/global/propyoulike.json";
 import legal from "@/content/legal/legalIndex.json";
 
 /* -------------------------------------------------------------
-   Helper Types
-------------------------------------------------------------- */
-
-type SectionDef = typeof SECTIONS[keyof typeof SECTIONS];
-
-type SectionPropsFactory = (
-  project: ProjectData,
-  ctx: {
-    openCTA: () => void;
-    autoMenu: { name: string; id: string; label: string }[];
-    related: ProjectData[];
-  }
-) => Record<string, any>;
-
-/* -------------------------------------------------------------
-   Error Boundary for individual sections
+   Error Boundary for each section
 ------------------------------------------------------------- */
 class SectionErrorBoundary extends React.Component<
   { sectionName: string; children: React.ReactNode },
@@ -48,8 +34,8 @@ class SectionErrorBoundary extends React.Component<
   render() {
     if (this.state.hasError) {
       return (
-        <div className="py-8 px-4 text-center text-red-600">
-          Something went wrong in this section.
+        <div className="py-8 text-center text-red-600">
+          Error loading section: {this.props.sectionName}
         </div>
       );
     }
@@ -58,9 +44,9 @@ class SectionErrorBoundary extends React.Component<
 }
 
 /* -------------------------------------------------------------
-   Utility: Sanitize DOM id
+   DOM ID Normalizer
 ------------------------------------------------------------- */
-function sanitizeId(raw?: string | null) {
+function sanitizeId(raw?: string | null): string {
   if (!raw) return "";
   return String(raw)
     .trim()
@@ -76,146 +62,117 @@ export default function ProjectRenderer({ project }: { project: ProjectData }) {
   const { openCTA } = useLeadCTAContext();
 
   /* ---------------------------------------------------------
-     1. Read list of sections from project.json
+     Load Builder Data + Apply Theme
   --------------------------------------------------------- */
-  const sections = React.useMemo(
-    () => [...(project.sections || [])],
-    [project.sections]
-  );
-
-  /* ---------------------------------------------------------
-     2. Load Builder Data (from /content/projects/.../aboutbuilder.json)
-  --------------------------------------------------------- */
-  const builderData = React.useMemo(() => {
+  const builderData = useMemo(() => {
     if (!project.builder) return null;
     return loadBuilder(project.builder);
   }, [project.builder]);
 
-  /* ---------------------------------------------------------
-     3. Apply Builder Theme (if exists)
-  --------------------------------------------------------- */
-  React.useEffect(() => {
+  useEffect(() => {
     if (builderData?.theme) applyTheme(builderData.theme);
   }, [builderData]);
 
   /* ---------------------------------------------------------
-     4. Builder-specific section overrides
+     Project Sections
   --------------------------------------------------------- */
-  const finalSections = React.useMemo(() => {
+  const sections = useMemo(() => [...(project.sections || [])], [project.sections]);
+
+  /* ---------------------------------------------------------
+     Builder Overrides
+  --------------------------------------------------------- */
+  const finalSections = useMemo(() => {
     const overrides = getBuilderOverrides(project.builder) || {};
     const merged: Record<string, any> = {};
 
-    Object.keys(SECTIONS).forEach((k) => {
+    for (const k of Object.keys(SECTIONS)) {
       merged[k] = { ...(SECTIONS as any)[k], ...(overrides as any)[k] };
-    });
-
-    Object.keys(overrides).forEach((k) => {
-      if (!merged[k]) merged[k] = overrides[k];
-    });
-
+    }
     return merged as typeof SECTIONS;
   }, [project.builder]);
 
   /* ---------------------------------------------------------
-     5. Related Projects Widget
+     Related Projects
   --------------------------------------------------------- */
-  const related = React.useMemo(
-    () => getRelatedProjects(project),
-    [project]
-  );
+  const related = useMemo(() => getRelatedProjects(project), [project]);
 
   /* ---------------------------------------------------------
-     6. Build Auto Navigation Menu
+     Build AutoMenu
   --------------------------------------------------------- */
-  const resolvedSectionMap = React.useMemo(() => {
+  const resolvedSectionMap = useMemo(() => {
     return sections
       .map((name) => {
         const normalized =
-          (name as string).charAt(0).toUpperCase() +
-          (name as string).slice(1);
+          (name as string).charAt(0).toUpperCase() + (name as string).slice(1);
 
-        const def: SectionDef | undefined = (finalSections as any)[normalized];
+        const def = (finalSections as any)[normalized];
         if (!def || def.menuVisible === false) return null;
 
-        const rawId =
-          typeof def.id === "function" ? def.id(project) : def.id;
+        const rawId = typeof def.id === "function" ? def.id(project) : def.id;
 
-        const resolvedId = sanitizeId(
-          typeof rawId === "string" ? rawId : String(rawId ?? "")
-        );
-
+        const resolvedId = sanitizeId(rawId);
         if (!resolvedId) return null;
 
         const label =
-          def.menuLabel ??
-          normalized.replace(/([A-Z])/g, " $1").trim();
+          def.menuLabel ?? normalized.replace(/([A-Z])/g, " $1").trim();
 
         return { name: normalized, id: resolvedId, label };
       })
       .filter(Boolean) as { name: string; id: string; label: string }[];
   }, [sections, finalSections, project]);
 
-  const autoMenu = React.useMemo(
+  const autoMenu = useMemo(
     () => buildAutoMenuFromResolved(resolvedSectionMap, project),
     [resolvedSectionMap, project]
   );
 
   /* ---------------------------------------------------------
-     7. Render
+     CLEAN Scroll Restoration (Fixes auto-scroll bug)
+  --------------------------------------------------------- */
+  useEffect(() => {
+    // Prevent initial unwanted scroll jump
+    history.scrollRestoration = "manual";
+    window.scrollTo(0, 0);
+  }, []);
+
+  /* ---------------------------------------------------------
+     RENDER
   --------------------------------------------------------- */
   return (
     <div>
-      {/* ------------------ DYNAMIC SECTIONS ------------------ */}
-      {sections.map((name, index) => {
+      {sections.map((name) => {
         const normalized =
-          (name as string).charAt(0).toUpperCase() +
-          (name as string).slice(1);
+          (name as string).charAt(0).toUpperCase() + (name as string).slice(1);
 
-        const def: SectionDef | undefined = (finalSections as any)[normalized];
+        const def = (finalSections as any)[normalized];
+        if (!def) return null;
 
-        if (!def) {
-          if (import.meta.env.DEV) {
-            return (
-              <section
-                key={`unknown-${name}-${index}`}
-                className="p-6 bg-red-50 text-red-700 border border-red-200"
-              >
-                <strong>Unknown section:</strong> "{name}"
-              </section>
-            );
-          }
-          return null;
-        }
-
-        const Component = def.Component as React.ComponentType<any>;
-        const propsFactory = def.props as SectionPropsFactory | undefined;
+        const Component = def.Component;
+        const propsFactory = def.props;
 
         const props =
-          (propsFactory
+          (typeof propsFactory === "function"
             ? propsFactory(project, { openCTA, autoMenu, related })
             : def.props) || {};
 
         const extraProps =
-          normalized === "Navbar"
-            ? { autoMenu, onCtaClick: openCTA }
-            : {};
+          normalized === "Navbar" ? { autoMenu, onCtaClick: openCTA } : {};
 
+        /* -----------------------------------------------------
+           FIXED ID Logic — No more auto-generated numeric IDs
+        ----------------------------------------------------- */
         let id = "";
         try {
-          const raw =
-            typeof def.id === "function" ? def.id(project) : def.id;
+          const raw = typeof def.id === "function" ? def.id(project) : def.id;
 
-          const base = sanitizeId(
-            typeof raw === "string" ? raw : String(raw ?? "")
-          );
-
-          id = base ? `${base}-${index}` : `section-${index}`;
+          id = sanitizeId(raw);
+          if (!id) id = sanitizeId(name as string); // fallback to original section name
         } catch {
-          id = `section-${index}`;
+          id = sanitizeId(name as string);
         }
 
         return (
-          <section id={id} key={id}>
+          <section key={id} id={id} className="scroll-mt-24">
             <SectionErrorBoundary sectionName={normalized}>
               <Suspense
                 fallback={
@@ -234,7 +191,7 @@ export default function ProjectRenderer({ project }: { project: ProjectData }) {
       {/* Floating mini-nav */}
       <FloatingQuickNav items={autoMenu} />
 
-      {/* ------------------ GLOBAL FOOTER ------------------ */}
+      {/* Footer */}
       <Footer
         project={project}
         builder={builderData}
