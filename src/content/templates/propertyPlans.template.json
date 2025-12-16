@@ -1,0 +1,41 @@
+{
+  "propertyPlans": {
+    "title": "",
+    "subtitle": "",
+    "tagline": "",
+
+    "modelFlats": [
+      {
+        "title": "",
+        "youtubeId": ""
+      }
+    ],
+
+    "unitPlans": [
+      {
+        "title": "",
+        "description": "",
+        "sba": "",
+        "ca": "",
+        "usable": "",
+        "uds": "",
+        "price": "",
+        "floorPlanImage": ""
+      }
+    ],
+
+    "floorPlans": [
+      {
+        "title": "",
+        "image": "",
+        "description": ""
+      }
+    ],
+
+    "masterPlan": {
+      "image": "",
+      "title": "",
+      "description": ""
+    }
+  }
+}

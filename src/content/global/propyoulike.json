@@ -74,6 +74,12 @@
       "projectId": "abcdefghij"
     },
 
+    "googleCloudAccount": 
+      {
+	"id": "759760617603",
+	"projectName": "propyoulike-content-engine",
+	"projectNumber": "197942704722"
+      },
     "customPixels": [
       {
         "name": "tiktok",

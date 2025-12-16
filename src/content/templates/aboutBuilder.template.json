@@ -1,0 +1,17 @@
+{
+  "aboutBuilder": {
+    "id": "",
+    "name": "",
+    "title": "",
+    "subtitle": "",
+    "description": "",
+    "descriptionExpanded": "",
+    "stats": [
+      {
+        "icon": "",
+        "label": "",
+        "value": ""
+      }
+    ]
+  }
+}

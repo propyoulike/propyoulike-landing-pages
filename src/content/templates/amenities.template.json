@@ -1,0 +1,20 @@
+{
+  "amenities": {
+    "heroTitle": "",
+    "heroSubtitle": "",
+
+    "amenityImages": [
+      {
+        "src": "",
+        "title": ""
+      }
+    ],
+
+    "amenityCategories": [
+      {
+        "title": "",
+        "items": []
+      }
+    ]
+  }
+}

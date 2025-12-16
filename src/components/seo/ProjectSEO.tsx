@@ -5,14 +5,16 @@ interface SEOProps {
   project: ProjectData;
 }
 
+const ORIGIN = "https://propyoulike.com";
+const DEFAULT_OG_IMAGE = "/images/og-default.jpg";
+
 export default function ProjectSEO({ project }: SEOProps) {
   if (!project) return null;
 
   /* -----------------------------------------------
       URL & CANONICAL
   ----------------------------------------------- */
-  const origin = "https://propyoulike.com";
-  const url = `${origin}/${project.slug}`;
+  const url = `${ORIGIN}/${project.slug}`;
 
   /* -----------------------------------------------
       TITLE + DESCRIPTION
@@ -30,12 +32,12 @@ export default function ProjectSEO({ project }: SEOProps) {
     `Explore ${project.projectName} – pricing, floor plans, amenities, location and brochure.`;
 
   /* -----------------------------------------------
-      HERO IMAGE FALLBACK
+      HERO IMAGE (SAFE, LOCAL, OPTIONAL)
   ----------------------------------------------- */
   const heroImage =
     project.hero?.images?.[0] ||
-    project.heroImage ||
-    "https://via.placeholder.com/1200x630?text=Project+Image";
+    project.brochure?.coverImage ||
+    DEFAULT_OG_IMAGE;
 
   /* -----------------------------------------------
       FAQ JSON-LD
@@ -59,7 +61,7 @@ export default function ProjectSEO({ project }: SEOProps) {
       : null;
 
   /* -----------------------------------------------
-      PROJECT SCHEMA (ApartmentComplex)
+      PROJECT SCHEMA
   ----------------------------------------------- */
   const projectSchema = {
     "@context": "https://schema.org",
@@ -77,12 +79,12 @@ export default function ProjectSEO({ project }: SEOProps) {
   };
 
   /* -----------------------------------------------
-      PRICING SCHEMA SAFELY
+      PRICING SCHEMA
   ----------------------------------------------- */
   const pricing = project.floorPlansSection?.unitPlans || [];
 
   const pricingSchema =
-    Array.isArray(pricing) && pricing.length > 0
+    pricing.length > 0
       ? {
           "@context": "https://schema.org",
           "@type": "Product",
@@ -99,7 +101,7 @@ export default function ProjectSEO({ project }: SEOProps) {
       : null;
 
   /* -----------------------------------------------
-      BREADCRUMB SCHEMA (City → Project)
+      BREADCRUMB SCHEMA
   ----------------------------------------------- */
   const breadcrumbSchema = {
     "@context": "https://schema.org",
@@ -109,16 +111,14 @@ export default function ProjectSEO({ project }: SEOProps) {
         "@type": "ListItem",
         position: 1,
         name: "Home",
-        item: origin,
+        item: ORIGIN,
       },
-      city
-        ? {
-            "@type": "ListItem",
-            position: 2,
-            name: city,
-            item: `${origin}/${encodeURIComponent(city)}`,
-          }
-        : null,
+      city && {
+        "@type": "ListItem",
+        position: 2,
+        name: city,
+        item: `${ORIGIN}/${encodeURIComponent(city)}`,
+      },
       {
         "@type": "ListItem",
         position: city ? 3 : 2,
@@ -138,15 +138,17 @@ export default function ProjectSEO({ project }: SEOProps) {
       {/* OpenGraph */}
       <meta property="og:title" content={title} />
       <meta property="og:description" content={desc} />
-      <meta property="og:image" content={heroImage} />
+      {heroImage && <meta property="og:image" content={heroImage} />}
       <meta property="og:url" content={url} />
       <meta property="og:type" content="website" />
 
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
 
-      {/* Preload hero image */}
-      {heroImage && <link rel="preload" as="image" href={heroImage} fetchPriority="high" />}
+      {/* Preload ONLY real image */}
+      {heroImage && (
+        <link rel="preload" as="image" href={heroImage} fetchPriority="high" />
+      )}
 
       {/* JSON-LD */}
       <script type="application/ld+json">

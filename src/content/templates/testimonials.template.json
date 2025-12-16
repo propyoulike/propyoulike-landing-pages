@@ -1,0 +1,15 @@
+{
+  "testimonials": {
+    "title": "",
+    "subtitle": "",
+    "testimonials": [
+      {
+        "name": "",
+        "quote": "",
+        "videoId": "",
+        "rating": 5,
+        "thumbUrl": ""
+      }
+    ]
+  }
+}

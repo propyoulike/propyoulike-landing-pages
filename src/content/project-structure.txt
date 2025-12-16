@@ -1,0 +1,124 @@
+Folder PATH listing for volume Windows-SSD
+Volume serial number is 2EF4-0C29
+C:.
+|   getAllProjects.ts
+|   project-structure.txt
+|   
++---global
+|       globalFiles.json
+|       globalNavbar.json
+|       globalSections.json
+|       propyoulike.json
+|       
++---legal
+|       legalIndex.json
+|       privacy.json
+|       rera.json
+|       terms.json
+|       
++---projects
+|   |   faq.json
+|   |   
+|   +---provident
+|   |   |   aboutbuilder.json
+|   |   |   builder_faq.json
+|   |   |   files.json
+|   |   |   navbar.json
+|   |   |   sections.json
+|   |   |   
+|   |   +---botanico
+|   |   |       amenities.json
+|   |   |       brochure.json
+|   |   |       construction.json
+|   |   |       floorPlans.json
+|   |   |       hero.json
+|   |   |       index.json
+|   |   |       loan.json
+|   |   |       LocationUI.json
+|   |   |       paymentPlans.json
+|   |   |       project_faq.json
+|   |   |       summary.json
+|   |   |       testimonials.json
+|   |   |       views.json
+|   |   |       
+|   |   +---capella
+|   |   |       amenities.json
+|   |   |       brochure.json
+|   |   |       construction.json
+|   |   |       floorPlans.json
+|   |   |       hero.json
+|   |   |       index.json
+|   |   |       loan.json
+|   |   |       LocationUI.json
+|   |   |       paymentPlans.json
+|   |   |       summary.json
+|   |   |       testimonials.json
+|   |   |       views.json
+|   |   |       
+|   |   +---deansgate
+|   |   |       amenities.json
+|   |   |       brochure.json
+|   |   |       construction.json
+|   |   |       floorPlans.json
+|   |   |       hero.json
+|   |   |       index.json
+|   |   |       loan.json
+|   |   |       LocationUI.json
+|   |   |       paymentPlans.json
+|   |   |       summary.json
+|   |   |       testimonials.json
+|   |   |       views.json
+|   |   |       
+|   |   +---ecopolitan
+|   |   |       amenities.json
+|   |   |       brochure.json
+|   |   |       construction.json
+|   |   |       floorPlans.json
+|   |   |       hero.json
+|   |   |       index.json
+|   |   |       loan.json
+|   |   |       LocationUI.json
+|   |   |       paymentPlans.json
+|   |   |       summary.json
+|   |   |       testimonials.json
+|   |   |       views.json
+|   |   |       
+|   |   +---park-square
+|   |   |       amenities.json
+|   |   |       brochure.json
+|   |   |       construction.json
+|   |   |       floorPlans.json
+|   |   |       hero.json
+|   |   |       index.json
+|   |   |       loan.json
+|   |   |       LocationUI.json
+|   |   |       paymentPlans.json
+|   |   |       summary.json
+|   |   |       testimonials.json
+|   |   |       views.json
+|   |   |       
+|   |   \---sunworth-city
+|   |           amenities.json
+|   |           brochure.json
+|   |           construction.json
+|   |           floorPlans.json
+|   |           hero.json
+|   |           index.json
+|   |           loan.json
+|   |           LocationUI.json
+|   |           paymentPlans.json
+|   |           summary.json
+|   |           testimonials.json
+|   |           views.json
+|   |           
+|   \---puravankara
+|           aboutbuilder.json
+|           builder_faq.json
+|           files.json
+|           navbar.json
+|           sections.json
+|           
+\---schema
+        builder.schema.ts
+        project.schema.ts
+        

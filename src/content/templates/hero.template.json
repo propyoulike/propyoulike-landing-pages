@@ -1,0 +1,13 @@
+{
+  "hero": {
+    "videoId": "",
+    "images": [],
+    "overlayTitle": "",
+    "overlaySubtitle": "",
+    "quickInfo": {
+      "price": "",
+      "typology": "",
+      "size": ""
+    }
+  }
+}

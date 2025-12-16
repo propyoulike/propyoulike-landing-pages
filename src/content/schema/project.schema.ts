@@ -1,376 +1,360 @@
 import { z } from "zod";
 
-/**
- * Universal project schema.
- * Generic and reusable across all builders.
- */
+/* ============================================================
+   HERO
+============================================================ */
 
-/* -----------------------------------------
-    COMMON SECTION SCHEMAS
------------------------------------------ */
+const HeroSchema = z.object({
+  videoId: z.string().optional(),
+  images: z.array(z.string()).optional(),
 
-const HeroSchema = z
-  .object({
-    videoId: z.string().optional(), // YouTube video ID only
-    images: z.array(z.string()).optional(),
-    overlayTitle: z.string().optional(),
-    overlaySubtitle: z.string().optional(),
-    ctaEnabled: z.boolean().default(false),
-    quickInfo: z
-      .object({
-        price: z.string().optional(),
-        typology: z.string().optional(),
-        size: z.string().optional(),
-      })
-      .optional(),
-  })
-  .optional();
+  overlayTitle: z.string().optional(),
+  overlaySubtitle: z.string().optional(),
 
-const NavbarSchema = z
-  .object({
-    logo: z.string().optional(),
-    builderLogo: z.string().nullable().optional(),
-    menu: z
-      .array(
-        z.object({
-          label: z.string(),
-          targetId: z.string().optional(),
-        })
-      )
-      .optional(),
-  })
-  .optional();
+  quickInfo: z
+    .object({
+      price: z.string().optional(),
+      typology: z.string().optional(),
+      size: z.string().optional(),
+    })
+    .optional(),
+});
 
-const SummarySchema = z
-  .object({
-    title: z.string().optional(),
-    subtitle: z.string().optional(),
-    description: z.string().optional(),
-    highlights: z
-      .array(
-        z.object({
-          icon: z.string().optional(),
-          label: z.string().optional(),
-          value: z.string().optional(),
-        })
-      )
-      .optional(),
-  })
-  .optional();
+/* ============================================================
+   SUMMARY
+============================================================ */
 
-const BrochureSchema = z
-  .object({
-    heroTitle: z.string().optional(),
-    heroSubtitle: z.string().optional(),
-    coverImage: z.string().optional(),
-    documents: z
-      .array(
-        z.object({
-          title: z.string(),
-          url: z.string(),
-        })
-      )
-      .optional(),
-  })
-  .optional();
+const SummarySchema = z.object({
+  title: z.string().optional(),
+  subtitle: z.string().optional(),
+  description: z.string(),
 
-const ViewsSchema = z
-  .object({
-    title: z.string().optional(),
-    subtitle: z.string().optional(),
+  highlights: z.array(z.string()).optional(),
 
-    images: z
-      .array(
-        z.object({
-          src: z.string(),
-          title: z.string().optional(),
-        })
-      )
-      .optional(),
+});
 
-    // Mixed media support
-    media: z
-      .array(
-        z.object({
-          type: z.enum(["image", "video"]),
-          src: z.string().optional(),
-          videoId: z.string().optional(),
-          title: z.string().optional(),
-        })
-      )
-      .optional(),
-  })
-  .optional();
+/* ============================================================
+   AMENITIES
+============================================================ */
 
-/* -----------------------------------------
-    FLOOR PLANS SECTION
------------------------------------------ */
+const AmenitiesSchema = z.object({
+  heroTitle: z.string().optional(),
+  heroSubtitle: z.string().optional(),
 
-const FloorPlansSectionSchema = z
-  .object({
-    title: z.string(),
-    subtitle: z.string(),
-
-    modelFlats: z.array(
+  amenityImages: z
+    .array(
       z.object({
-        title: z.string(),
-        id: z.string(), // YouTube video ID only
+        src: z.string(),
+        title: z.string().optional(),
       })
-    ),
+    )
+    .optional(),
 
-    unitPlans: z.array(
-      z.object({
-        title: z.string(),
-        description: z.string(),
-        sba: z.string(),
-        ca: z.string(),
-        usable: z.string(),
-        uds: z.string(),
-        price: z.string(),
-        floorPlanImage: z.string().optional(),
-      })
-    ),
-
-    floorPlans: z.array(
-      z.object({
-        title: z.string(),
-        image: z.string(),
-        description: z.string(),
-      })
-    ),
-
-    masterPlan: z.object({
-      image: z.string(),
+  amenityCategories: z.array(
+    z.object({
       title: z.string(),
-      description: z.string(),
-    }),
+      items: z.array(z.string()).min(1),
+    })
+  ).min(1),
+});
 
-    ctaText: z.string(),
-  })
-  .optional();
+/* ============================================================
+   VIEWS
+============================================================ */
 
-/* -----------------------------------------
-    LOCATION UI SECTION
------------------------------------------ */
+const ViewsSchema = z.object({
+  images: z.array(
+    z.object({
+      src: z.string(),
+      title: z.string().optional(),
+    })
+  ).min(1),
+});
+
+/* ============================================================
+   LOCATION UI
+============================================================ */
 
 const LocationUISchema = z.object({
-  sectionId: z.string().default("location-ui"),
-  title: z.string(),
+  title: z.string().optional(),
   subtitle: z.string().optional(),
   tagline: z.string().optional(),
-  videoId: z.string().optional(),
-  mapUrl: z.string().optional(),
 
-  categories: z
+  videoId: z.string().optional(),
+  mapUrl: z.string(),
+
+  categories: z.array(
+    z.object({
+      title: z.string(),
+      items: z.array(z.string()).optional(),
+    })
+  ).optional(),
+});
+
+/* ============================================================
+   PROPERTY PLANS
+============================================================ */
+
+const PropertyPlansSchema = z
+  .object({
+    title: z.string().optional(),
+    subtitle: z.string().optional(),
+    tagline: z.string().optional(),
+
+    modelFlats: z
+      .array(
+        z.object({
+          title: z.string().optional(),
+          youtubeId: z.string().optional(),
+        })
+      )
+      .optional(),
+
+    unitPlans: z
+      .array(
+        z.object({
+          title: z.string().optional(),
+          description: z.string().optional(),
+          sba: z.string().optional(),
+          ca: z.string().optional(),
+          usable: z.string().optional(),
+          uds: z.string().optional(),
+          price: z.string().optional(),
+          floorPlanImage: z.string().optional(),
+        })
+      )
+      .optional(),
+
+    floorPlans: z
+      .array(
+        z.object({
+          title: z.string().optional(),
+          image: z.string().optional(),
+          description: z.string().optional(),
+        })
+      )
+      .optional(),
+
+    masterPlan: z
+      .object({
+        image: z.string().optional(),
+        title: z.string().optional(),
+        description: z.string().optional(),
+      })
+      .optional(),
+  })
+  .refine(
+    (v) =>
+      (v.modelFlats?.length ?? 0) > 0 ||
+      (v.unitPlans?.length ?? 0) > 0 ||
+      (v.floorPlans?.length ?? 0) > 0 ||
+      !!v.masterPlan?.image,
+    {
+      message:
+        "PropertyPlans must have at least one of: modelFlats, unitPlans, floorPlans, or masterPlan",
+    }
+  );
+
+/* ============================================================
+   PAYMENT PLANS
+============================================================ */
+
+const PaymentPlansSchema = z.object({
+  sectionTitle: z.string().optional().default(""),
+  sectionSubtitle: z.string().optional().default(""),
+
+  pricingTitle: z.string().optional().default(""),
+
+  pricingComputation: z.array(
+    z.object({
+      title: z.string().optional().default(""),
+      points: z.array(z.string()).optional().default([]),
+    })
+  ).optional().default([]),
+
+  scheduleTitle: z.string().optional().default(""),
+
+  paymentSchedule: z.array(
+    z.object({
+      title: z.string().optional().default(""),
+      percentage: z.string().optional().default(""),
+      items: z.array(z.string()).optional().default([]),
+    })
+  ).optional().default([]),
+});
+
+/* ============================================================
+   CONSTRUCTION
+============================================================ */
+
+const ConstructionUpdateSchema = z.object({
+  name: z.string(),                        // REQUIRED
+  image: z.string().optional(),            // Thumbnail or image
+  videoId: z.string().optional(),          // YouTube ID
+  type: z.enum(["image", "video"]).default("image"),
+
+  // Optional metadata (future-proof)
+  status: z.array(z.string()).optional(),
+  achieved: z.array(z.string()).optional(),
+  upcoming: z.array(z.string()).optional()
+});
+
+const ConstructionSchema = z.object({
+  title: z.string().optional(),
+  subtitle: z.string().optional(),
+  tagline: z.string().optional(),
+
+  updates: z.array(ConstructionUpdateSchema).default([]),
+});
+
+/* ============================================================
+   TESTIMONIALS
+============================================================ */
+
+const TestimonialsSchema = z.object({
+  title: z.string().optional(),
+  subtitle: z.string().optional(),
+
+  testimonials: z.array(
+    z.object({
+      name: z.string(),
+      quote: z.string().optional(),
+      videoId: z.string().optional(),
+      rating: z.number().min(1).max(5).optional(),
+      thumbUrl: z.string().optional()
+    }).refine(
+    v => v.quote || v.videoId,
+    { message: "Testimonial must have either quote or videoId" }
+  )
+  ).min(1)
+});
+
+/* ============================================================
+   BUILDER ABOUT
+============================================================ */
+
+const AboutBuilderSchema = z.object({
+  id: z.string().optional(),
+  name: z.string(),
+  title: z.string().optional(),
+  subtitle: z.string().optional(),
+
+  description: z.string(),
+  descriptionExpanded: z.string().optional(),
+
+  stats: z.array(
+    z.object({
+      icon: z.string().optional(),
+      label: z.string(),
+      value: z.string()
+    })
+  ).optional()
+});
+
+/* ============================================================
+   PROJECT CARD (REUSABLE)
+============================================================ */
+
+const ProjectCardSchema = z.object({
+  slug: z.string(),
+  builder: z.string(),
+  projectName: z.string(),
+
+  city: z.string().optional(),
+  zone: z.string().optional(),
+  locality: z.string().optional(),
+
+  heroImage: z.string().nullable().optional(),
+  heroVideoId: z.string().nullable().optional()
+});
+
+/* ============================================================
+   LOAN BANKS
+============================================================ */
+
+const LoanBankSchema = z.array(
+  z.object({
+    name: z.string(),
+    logo: z.string().optional(),
+    interestRate: z.string().optional()
+  })
+);
+
+/* ============================================================
+   BROCHURE
+============================================================ */
+
+const BrochureSchema = z.object({
+  heroTitle: z.string().optional(),
+  heroSubtitle: z.string().optional(),
+  coverImage: z.string().url().optional(),
+
+  documents: z
     .array(
       z.object({
         title: z.string(),
-        items: z.array(z.string()),
+        url: z.string().url(),
       })
-    )
-    .default([]),
-
-  ctaText: z.string().optional(),
+    ).optional().default([]),
 });
 
-/* -----------------------------------------
-    AMENITIES
------------------------------------------ */
-
-const AmenitiesSchema = z
-  .object({
-    heroTitle: z.string().optional(),
-    heroSubtitle: z.string().optional(),
-    amenityImages: z
-      .array(
-        z.object({
-          src: z.string(),
-          title: z.string().optional(),
-        })
-      )
-      .optional(),
-    amenityCategories: z
-      .array(
-        z.object({
-          title: z.string(),
-          items: z.array(z.string()),
-        })
-      )
-      .optional(),
-  })
-  .optional();
-
-/* -----------------------------------------
-    CONSTRUCTION STATUS
------------------------------------------ */
-
-const ConstructionSchema = z
-  .array(
-    z.object({
-      name: z.string(),
-      image: z.string().optional(),
-      updates: z.array(z.string()).optional(),
-    })
-  )
-  .optional();
-
-/* -----------------------------------------
-    PAYMENT PLANS
------------------------------------------ */
-
-const PaymentPlansSchema = z
-  .object({
-    sectionId: z.string(),
-    sectionTitle: z.string(),
-    sectionSubtitle: z.string(),
-    pricingTitle: z.string(),
-
-    pricingComputation: z.array(
-      z.object({
-        title: z.string(),
-        points: z.array(z.string()),
-      })
-    ),
-
-    scheduleTitle: z.string(),
-
-    paymentSchedule: z.array(
-      z.object({
-        title: z.string(),
-        percentage: z.string(),
-        items: z.array(z.string()).optional(),
-      })
-    ),
-
-    ctaText: z.string(),
-  })
-  .optional();
-
-/* -----------------------------------------
-    CUSTOMER SPEAKS
------------------------------------------ */
-
-const CustomerSpeaksSchema = z
-  .object({
-    title: z.string().optional(),
-    subtitle: z.string().optional(),
-
-    testimonials: z
-      .array(
-        z.object({
-          name: z.string(),
-          videoId: z.string().optional(),
-          quote: z.string().optional(),
-          rating: z.number().min(1).max(5).optional(),
-          thumbUrl: z.string().optional(),
-        })
-      )
-      .optional(),
-  })
-  .optional();
-
-/* -----------------------------------------
-    FAQ
------------------------------------------ */
-
+/* ============================================================
+   FAQ
+============================================================ */
 const FAQItemSchema = z.object({
   question: z.string(),
   answer: z.string(),
+  category: z.string().optional().default("General"),
+  order: z.number().optional(),
+  source: z.enum(["builder", "project", "global"]).optional()
 });
 
-const FAQSchema = z.array(FAQItemSchema).optional();
+const FAQSchema = z.object({
+  title: z.string().optional(),
+  subtitle: z.string().optional(),
+  faqs: z.array(FAQItemSchema)
+});
 
-/* -----------------------------------------
-    BUILDER ABOUT
------------------------------------------ */
 
-const BuilderAboutSchema = z
-  .object({
-    id: z.string().optional(),
-    name: z.string().optional(),
-    title: z.string().optional(),
-    subtitle: z.string().optional(),
-    description: z.string().optional(),
-    descriptionExpanded: z.string().optional(),
-    stats: z
-      .array(
-        z.object({
-          icon: z.string().optional(),
-          label: z.string().optional(),
-          value: z.string().optional(),
-        })
-      )
-      .optional(),
-  })
-  .optional();
-
-/* -----------------------------------------
-    NAVBAR CONFIG
------------------------------------------ */
-
-const NavbarConfigSchema = z
-  .object({
-    visible: z.array(z.string()).optional(),
-    hidden: z.array(z.string()).optional(),
-    order: z.array(z.string()).optional(),
-    ctaLabel: z.string().optional(),
-  })
-  .optional();
-
-/* -----------------------------------------
-    TOP-LEVEL PROJECT SCHEMA
------------------------------------------ */
+/* ============================================================
+   FINAL PROJECT SCHEMA
+============================================================ */
 
 export const ProjectSchema = z.object({
+  /* Identity */
   slug: z.string(),
   projectName: z.string(),
   builder: z.string(),
-  type: z.string().optional(),
-  status: z.string().optional(),
 
+  /* Location */
+  city: z.string(),
+  zone: z.enum(["East", "West", "North", "South", "Central"]).optional(),
   area: z.string().optional(),
   locality: z.string().optional(),
-  city: z.string().optional(),
   state: z.string().optional(),
   country: z.string().optional(),
 
-  zone: z.enum(["East", "West", "North", "South", "Central"]).optional(),
+  /* Status */
+  status: z.string().optional(),
+  type: z.string().optional(),
 
-  meta: z
-    .object({
-      title: z.string().optional(),
-      description: z.string().optional(),
-    })
-    .optional(),
-
-  sections: z.array(z.string()).optional(),
-
-  navbar: NavbarSchema,
-  navbarConfig: NavbarConfigSchema,
+  /* Content Sections */
   hero: HeroSchema,
-  summary: SummarySchema,
-  brochure: BrochureSchema,
-  views: ViewsSchema,
-  floorPlansSection: FloorPlansSectionSchema,
+  summary: SummarySchema.optional(),
+  amenities: AmenitiesSchema.optional(),
+  views: ViewsSchema.optional(),
   locationUI: LocationUISchema.optional(),
-  amenities: AmenitiesSchema,
-  construction: ConstructionSchema,
-  paymentPlans: PaymentPlansSchema,
-  customerSpeaks: CustomerSpeaksSchema,
+  propertyPlans: PropertyPlansSchema.optional(),
+  paymentPlans: PaymentPlansSchema.optional(),
+  brochure: BrochureSchema.optional(),
+  testimonials: TestimonialsSchema.optional(),
+  aboutBuilder: AboutBuilderSchema.optional(),
+  construction: ConstructionSchema.optional(),
+  faq: FAQSchema.optional(),
 
-  faq: FAQSchema,
-
-  /* -----------------------------------------
-      ✅ RERA SUPPORT ADDED
-  ----------------------------------------- */
-  rera: z
-    .object({
-      reraId: z.union([z.string(), z.array(z.string())]).optional(),
-      reraLink: z.string().optional(),
-    })
-    .optional(),
-
-  builderAbout: BuilderAboutSchema,
+  localityProjects: z.array(ProjectCardSchema).optional(),
+  builderProjects: z.array(ProjectCardSchema).optional(),
+  loanBanks: LoanBankSchema.optional()
 });
 
 export type ProjectData = z.infer<typeof ProjectSchema>;

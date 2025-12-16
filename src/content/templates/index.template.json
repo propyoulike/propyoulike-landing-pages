@@ -1,0 +1,29 @@
+{
+  "slug": "",
+  "builder": "",
+  "projectName": "",
+  "type": "",
+  "status": "",
+
+  "city": "Bengaluru",
+  "zone": "",
+  "area": "",
+  "locality": "",
+  "state": "Karnataka",
+  "country": "India",
+
+  "files": {
+    "hero": "hero.json",
+    "summary": "summary.json",
+    "propertyPlans": "propertyPlans.json",
+    "amenities": "amenities.json",
+    "views": "views.json",
+    "locationUI": "locationUI.json",
+    "construction": "construction.json",
+    "paymentPlans": "paymentPlans.json",
+    "testimonials": "testimonials.json",
+    "brochure": "brochure.json",
+    "aboutBuilder": "./aboutBuilder.json",
+    "loanBanks": "loanEligibility.json"
+  }
+}

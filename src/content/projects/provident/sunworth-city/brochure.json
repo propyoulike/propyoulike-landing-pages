@@ -1,4 +1,5 @@
 {
+  "brochure": {
     "heroTitle": "A lifestyle project that suits your needs.",
     "heroSubtitle": "Explore detailed information on floor plans, amenities, pricing, layout plans and official project documents.",
     "coverImage": "https://www.providenthousing.com/wp-content/uploads/2022/12/sunworthcity-brochure-cover-1.png",
@@ -13,3 +14,4 @@
       }
     ]
   }
+}

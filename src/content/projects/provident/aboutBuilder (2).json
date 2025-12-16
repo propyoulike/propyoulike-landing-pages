@@ -1,0 +1,30 @@
+{
+  "id": "provident",
+  "name": "Provident Housing",
+  "title": "About Provident Housing",
+  "subtitle": "A trusted name in affordable luxury living",
+  "description": "Provident Housing is a subsidiary of the Puravankara Group...",
+  "descriptionExpanded": "Since its inception, Provident Housing has been committed...",
+  "stats": [
+    {
+      "icon": "TrendingUp",
+      "label": "Years Experience",
+      "value": "16+"
+    },
+    {
+      "icon": "Users",
+      "label": "Happy Customers",
+      "value": "55,000+"
+    },
+    {
+      "icon": "Building2",
+      "label": "Million Sq.Ft. Delivered",
+      "value": 12.8
+    },
+    {
+      "icon": "Award",
+      "label": "Cities",
+      "value": 9
+    }
+  ]
+}

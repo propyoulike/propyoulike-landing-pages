@@ -1,0 +1,23 @@
+{
+  "paymentPlans": {
+    "sectionTitle": "",
+    "sectionSubtitle": "",
+
+    "pricingTitle": "",
+    "pricingComputation": [
+      {
+        "title": "",
+        "points": []
+      }
+    ],
+
+    "scheduleTitle": "",
+    "paymentSchedule": [
+      {
+        "title": "",
+        "percentage": "",
+        "items": []
+      }
+    ]
+  }
+}

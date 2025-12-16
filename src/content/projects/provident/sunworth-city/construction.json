@@ -1,68 +1,44 @@
-[
-  {
-    "name": "Tower 4J",
-    "image": "/images/construction/tower-4j.png",
-    "status": [
-      "2nd floor roof slab completed",
-      "3rd floor roof slab shuttering & reinforcements work in progress"
-    ],
-    "achieved": ["Completion of GF/Stilt floor roof slab"],
-    "upcoming": ["Completion of 3rd floor roof slab"]
-  },
-  {
-    "name": "Tower 4H",
-    "image": "/images/construction/tower-4h.png",
-    "status": [
-      "1st floor Roof slab shuttering work in progress",
-      "1st floor Roof slab reinforcement, work in progress"
-    ],
-    "achieved": ["Completion of Ground/stilt floor roof slab"],
-    "upcoming": ["Completion of 3rd floor Roof slab"]
-  },
-  {
-    "name": "Tower 4G",
-    "image": "/images/construction/tower-4g.png",
-    "status": [
-      "Completion of Ground/stilt floor roof slab",
-      "1st floor roof slab shuttering & Reinforcements work in progress"
-    ],
-    "achieved": ["Completion of Ground/stilt floor roof slab"],
-    "upcoming": ["Completion of 3rd floor roof slab"]
-  },
-  {
-    "name": "Tower 4F",
-    "image": "/images/construction/tower-4f.png",
-    "status": [
-      "Basement slab concreting completed",
-      "Ground floor Shear wall concreting work in progress"
-    ],
-    "achieved": ["Completion of Foundation"],
-    "upcoming": ["Completion of ground / stilt roof slab"]
-  },
-  {
-    "name": "Tower 4E",
-    "image": "/images/construction/tower-4e.png",
-    "status": [
-      "Basement shuttering & reinforcement work in progress"
-    ],
-    "achieved": ["Completion of Foundation"],
-    "upcoming": ["Completion of Ground /stilt floor roof slab"]
-  },
-  {
-    "name": "Tower 4D",
-    "image": "/images/construction/tower-4d.png",
-    "status": [
-      "Foundation completed",
-      "Plinth beam work in progress"
-    ],
-    "achieved": ["Completion of foundation"],
-    "upcoming": ["Completion of Ground /stilt floor roof slab"]
-  },
-  {
-    "name": "Tower 4C",
-    "image": "/images/construction/tower-4c.png",
-    "status": ["Excavation work completed"],
-    "achieved": ["Completion of foundation"],
-    "upcoming": ["Completion of Ground /stilt floor roof slab"]
+{
+  "construction": {
+    "title": "Construction Progress",
+    "subtitle": "Stay updated with the work happening on-site.",
+    "tagline": "Track real progress with verified on-site updates.",
+    "updates": [
+      {
+        "name": "Tower 4J",
+        "image": "/images/construction/tower-4j.png",
+        "type": "image"
+      },
+      {
+        "name": "Tower 4H",
+        "image": "/images/construction/tower-4h.png",
+        "type": "image"
+      },
+      {
+        "name": "Tower 4G",
+        "image": "/images/construction/tower-4g.png",
+        "type": "image"
+      },
+      {
+        "name": "Tower 4F",
+        "image": "/images/construction/tower-4f.png",
+        "type": "image"
+      },
+      {
+        "name": "Tower 4E",
+        "image": "/images/construction/tower-4e.png",
+        "type": "image"
+      },
+      {
+        "name": "Tower 4D",
+        "image": "/images/construction/tower-4d.png",
+        "type": "image"
+      },
+      {
+        "name": "Tower 4C",
+        "image": "/images/construction/tower-4c.png",
+        "type": "image"
+      }
+    ]
   }
-]
+}

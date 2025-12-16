@@ -18,7 +18,7 @@ export default function SEO({
   noindex,
   children,
 }: Props) {
-  const siteName = "YourSiteName"; // replace with your brand
+  const siteName = "propyoulike.com"; // replace with your brand
   const fullTitle = title ? `${title} | ${siteName}` : siteName;
 
   return (

@@ -1,16 +1,56 @@
-
-   {
+{
+  "amenities": {
     "heroTitle": "Your Leisure Adorned With Opulence",
-    "heroSubtitle": "From sports to leisure, wellness to education...",
+    "heroSubtitle": "From sports to leisure, wellness to education…",
     "amenityImages": [
-      { "src": "https://www.providenthousing.com/wp-content/uploads/2022/12/amenitie-basketball-court-3-1.jpg", "title": "Basketball Court", "description": "Professional court for sports enthusiasts" },
-      { "src": "https://www.providenthousing.com/wp-content/uploads/2022/12/amenitie-gym-2-1-1.jpg", "title": "Gymnasium", "description": "Gymnasium to keep you fit" },
-      { "src": "https://www.providenthousing.com/wp-content/uploads/2022/12/amenitie-swimming-2-2-1.jpg", "title": "Swimming Pool", "description": "Olympic-size pool for all ages" },
-      { "src": "https://www.providenthousing.com/wp-content/uploads/2022/12/amenitie-tennis-court-2-2-1.jpg", "title": "Tennis Court", "description": "Premium tennis facilities" },
-      { "src": "https://www.providenthousing.com/wp-content/uploads/2022/12/child-play-area-5-2.png", "title": "Childrens Play Area", "description": "Safe and fun play zones for kids" },
-      { "src": "https://www.providenthousing.com/wp-content/uploads/2022/12/reading-room-amenitie-1-1.jpg", "title": "Library", "description": "Quiet reading and study space" },
-      { "src": "https://www.providenthousing.com/wp-content/uploads/2022/12/amenitie-forest-1-1-new.jpg", "title": "Forest Walk", "description": "Scenic nature trails within the township" },
-      { "src": "https://www.providenthousing.com/wp-content/uploads/2022/12/amenitie-criket-1-1-2.webp", "title": "Cricket Pitch", "description": "Full-sized cricket ground" }
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2022/12/amenitie-basketball-court-3-1.jpg",
+        "title": "Basketball Court",
+        "description": "Professional court for sports enthusiasts",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2022/12/amenitie-gym-2-1-1.jpg",
+        "title": "Gymnasium",
+        "description": "Gymnasium to keep you fit",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2022/12/amenitie-swimming-2-2-1.jpg",
+        "title": "Swimming Pool",
+        "description": "Olympic-size pool for all ages",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2022/12/amenitie-tennis-court-2-2-1.jpg",
+        "title": "Tennis Court",
+        "description": "Premium tennis facilities",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2022/12/child-play-area-5-2.png",
+        "title": "Childrens Play Area",
+        "description": "Safe and fun play zones for kids",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2022/12/reading-room-amenitie-1-1.jpg",
+        "title": "Library",
+        "description": "Quiet reading and study space",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2022/12/amenitie-forest-1-1-new.jpg",
+        "title": "Forest Walk",
+        "description": "Scenic nature trails within the township",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2022/12/amenitie-criket-1-1-2.webp",
+        "title": "Cricket Pitch",
+        "description": "Full-sized cricket ground",
+        "media_type": "image"
+      }
     ],
     "amenityCategories": [
       {
@@ -65,3 +105,4 @@
       }
     ]
   }
+}

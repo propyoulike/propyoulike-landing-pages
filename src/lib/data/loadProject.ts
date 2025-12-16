@@ -1,470 +1,206 @@
-// src/lib/data/loadProject.ts
+// src/content/loadProject.ts
 
 import { ProjectSchema, type ProjectData } from "@/content/schema/project.schema";
 
-// GLOBAL CONFIG
-import globalFiles from "@/content/global/globalFiles.json";
-import globalSections from "@/content/global/globalSections.json";
-import globalNavbar from "@/content/global/globalNavbar.json";
-
-// Load all JSON files
-const projectFiles = import.meta.glob("/src/content/**/*.json", {
-  eager: true,
+/* ------------------------------------------------------------------
+   Load all JSON content eagerly (Vite)
+------------------------------------------------------------------- */
+const contentFiles = import.meta.glob("/src/content/**/*.json", {
+  eager: true
 }) as Record<string, any>;
 
-/* --------------------------------------------------------------
-   Helper: safe fallback image
---------------------------------------------------------------- */
-function fallbackImg(label: string) {
-  const safe = encodeURIComponent(label.replace(/[:]/g, ""));
-  return `https://via.placeholder.com/800x450?text=${safe}`;
+/* ------------------------------------------------------------------
+   Helpers
+------------------------------------------------------------------- */
+function getJSON(path: string) {
+  const mod = contentFiles[path];
+  return mod ? mod.default ?? mod : null;
 }
 
-/* --------------------------------------------------------------
-   Collect metadata for all projects
---------------------------------------------------------------- */
-type ProjectMeta = {
+/* ------------------------------------------------------------------
+   Load base project (index.json)
+------------------------------------------------------------------- */
+function loadBaseProject(slug: string) {
+  const [builder, ...rest] = slug.split("-");
+  const projectSlug = rest.join("-");
+
+  const basePath = `/src/content/projects/${builder}/${projectSlug}/index.json`;
+  const base = getJSON(basePath);
+
+  if (!base) {
+    throw new Error(`❌ Project index.json not found at ${basePath}`);
+  }
+
+  return { builder, projectSlug, base };
+}
+
+/* ------------------------------------------------------------------
+   Strictly hydrate referenced section JSON files
+   RULE:
+   - Each JSON must export a root key equal to the project key
+------------------------------------------------------------------- */
+function hydrateFiles(project: any, builder: string, projectSlug: string) {
+  const baseDir = `/src/content/projects/${builder}/${projectSlug}/`;
+
+  if (!project.files) return project;
+
+  for (const [key, fileName] of Object.entries(project.files)) {
+    const filePath = `${baseDir}${fileName}`;
+    const data = getJSON(filePath);
+
+    if (!data) {
+      console.warn(`⚠️ Missing file: ${filePath}`);
+      continue;
+    }
+
+    if (!data[key]) {
+      console.warn(`⚠️ ${fileName} must export root key "${key}". Skipped.`);
+      continue;
+    }
+
+    project[key] = data[key];
+  }
+
+  return project;
+}
+
+/* ------------------------------------------------------------------
+   Project Meta (used for listings & recommendations)
+------------------------------------------------------------------- */
+export type ProjectMeta = {
   slug: string;
-  builder?: string;
+  builder: string;
   projectName?: string;
-  type?: string;
-  status?: string;
-  area?: string;
-  locality?: string;
   city?: string;
-  state?: string;
-  country?: string;
   zone?: string;
+  locality?: string;
   heroImage?: string | null;
   heroVideoId?: string | null;
 };
 
-const allProjectMetas: ProjectMeta[] = Object.entries(projectFiles)
-  .filter(([path]) => {
-    const ok = path.startsWith("/src/content/projects/") && path.endsWith("/index.json");
-    return ok;
-  })
-  .map(([path, mod]) => {
-    const raw = mod.default ?? mod;
+/* ------------------------------------------------------------------
+   Build meta index from index.json files
+------------------------------------------------------------------- */
+const allProjectMetas: ProjectMeta[] = Object.entries(contentFiles)
+  .filter(([path]) => path.endsWith("/index.json"))
+  .map(([_, mod]) => {
+    const data = mod.default ?? mod;
 
-    const builder = raw.builder;
-    const innerSlug = raw.slug;
-    const fullSlug =
-      builder && innerSlug ? `${builder}-${innerSlug}` : innerSlug || "";
-
-    const baseDir = path.replace("index.json", "");
-
-    // Try hero files
-    const possibleHeroFiles = [
-      baseDir + "hero.json",
-      baseDir + "Hero.json",
-      baseDir + "hero/index.json",
-      baseDir + "Hero/index.json",
-    ];
-
-    let hero: any = null;
-    for (const candidate of possibleHeroFiles) {
-      if (projectFiles[candidate]) {
-        hero = projectFiles[candidate].default ?? projectFiles[candidate];
-        break;
-      }
-    }
-
-    // Extract hero image
-    let heroImage: string | null = null;
-
-    if (Array.isArray(hero?.images)) {
-      const first = hero.images[0];
-      heroImage = typeof first === "string" ? first : first?.url ?? null;
-    }
-
-    if (!heroImage && typeof hero?.image === "string") {
-      heroImage = hero.image;
-    }
-
-    const heroVideoId = hero?.videoId ?? hero?.videoUrl ?? null;
+    if (!data.slug || !data.builder) return null;
 
     return {
-      slug: fullSlug,
-      builder,
-      projectName: raw.projectName,
-      type: raw.type,
-      status: raw.status,
-      area: raw.locationMeta?.area ?? raw.area,
-      locality: raw.locationMeta?.locality ?? raw.locality,
-      city: raw.locationMeta?.city ?? raw.city,
-      state: raw.locationMeta?.state ?? raw.state,
-      country: raw.locationMeta?.country ?? raw.country,
-      zone: raw.locationMeta?.zone ?? raw.zone,
-      heroImage,
-      heroVideoId,
+      slug: `${data.builder}-${data.slug}`,
+      builder: data.builder,
+      projectName: data.projectName,
+      city: data.city,
+      zone: data.zone,
+      locality: data.locality,
+      heroImage: data.hero?.images?.[0] ?? null,
+      heroVideoId: data.hero?.videoId ?? null
     };
   })
-  .filter((p) => !!p.slug);
+  .filter(Boolean) as ProjectMeta[];
 
-/* --------------------------------------------------------------
-   Project loader — full JSON assembly
---------------------------------------------------------------- */
+/* ------------------------------------------------------------------
+   Public API: loadProject
+------------------------------------------------------------------- */
 export async function loadProject(
-  slug?: string
+  slug: string
 ): Promise<
   ProjectData & {
-    builderData?: any;
-    builderProjects?: any[];
-    localityProjects?: any[];
-  } | null
+    builderProjects: ProjectMeta[];
+    localityProjects: ProjectMeta[];
+  }
 > {
-  if (!slug) {
-    console.error("❌ loadProject called with empty slug");
-    return null;
-  }
+  if (!slug) throw new Error("❌ loadProject called without slug");
 
-  const parts = slug.split("-");
-  const builder = parts[0];
-  const projectSlug = parts.slice(1).join("-");
-  const baseDir = `/src/content/projects/${builder}/${projectSlug}/`;
+  /* 1. Load base project */
+  const { builder, projectSlug, base } = loadBaseProject(slug);
 
-  const indexKey = `${baseDir}index.json`;
-  const indexModule = projectFiles[indexKey];
+  /* 2. Hydrate section files */
+  const hydrated = hydrateFiles(structuredClone(base), builder, projectSlug);
 
-  if (!indexModule) {
-    console.error("❌ No index.json found at", indexKey);
-    return null;
-  }
+/* ---------------------------------------------------------------
+   3. Merge FAQs (Global + Builder + Project)
+   FINAL OUTPUT → hydrated.faq (object with .faqs array)
+---------------------------------------------------------------- */
+const globalFaq = getJSON("/src/content/projects/faq.json")?.faqs ?? [];
+const builderFaq = getJSON(`/src/content/projects/${builder}/builder_faq.json`)?.faqs ?? [];
+const projectFaqPath = `/src/content/projects/${builder}/${projectSlug}/faq.json`;
+const projectFaq = getJSON(projectFaqPath)?.faqs ?? [];
 
-  const baseData = structuredClone(indexModule.default ?? indexModule);
+const finalFaqs = [...globalFaq, ...builderFaq, ...projectFaq];
 
-  /* --------------------------------------------------------------
-      Builder overrides
-  -------------------------------------------------------------- */
-  const builderFiles =
-    projectFiles[`/src/content/projects/${builder}/files.json`]?.default ?? null;
+// Schema requires hydrated.faq (not hydrated.faqs)
+hydrated.faq = {
+  title: hydrated.faq?.title ?? "Frequently Asked Questions",
+  subtitle: hydrated.faq?.subtitle ?? "Everything you should know before buying this home",
+  faqs: finalFaqs
+};
 
-  const builderSections =
-    projectFiles[`/src/content/projects/${builder}/sections.json`]?.default ??
-    null;
-
-  const builderNavbar =
-    projectFiles[`/src/content/projects/${builder}/navbar.json`]?.default ??
-    null;
-
-  const aboutPaths = [
-    `/src/content/projects/${builder}/aboutbuilder.json`,
-    `/src/content/builders/${builder}/aboutbuilder.json`,
-  ];
-
-  let builderAbout = null;
-
-  for (const p of aboutPaths) {
-    if (projectFiles[p]) {
-      builderAbout = projectFiles[p]?.default ?? projectFiles[p];
-      break;
-    } else {
-      console.log("DEBUG: Not found at", p);
-    }
-  }
-
-  if (builderAbout) {
-    baseData.builderAbout = builderAbout;
-  }
-
-  /* --------------------------------------------------------------
-      Merge FILES
-  --------------------------------------------------------------- */
-  baseData.files = {
-    ...(globalFiles.files || {}),
-    ...(builderFiles?.files || {}),
-    ...(baseData.files || {}),
-  };
-
-  /* --------------------------------------------------------------
-      SECTION MERGE FIX
---------------------------------------------------------------- */
-
-  let sections = [
-    ...(globalSections.sections || []),
-    ...(builderSections?.sections || []),
-    ...(baseData.sections || []),
-  ];
-
-  // Dedupe
-  const seen = new Set<string>();
-  sections = sections.filter((s) => {
-    const ok = !seen.has(s);
-    seen.add(s);
-    return ok;
-  });
-
-  // Ensure proper ordering around FAQ
-  const FAQ_INDEX = sections.indexOf("FAQ");
-
-  if (FAQ_INDEX !== -1) {
-    const beforeFAQ = sections.slice(0, FAQ_INDEX);
-    const afterFAQ = sections.slice(FAQ_INDEX + 1);
-
-    const CLEAN = (arr: string[]) =>
-      arr.filter((s) => s !== "BuilderWidget" && s !== "LocalityWidget");
-
-    sections = [
-      ...CLEAN(beforeFAQ),
-      "BuilderWidget",
-      "LocalityWidget",
-      "FAQ",
-      ...CLEAN(afterFAQ),
-    ];
-
-  }
-
-  baseData.sections = sections;
-
-  /* --------------------------------------------------------------
-      Merge Navbar
---------------------------------------------------------------- */
-  baseData.navbarConfig = {
-    ...(globalNavbar.navbarConfig || {}),
-    ...(builderNavbar?.navbarConfig || {}),
-    ...(baseData.navbarConfig || {}),
-  };
-
-  /* --------------------------------------------------------------
-      Auto-load referenced section files
---------------------------------------------------------------- */
-
-  for (const key of Object.keys(baseData.files)) {
-    const fileName = baseData.files[key];
-
-    const attempts = [
-      `${baseDir}${fileName}`,
-      `${baseDir}${fileName.replace(/^\.\.\//, "")}`,
-    ];
-
-    for (const c of attempts) {
-      if (projectFiles[c]) {
-        const raw = projectFiles[c].default ?? projectFiles[c];
-
-        if (
-          typeof raw === "object" &&
-          raw !== null &&
-          Object.keys(raw).length === 1 &&
-          raw[key]
-        ) {
-          baseData[key] = raw[key];
-        } else {
-          baseData[key] = raw;
-        }
-
-        break;
-      }
-    }
-  }
-
-  /* --------------------------------------------------------------
-      Legacy builder.json
---------------------------------------------------------------- */
-  const builderOverrideKey = `/src/content/builders/${builder}.json`;
-  const builderData = projectFiles[builderOverrideKey]?.default ?? null;
-
-  /* --------------------------------------------------------------
-      Validate schema
---------------------------------------------------------------- */
-
-  const parsed = ProjectSchema.safeParse(baseData);
-
+  /* ---------------------------------------------------------------
+     4. Validate against schema
+  ---------------------------------------------------------------- */
+  const parsed = ProjectSchema.safeParse(hydrated);
   if (!parsed.success) {
-    console.error("❌ Project schema validation failed:", parsed.error);
-    console.log("❌ Offending baseData:", baseData);
-    return null;
+    console.error("❌ Project schema validation failed", parsed.error);
+    throw new Error("Invalid project schema");
   }
 
-  const project: ProjectData = parsed.data;
+  const project = Object.freeze(parsed.data);
 
-  /* --------------------------------------------------------------
-      Builder sibling projects
---------------------------------------------------------------- */
+  /* ---------------------------------------------------------------
+     5. Builder sibling projects
+  ---------------------------------------------------------------- */
+  const builderProjects = allProjectMetas.filter(
+    (p) => p.builder === builder && p.slug !== slug
+  );
 
-  const builderProjects = allProjectMetas
-    .filter((p) => p.builder === project.builder && p.slug !== slug)
-    .map((meta) => ({
-      name: meta.projectName ?? meta.slug,
-      slug: meta.slug,
-      builder: meta.builder,
-      type: meta.type,
-      status: meta.status,
-      area: meta.area,
-      locality: meta.locality,
-      city: meta.city,
-      state: meta.state,
-      country: meta.country,
-      zone: meta.zone,
-      heroImage: meta.heroImage || null,
-      heroVideoId: meta.heroVideoId,
-      location:
-        meta.area ||
-        meta.locality ||
-        meta.city ||
-        meta.state ||
-        meta.country ||
-        "",
-    }));
+  /* ---------------------------------------------------------------
+     6. Locality recommendations
+  ---------------------------------------------------------------- */
+  const current = allProjectMetas.find((p) => p.slug === slug);
 
-  /* --------------------------------------------------------------
-      Locality-level recommendations
---------------------------------------------------------------- */
+  const localityProjects = current
+    ? allProjectMetas.filter(
+        (p) =>
+          p.slug !== slug &&
+          p.city === current.city &&
+          p.zone === current.zone
+      )
+    : [];
 
-  let localityProjects: any[] = [];
-  const currentMeta = allProjectMetas.find((p) => p.slug === slug);
-
-  if (currentMeta) {
-    const levels = [
-      (p: ProjectMeta) =>
-        p.country === currentMeta.country &&
-        p.state === currentMeta.state &&
-        p.city === currentMeta.city &&
-        p.zone === currentMeta.zone &&
-        p.locality === currentMeta.locality &&
-        p.area === currentMeta.area,
-
-      (p: ProjectMeta) =>
-        p.country === currentMeta.country &&
-        p.state === currentMeta.state &&
-        p.city === currentMeta.city &&
-        p.zone === currentMeta.zone &&
-        p.locality === currentMeta.locality,
-
-      (p: ProjectMeta) =>
-        p.country === currentMeta.country &&
-        p.state === currentMeta.state &&
-        p.city === currentMeta.city &&
-        p.zone === currentMeta.zone,
-
-      (p: ProjectMeta) =>
-        p.country === currentMeta.country &&
-        p.state === currentMeta.state &&
-        p.city === currentMeta.city,
-
-      (p: ProjectMeta) =>
-        p.country === currentMeta.country &&
-        p.state === currentMeta.state,
-
-      (p: ProjectMeta) => p.country === currentMeta.country,
-    ];
-
-    for (const matchFn of levels) {
-      const matches = allProjectMetas
-        .filter((p) => p.slug !== slug && matchFn(p))
-        .map((m) => ({
-          name: m.projectName ?? m.slug,
-          slug: m.slug,
-          builder: m.builder,
-          type: m.type,
-          status: m.status,
-          area: m.area,
-          locality: m.locality,
-          city: m.city,
-          state: m.state,
-          country: m.country,
-          zone: m.zone,
-          heroImage: m.heroImage || null,
-          heroVideoId: m.heroVideoId,
-          location:
-            m.area ||
-            m.locality ||
-            m.city ||
-            m.state ||
-            m.country ||
-            "",
-        }));
-
-      if (matches.length > 0) {
-        localityProjects = matches;
-        break;
-      }
-    }
-  }
-
+  /* ---------------------------------------------------------------
+     7. Return final normalized project
+  ---------------------------------------------------------------- */
   return {
     ...project,
-    builderData: builderData ?? undefined,
     builderProjects,
-    localityProjects,
+    localityProjects
   };
 }
 
-/* --------------------------------------------------------------
-   Public API: Get projects by CITY
---------------------------------------------------------------- */
+/* ------------------------------------------------------------------
+   Public APIs for routing & listings
+------------------------------------------------------------------- */
+export { allProjectMetas };
+
 export function getProjectsByCity(city: string) {
   if (!city) return [];
-  const cityLower = city.toLowerCase();
-  return allProjectMetas
-    .filter((p) => p.city?.toLowerCase() === cityLower)
-    .map((m) => ({
-      name: m.projectName ?? m.slug,
-      slug: m.slug,
-      builder: m.builder,
-      area: m.area,
-      locality: m.locality,
-      city: m.city,
-      state: m.state,
-      country: m.country,
-      zone: m.zone,
-      heroImage: m.heroImage || null,
-      heroVideoId: m.heroVideoId,
-      location:
-        m.area ||
-        m.locality ||
-        m.city ||
-        m.state ||
-        m.country ||
-        "",
-    }));
+  return allProjectMetas.filter(
+    (p) => p.city?.toLowerCase() === city.toLowerCase()
+  );
 }
 
-/* --------------------------------------------------------------
-   Public API: Get projects by ZONE
---------------------------------------------------------------- */
 export function getProjectsByZone(city: string, zone: string) {
   if (!city || !zone) return [];
-  const cityLower = city.toLowerCase();
-  const zoneLower = zone.toLowerCase();
-
-  return allProjectMetas
-    .filter(
-      (p) =>
-        p.city?.toLowerCase() === cityLower &&
-        p.zone?.toLowerCase() === zoneLower
-    )
-    .map((m) => ({
-      name: m.projectName ?? m.slug,
-      slug: m.slug,
-      builder: m.builder,
-      area: m.area,
-      locality: m.locality,
-      city: m.city,
-      state: m.state,
-      country: m.country,
-      zone: m.zone,
-      heroImage: m.heroImage || null,
-      heroVideoId: m.heroVideoId,
-      location:
-        m.area ||
-        m.locality ||
-        m.city ||
-        m.state ||
-        m.country ||
-        "",
-    }));
+  return allProjectMetas.filter(
+    (p) =>
+      p.city?.toLowerCase() === city.toLowerCase() &&
+      p.zone?.toLowerCase() === zone.toLowerCase()
+  );
 }
 
-/* --------------------------------------------------------------
-   Public API: Check if slug belongs to a project
---------------------------------------------------------------- */
 export function isProjectSlug(slug: string) {
-  if (!slug) return false;
   return allProjectMetas.some((p) => p.slug === slug);
 }
-
-/* --------------------------------------------------------------
-   Export meta list for Breadcrumbs + SEO
---------------------------------------------------------------- */
-export { allProjectMetas };

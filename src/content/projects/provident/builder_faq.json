@@ -1,4 +1,5 @@
-[
+{
+"faqs": [
   {
     "category": "Builder",
     "question": "Who is Provident Housing?",
@@ -80,3 +81,4 @@
     "answer": "Both. Provident offers: a. End users → Spacious layouts, good amenities & community living. b. Investors → Strong rental demand, high absorption rates & fast-growing micro-markets"
   }
 ]
+}
