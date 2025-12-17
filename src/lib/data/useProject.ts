@@ -12,16 +12,19 @@ interface UseProjectResult {
 
 export function useProject(slug: string | null): UseProjectResult {
   const [project, setProject] = useState<ProjectData | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!slug || slug.trim() === "") {
+    let cancelled = false;
+
+    // 🔒 Guard: invalid slug
+    if (!slug || !slug.trim()) {
+      setProject(null);
+      setError(null);
       setLoading(false);
       return;
     }
-
-    let cancelled = false;
 
     async function fetchProject() {
       setLoading(true);
@@ -33,22 +36,17 @@ export function useProject(slug: string | null): UseProjectResult {
         if (cancelled) return;
 
         if (!data) {
-          setError("Project not found");
           setProject(null);
+          setError("Project not found");
           return;
         }
 
-        const normalized: ProjectData = {
-          ...data,
-          builder: data.builder || "default",
-          type: data.type || "apartment",
-          sections: data.sections ?? [],
-        };
-
-        setProject(normalized);
+        // ✅ DO NOT mutate or normalize here
+        setProject(data);
       } catch (err) {
         if (!cancelled) {
           console.error("❌ useProject error:", err);
+          setProject(null);
           setError("Failed to load project");
         }
       } finally {

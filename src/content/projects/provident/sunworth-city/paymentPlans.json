@@ -3,7 +3,7 @@
     "sectionTitle": "Pricing & Payment Plans",
     "sectionSubtitle": "Transparent costing • Milestone-based • RERA compliant",
 
-    "pricingTitle": "Pricing Computation",
+    "pricingTitle": "How is price calculated?",
     "pricingComputation": [
       {
         "title": "Sales Consideration",
@@ -48,7 +48,7 @@
       }
     ],
 
-    "scheduleTitle": "Construction Payment Schedule",
+    "scheduleTitle": "When do you pay?",
     "paymentSchedule": [
       {
         "title": "Booking & Agreement",

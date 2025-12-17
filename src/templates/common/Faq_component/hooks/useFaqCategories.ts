@@ -1,20 +1,24 @@
-
-// useFaqCategories.ts
+// src/templates/common/Faq_component/hooks/useFaqCategories.ts
 import { useMemo } from "react";
+import type { ResolvedFaqItem } from "../faqTypes";
 
-export function useFaqCategories(faqs: any[]) {
-  const map = new Map<string, number>();
+export function useFaqCategories(faqs: ResolvedFaqItem[] = []) {
+  return useMemo(() => {
+    if (!Array.isArray(faqs) || faqs.length === 0) return [];
 
-  faqs.forEach(faq => {
-    const name = faq.category ?? "General";
-    map.set(name, (map.get(name) ?? 0) + 1);
-  });
+    const map = new Map<string, number>();
 
-  return [
-    { name: "All", count: faqs.length },
-    ...Array.from(map.entries()).map(([name, count]) => ({
-      name,
-      count,
-    })),
-  ];
+    faqs.forEach((faq) => {
+      // category is already normalized in faqLoader
+      map.set(faq.category, (map.get(faq.category) ?? 0) + 1);
+    });
+
+    return [
+      { name: "All", count: faqs.length },
+      ...Array.from(map.entries()).map(([name, count]) => ({
+        name,
+        count,
+      })),
+    ];
+  }, [faqs]);
 }

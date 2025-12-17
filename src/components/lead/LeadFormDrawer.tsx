@@ -1,52 +1,39 @@
 // src/components/lead/LeadFormDrawer.tsx
-
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetClose,
-} from "@/components/ui/sheet";
-
 import LeadForm from "./LeadForm";
+import type { LeadIntent } from "./types/LeadIntent";
+import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
 
-export interface LeadDrawerProps {
+interface Props {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-
   projectName: string;
   projectId?: string;
   whatsappNumber: string;
+  intent?: LeadIntent;
 }
 
 export default function LeadFormDrawer({
   open,
   onOpenChange,
-
   projectName,
   projectId,
   whatsappNumber,
-}: LeadDrawerProps) {
+  intent,
+}: Props) {
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
-        side="bottom"
-        className="rounded-t-2xl p-6 max-h-[85vh] overflow-y-auto shadow-xl"
-      >
-        <SheetHeader>
-          <SheetTitle className="text-xl font-semibold text-center">
-            Get Best Units & Pricing
-          </SheetTitle>
-        </SheetHeader>
+      <SheetContent side="bottom" className="p-6 max-h-[85vh] overflow-y-auto">
+        <SheetTitle className="text-center text-xl font-semibold mb-4">
+          Get Best Units & Pricing
+        </SheetTitle>
 
         <LeadForm
           projectName={projectName}
           projectId={projectId}
           whatsappNumber={whatsappNumber}
+          intent={intent}
           onSuccess={() => onOpenChange(false)}
         />
-
-        <SheetClose />
       </SheetContent>
     </Sheet>
   );

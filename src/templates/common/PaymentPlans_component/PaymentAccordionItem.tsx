@@ -1,4 +1,6 @@
-import { ChevronDown, ChevronUp, CheckCircle } from "lucide-react";
+// src/templates/common/PaymentPlans_component/PaymentAccordionItem.tsx
+
+import { ChevronDown, ChevronUp } from "lucide-react";
 
 export default function PaymentAccordionItem({
   title,
@@ -12,20 +14,30 @@ export default function PaymentAccordionItem({
   children: React.ReactNode;
 }) {
   return (
-    <div className="bg-card border rounded-2xl p-6 shadow-sm hover:shadow-lg transition">
+    <div
+      className={`
+        rounded-2xl border transition-all duration-300
+        ${open ? "border-primary/40 shadow-lg" : "border-border shadow-sm"}
+      `}
+    >
       <button
-        className="w-full flex justify-between items-center"
         onClick={onToggle}
+        className="w-full flex items-center justify-between px-5 py-4 text-left"
       >
-        <span className="font-semibold text-lg">{title}</span>
+        <h4 className="text-base font-semibold">{title}</h4>
+
         {open ? (
-          <ChevronUp className="text-primary" />
+          <ChevronUp className="w-5 h-5 text-primary" />
         ) : (
-          <ChevronDown className="text-primary" />
+          <ChevronDown className="w-5 h-5 text-muted-foreground" />
         )}
       </button>
 
-      {open && <div className="mt-4">{children}</div>}
+      {open && (
+        <div className="px-5 pb-5 animate-accordion-down">
+          {children}
+        </div>
+      )}
     </div>
   );
 }

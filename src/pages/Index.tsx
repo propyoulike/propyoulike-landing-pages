@@ -7,7 +7,7 @@ import { Helmet } from "react-helmet";
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
-
+      {/* SEO */}
       <Helmet>
         <title>PropYouLike – Premium Bangalore Real Estate</title>
         <meta
@@ -36,20 +36,18 @@ const Index = () => {
         </div>
 
         <div className="container relative z-10 mx-auto px-4 text-center">
-          <h1 className="font-heading text-5xl md:text-7xl font-bold text-primary-foreground mb-6 animate-fade-in">
+          <h1 className="text-5xl md:text-7xl font-bold text-primary-foreground mb-6">
             PropYouLike
           </h1>
 
-          <p
-            className="text-xl md:text-2xl text-primary-foreground/90 mb-8 max-w-2xl mx-auto animate-slide-up"
-          >
+          <p className="text-xl md:text-2xl text-primary-foreground/90 mb-8 max-w-2xl mx-auto">
             Your Gateway to Premium Real Estate in Bangalore
           </p>
 
           <Link to="/provident-sunworth-city">
             <Button
               size="lg"
-              className="bg-accent hover:bg-accent-light text-accent-foreground font-semibold px-8 shadow-lg animate-slide-up"
+              className="bg-accent hover:bg-accent-light text-accent-foreground font-semibold px-8 shadow-lg"
             >
               <Home className="w-5 h-5 mr-2" />
               Explore Projects
@@ -62,7 +60,7 @@ const Index = () => {
       <section className="py-20 bg-muted">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="font-heading text-4xl md:text-5xl font-bold text-foreground mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
               Featured Projects
             </h2>
             <p className="text-muted-foreground text-lg">
@@ -70,14 +68,10 @@ const Index = () => {
             </p>
           </div>
 
-          {/* Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 max-w-6xl mx-auto">
-            
             {/* CARD */}
-            <Link to="/projects/provident-sunworth-city" className="group block">
+            <Link to="/provident-sunworth-city" className="group block">
               <div className="bg-card rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-[1.02]">
-                
-                {/* Image */}
                 <div className="aspect-[16/10] overflow-hidden">
                   <img
                     src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80"
@@ -87,14 +81,13 @@ const Index = () => {
                   />
                 </div>
 
-                {/* Content */}
                 <div className="p-6">
                   <div className="flex items-center gap-2 text-muted-foreground mb-2">
                     <Building2 className="w-4 h-4" />
                     <span className="text-sm font-medium">By Provident</span>
                   </div>
 
-                  <h3 className="font-heading text-2xl font-bold text-foreground mb-2">
+                  <h3 className="text-2xl font-bold mb-2">
                     Provident Sunworth City
                   </h3>
 
@@ -103,13 +96,12 @@ const Index = () => {
                     <span>Kengeri, Bangalore</span>
                   </div>
 
-                  <Button className="w-full bg-primary hover:bg-primary-light text-primary-foreground font-semibold">
+                  <Button className="w-full">
                     View Details
                   </Button>
                 </div>
               </div>
             </Link>
-          
           </div>
         </div>
       </section>

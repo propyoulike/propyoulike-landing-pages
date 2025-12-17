@@ -1,11 +1,15 @@
 import { Link, useLocation } from "react-router-dom";
 import { allProjectMetas } from "@/lib/data/loadProject";
 
+/* ---------------------------------------------------------
+   Breadcrumbs Component
+--------------------------------------------------------- */
 export default function Breadcrumbs() {
   const location = useLocation();
-  const path = location.pathname.replace(/^\/|\/$/g, ""); // remove leading/trailing slash
+  const path = location.pathname.replace(/^\/|\/$/g, ""); // trim slashes
 
-  if (!path || path === "") return null; // root "/" — no breadcrumbs
+  // Root ("/") → no breadcrumbs
+  if (!path) return null;
 
   const segments = path.split("/");
   const breadcrumbs: { name: string; url: string }[] = [];
@@ -13,37 +17,33 @@ export default function Breadcrumbs() {
   /* ---------------------------------------------------------
       ALWAYS include Home
   --------------------------------------------------------- */
-  breadcrumbs.push({
-    name: "Home",
-    url: "/",
-  });
+  breadcrumbs.push({ name: "Home", url: "/" });
 
   /* ---------------------------------------------------------
-      CASE 1: PROJECT PAGE (matching slug)
+      CASE 1: PROJECT PAGE (slug match)
   --------------------------------------------------------- */
-  const isProject = allProjectMetas.some((p) => p.slug === path);
+  const projectMeta = allProjectMetas.find((p) => p.slug === path);
 
-  if (isProject) {
-    const projectMeta = allProjectMetas.find((p) => p.slug === path);
-    const city = projectMeta?.city;
-    const zone = projectMeta?.zone;
+  if (projectMeta) {
+    const citySlug = slugify(projectMeta.city);
+    const zoneSlug = slugify(projectMeta.zone);
 
-    if (city) {
+    if (projectMeta.city) {
       breadcrumbs.push({
-        name: city,
-        url: `/${city.toLowerCase()}`,
+        name: projectMeta.city,
+        url: `/${citySlug}`,
       });
     }
 
-    if (city && zone) {
+    if (projectMeta.city && projectMeta.zone) {
       breadcrumbs.push({
-        name: zone,
-        url: `/${city.toLowerCase()}/${zone.toLowerCase()}`,
+        name: projectMeta.zone,
+        url: `/${citySlug}/${zoneSlug}`,
       });
     }
 
     breadcrumbs.push({
-      name: projectMeta?.projectName || path,
+      name: projectMeta.projectName || path,
       url: `/${path}`,
     });
 
@@ -54,13 +54,9 @@ export default function Breadcrumbs() {
       CASE 2: BUILDER PAGE → /builder/provident
   --------------------------------------------------------- */
   if (segments[0] === "builder" && segments[1]) {
+    breadcrumbs.push({ name: "Builders", url: "/builder" });
     breadcrumbs.push({
-      name: "Builders",
-      url: "/builder",
-    });
-
-    breadcrumbs.push({
-      name: capitalize(segments[1]),
+      name: prettify(segments[1]),
       url: `/builder/${segments[1]}`,
     });
 
@@ -71,13 +67,9 @@ export default function Breadcrumbs() {
       CASE 3: LOCALITY PAGE → /locality/whitefield
   --------------------------------------------------------- */
   if (segments[0] === "locality" && segments[1]) {
+    breadcrumbs.push({ name: "Localities", url: "/locality" });
     breadcrumbs.push({
-      name: "Localities",
-      url: "/locality",
-    });
-
-    breadcrumbs.push({
-      name: capitalize(segments[1]),
+      name: prettify(segments[1]),
       url: `/locality/${segments[1]}`,
     });
 
@@ -89,7 +81,7 @@ export default function Breadcrumbs() {
   --------------------------------------------------------- */
   if (segments.length === 1) {
     breadcrumbs.push({
-      name: capitalize(segments[0]),
+      name: prettify(segments[0]),
       url: `/${segments[0]}`,
     });
 
@@ -97,18 +89,18 @@ export default function Breadcrumbs() {
   }
 
   /* ---------------------------------------------------------
-      CASE 5: ZONE PAGE → /bangalore/north
+      CASE 5: ZONE PAGE → /bangalore/west
   --------------------------------------------------------- */
   if (segments.length === 2) {
     const [city, zone] = segments;
 
     breadcrumbs.push({
-      name: capitalize(city),
+      name: prettify(city),
       url: `/${city}`,
     });
 
     breadcrumbs.push({
-      name: capitalize(zone),
+      name: prettify(zone),
       url: `/${city}/${zone}`,
     });
 
@@ -119,32 +111,56 @@ export default function Breadcrumbs() {
 }
 
 /* ---------------------------------------------------------
-    RENDER UI
+    Breadcrumb UI
 --------------------------------------------------------- */
-function BreadcrumbUI({ items }: { items: { name: string; url: string }[] }) {
+function BreadcrumbUI({
+  items,
+}: {
+  items: { name: string; url: string }[];
+}) {
   return (
-    <nav className="text-sm px-4 py-3 text-muted-foreground">
+    <nav
+      aria-label="Breadcrumb"
+      className="text-xs px-4 py-2 text-muted-foreground/70"
+    >
       <ol className="flex flex-wrap items-center gap-1">
-        {items.map((item, i) => (
-          <li key={i} className="flex items-center">
-            {i > 0 && <span className="mx-1">›</span>}
+        {items.map((item, i) => {
+          const isLast = i === items.length - 1;
 
-            <Link
-              to={item.url}
-              className="hover:text-primary transition-colors"
-            >
-              {item.name}
-            </Link>
-          </li>
-        ))}
+          return (
+            <li key={i} className="flex items-center">
+              {i > 0 && <span className="mx-1">›</span>}
+
+              {isLast ? (
+                <span className="text-foreground font-medium">
+                  {item.name}
+                </span>
+              ) : (
+                <Link
+                  to={item.url}
+                  className="hover:text-primary transition-colors"
+                >
+                  {item.name}
+                </Link>
+              )}
+            </li>
+          );
+        })}
       </ol>
     </nav>
   );
 }
 
 /* ---------------------------------------------------------
-    Helper
+    Helpers
 --------------------------------------------------------- */
-function capitalize(str = "") {
-  return str.charAt(0).toUpperCase() + str.slice(1);
+function prettify(str = "") {
+  return str
+    .split("-")
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(" ");
+}
+
+function slugify(str?: string) {
+  return str ? str.toLowerCase().replace(/\s+/g, "-") : "";
 }

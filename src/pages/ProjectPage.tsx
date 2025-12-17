@@ -5,29 +5,29 @@ import { useProject } from "@/lib/data/useProject";
 import { getTemplate } from "@/templates/getTemplate";
 import { LeadCTAProvider } from "@/components/lead/LeadCTAProvider";
 
+import Footer from "@/components/footer/Footer";
 import ProjectSEO from "@/components/seo/ProjectSEO";
 import Breadcrumbs from "@/components/navigation/Breadcrumbs";
+import FloatingQuickNav from "@/templates/common/FloatingQuickNav";
 
 export default function ProjectPage() {
-  const { slug: routeSlug } = useParams();
+  const { slug } = useParams<{ slug: string }>();
 
-  /**
-   * RESOLVE FINAL SLUG
-   * - Works for /slug
-   * - Works even if router didn't pass slug (DynamicRouter fallback)
-   */
+  /* ---------------------------------------
+     Slug resolution (router-first)
+  ---------------------------------------- */
   const resolvedSlug = useMemo(() => {
-    if (routeSlug && routeSlug.trim() !== "") return routeSlug;
+    return slug && slug.trim() !== "" ? slug : null;
+  }, [slug]);
 
-    const cleaned = window.location.pathname.replace(/^\/|\/$/g, "");
-    return cleaned !== "" ? cleaned : null;
-  }, [routeSlug]);
+  const { project, loading, error } = useProject(resolvedSlug);
 
-  const { project, loading, error } = useProject(resolvedSlug || "");
+  const [Template, setTemplate] = useState<any>(null);
+  const [templateError, setTemplateError] = useState<string | null>(null);
 
-  const [Template, setTemplate] = useState(null);
-  const [templateError, setTemplateError] = useState(null);
-
+  /* ---------------------------------------
+     Resolve template
+  ---------------------------------------- */
   useEffect(() => {
     if (!project) return;
 
@@ -37,6 +37,7 @@ export default function ProjectPage() {
     }
 
     const tpl = getTemplate(project.builder, project.type);
+
     if (!tpl) {
       setTemplateError("No template available for this project.");
     } else {
@@ -44,44 +45,42 @@ export default function ProjectPage() {
     }
   }, [project]);
 
-  // -------------------------------------------------------------
-  // RENDER FLOW
-  // -------------------------------------------------------------
-  if (!resolvedSlug) {
-    return <div>Invalid project URL</div>;
-  }
-
-  if (loading || !project) {
-    return <div>Loading…</div>;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
-  }
-
-  if (templateError) {
-    return <div>{templateError}</div>;
-  }
-
-  if (!Template) {
-    return <div>Loading template…</div>;
-  }
+  /* ---------------------------------------
+     Render guards
+  ---------------------------------------- */
+  if (!resolvedSlug) return <div>Invalid project URL</div>;
+  if (loading) return <div>Loading…</div>;
+  if (error) return <div>{error}</div>;
+  if (!project) return <div>Project not found</div>;
+  if (templateError) return <div>{templateError}</div>;
+  if (!Template) return <div>Loading template…</div>;
 
   return (
     <>
-      {/* ⭐ Full SEO for project */}
+      {/* SEO */}
       <ProjectSEO project={project} />
 
-      {/* ⭐ Auto Breadcrumbs */}
+      {/* Breadcrumbs */}
       <Breadcrumbs />
 
+      {/* Lead + CTA Context */}
       <LeadCTAProvider
         projectName={project.projectName}
         projectId={project.slug}
         whatsappNumber="919379822010"
+        trackEvent
       >
+        {/* Main project content */}
         <Template project={project} />
       </LeadCTAProvider>
+
+      {/* ⭐ Floating Quick Nav (mobile only)
+          – outside CTA provider
+          – auto-hides near footer */}
+      <FloatingQuickNav footerId="site-footer" />
+
+      {/* Footer */}
+      <Footer id="site-footer" project={project} />
     </>
   );
 }

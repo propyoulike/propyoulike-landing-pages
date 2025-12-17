@@ -7,15 +7,42 @@ import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
 import "yet-another-react-lightbox/styles.css";
 import "yet-another-react-lightbox/plugins/thumbnails.css";
 
-export default function ViewLightbox({ open, index, images, onClose }) {
+interface ViewLightboxProps {
+  open: boolean;
+  index: number;
+  images: { src: string; title?: string }[];
+  onClose: () => void;
+}
+
+export default function ViewLightbox({
+  open,
+  index,
+  images,
+  onClose,
+}: ViewLightboxProps) {
+  const isMobile =
+    typeof window !== "undefined" && window.innerWidth < 768;
+
   return (
     <Lightbox
       open={open}
       close={onClose}
       index={index}
-      slides={images.map((i) => ({ src: i.src, title: i.title }))}
-      plugins={[Captions, Thumbnails]}
-      captions={{ showToggle: true }}
+      slides={images.map((img) => ({
+        src: img.src,
+        title: img.title,
+      }))}
+
+      /* UX defaults */
+      controller={{ closeOnBackdropClick: true }}
+      carousel={{ finite: false }}
+
+      /* Plugins */
+      plugins={isMobile ? [Captions] : [Captions, Thumbnails]}
+
+      captions={{
+        showToggle: false, // 🔒 always visible
+      }}
     />
   );
 }

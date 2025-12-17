@@ -40,7 +40,7 @@
 
 /* 3. Trigger typography & layout */
 .accordion-trigger {
-  font-family: var(--font-family);
+  font-family: var(--font-heading);
   font-weight: var(--heading-weight);
   color: hsl(var(--foreground));
   padding: 1.25rem 1.5rem;
@@ -62,7 +62,7 @@
 
 /* 5. Content text styling */
 .accordion-content-item {
-  font-family: var(--font-family);
+  font-family: var(--font-body);
   font-weight: var(--body-weight);
   font-size: 1rem;
   color: hsl(var(--muted-foreground));

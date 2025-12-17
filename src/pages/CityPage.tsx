@@ -1,52 +1,71 @@
-import { useEffect, useState } from "react";
+// src/pages/CityPage.tsx
 import { useParams } from "react-router-dom";
+import { useMemo } from "react";
 
-import { getProjectsByCity } from "@/lib/data/loadProject"; 
-import type { ProjectData } from "@/content/schema/project.schema";
+import { allProjectMetas } from "@/lib/data/loadProject";
+import { getProjectsByCity } from "@/lib/data/project/getProjectsByCity";
+import type { ProjectMeta } from "@/lib/data/project/buildProjectMeta";
 
 import ProjectCard from "@/components/project/ProjectCard";
 import SEO from "@/components/seo/SEO";
+import Footer from "@/components/footer/Footer";
 
 export default function CityPage() {
-  const { city } = useParams();
-  const [projects, setProjects] = useState<ProjectData[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { city } = useParams<{ city: string }>();
 
-  useEffect(() => {
-    if (!city) return;
+  /* -------------------------------------------
+     Defensive guard
+  -------------------------------------------- */
+  const cityName = city?.toLowerCase();
 
-    async function load() {
-      setLoading(true);
-      const result = await getProjectsByCity(city);
-      setProjects(result || []);
-      setLoading(false);
-    }
+  /* -------------------------------------------
+     Get projects (SYNC, from meta index)
+  -------------------------------------------- */
+  const projects: ProjectMeta[] = useMemo(() => {
+    if (!cityName) return [];
+    return getProjectsByCity(allProjectMetas, cityName);
+  }, [cityName]);
 
-    load();
-  }, [city]);
+  /* -------------------------------------------
+     Guards
+  -------------------------------------------- */
+  if (!cityName) {
+    return <div className="container py-20">Invalid city</div>;
+  }
 
-  if (loading) return <div className="container py-20">Loading projects…</div>;
-
+  /* -------------------------------------------
+     Render
+  -------------------------------------------- */
   return (
-    <div className="container py-10">
+    <>
       <SEO
-        title={`${city} — Real Estate Projects`}
-        description={`Explore top residential projects, apartments, and townships in ${city}.`}
+        title={`Projects in ${cityName} | PropYouLike`}
+        description={`Explore apartments, townships and residential projects in ${cityName}.`}
       />
 
-      <h1 className="text-3xl font-bold mb-6 capitalize">
-        Projects in {city}
-      </h1>
+      <main className="container mx-auto px-4 py-14 max-w-6xl">
+        <h1 className="text-3xl sm:text-4xl font-bold mb-8 capitalize">
+          Projects in {cityName}
+        </h1>
 
-      {projects.length === 0 ? (
-        <p>No projects found in this city.</p>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.map((p) => (
-            <ProjectCard key={p.slug} project={p} />
-          ))}
-        </div>
-      )}
-    </div>
+        {projects.length === 0 ? (
+          <p className="text-muted-foreground">
+            No projects found in this city.
+          </p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {projects.map((project) => (
+              <ProjectCard
+                key={project.slug}
+                project={project}
+              />
+            ))}
+          </div>
+        )}
+      </main>
+
+      {/* Footer (generic) */}
+      <Footer />
+    </>
   );
 }

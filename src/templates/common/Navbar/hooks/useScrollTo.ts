@@ -1,18 +1,35 @@
 // src/templates/common/Navbar/hooks/useScrollTo.ts
-export function useScrollTo() {
+import { RefObject } from "react";
+
+const OFFSET_PADDING = 20;
+const SCROLL_RELEASE_MS = 500;
+
+export function useScrollTo(lockRef: RefObject<boolean>) {
   return function scrollTo(id: string) {
     const el = document.getElementById(id);
     if (!el) return;
 
     const navbar = document.querySelector("header");
-    const offset = navbar ? navbar.clientHeight + 12 : 80;
+    const offset = (navbar?.clientHeight || 0) + OFFSET_PADDING;
 
     const top =
       el.getBoundingClientRect().top + window.scrollY - offset;
 
-    window.scrollTo({ top, behavior: "smooth" });
+    // lock scroll spy
+    lockRef.current = true;
 
-    // Update URL
-    window.history.replaceState(null, "", `#${id}`);
+    window.scrollTo({
+      top,
+      behavior: "smooth",
+    });
+
+    // unlock after scroll settles
+    window.setTimeout(() => {
+      lockRef.current = false;
+    }, SCROLL_RELEASE_MS);
+
+    if (location.hash !== `#${id}`) {
+      history.replaceState(null, "", `#${id}`);
+    }
   };
 }

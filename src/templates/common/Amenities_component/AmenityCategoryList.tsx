@@ -15,14 +15,18 @@ export default function AmenityCategoryList({ categories = [] }) {
           <div
             key={index}
             className={`rounded-2xl border transition-all duration-300 overflow-hidden ${
-              open ? "border-primary/50 shadow-xl" : "border-border shadow-md"
+              open
+                ? "border-primary/50 shadow-lg"
+                : "border-border shadow-sm"
             }`}
           >
             <button
               onClick={() => setOpenIndex(open ? null : index)}
               className="w-full p-5 flex items-center justify-between hover:bg-muted/40"
             >
-              <h3 className="text-lg font-semibold">{category.title}</h3>
+              <h3 className="text-lg font-semibold">
+                {category.title}
+              </h3>
               {open ? <ChevronUp /> : <ChevronDown />}
             </button>
 
@@ -30,8 +34,12 @@ export default function AmenityCategoryList({ categories = [] }) {
               <div className="p-5 animate-accordion-down">
                 <ul className="space-y-2">
                   {category.items.map((item, i) => (
-                    <li key={i} className="flex items-start text-muted-foreground">
-                      <span className="text-primary mr-2 mt-[3px]">•</span> {item}
+                    <li
+                      key={i}
+                      className="flex items-start text-muted-foreground"
+                    >
+                      <span className="text-primary mr-2 mt-[3px]">•</span>
+                      {item}
                     </li>
                   ))}
                 </ul>

@@ -1,0 +1,21 @@
+{
+  "enabled": true,
+
+  "headline": "Home Loan Assistance Available",
+  "subtext": "Tie-ups with leading banks • Expert guidance • Zero obligation",
+
+  "banks": [
+    { "name": "HDFC" },
+    { "name": "ICICI" },
+    { "name": "Axis Bank" },
+    { "name": "Punjab National Bank" },
+    { "name": "Canara Bank" },
+    { "name": "State Bank of India" }
+  ],
+
+  "display": "illustrative",
+
+  "ctaText": "Talk to loan expert",
+
+  "disclaimer": "Loan approval subject to bank eligibility and terms."
+}

@@ -1,41 +1,36 @@
-import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useMemo } from "react";
 
-import { getProjectsByZone } from "@/lib/data/loadProject"; 
-import type { ProjectData } from "@/content/schema/project.schema";
-
-import ProjectCard from "@/components/project/ProjectCard";
 import SEO from "@/components/seo/SEO";
+import ProjectCard from "@/components/project/ProjectCard";
+
+import { allProjectMetas } from "@/lib/data/loadProject";
+import { getProjectsByZone } from "@/lib/data/project/getProjectsByZone";
+import type { ProjectMeta } from "@/lib/data/project/buildProjectMeta";
 
 export default function ZonePage() {
-  const { city, zone } = useParams();
-  const [projects, setProjects] = useState<ProjectData[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { city, zone } = useParams<{ city: string; zone: string }>();
 
-  useEffect(() => {
-    if (!city || !zone) return;
-
-    async function load() {
-      setLoading(true);
-      const result = await getProjectsByZone(city, zone);
-      setProjects(result || []);
-      setLoading(false);
-    }
-
-    load();
+  const projects = useMemo<ProjectMeta[]>(() => {
+    if (!city || !zone) return [];
+    return getProjectsByZone(allProjectMetas, city, zone);
   }, [city, zone]);
 
-  if (loading) return <div className="container py-20">Loading projects…</div>;
+  if (!city || !zone) {
+    return <div className="container py-20">Invalid zone</div>;
+  }
 
   return (
     <div className="container py-10">
       <SEO
-        title={`${zone}, ${city} — Real Estate Projects`}
-        description={`Explore residential projects in ${zone}, ${city}.`}
+        title={`Projects in ${formatLabel(zone)}, ${formatLabel(city)}`}
+        description={`Explore residential projects in ${formatLabel(
+          zone
+        )}, ${formatLabel(city)}.`}
       />
 
-      <h1 className="text-3xl font-bold mb-6 capitalize">
-        Projects in {zone}, {city}
+      <h1 className="text-3xl font-bold mb-6">
+        Projects in {formatLabel(zone)}, {formatLabel(city)}
       </h1>
 
       {projects.length === 0 ? (
@@ -49,4 +44,13 @@ export default function ZonePage() {
       )}
     </div>
   );
+}
+
+/* ---------------------------------------------
+   Helpers
+---------------------------------------------- */
+function formatLabel(slug: string) {
+  return slug
+    .replace(/-/g, " ")
+    .replace(/\b\w/g, (c) => c.toUpperCase());
 }

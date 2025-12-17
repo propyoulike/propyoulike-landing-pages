@@ -1,5 +1,5 @@
 // src/templates/common/Navbar/Navbar.tsx
-import { memo } from "react";
+import { memo, useMemo, useRef } from "react";
 
 import Shell from "./components/Shell";
 import LogoBlock from "./components/LogoBlock";
@@ -10,15 +10,51 @@ import { useNavbarState } from "./hooks/useNavbarState";
 import { useScrollTo } from "./hooks/useScrollTo";
 import { useScrollSpy } from "./hooks/useScrollSpy";
 
-function Navbar({ logo, builderLogo, projectName, autoMenu = [], ctaLabel, onCtaClick }) {
-  const { sticky, shrink, mobileOpen, toggleMobile, closeMobile } = useNavbarState();
-  const scrollTo = useScrollTo();
+/* -------------------------------------------------
+   Types
+-------------------------------------------------- */
+export interface NavbarMenuItem {
+  id: string;
+  label: string;
+}
 
-  // ScrollSpy
-  const ids = autoMenu.map((m) => m.id);
-  const activeId = useScrollSpy(ids);
+interface NavbarProps {
+  logo?: string;
+  builderLogo?: string;
+  projectName?: string;
+  autoMenu?: NavbarMenuItem[];
+  ctaLabel?: string;
+  onCtaClick?: () => void;
+}
 
-  const handleSelect = (id: string) => scrollTo(id);
+/* -------------------------------------------------
+   Component
+-------------------------------------------------- */
+function Navbar({
+  logo,
+  builderLogo,
+  projectName,
+  autoMenu = [],
+  ctaLabel,
+  onCtaClick,
+}: NavbarProps) {
+  const { sticky, shrink, mobileOpen, toggleMobile, closeMobile } =
+    useNavbarState();
+
+  // 🔒 shared lock between scrollTo & scrollSpy
+  const scrollLockRef = useRef(false);
+
+  const scrollTo = useScrollTo(scrollLockRef);
+
+  // stable ids for spy
+  const ids = useMemo(() => autoMenu.map((m) => m.id), [autoMenu]);
+
+  const activeId = useScrollSpy(ids, scrollLockRef);
+
+  const handleSelect = (id: string) => {
+    scrollTo(id);
+    closeMobile(); // mobile UX fix
+  };
 
   return (
     <>
@@ -31,10 +67,14 @@ function Navbar({ logo, builderLogo, projectName, autoMenu = [], ctaLabel, onCta
           onClick={() => scrollTo("hero")}
         />
 
-        <DesktopMenu menu={autoMenu} activeId={activeId} onSelect={handleSelect} />
+        <DesktopMenu
+          menu={autoMenu}
+          activeId={activeId}
+          onSelect={handleSelect}
+        />
 
-        {/* Mobile toggle */}
         <button
+          aria-label="Toggle navigation"
           className="lg:hidden p-2 rounded-lg hover:bg-muted"
           onClick={toggleMobile}
         >
@@ -55,4 +95,4 @@ function Navbar({ logo, builderLogo, projectName, autoMenu = [], ctaLabel, onCta
   );
 }
 
-export default Navbar;
+export default memo(Navbar);

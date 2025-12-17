@@ -4,6 +4,12 @@ import LeadFormModal from "./LeadFormModal";
 import LeadFormDrawer from "./LeadFormDrawer";
 import FloatingCTA from "./FloatingCTA";
 
+export type CTAIntent = {
+  source?: "faq" | "hero" | "floating" | "section" | "unknown";
+  label?: string;
+  question?: string;
+};
+
 interface UseLeadCTAProps {
   projectName: string;
   projectId?: string;
@@ -18,46 +24,50 @@ export function useLeadCTA({
   whatsappNumber,
   trackEvent,
 }: UseLeadCTAProps) {
-  
   const [openModal, setOpenModal] = useState(false);
   const [openDrawer, setOpenDrawer] = useState(false);
 
+  /** 🔥 Store CTA intent */
+  const [intent, setIntent] = useState<CTAIntent | null>(null);
+
   /** ----------------------------------------------------------
-   * Device detection (runs once)
+   * Device detection
    * ---------------------------------------------------------- */
-  const isMobile = typeof window !== "undefined"
-    ? window.innerWidth < 768
-    : false;
+  const isMobile =
+    typeof window !== "undefined" ? window.innerWidth < 768 : false;
 
   /** ----------------------------------------------------------
-   * CTA Open → auto-detect device
+   * Open CTA with intent
    * ---------------------------------------------------------- */
-  const open = useCallback(() => {
-    // Track CTA click
-    trackEvent?.("cta_clicked", {
-      component: "useLeadCTA",
-      project: projectName,
-      project_id: projectId,
-    });
+  const open = useCallback(
+    (nextIntent?: CTAIntent) => {
+      setIntent(nextIntent || null);
 
-    if (isMobile) {
-      setOpenDrawer(true);
-    } else {
-      setOpenModal(true);
-    }
-  }, [isMobile, projectName, projectId, trackEvent]);
+      trackEvent?.("cta_opened", {
+        project: projectName,
+        project_id: projectId,
+        source: nextIntent?.source || "generic",
+        label: nextIntent?.label,
+        question: nextIntent?.question,
+      });
+
+      if (isMobile) setOpenDrawer(true);
+      else setOpenModal(true);
+    },
+    [isMobile, projectName, projectId, trackEvent]
+  );
 
   /** ----------------------------------------------------------
-   * CTA Close
+   * Close CTA
    * ---------------------------------------------------------- */
   const close = useCallback(() => {
     setOpenDrawer(false);
     setOpenModal(false);
+    setIntent(null);
   }, []);
 
   /** ----------------------------------------------------------
-   * Attach global event to track scroll depth or time on page
-   * (Optional but improves ad optimization)
+   * Engagement tracking (optional)
    * ---------------------------------------------------------- */
   useEffect(() => {
     if (!trackEvent) return;
@@ -74,7 +84,7 @@ export function useLeadCTA({
   }, [trackEvent, projectName, projectId]);
 
   /** ----------------------------------------------------------
-   * Render UI components controlled by this hook
+   * Render controlled CTA UI
    * ---------------------------------------------------------- */
   const CTAComponents = (
     <>
@@ -85,6 +95,7 @@ export function useLeadCTA({
         projectName={projectName}
         projectId={projectId}
         whatsappNumber={whatsappNumber}
+        intent={intent} // 🔥 PASS INTENT
       />
 
       {/* Mobile Drawer */}
@@ -94,21 +105,28 @@ export function useLeadCTA({
         projectName={projectName}
         projectId={projectId}
         whatsappNumber={whatsappNumber}
+        intent={intent} // 🔥 PASS INTENT
       />
 
-      {/* Floating CTA (mobile only) */}
+      {/* Floating CTA */}
       <FloatingCTA
         whatsappNumber={whatsappNumber}
-        onEnquire={open}
+        onEnquire={() =>
+          open({
+            source: "floating",
+            label: "Floating CTA",
+          })
+        }
       />
     </>
   );
 
   return {
-    open,
+    open,          // open(intent?)
     close,
     CTAComponents,
     openModal,
     openDrawer,
+    intent,        // exposed if needed
   };
 }

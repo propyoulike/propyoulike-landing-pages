@@ -44,14 +44,20 @@
   --warning: 38 92% 50%;
   --destructive: 0 84% 60%;
 
-  /* ---------------------------------------------------
-     GRADIENTS
-  --------------------------------------------------- */
-  --gradient-primary: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary-dark)) 100%);
-  --gradient-accent: linear-gradient(135deg, hsl(var(--accent)) 0%, hsl(var(--accent-dark)) 100%);
+/* ---------------------------------------------------
+   GRADIENTS
+--------------------------------------------------- */
+--gradient-primary: linear-gradient(
+  135deg,
+  hsl(var(--primary)) 0%,
+  hsl(var(--primary-dark)) 100%
+);
 
-  --button-gradient: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary-dark)) 100%);
-  --button-accent-gradient: linear-gradient(135deg, hsl(var(--accent)) 0%, hsl(var(--accent-dark)) 100%);
+--gradient-accent: linear-gradient(
+  135deg,
+  hsl(var(--accent)) 0%,
+  hsl(var(--accent-dark)) 100%
+);
 
   /* ---------------------------------------------------
      SHADOW SYSTEM (V7 STANDARD)
@@ -79,12 +85,14 @@
   --radius-2xl: 24px;
   --radius-3xl: 32px;
 
-  /* ---------------------------------------------------
-     TYPOGRAPHY
-  --------------------------------------------------- */
-  --font-family: 'Inter','Poppins',sans-serif;
-  --heading-weight: 700;
-  --body-weight: 400;
+/* ---------------------------------------------------
+   TYPOGRAPHY (LOCKED)
+--------------------------------------------------- */
+--font-heading: 'Outfit', sans-serif;
+--font-body: 'Inter', sans-serif;
+
+--heading-weight: 600;
+--body-weight: 400;
 
   /* ---------------------------------------------------
      SPECIAL EFFECT VARIABLES

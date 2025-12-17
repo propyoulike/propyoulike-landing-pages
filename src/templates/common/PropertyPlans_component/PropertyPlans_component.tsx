@@ -1,4 +1,4 @@
-//src/templates/common/PropertyPlans_component/PropertyPlans_component.tsx
+// src/templates/common/PropertyPlans_component/PropertyPlans_component.tsx
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState } from "react";
@@ -7,7 +7,6 @@ import ImageZoomModal from "@/components/image/ImageZoomModal";
 import MasterPlanBlock from "./MasterPlanBlock";
 import FloorPlanCard from "./FloorPlanCard";
 import UnitPlanCard from "./UnitPlanCard";
-
 import CTAButtons from "@/components/CTAButtons";
 
 interface Props {
@@ -15,7 +14,6 @@ interface Props {
   subtitle?: string;
   tagline?: string;
 
-  modelFlats?: { title?: string; youtubeId?: string }[];
   floorPlans?: { title?: string; image?: string; description?: string }[];
   unitPlans?: any[];
   masterPlan?: {
@@ -28,16 +26,14 @@ interface Props {
 }
 
 export default function PropertyPlans_component(props: Props) {
-
   const {
     title,
     subtitle,
     tagline,
-    modelFlats = [],
     floorPlans = [],
     unitPlans = [],
     masterPlan,
-    onCtaClick
+    onCtaClick,
   } = props;
 
   const [zoomImage, setZoomImage] = useState<string | null>(null);
@@ -49,55 +45,68 @@ export default function PropertyPlans_component(props: Props) {
   if (!hasMaster && !hasFloor && !hasUnits) return null;
 
   return (
-    <section className="py-20 lg:py-28 scroll-mt-32 bg-background" id="plans">
+    <section
+      id="plans"
+      className="py-16 lg:py-20 scroll-mt-32 bg-background"
+    >
       <div className="container mx-auto px-4">
 
         {/* ---------- Header ---------- */}
         {(title || subtitle || tagline) && (
           <div className="max-w-3xl mx-auto text-center mb-12">
             {title && (
-              <h2 className="text-3xl lg:text-5xl font-bold mb-4 text-foreground">
+              <h2 className="text-3xl font-semibold mb-3">
                 {title}
               </h2>
             )}
             {subtitle && (
-              <p className="text-lg text-muted-foreground mb-4">
+              <p className="text-lg text-muted-foreground mb-3">
                 {subtitle}
               </p>
             )}
             {tagline && (
-              <p className="text-muted-foreground">{tagline}</p>
+              <p className="text-muted-foreground">
+                {tagline}
+              </p>
             )}
           </div>
         )}
 
-        {/* ---------- Main Tabs ---------- */}
+        {/* ---------- Tabs ---------- */}
         <Tabs
           defaultValue={
             hasMaster ? "master" : hasFloor ? "floor" : "unit"
           }
           className="max-w-5xl mx-auto"
         >
-          <TabsList className="grid w-full grid-cols-3 mb-10 h-auto bg-gray-50 rounded-xl p-1">
+          <TabsList className="grid w-full grid-cols-3 mb-10 h-auto bg-muted rounded-xl p-1">
             {hasMaster && (
-              <TabsTrigger value="master">Master Plan</TabsTrigger>
+              <TabsTrigger value="master">
+                Master Plan
+              </TabsTrigger>
             )}
             {hasFloor && (
-              <TabsTrigger value="floor">Floor Plans</TabsTrigger>
+              <TabsTrigger value="floor">
+                Floor Plans
+              </TabsTrigger>
             )}
             {hasUnits && (
-              <TabsTrigger value="unit">Unit Plans</TabsTrigger>
+              <TabsTrigger value="unit">
+                Unit Plans
+              </TabsTrigger>
             )}
           </TabsList>
 
           {/* ---------- MASTER PLAN ---------- */}
           {hasMaster && (
             <TabsContent value="master">
-              <MasterPlanBlock
-                image={masterPlan?.image}
-                title={masterPlan?.title}
-                description={masterPlan?.description}
-              />
+              <div className="flex justify-center">
+                <MasterPlanBlock
+                  image={masterPlan?.image}
+                  title={masterPlan?.title}
+                  description={masterPlan?.description}
+                />
+              </div>
             </TabsContent>
           )}
 
@@ -124,27 +133,36 @@ export default function PropertyPlans_component(props: Props) {
                   <UnitPlanCard
                     key={i}
                     {...plan}
-                    onZoom={() => setZoomImage(plan.floorPlanImage)}
-                    onCta={onCtaClick}
+                    onZoom={() =>
+                      setZoomImage(plan.floorPlanImage)
+                    }
                   />
                 ))}
               </div>
             </TabsContent>
           )}
-
         </Tabs>
+
+        {/* ---------- CTA (Decision Confirmation) ---------- */}
+        {onCtaClick && (
+          <div className="mt-14 flex justify-center">
+            <CTAButtons
+              onPrimaryClick={onCtaClick}
+              intent={{
+                source: "section",
+                label: "Property Plans CTA",
+              }}
+            />
+          </div>
+        )}
+
       </div>
 
       {/* ---------- Global Zoom Modal ---------- */}
-      <ImageZoomModal src={zoomImage} onClose={() => setZoomImage(null)} />
-
-      {/* ------------ CTA (Global Component) ------------ */}
-      {onCtaClick && (
-        <div className="container max-w-4xl mt-10">
-          <CTAButtons onPrimaryClick={onCtaClick} />
-        </div>
-      )}
-
+      <ImageZoomModal
+        src={zoomImage}
+        onClose={() => setZoomImage(null)}
+      />
     </section>
   );
 }

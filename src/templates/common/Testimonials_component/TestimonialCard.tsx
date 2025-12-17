@@ -1,32 +1,37 @@
+// src/templates/common/Testimonials_component/TestimonialCard.tsx
+
 import { Play } from "lucide-react";
 import StarRating from "./StarRating";
 import TestimonialVideoPlayer from "./TestimonialVideoPlayer";
 
-export default function TestimonialCard({
-  t,
-  activeVideo,
-  setActiveVideo,
-  isLarge,
-  onPlay,
-}: {
+interface TestimonialCardProps {
   t: any;
   activeVideo: string | null;
   setActiveVideo: (v: string | null) => void;
   isLarge?: boolean;
   onPlay?: () => void;
-}) {
-  const hasVideo = !!t.videoId;
+}
 
-  const thumbnail =
-    t.thumbUrl || (hasVideo && `https://img.youtube.com/vi/${t.videoId}/maxresdefault.jpg`);
-
+export default function TestimonialCard({
+  t,
+  activeVideo,
+  setActiveVideo,
+  isLarge = false,
+  onPlay,
+}: TestimonialCardProps) {
+  const hasVideo = Boolean(t.videoId);
   const playing = activeVideo === t.videoId;
 
+  const thumbnail =
+    t.thumbUrl ||
+    (hasVideo &&
+      `https://img.youtube.com/vi/${t.videoId}/maxresdefault.jpg`);
+
   return (
-    <div className="bg-card rounded-2xl overflow-hidden border border-border shadow-lg">
-      {/* VIDEO OR THUMBNAIL */}
+    <div className="bg-card rounded-2xl overflow-hidden border border-border shadow-md">
+      {/* ---------- VIDEO / THUMBNAIL ---------- */}
       {hasVideo && (
-        <div className="relative aspect-video">
+        <div className="relative aspect-video bg-muted">
           {playing ? (
             <TestimonialVideoPlayer
               videoId={t.videoId}
@@ -34,26 +39,37 @@ export default function TestimonialCard({
             />
           ) : (
             <>
-              <img src={thumbnail} alt={t.name} className="w-full h-full object-cover" />
+              <img
+                src={thumbnail}
+                alt={`Testimonial from ${t.name}`}
+                loading="lazy"
+                decoding="async"
+                className="w-full h-full object-cover"
+              />
 
               <button
+                aria-label={`Play testimonial video by ${t.name}`}
                 onClick={() => {
                   setActiveVideo(t.videoId);
                   onPlay?.();
                 }}
-                className="absolute inset-0 flex items-center justify-center bg-black/20 hover:bg-black/30 transition"
+                className="absolute inset-0 flex items-center justify-center 
+                           bg-black/20 hover:bg-black/30 transition"
               >
                 <div
-                  className={`rounded-full bg-primary shadow-xl flex items-center justify-center transition-transform ${
+                  className={[
+                    "rounded-full bg-primary/90 shadow-xl flex items-center justify-center",
+                    "transition-transform ease-out",
                     isLarge
                       ? "w-20 h-20 md:w-24 md:h-24 hover:scale-110"
-                      : "w-14 h-14 md:w-16 md:h-16 hover:scale-105"
-                  }`}
+                      : "w-14 h-14 md:w-16 md:h-16 hover:scale-105",
+                  ].join(" ")}
                 >
                   <Play
-                    className={`text-white ml-1 ${
-                      isLarge ? "w-10 h-10" : "w-7 h-7"
-                    }`}
+                    className={[
+                      "text-white ml-1",
+                      isLarge ? "w-10 h-10" : "w-7 h-7",
+                    ].join(" ")}
                   />
                 </div>
               </button>
@@ -62,29 +78,28 @@ export default function TestimonialCard({
         </div>
       )}
 
-      {/* TEXT CONTENT */}
-      <div className={`${isLarge ? "p-8" : "p-5"}`}>
+      {/* ---------- TEXT CONTENT ---------- */}
+      <div className={isLarge ? "p-8 text-center" : "p-5"}>
         {t.rating && (
-          <div className="mb-3">
+          <div className="mb-3 flex justify-center">
             <StarRating rating={t.rating} />
           </div>
         )}
 
         {t.quote && (
           <p
-            className={`italic text-muted-foreground ${
-              isLarge ? "text-lg md:text-xl mb-4 text-center" : "text-base mb-3"
-            }`}
+            className={[
+              "italic text-muted-foreground leading-relaxed",
+              isLarge
+                ? "text-lg md:text-xl mb-4"
+                : "text-base mb-3",
+            ].join(" ")}
           >
-            "{t.quote}"
+            “{t.quote}”
           </p>
         )}
 
-        <p
-          className={`font-semibold text-foreground ${
-            isLarge ? "text-lg text-center" : ""
-          }`}
-        >
+        <p className="font-semibold text-foreground">
           — {t.name}
         </p>
       </div>

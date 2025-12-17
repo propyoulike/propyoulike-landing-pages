@@ -54,9 +54,9 @@ export const SECTION_CONTRACTS = {
     file: "aboutBuilder.json",
     component: "AboutBuilder_component"
   },
-  "loan-eligibility": {
-    projectKey: "loanBanks",
-    file: "loanEligibility.json",
-    component: "LoanEligibility_component"
+  "loanAssistance": {
+    projectKey: "LoanAssistance",
+    file: "LoanAssistance.json",
+    component: "LoanAssistance"
   }
 } as const;

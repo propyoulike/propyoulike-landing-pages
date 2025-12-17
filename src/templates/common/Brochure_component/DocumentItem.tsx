@@ -2,7 +2,14 @@
 import { memo } from "react";
 import { FileText } from "lucide-react";
 
-const DocumentItem = memo(function DocumentItem({ doc }) {
+interface DocumentItemProps {
+  doc?: {
+    title?: string;
+    url?: string;
+  };
+}
+
+const DocumentItem = memo(function DocumentItem({ doc }: DocumentItemProps) {
   if (!doc?.title || !doc?.url) return null;
 
   return (
@@ -11,12 +18,36 @@ const DocumentItem = memo(function DocumentItem({ doc }) {
         href={doc.url}
         target="_blank"
         rel="noopener noreferrer"
-        className="flex items-center gap-3 text-primary group"
+        aria-label={`Open document: ${doc.title}`}
+        className="
+          group flex items-center gap-4
+          rounded-xl border border-border
+          px-4 py-3
+          bg-background
+          hover:bg-muted/50
+          transition-colors
+          focus:outline-none
+          focus-visible:ring-2
+          focus-visible:ring-primary
+        "
       >
-        <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition">
-          <FileText className="w-5 h-5" />
+        {/* Icon */}
+        <div
+          className="
+            w-10 h-10 rounded-lg
+            bg-muted flex items-center justify-center
+            group-hover:bg-primary/10
+            transition-colors
+          "
+          aria-hidden
+        >
+          <FileText className="w-5 h-5 text-primary" />
         </div>
-        <span className="font-medium">{doc.title}</span>
+
+        {/* Title */}
+        <span className="font-medium text-foreground">
+          {doc.title}
+        </span>
       </a>
     </li>
   );

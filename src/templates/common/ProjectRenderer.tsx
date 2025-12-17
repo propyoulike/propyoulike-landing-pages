@@ -1,6 +1,6 @@
 // src/templates/common/ProjectRenderer.tsx
 
-import sectionsConfig from "@/content/global/sections.config.json";
+import sectionsConfig from "@/content/global/sections.config";
 import { COMPONENT_REGISTRY } from "@/content/registry/componentRegistry";
 import { resolveSectionProps } from "@/utils/resolveSectionProps";
 import { buildMenuFromSections } from "@/utils/buildMenuFromSections";
@@ -14,11 +14,21 @@ interface ProjectRendererProps {
 }
 
 export default function ProjectRenderer({ project, ctx }: ProjectRendererProps) {
-  const menuItems = buildMenuFromSections(sectionsConfig.sections);
+  /* -------------------------------------------------
+     Defensive guard
+  -------------------------------------------------- */
+  const safeSections = Array.isArray(sectionsConfig)
+    ? sectionsConfig
+    : [];
+
+  /* -------------------------------------------------
+     Menu items (single source of truth)
+  -------------------------------------------------- */
+  const menuItems = buildMenuFromSections(safeSections);
 
   return (
     <>
-      {sectionsConfig.sections.map((section) => {
+      {safeSections.map((section) => {
         const Component = COMPONENT_REGISTRY[section.component];
         if (!Component) return null;
 
@@ -26,13 +36,20 @@ export default function ProjectRenderer({ project, ctx }: ProjectRendererProps) 
           section.props,
           project,
           { ...ctx, menuItems },
+          project.resolved,
           section.id
         );
 
+        /**
+         * 🔑 IMPORTANT:
+         * Section wrapper is owned by the component itself.
+         * Do NOT wrap again here.
+         */
         return (
-          <section id={section.id} key={section.id}>
-            <Component {...resolvedProps} />
-          </section>
+          <Component
+            key={section.id}
+            {...resolvedProps}
+          />
         );
       })}
     </>

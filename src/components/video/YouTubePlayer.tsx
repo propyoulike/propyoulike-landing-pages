@@ -157,7 +157,6 @@ export default function YouTubePlayer({
           src={iframeSrc}
           className="absolute inset-0 w-full h-full"
           allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
-          allowFullScreen
           loading="eager"
         />
       )}

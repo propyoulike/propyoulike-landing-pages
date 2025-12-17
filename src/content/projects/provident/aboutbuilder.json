@@ -1,4 +1,5 @@
 {
+"aboutBuilder": {
   "id": "Provident",
   "name": "Provident Housing",
   "slug": "provident-housing",
@@ -67,4 +68,5 @@
       "thumbnail-overlay": "rgba(0,58,112,0.3)"
     }
   }
+}
 }

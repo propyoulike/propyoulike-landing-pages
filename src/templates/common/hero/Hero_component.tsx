@@ -28,7 +28,10 @@ export default function Hero_component(props: HeroProps) {
     quickInfo,
   } = props;
 
-  const hasMedia = Boolean(videoId || images.length > 0);
+  // 🔐 ENFORCE SINGLE DOMINANT VISUAL
+  const hasVideo = Boolean(videoId);
+  const hasImages = !hasVideo && images.length > 0;
+  const hasMedia = hasVideo || hasImages;
   const hasText = Boolean(overlayTitle || overlaySubtitle);
 
   // 🔐 render guard
@@ -45,7 +48,10 @@ export default function Hero_component(props: HeroProps) {
       ].join(" ")}
     >
       {hasMedia && (
-        <HeroMedia videoId={videoId} images={images} />
+        <HeroMedia
+          videoId={hasVideo ? videoId : undefined}
+          images={hasImages ? images : []}
+        />
       )}
 
       <HeroContent

@@ -1,48 +1,82 @@
 // src/templates/common/Navbar/hooks/useScrollSpy.ts
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-export function useScrollSpy(ids: string[]) {
+type Section = {
+  id: string;
+  top: number;
+};
+
+export function useScrollSpy(
+  ids: string[],
+  lockRef: React.RefObject<boolean>
+) {
   const [activeId, setActiveId] = useState("");
+  const sectionsRef = useRef<Section[]>([]);
+  const rafRef = useRef<number | null>(null);
 
+  /* -------------------------------
+     Measure sections
+  -------------------------------- */
   useEffect(() => {
     if (!ids.length) return;
 
-    let ticking = false;
+    const measure = () => {
+      const navbar = document.querySelector("header");
+      const offset = (navbar?.clientHeight || 0) + 20;
 
-    const handleScroll = () => {
-      if (ticking) return;
-      ticking = true;
-
-      requestAnimationFrame(() => {
-        const navbar = document.querySelector("header");
-        const offset = (navbar?.clientHeight || 0) + 20;
-
-        let current = "";
-
-        for (const id of ids) {
+      sectionsRef.current = ids
+        .map((id) => {
           const el = document.getElementById(id);
-          if (!el) continue;
+          if (!el) return null;
 
           const rect = el.getBoundingClientRect();
-          const top = rect.top - offset;
-          const bottom = rect.bottom - offset;
+          const scrollTop = window.scrollY;
 
-          // Section is covering the navbar threshold
-          if (top <= 0 && bottom > 0) {
-            current = id;
-            break;
-          }
+          return {
+            id,
+            top: rect.top + scrollTop - offset,
+          };
+        })
+        .filter(Boolean) as Section[];
+    };
+
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, [ids]);
+
+  /* -------------------------------
+     Scroll spy
+  -------------------------------- */
+  useEffect(() => {
+    if (!sectionsRef.current.length) return;
+
+    const onScroll = () => {
+      if (lockRef.current) return; // 🔒 critical
+      if (rafRef.current !== null) return;
+
+      rafRef.current = requestAnimationFrame(() => {
+        rafRef.current = null;
+
+        const y = window.scrollY;
+        let current = sectionsRef.current[0]?.id ?? "";
+
+        for (const s of sectionsRef.current) {
+          if (y >= s.top) current = s.id;
+          else break;
         }
 
         setActiveId(current);
-        ticking = false;
       });
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll(); // initial
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
   }, [ids]);
 
   return activeId;

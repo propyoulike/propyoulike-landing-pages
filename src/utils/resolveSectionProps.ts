@@ -6,32 +6,47 @@ function getValueFromPath(obj: any, path: string) {
     .reduce((acc, key) => (acc != null ? acc[key] : undefined), obj);
 }
 
-function resolveValue(value: any, project: any, ctx: any): any {
+function resolveValue(
+  value: any,
+  project: any,
+  ctx: any,
+  resolved: any
+): any {
+  // Literal override
   if (typeof value === "object" && value !== null && "$value" in value) {
     return value.$value;
   }
 
+  // Context values
   if (typeof value === "string" && value.startsWith("$ctx.")) {
     return getValueFromPath(ctx, value.slice(5));
   }
 
+  // Resolved (global / builder / project normalized)
+  if (typeof value === "string" && value.startsWith("$resolved.")) {
+    return getValueFromPath(resolved, value.slice(10));
+  }
+
+  // Direct project access
   if (typeof value === "string" && value.startsWith("project.")) {
     return getValueFromPath(project, value.slice(8));
   }
 
+  // Arrays
   if (Array.isArray(value)) {
     return value
-      .map(v => resolveValue(v, project, ctx))
-      .filter(v => v !== undefined);
+      .map((v) => resolveValue(v, project, ctx, resolved))
+      .filter((v) => v !== undefined);
   }
 
+  // Objects
   if (typeof value === "object" && value !== null) {
-    const resolved: any = {};
+    const out: any = {};
     Object.entries(value).forEach(([k, v]) => {
-      const rv = resolveValue(v, project, ctx);
-      if (rv !== undefined) resolved[k] = rv;
+      const rv = resolveValue(v, project, ctx, resolved);
+      if (rv !== undefined) out[k] = rv;
     });
-    return resolved;
+    return out;
   }
 
   return value;
@@ -41,6 +56,7 @@ export function resolveSectionProps(
   propsConfig: Record<string, any> = {},
   project: any,
   ctx: any,
+  resolved: any,
   sectionId?: string
 ) {
   const resolvedProps: any = {};
@@ -58,7 +74,12 @@ export function resolveSectionProps(
       continue;
     }
 
-    const resolvedValue = resolveValue(value, project, ctx);
+    const resolvedValue = resolveValue(
+      value,
+      project,
+      ctx,
+      resolved
+    );
 
     if (resolvedValue !== undefined) {
       resolvedProps[key] = resolvedValue;

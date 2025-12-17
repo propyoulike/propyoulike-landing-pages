@@ -1,7 +1,9 @@
+// src/templates/common/Testimonials_component/TestimonialCarousel.tsx
+
 import useEmblaCarousel from "embla-carousel-react";
 import AutoScroll from "embla-carousel-auto-scroll";
 import TestimonialCard from "./TestimonialCard";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function TestimonialCarousel({
   testimonials,
@@ -13,26 +15,80 @@ export default function TestimonialCarousel({
   onPlay?: (name: string) => void;
 }) {
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
+  const resumeTimeout = useRef<number | null>(null);
+
+  const isMobile =
+    typeof window !== "undefined" && window.innerWidth < 768;
+
   const [emblaRef, emblaApi] = useEmblaCarousel(
-    { loop: true, dragFree: true, align: "start" },
-    [
-      AutoScroll({
-        playOnInit: true,
-        speed: autoScrollSpeed,
-        stopOnInteraction: true,
-      }),
-    ]
+    {
+      loop: true,
+      dragFree: true,
+      align: "start",
+    },
+    isMobile
+      ? [] // ❌ no auto-scroll on mobile
+      : [
+          AutoScroll({
+            playOnInit: true,
+            speed: autoScrollSpeed,
+            stopOnInteraction: true,
+          }),
+        ]
   );
 
   /* Pause autoplay when video is active */
   useEffect(() => {
     if (!emblaApi) return;
+
     const auto = emblaApi.plugins()?.autoScroll;
-    activeVideo ? auto?.stop() : auto?.play();
+    if (!auto) return;
+
+    if (activeVideo) {
+      auto.stop();
+      if (resumeTimeout.current) {
+        window.clearTimeout(resumeTimeout.current);
+      }
+    } else {
+      resumeTimeout.current = window.setTimeout(() => {
+        auto.play();
+      }, 1500); // ✅ gentle resume
+    }
+
+    return () => {
+      if (resumeTimeout.current) {
+        window.clearTimeout(resumeTimeout.current);
+      }
+    };
   }, [activeVideo, emblaApi]);
 
+  /* Pause on hover (desktop only) */
+  useEffect(() => {
+    if (!emblaApi || isMobile) return;
+    const auto = emblaApi.plugins()?.autoScroll;
+    if (!auto) return;
+
+    const node = emblaApi.rootNode();
+    const stop = () => auto.stop();
+    const play = () => auto.play();
+
+    node.addEventListener("mouseenter", stop);
+    node.addEventListener("mouseleave", play);
+
+    return () => {
+      node.removeEventListener("mouseenter", stop);
+      node.removeEventListener("mouseleave", play);
+    };
+  }, [emblaApi, isMobile]);
+
   return (
-    <div className="overflow-hidden" ref={emblaRef}>
+    <div
+      ref={emblaRef}
+      className="overflow-hidden"
+      role="region"
+      aria-roledescription="carousel"
+      aria-label="Customer testimonials"
+    >
       <div className="flex gap-4 md:gap-6 will-change-transform">
         {testimonials.map((t, i) => (
           <div

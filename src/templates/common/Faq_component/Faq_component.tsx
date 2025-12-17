@@ -1,5 +1,4 @@
 import { memo, useState } from "react";
-
 import CTAButtons from "@/components/CTAButtons";
 
 import FAQHeader from "./components/FAQHeader";
@@ -20,18 +19,21 @@ type FaqProps = {
 };
 
 function Faq({ title, subtitle, faqs = [], onCtaClick }: FaqProps) {
+  /** ✅ Always normalize first */
   const safeFaqs = Array.isArray(faqs) ? faqs : [];
 
+  /** ✅ ALL hooks must run unconditionally */
   const [showAll, setShowAll] = useState(false);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [lastClickedQuestion, setLastClickedQuestion] = useState<string | null>(null);
-
-  if (!safeFaqs.length) return null;
 
   const { query, setQuery, filtered } = useFaqSearch(safeFaqs);
   const categories = useFaqCategories(safeFaqs);
   const suggestions = useFaqSuggestions(query, safeFaqs);
   const popular = useFaqPopularity(safeFaqs);
+
+  /** ✅ AFTER hooks — safe early exit */
+  if (!safeFaqs.length) return null;
 
   const hasQuery = query.trim().length > 0;
 
@@ -40,16 +42,12 @@ function Faq({ title, subtitle, faqs = [], onCtaClick }: FaqProps) {
     : safeFaqs;
 
   const baseFaqs = hasQuery ? filtered : categoryFilteredFaqs;
-
   const defaultFaqs = popular.length ? popular : safeFaqs;
 
   const visibleFaqs = showAll
     ? baseFaqs
     : defaultFaqs.slice(0, 3);
 
-  /* ---------------------------------------------
-     WhatsApp Prefilled CTA
-  ---------------------------------------------- */
   const handleWhatsappCTA = () => {
     const text = lastClickedQuestion
       ? `Hi, I have a question about this project:\n\n"${lastClickedQuestion}"`
@@ -61,41 +59,25 @@ function Faq({ title, subtitle, faqs = [], onCtaClick }: FaqProps) {
 
   return (
     <section id="faq" className="py-20">
-      {/* -------- Header -------- */}
       <FAQHeader title={title} subtitle={subtitle} />
 
-      {/* -------- Search -------- */}
       <FAQSearch
         query={query}
         setQuery={setQuery}
         suggestions={suggestions}
+        resultsCount={baseFaqs.length}
       />
 
-      {/* -------- Categories -------- */}
       {showAll && (
-        <>
-          <FAQCategories
-            categories={categories}
-            onSelectCategory={(cat) => {
-              setActiveCategory(cat);
-              setShowAll(true);
-            }}
-          />
-
-          {activeCategory && (
-            <div className="mt-2">
-              <button
-                onClick={() => setActiveCategory(null)}
-                className="text-sm text-muted-foreground underline"
-              >
-                Clear category filter
-              </button>
-            </div>
-          )}
-        </>
+        <FAQCategories
+          categories={categories}
+          onSelectCategory={(cat) => {
+            setActiveCategory(cat === "All" ? null : cat);
+            setShowAll(true);
+          }}
+        />
       )}
 
-      {/* -------- FAQ List -------- */}
       <FAQList
         faqs={visibleFaqs}
         autoExpandFirst={!showAll && !hasQuery}
@@ -103,7 +85,6 @@ function Faq({ title, subtitle, faqs = [], onCtaClick }: FaqProps) {
         onInlineCTA={handleWhatsappCTA}
       />
 
-      {/* -------- Progressive Disclosure -------- */}
       {!showAll && !hasQuery && safeFaqs.length > 5 && (
         <div className="mt-6 text-center">
           <button
@@ -115,15 +96,12 @@ function Faq({ title, subtitle, faqs = [], onCtaClick }: FaqProps) {
         </div>
       )}
 
-      {/* -------- Section CTA -------- */}
       <div className="mt-14 text-center border-t pt-8">
         <p className="text-muted-foreground mb-4">
           Still unsure? Talk to someone who knows this project.
         </p>
 
-        {onCtaClick && (
-          <CTAButtons onPrimaryClick={handleWhatsappCTA} />
-        )}
+        {onCtaClick && <CTAButtons onPrimaryClick={handleWhatsappCTA} />}
       </div>
     </section>
   );

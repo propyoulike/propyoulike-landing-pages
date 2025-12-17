@@ -1,28 +1,53 @@
 import type { ProjectData } from "@/content/schema/project.schema";
 import { loadProject } from "@/lib/data/loadProject";
 
+/* -------------------------------------------------
+   In-memory cache (per session)
+-------------------------------------------------- */
 const cache = new Map<string, ProjectData>();
 
-// Load all projects ONCE
+/* -------------------------------------------------
+   Known project slugs (source of truth for now)
+   → Can be replaced later with FS scan / API
+-------------------------------------------------- */
+const PROJECT_SLUGS = [
+  "provident-sunworth-city",
+  "provident-botanico",
+  "provident-capella",
+  "provident-deansgate",
+] as const;
+
+/* -------------------------------------------------
+   Load ALL projects (once)
+-------------------------------------------------- */
 export async function loadAllProjects(): Promise<ProjectData[]> {
-  if (cache.size) return Array.from(cache.values());
+  // Fast path
+  if (cache.size > 0) {
+    return Array.from(cache.values());
+  }
 
-  const slugs = [
-    "provident-sunworth-city",
-    "provident-botanico",
-    "provident-capella",
-    "provident-deansgate",
-  ];
-
-  for (const slug of slugs) {
-    const data = await loadProject(slug);
-    if (data) cache.set(slug, data);
+  for (const slug of PROJECT_SLUGS) {
+    try {
+      const data = await loadProject(slug);
+      if (data) {
+        cache.set(slug, data);
+      }
+    } catch (err) {
+      // ❌ Never break entire app because of one project
+      console.error(`❌ Failed to load project: ${slug}`, err);
+    }
   }
 
   return Array.from(cache.values());
 }
 
-export async function getProject(slug: string) {
-  if (!cache.size) await loadAllProjects();
+/* -------------------------------------------------
+   Get single project (lazy-safe)
+-------------------------------------------------- */
+export async function getProject(slug: string): Promise<ProjectData | undefined> {
+  if (!cache.size) {
+    await loadAllProjects();
+  }
+
   return cache.get(slug);
 }

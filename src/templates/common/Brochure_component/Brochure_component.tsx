@@ -3,52 +3,75 @@ import { memo, useState } from "react";
 import BrochurePreview from "./BrochurePreview";
 import DocumentList from "./DocumentList";
 import BrochureModal from "./BrochureModal";
-import CTAButtons from "@/components/CTAButtons";
+import { Button } from "@/components/ui/button";
+import { useLeadCTAContext } from "@/components/lead/LeadCTAProvider";
 
 const Brochure_component = memo(function Brochure_component({
   id = "brochure",
-  heroTitle,
-  heroSubtitle,
+  title = "Project Brochure & Documents",
+  subtitle = "Download official brochures, floor plans and approvals",
   coverImage,
   documents = [],
-  onCtaClick,
 }) {
   const [modalOpen, setModalOpen] = useState(false);
+  const { openCTA } = useLeadCTAContext();
+
+  if (!coverImage && !documents.length) return null;
 
   return (
-    <section id={id} className="py-20 lg:py-28 bg-muted/30 scroll-mt-32">
+    <section
+      id={id}
+      className="py-20 lg:py-28 bg-muted/30 scroll-mt-32"
+    >
       <div className="container mx-auto px-4 max-w-6xl">
-        <div className="flex flex-col lg:flex-row gap-10 items-center">
 
+        {/* ✅ SECTION HEADER — CONSISTENT */}
+        <div className="text-center max-w-3xl mx-auto mb-14">
+          <h2 className="text-2xl md:text-3xl font-semibold">
+            {title}
+          </h2>
+          {subtitle && (
+            <p className="text-lg text-muted-foreground mt-2">
+              {subtitle}
+            </p>
+          )}
+        </div>
+
+        {/* CONTENT */}
+        <div className="flex flex-col lg:flex-row gap-12 items-center">
           {/* LEFT — Preview */}
           <BrochurePreview
             image={coverImage}
-            title={heroTitle}
-            subtitle={heroSubtitle}
             onPreviewClick={() => setModalOpen(true)}
           />
 
-          {/* RIGHT — Documents */}
+          {/* RIGHT — Documents + CTA */}
           <div className="lg:w-1/2 w-full flex flex-col gap-6">
             <DocumentList documents={documents} />
+
+            {/* SINGLE PRIMARY ACTION */}
+            <Button
+              size="lg"
+              className="w-full rounded-xl font-semibold"
+              onClick={() =>
+                openCTA({
+                  source: "section",
+                  label: "Brochure – Get Details",
+                })
+              }
+            >
+              Get Brochure & Pricing
+            </Button>
           </div>
         </div>
       </div>
 
-      {/* Modal (optional) */}
+      {/* Preview Modal (ungated) */}
       <BrochureModal
         open={modalOpen}
         onClose={() => setModalOpen(false)}
         image={coverImage}
       />
-
-      {/* ------------ CTA (Global Component) ------------ */}
-      {onCtaClick && (
-        <div className="container max-w-4xl mt-10">
-          <CTAButtons onPrimaryClick={onCtaClick} />
-        </div>
-      )}
-
     </section>
   );
 });

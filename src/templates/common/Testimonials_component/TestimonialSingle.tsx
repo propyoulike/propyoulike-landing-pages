@@ -1,26 +1,18 @@
-import TestimonialCard from "./TestimonialCard";
-import CTAButtons from "@/components/CTAButtons";
-import { useState } from "react";
+// src/templates/common/Testimonials_component/TestimonialSingle.tsx
 
-export default function TestimonialSingle({
-  t,
-  title,
-  subtitle,
-  onCtaClick,
-}: any) {
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { useLeadCTAContext } from "@/components/lead/LeadCTAProvider";
+import TestimonialCard from "./TestimonialCard";
+
+export default function TestimonialSingle({ t }: { t: any }) {
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
+  const { openCTA } = useLeadCTAContext();
 
   return (
     <div className="max-w-3xl mx-auto">
-      <div className="text-center mb-12">
-        {title && (
-          <h2 className="text-3xl lg:text-5xl font-bold mb-4">{title}</h2>
-        )}
-        {subtitle && (
-          <p className="text-lg text-muted-foreground">{subtitle}</p>
-        )}
-      </div>
 
+      {/* Testimonial */}
       <TestimonialCard
         t={t}
         activeVideo={activeVideo}
@@ -28,9 +20,23 @@ export default function TestimonialSingle({
         isLarge
       />
 
+      {/* ✅ Soft, trust-follow-up CTA */}
       <div className="flex justify-center mt-12">
-        <CTAButtons onFormOpen={onCtaClick} variant="compact" />
+        <Button
+          size="lg"
+          variant="secondary"
+          className="rounded-xl px-10"
+          onClick={() =>
+            openCTA({
+              source: "testimonials",
+              label: "Single Testimonial – Book Site Visit",
+            })
+          }
+        >
+          Book Site Visit
+        </Button>
       </div>
+
     </div>
   );
 }

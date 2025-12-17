@@ -2,19 +2,47 @@
 import { memo } from "react";
 import DocumentItem from "./DocumentItem";
 
-const DocumentList = memo(function DocumentList({ documents = [] }) {
-  if (!documents.length) return null;
+interface DocumentListProps {
+  documents?: {
+    title?: string;
+    url?: string;
+  }[];
+}
+
+const DocumentList = memo(function DocumentList({
+  documents = [],
+}: DocumentListProps) {
+  const validDocs = documents.filter(
+    (d) => d?.title && d?.url
+  );
+
+  if (!validDocs.length) return null;
 
   return (
-    <div className="bg-card border border-border rounded-xl p-5">
-      <h3 className="font-semibold mb-4">Official Documents</h3>
+    <section
+      aria-labelledby="official-documents-heading"
+      className="
+        bg-card border border-border
+        rounded-2xl
+        p-5 md:p-6
+        shadow-sm
+      "
+    >
+      {/* Header */}
+      <h3
+        id="official-documents-heading"
+        className="text-base font-semibold mb-4 text-foreground"
+      >
+        Official Documents
+      </h3>
 
+      {/* List */}
       <ul className="space-y-3">
-        {documents.map((doc, i) => (
+        {validDocs.map((doc, i) => (
           <DocumentItem key={i} doc={doc} />
         ))}
       </ul>
-    </div>
+    </section>
   );
 });
 

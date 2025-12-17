@@ -21,7 +21,6 @@
     "paymentPlans": "paymentPlans.json",
     "testimonials": "testimonials.json",
     "brochure": "brochure.json",
-    "aboutBuilder": "./aboutBuilder.json",
-    "loanBanks": "loanEligibility.json"
+    "aboutBuilder": "../aboutBuilder.json"
   }
 }
