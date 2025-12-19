@@ -1,0 +1,301 @@
+{
+  "slug": "",
+  "builder": "",
+  "projectName": "",
+
+  "type": "",
+  "status": "",
+  "featured": false,
+
+  "area": "",
+  "locality": "",
+  "zone": "",
+  "city": "",
+  "state": "",
+  "country": "",
+  "pincode": "",
+
+  "hero": {
+    "videoId": "",
+    "images": [
+      {
+        "image": ""
+      }
+    ],
+
+    "overlayTitle": "",
+    "overlaySubtitle": "",
+
+    "eyebrow": "",
+    "title": "",
+    "subtitle": "",
+    "tagline": "",
+
+    "quickInfo": {
+      "price": "",
+      "typology": "",
+      "size": ""
+    }
+  },
+
+  "summary": {
+    "eyebrow": "",
+    "title": "",
+    "subtitle": "",
+    "tagline": "",
+    "description": "",
+
+    "highlights": [
+      {
+        "highlight": ""
+      }
+    ]
+  },
+
+  "amenities": {
+    "eyebrow": "",
+    "title": "",
+    "subtitle": "",
+    "tagline": "",
+
+    "heroTitle": "",
+    "heroSubtitle": "",
+
+    "amenityImages": [
+      {
+        "src": "",
+        "title": "",
+        "description": "",
+        "media_type": "image"
+      }
+    ],
+
+    "amenityCategories": [
+      {
+        "title": "",
+        "items": ""
+      }
+    ]
+  },
+
+  "views": {
+    "eyebrow": "",
+    "title": "",
+    "subtitle": "",
+    "tagline": "",
+
+    "images": [
+      {
+        "src": "",
+        "title": "",
+        "order": "",
+        "is_active": true
+      }
+    ]
+  },
+
+  "locationUI": {
+    "eyebrow": "",
+    "title": "",
+    "subtitle": "",
+    "tagline": "",
+
+    "videoId": "",
+    "mapUrl": "",
+
+    "categories": [
+      {
+        "title": "",
+        "items": ""
+      }
+    ]
+  },
+
+  "propertyPlans": {
+    "eyebrow": "",
+    "title": "",
+    "subtitle": "",
+    "tagline": "",
+
+    "modelFlats": [
+      {
+        "title": "",
+        "youtubeId": "",
+        "order": ""
+      }
+    ],
+
+    "unitPlans": [
+      {
+        "title": "",
+        "description": "",
+        "sba": "",
+        "ca": "",
+        "usable": "",
+        "uds": "",
+        "price": "",
+        "floorPlanImage": ""
+      }
+    ],
+
+    "floorPlans": [
+      {
+        "title": "",
+        "image": "",
+        "description": ""
+      }
+    ],
+
+    "masterPlan": {
+      "image": "",
+      "title": "",
+      "description": ""
+    }
+  },
+
+  "paymentPlans": {
+    "eyebrow": "",
+    "title": "",
+    "subtitle": "",
+    "tagline": "",
+
+    "pricing": {
+      "title": "",
+      "computation": [
+        {
+          "title": "",
+          "points": ""
+        }
+      ]
+    },
+
+    "schedule": {
+      "title": "",
+      "items": [
+        {
+          "title": "",
+          "percentage": "",
+          "breakdown": ""
+        }
+      ]
+    },
+
+    "status": "",
+    "note": ""
+  },
+
+  "construction": {
+    "eyebrow": "",
+    "title": "",
+    "subtitle": "",
+    "tagline": "",
+
+    "status": "",
+    "note": "",
+
+    "updates": [
+      {
+        "name": "",
+        "type": "image",
+        "image": "",
+        "videoId": ""
+      }
+    ]
+  },
+
+  "testimonials": {
+    "eyebrow": "",
+    "title": "",
+    "subtitle": "",
+    "tagline": "",
+
+    "testimonials": [
+      {
+        "name": "",
+        "quote": "",
+        "videoId": "",
+        "rating": "",
+        "thumbUrl": ""
+      }
+    ]
+  },
+
+  "aboutBuilder": {
+    "name": "",
+
+    "eyebrow": "",
+    "title": "",
+    "subtitle": "",
+    "tagline": "",
+
+    "description": "",
+    "descriptionExpanded": "",
+
+    "stats": [
+      {
+        "icon": "",
+        "label": "",
+        "value": ""
+      }
+    ]
+  },
+
+  "loanSupport": {
+    "enabled": false,
+
+    "eyebrow": "",
+    "title": "",
+    "subtitle": "",
+    "tagline": "",
+
+    "banks": [
+      {
+        "name": "",
+        "logo": ""
+      }
+    ],
+
+    "ctaText": ""
+  },
+
+  "brochure": {
+    "eyebrow": "",
+    "title": "",
+    "subtitle": "",
+    "tagline": "",
+
+    "heroTitle": "",
+    "heroSubtitle": "",
+
+    "coverImage": null,
+
+    "documents": [
+      {
+        "title": "",
+        "url": ""
+      }
+    ],
+
+    "status": "",
+    "note": ""
+  },
+
+  "faq": {
+    "eyebrow": "",
+    "title": "",
+    "subtitle": "",
+    "tagline": "",
+
+    "faqs": [
+      {
+        "question": "",
+        "answer": "",
+        "category": "",
+        "subCategory": "",
+        "isPopular": false,
+        "order": "",
+        "source": "project"
+      }
+    ]
+  }
+}
