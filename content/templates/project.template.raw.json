@@ -153,32 +153,22 @@
     "subtitle": "",
     "tagline": "",
 
-    "pricing": {
-      "title": "",
-      "computation": [
-        {
-          "title": "",
-          "points": [
-            {
-	        "points": ""
-	     }
-          ]
+    "pricingTitle": "",
+    "pricingComputation": [
+	{"title": "",
+	 "points": [{"points": ""}]
         }
-      ]
-    },
-
-    "schedule": [
+      	],
+    "scheduleTitle": "",
+    "paymentSchedule": [
       {
         "title": "",
+        "percentage": "",
         "items": [
-          {
-            "title": "",
-            "percentage": "",
-            "breakdown": ""
-          }
-        ]
+          {"items": ""}
+        ],
+    "ctaText": ""
       }
-    ]
   },
 
   "construction": {
