@@ -1,5 +1,5 @@
 {
-  "slug": "",
+  "slug": "provident-sunworth-city",
   "builder": "",
   "projectName": "",
 
@@ -22,9 +22,6 @@
         "image": ""
       }
     ],
-
-    "overlayTitle": "",
-    "overlaySubtitle": "",
 
     "eyebrow": "",
     "title": "",
@@ -57,9 +54,6 @@
     "title": "",
     "subtitle": "",
     "tagline": "",
-
-    "heroTitle": "",
-    "heroSubtitle": "",
 
     "amenityImages": [
       {
@@ -164,24 +158,27 @@
       "computation": [
         {
           "title": "",
-          "points": ""
+          "points": [
+            {
+	        "points": ""
+	     }
+          ]
         }
       ]
     },
 
-    "schedule": {
-      "title": "",
-      "items": [
-        {
-          "title": "",
-          "percentage": "",
-          "breakdown": ""
-        }
-      ]
-    },
-
-    "status": "",
-    "note": ""
+    "schedule": [
+      {
+        "title": "",
+        "items": [
+          {
+            "title": "",
+            "percentage": "",
+            "breakdown": ""
+          }
+        ]
+      }
+    ]
   },
 
   "construction": {
@@ -189,10 +186,6 @@
     "title": "",
     "subtitle": "",
     "tagline": "",
-
-    "status": "",
-    "note": "",
-
     "updates": [
       {
         "name": "",
@@ -263,10 +256,6 @@
     "title": "",
     "subtitle": "",
     "tagline": "",
-
-    "heroTitle": "",
-    "heroSubtitle": "",
-
     "coverImage": null,
 
     "documents": [
@@ -274,10 +263,7 @@
         "title": "",
         "url": ""
       }
-    ],
-
-    "status": "",
-    "note": ""
+    ]
   },
 
   "faq": {
