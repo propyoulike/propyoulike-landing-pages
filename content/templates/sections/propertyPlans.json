@@ -1,0 +1,14 @@
+{
+  "title": "",
+  "subtitle": "",
+  "tagline": "",
+  "modelFlats": [],
+  "unitPlans": [],
+  "floorPlans": [],
+  "masterPlan": {
+    "image": "",
+    "title": "",
+    "description": ""
+  },
+  "_note": "Add at least one of: modelFlats, unitPlans, floorPlans, or masterPlan.image"
+}

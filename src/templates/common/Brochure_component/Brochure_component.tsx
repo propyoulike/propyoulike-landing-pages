@@ -1,18 +1,53 @@
 // src/templates/common/brochure/Brochure_component.tsx
+
 import { memo, useState } from "react";
 import BrochurePreview from "./BrochurePreview";
 import DocumentList from "./DocumentList";
 import BrochureModal from "./BrochureModal";
+
 import { Button } from "@/components/ui/button";
 import { useLeadCTAContext } from "@/components/lead/LeadCTAProvider";
+import SectionHeader from "../SectionHeader";
+import type { SectionMeta } from "@/content/types/sectionMeta";
 
+/* ---------------------------------------------------------------------
+   TYPES
+------------------------------------------------------------------------*/
+interface BrochureProps {
+  id?: string;
+
+  /** Canonical section meta */
+  meta?: SectionMeta;
+
+  /** Preview image */
+  coverImage?: string;
+
+  /** Documents list */
+  documents?: {
+    label?: string;
+    url?: string;
+    type?: string;
+  }[];
+}
+
+/* ---------------------------------------------------------------------
+   COMPONENT
+------------------------------------------------------------------------*/
 const Brochure_component = memo(function Brochure_component({
   id = "brochure",
-  title = "Project Brochure & Documents",
-  subtitle = "Download official brochures, floor plans and approvals",
+
+  meta = {
+    eyebrow: "DOWNLOADS",
+    title: "Brochure & official documents",
+    subtitle:
+      "Access brochures, floor plans, approvals and key project details",
+    tagline:
+      "Everything you need to evaluate the project — in one place",
+  },
+
   coverImage,
   documents = [],
-}) {
+}: BrochureProps) {
   const [modalOpen, setModalOpen] = useState(false);
   const { openCTA } = useLeadCTAContext();
 
@@ -21,33 +56,41 @@ const Brochure_component = memo(function Brochure_component({
   return (
     <section
       id={id}
-      className="py-20 lg:py-28 bg-muted/30 scroll-mt-32"
+      className="py-12 md:py-16 bg-muted/30 scroll-mt-32"
     >
-      <div className="container mx-auto px-4 max-w-6xl">
+      <div className="container max-w-6xl">
 
-        {/* ✅ SECTION HEADER — CONSISTENT */}
-        <div className="text-center max-w-3xl mx-auto mb-14">
-          <h2 className="text-2xl md:text-3xl font-semibold">
-            {title}
-          </h2>
-          {subtitle && (
-            <p className="text-lg text-muted-foreground mt-2">
-              {subtitle}
-            </p>
-          )}
+        {/* ─────────────────────────────
+           SECTION HEADER (SYSTEMIC)
+        ───────────────────────────── */}
+        <div className="mb-12">
+          <SectionHeader
+            eyebrow={meta.eyebrow}
+            title={meta.title}
+            subtitle={meta.subtitle}
+            tagline={meta.tagline}
+            align="center"
+          />
         </div>
 
-        {/* CONTENT */}
-        <div className="flex flex-col lg:flex-row gap-12 items-center">
-          {/* LEFT — Preview */}
-          <BrochurePreview
-            image={coverImage}
-            onPreviewClick={() => setModalOpen(true)}
-          />
+        {/* ─────────────────────────────
+           CONTENT
+        ───────────────────────────── */}
+        <div className="flex flex-col lg:flex-row gap-12 items-start">
 
-          {/* RIGHT — Documents + CTA */}
+          {/* LEFT — Preview */}
+          {coverImage && (
+            <BrochurePreview
+              image={coverImage}
+              onPreviewClick={() => setModalOpen(true)}
+            />
+          )}
+
+          {/* RIGHT — Docs + CTA */}
           <div className="lg:w-1/2 w-full flex flex-col gap-6">
-            <DocumentList documents={documents} />
+            {documents.length > 0 && (
+              <DocumentList documents={documents} />
+            )}
 
             {/* SINGLE PRIMARY ACTION */}
             <Button
@@ -56,22 +99,26 @@ const Brochure_component = memo(function Brochure_component({
               onClick={() =>
                 openCTA({
                   source: "section",
-                  label: "Brochure – Get Details",
+                  label: "brochure_download",
                 })
               }
             >
-              Get Brochure & Pricing
+              Get brochure & pricing
             </Button>
           </div>
         </div>
       </div>
 
-      {/* Preview Modal (ungated) */}
-      <BrochureModal
-        open={modalOpen}
-        onClose={() => setModalOpen(false)}
-        image={coverImage}
-      />
+      {/* ─────────────────────────────
+         PREVIEW MODAL (UNGATED)
+      ───────────────────────────── */}
+      {coverImage && (
+        <BrochureModal
+          open={modalOpen}
+          onClose={() => setModalOpen(false)}
+          image={coverImage}
+        />
+      )}
     </section>
   );
 });

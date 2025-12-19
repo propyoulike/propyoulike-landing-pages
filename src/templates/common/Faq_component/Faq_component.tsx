@@ -1,7 +1,8 @@
+// src/templates/common/Faq_component/Faq_component.tsx
+
 import { memo, useState } from "react";
 import CTAButtons from "@/components/CTAButtons";
 
-import FAQHeader from "./components/FAQHeader";
 import FAQSearch from "./components/FAQSearch";
 import FAQCategories from "./components/FAQCategories";
 import FAQList from "./components/FAQList";
@@ -11,97 +12,180 @@ import { useFaqCategories } from "./hooks/useFaqCategories";
 import { useFaqSuggestions } from "./hooks/useFaqSuggestions";
 import { useFaqPopularity } from "./hooks/useFaqPopularity";
 
+import SectionHeader from "../SectionHeader";
+import type { SectionMeta } from "@/content/types/sectionMeta";
+
+/* ---------------------------------------------------------------------
+   TYPES
+------------------------------------------------------------------------*/
 type FaqProps = {
-  title?: string;
-  subtitle?: string;
+  id?: string;
+
+  /** Canonical section meta */
+  meta?: SectionMeta;
+
   faqs?: any[];
   onCtaClick?: () => void;
 };
 
-function Faq({ title, subtitle, faqs = [], onCtaClick }: FaqProps) {
-  /** ✅ Always normalize first */
+/* ---------------------------------------------------------------------
+   COMPONENT
+------------------------------------------------------------------------*/
+function Faq({
+  id = "faq",
+
+  meta = {
+    eyebrow: "FAQ",
+    title: "Frequently asked questions",
+    subtitle:
+      "Clear answers to common questions buyers usually have",
+    tagline:
+      "If something isn’t clear, you can always speak to an expert",
+  },
+
+  faqs = [],
+  onCtaClick,
+}: FaqProps) {
+  /** ✅ Normalize first */
   const safeFaqs = Array.isArray(faqs) ? faqs : [];
 
   /** ✅ ALL hooks must run unconditionally */
   const [showAll, setShowAll] = useState(false);
-  const [activeCategory, setActiveCategory] = useState<string | null>(null);
-  const [lastClickedQuestion, setLastClickedQuestion] = useState<string | null>(null);
+  const [activeCategory, setActiveCategory] =
+    useState<string | null>(null);
+  const [lastClickedQuestion, setLastClickedQuestion] =
+    useState<string | null>(null);
 
-  const { query, setQuery, filtered } = useFaqSearch(safeFaqs);
+  const { query, setQuery, filtered } =
+    useFaqSearch(safeFaqs);
   const categories = useFaqCategories(safeFaqs);
   const suggestions = useFaqSuggestions(query, safeFaqs);
   const popular = useFaqPopularity(safeFaqs);
 
-  /** ✅ AFTER hooks — safe early exit */
+  /** ✅ Safe early exit */
   if (!safeFaqs.length) return null;
 
   const hasQuery = query.trim().length > 0;
 
   const categoryFilteredFaqs = activeCategory
-    ? safeFaqs.filter((f) => f.category === activeCategory)
+    ? safeFaqs.filter(
+        (f) => f.category === activeCategory
+      )
     : safeFaqs;
 
-  const baseFaqs = hasQuery ? filtered : categoryFilteredFaqs;
-  const defaultFaqs = popular.length ? popular : safeFaqs;
+  const baseFaqs = hasQuery
+    ? filtered
+    : categoryFilteredFaqs;
+
+  const defaultFaqs = popular.length
+    ? popular
+    : safeFaqs;
 
   const visibleFaqs = showAll
     ? baseFaqs
     : defaultFaqs.slice(0, 3);
 
+  /* ---------------- WhatsApp CTA ---------------- */
   const handleWhatsappCTA = () => {
     const text = lastClickedQuestion
       ? `Hi, I have a question about this project:\n\n"${lastClickedQuestion}"`
       : `Hi, I’d like to know more about this project.`;
 
-    const url = `https://wa.me/91XXXXXXXXXX?text=${encodeURIComponent(text)}`;
+    const url = `https://wa.me/919379822010?text=${encodeURIComponent(
+      text
+    )}`;
+
     window.open(url, "_blank");
   };
 
   return (
-    <section id="faq" className="py-20">
-      <FAQHeader title={title} subtitle={subtitle} />
+    <section
+      id={id}
+      className="py-12 md:py-16 scroll-mt-32 bg-background"
+    >
+      <div className="container max-w-5xl">
 
-      <FAQSearch
-        query={query}
-        setQuery={setQuery}
-        suggestions={suggestions}
-        resultsCount={baseFaqs.length}
-      />
-
-      {showAll && (
-        <FAQCategories
-          categories={categories}
-          onSelectCategory={(cat) => {
-            setActiveCategory(cat === "All" ? null : cat);
-            setShowAll(true);
-          }}
-        />
-      )}
-
-      <FAQList
-        faqs={visibleFaqs}
-        autoExpandFirst={!showAll && !hasQuery}
-        onFaqClick={(q) => setLastClickedQuestion(q)}
-        onInlineCTA={handleWhatsappCTA}
-      />
-
-      {!showAll && !hasQuery && safeFaqs.length > 5 && (
-        <div className="mt-6 text-center">
-          <button
-            onClick={() => setShowAll(true)}
-            className="text-primary text-sm underline"
-          >
-            View all {safeFaqs.length} questions →
-          </button>
+        {/* ─────────────────────────────
+           SECTION HEADER (SYSTEMIC)
+        ───────────────────────────── */}
+        <div className="mb-10">
+          <SectionHeader
+            eyebrow={meta.eyebrow}
+            title={meta.title}
+            subtitle={meta.subtitle}
+            tagline={meta.tagline}
+            align="center"
+          />
         </div>
-      )}
 
-      <div className="mt-14 text-center border-t pt-8">
-        <p className="text-muted-foreground mb-4">
-          Still unsure? Talk to someone who knows this project.
-        </p>
+        {/* ─────────────────────────────
+           SEARCH
+        ───────────────────────────── */}
+        <FAQSearch
+          query={query}
+          setQuery={setQuery}
+          suggestions={suggestions}
+          resultsCount={baseFaqs.length}
+        />
 
-        {onCtaClick && <CTAButtons onPrimaryClick={handleWhatsappCTA} />}
+        {/* ─────────────────────────────
+           CATEGORIES (ONLY WHEN EXPANDED)
+        ───────────────────────────── */}
+        {showAll && (
+          <FAQCategories
+            categories={categories}
+            onSelectCategory={(cat) => {
+              setActiveCategory(
+                cat === "All" ? null : cat
+              );
+              setShowAll(true);
+            }}
+          />
+        )}
+
+        {/* ─────────────────────────────
+           FAQ LIST
+        ───────────────────────────── */}
+        <FAQList
+          faqs={visibleFaqs}
+          autoExpandFirst={!showAll && !hasQuery}
+          onFaqClick={(q) =>
+            setLastClickedQuestion(q)
+          }
+          onInlineCTA={handleWhatsappCTA}
+        />
+
+        {/* ─────────────────────────────
+           SHOW ALL
+        ───────────────────────────── */}
+        {!showAll &&
+          !hasQuery &&
+          safeFaqs.length > 5 && (
+            <div className="mt-6 text-center">
+              <button
+                onClick={() => setShowAll(true)}
+                className="text-primary text-sm underline"
+              >
+                View all {safeFaqs.length} questions →
+              </button>
+            </div>
+          )}
+
+        {/* ─────────────────────────────
+           FINAL CTA
+        ───────────────────────────── */}
+        <div className="mt-14 text-center border-t pt-8">
+          <p className="text-muted-foreground mb-4">
+            Still unsure? Talk to someone who knows this
+            project.
+          </p>
+
+          {onCtaClick && (
+            <CTAButtons
+              onPrimaryClick={handleWhatsappCTA}
+            />
+          )}
+        </div>
       </div>
     </section>
   );

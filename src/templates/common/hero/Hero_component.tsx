@@ -4,37 +4,56 @@ import HeroMedia from "./HeroMedia";
 import HeroContent from "./HeroContent";
 import HeroQuickInfo from "./HeroQuickInfo";
 
+interface HeroMeta {
+  title?: string;
+  subtitle?: string;
+  tagline?: string;
+}
+
 interface HeroProps {
+  /** Media */
   videoId?: string;
   images?: string[];
-  overlayTitle?: string;
-  overlaySubtitle?: string;
+
+  /** Copy (meta-like, enforced) */
+  meta?: HeroMeta;
+
+  /** CTA */
   ctaEnabled?: boolean;
+  onCtaClick?: () => void;
+
+  /** Reassurance strip */
   quickInfo?: {
     price?: string;
     typology?: string;
     location?: string;
     size?: string;
   };
-  onCtaClick?: () => void;
 }
 
 export default function Hero_component(props: HeroProps) {
   const {
     videoId,
     images = [],
-    overlayTitle,
-    overlaySubtitle,
+    meta,
     quickInfo,
   } = props;
 
-  // 🔐 ENFORCE SINGLE DOMINANT VISUAL
+  const title = meta?.title;
+  const subtitle = meta?.subtitle;
+  const tagline = meta?.tagline;
+
+  /* ─────────────────────────────
+     SINGLE DOMINANT VISUAL
+  ───────────────────────────── */
   const hasVideo = Boolean(videoId);
   const hasImages = !hasVideo && images.length > 0;
   const hasMedia = hasVideo || hasImages;
-  const hasText = Boolean(overlayTitle || overlaySubtitle);
+  const hasText = Boolean(title || subtitle || tagline);
 
-  // 🔐 render guard
+  /* ─────────────────────────────
+     RENDER GUARD
+  ───────────────────────────── */
   if (!hasMedia && !hasText) return null;
 
   return (
@@ -47,6 +66,7 @@ export default function Hero_component(props: HeroProps) {
           : "py-20 bg-background",
       ].join(" ")}
     >
+      {/* Visual */}
       {hasMedia && (
         <HeroMedia
           videoId={hasVideo ? videoId : undefined}
@@ -54,11 +74,18 @@ export default function Hero_component(props: HeroProps) {
         />
       )}
 
+      {/* Copy + CTA */}
       <HeroContent
-        {...props}
+        title={title}
+        subtitle={subtitle}
+        tagline={tagline}
         hasMedia={hasMedia}
+        ctaEnabled={props.ctaEnabled}
+        onCtaClick={props.onCtaClick}
+        ctaSource="hero_primary"
       />
 
+      {/* Reassurance strip */}
       {hasMedia && quickInfo && (
         <HeroQuickInfo quickInfo={quickInfo} />
       )}

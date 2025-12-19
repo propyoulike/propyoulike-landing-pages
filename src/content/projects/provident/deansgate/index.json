@@ -5,12 +5,25 @@
   "type": "apartment",
   "status": "Under Construction",
 
-  "locationMeta": {
   "area": "IVC Road",
   "locality": "Devanahalli",
   "city": "Bengaluru",
   "state": "Karnataka",
-  "city": "India",
-  "zone": "North"
-   }
+  "country": "India",
+  "zone": "North",
+  "featured": true,
+
+  "files": {
+    "hero": "hero.json",
+    "summary": "summary.json",
+    "propertyPlans": "propertyPlans.json",
+    "amenities": "amenities.json",
+    "views": "views.json",
+    "locationUI": "locationUI.json",
+    "construction": "construction.json",
+    "paymentPlans": "paymentPlans.json",
+    "testimonials": "testimonials.json",
+    "brochure": "brochure.json",
+    "aboutBuilder": "../aboutBuilder.json"
+  }
 }

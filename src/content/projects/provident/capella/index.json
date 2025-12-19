@@ -5,12 +5,25 @@
   "type": "apartment",
   "status": "Under Construction",
 
-  "locationMeta": {
   "area": "Soukya Road",
   "locality": "Whitefield",
   "city": "Bengaluru",
   "state": "Karnataka",
-  "city": "India",
-  "zone": "East"
-   }
+  "country": "India",
+  "zone": "East",
+  "featured": true,
+
+  "files": {
+    "hero": "hero.json",
+    "summary": "summary.json",
+    "propertyPlans": "propertyPlans.json",
+    "amenities": "amenities.json",
+    "views": "views.json",
+    "locationUI": "locationUI.json",
+    "construction": "construction.json",
+    "paymentPlans": "paymentPlans.json",
+    "testimonials": "testimonials.json",
+    "brochure": "brochure.json",
+    "aboutBuilder": "../aboutBuilder.json"
+  }
 }

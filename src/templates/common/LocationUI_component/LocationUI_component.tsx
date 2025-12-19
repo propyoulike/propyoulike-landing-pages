@@ -1,3 +1,5 @@
+// src/templates/common/LocationUI/LocationUI_component.tsx
+
 import { memo } from "react";
 import { Button } from "@/components/ui/button";
 import { useLeadCTAContext } from "@/components/lead/LeadCTAProvider";
@@ -6,64 +8,108 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 import LocationMediaPanel from "./LocationMediaPanel";
 import LocationCategoryAccordion from "./LocationCategoryAccordion";
 
+import SectionHeader from "../SectionHeader";
+import type { SectionMeta } from "@/content/types/sectionMeta";
+
+/* ---------------------------------------------------------------------
+   TYPES
+------------------------------------------------------------------------*/
+interface LocationUIProps {
+  id?: string;
+
+  /** Canonical section meta */
+  meta?: SectionMeta;
+
+  videoId?: string;
+  mapUrl?: string;
+
+  categories?: any[];
+}
+
+/* ---------------------------------------------------------------------
+   COMPONENT
+------------------------------------------------------------------------*/
 const LocationUI_component = memo(function LocationUI({
-  title,
-  subtitle,
-  tagline,
+  id = "location",
+
+  meta = {
+    eyebrow: "LOCATION",
+    title: "Location & connectivity",
+    subtitle:
+      "Distances to key landmarks, offices, schools and transport",
+    tagline:
+      "Understand daily travel convenience before you visit",
+  },
+
   videoId,
   mapUrl,
   categories = [],
-}) {
+}: LocationUIProps) {
   useScrollReveal(".fade-up");
   const { openCTA } = useLeadCTAContext();
 
+  if (!videoId && !mapUrl && !categories.length) return null;
+
   return (
-    <section id="location" className="py-24 scroll-mt-32 bg-background">
-      <div className="container mx-auto px-4">
+    <section
+      id={id}
+      className="py-12 md:py-16 scroll-mt-32 bg-background"
+    >
+      <div className="container max-w-6xl">
 
-        {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-14 fade-up">
-          <h2 className="text-2xl md:text-3xl font-semibold">
-            {title}
-          </h2>
-
-          {subtitle && (
-            <p className="text-lg text-muted-foreground mt-2">
-              {subtitle}
-            </p>
-          )}
-
-          {tagline && (
-            <p className="text-sm italic text-muted-foreground mt-1">
-              {tagline}
-            </p>
-          )}
+        {/* ─────────────────────────────
+           SECTION HEADER (SYSTEMIC)
+        ───────────────────────────── */}
+        <div className="mb-10 fade-up">
+          <SectionHeader
+            eyebrow={meta.eyebrow}
+            title={meta.title}
+            subtitle={meta.subtitle}
+            tagline={meta.tagline}
+            align="center"
+          />
         </div>
 
-        {/* Media */}
-        <LocationMediaPanel videoId={videoId} mapUrl={mapUrl} />
+        {/* ─────────────────────────────
+           MEDIA (VIDEO / MAP)
+        ───────────────────────────── */}
+        {(videoId || mapUrl) && (
+          <div className="fade-up">
+            <LocationMediaPanel
+              videoId={videoId}
+              mapUrl={mapUrl}
+            />
+          </div>
+        )}
 
-        {/* Distances */}
-        <div className="max-w-4xl mx-auto mt-12 fade-up">
-          <LocationCategoryAccordion categories={categories} />
+        {/* ─────────────────────────────
+           DISTANCES / CATEGORIES
+        ───────────────────────────── */}
+        {categories.length > 0 && (
+          <div className="max-w-4xl mx-auto mt-10 fade-up">
+            <LocationCategoryAccordion
+              categories={categories}
+            />
+          </div>
+        )}
+
+        {/* ─────────────────────────────
+           SINGLE, SOFT CTA
+        ───────────────────────────── */}
+        <div className="mt-14 text-center fade-up">
+          <Button
+            size="lg"
+            className="rounded-xl px-12"
+            onClick={() =>
+              openCTA({
+                source: "section",
+                label: "location_book_site_visit",
+              })
+            }
+          >
+            Book site visit
+          </Button>
         </div>
-
-        {/* ✅ SINGLE, SOFT CTA */}
-<div className="mt-14 text-center fade-up">
-  <Button
-    size="lg"
-    className="rounded-xl px-12"
-    onClick={() =>
-      openCTA({
-        source: "section",
-        label: "Location – Book Site Visit",
-      })
-    }
-  >
-    Book Site Visit
-  </Button>
-</div>
-
       </div>
     </section>
   );

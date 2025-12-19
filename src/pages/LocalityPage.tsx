@@ -48,6 +48,7 @@ export default function LocalityPage() {
           ))}
         </div>
       )}
+      <Footer city={city} locality={locality} />
     </div>
   );
 }

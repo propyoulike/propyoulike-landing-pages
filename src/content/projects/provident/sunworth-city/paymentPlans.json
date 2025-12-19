@@ -2,6 +2,7 @@
   "paymentPlans": {
     "sectionTitle": "Pricing & Payment Plans",
     "sectionSubtitle": "Transparent costing • Milestone-based • RERA compliant",
+    "status": "known",
 
     "pricingTitle": "How is price calculated?",
     "pricingComputation": [

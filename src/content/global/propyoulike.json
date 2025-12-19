@@ -25,7 +25,7 @@
   "rera": {
     "id": "PRM/KA/RERA/1251/310/AG/250811/005899",
     "state": "Karnataka",
-    "disclaimer": "PropYouLike is an Individual RERA registered real estate marketing partner. All project details are sourced from official developer materials.",
+    "disclaimer": "PropYouLike is a RERA-registered real estate marketing partner.",
     "verificationUrl": "https://rera.karnataka.gov.in/"
   },
 
@@ -42,7 +42,9 @@
     "facebook": "https://facebook.com/propyoulike",
     "instagram": "https://instagram.com/propyoulike",
     "youtube": "https://youtube.com/propyoulike",
-    "linkedin": "https://linkedin.com/company/propyoulike"
+    "linkedin": "https://linkedin.com/company/propyoulike",
+    "whatsappChannel": "",
+    "whatsappGroup": ""
   },
 
   "privyrEndpoint": "https://www.privyr.com/api/v1/incoming-leads/0vZfjMQw/5xrM2juN#generic-webhook",

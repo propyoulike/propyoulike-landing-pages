@@ -1,8 +1,13 @@
+// src/templates/common/Views_component/Views_component.tsx
+
 import { memo, useState } from "react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 import ViewCarousel from "./ViewCarousel";
 import ViewLightbox from "./ViewLightbox";
+
+import SectionHeader from "../SectionHeader";
+import type { SectionMeta } from "@/content/types/sectionMeta";
 
 /* -----------------------------------------
    Types match JSON exactly
@@ -17,15 +22,23 @@ interface ViewImage {
 
 interface ViewsProps {
   id?: string;
-  title?: string;
-  subtitle?: string;
+
+  /** Canonical section meta */
+  meta?: SectionMeta;
+
+  /** View / perspective images */
   images?: ViewImage[];
 }
 
 const Views_component = memo(function Views({
   id = "views",
-  title,
-  subtitle,
+
+  meta = {
+    title: "Views & Surroundings",
+    subtitle:
+      "A glimpse of the surroundings, open spaces, and perspectives from the project",
+  },
+
   images = [],
 }: ViewsProps) {
   useScrollReveal(".fade-up");
@@ -33,9 +46,9 @@ const Views_component = memo(function Views({
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  /** Only active images */
+  /** Only active images, ordered */
   const activeImages = images
-    .filter(img => img.is_active !== false)
+    .filter((img) => img.is_active !== false)
     .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 
   if (!activeImages.length) return null;
@@ -43,38 +56,42 @@ const Views_component = memo(function Views({
   return (
     <section
       id={id}
-      className="py-24 scroll-mt-32 bg-background"
+      className="py-12 md:py-16 scroll-mt-32 bg-background"
     >
-      <div className="container mx-auto px-4">
+      <div className="container">
 
-        {/* ✅ HEADER — WILL NOW ALWAYS RENDER */}
-        {(title || subtitle) && (
-          <div className="text-center max-w-3xl mx-auto mb-16 fade-up">
-            {title && (
-              <h2 className="text-3xl lg:text-5xl font-bold mb-4">
-                {title}
-              </h2>
-            )}
-
-            {subtitle && (
-              <p className="text-lg text-muted-foreground">
-                {subtitle}
-              </p>
-            )}
+        {/* ─────────────────────────────
+           SECTION HEADER (SYSTEMIC)
+        ───────────────────────────── */}
+        {meta?.title && (
+          <div className="mb-12 fade-up">
+            <SectionHeader
+              eyebrow={meta.eyebrow}
+              title={meta.title}
+              subtitle={meta.subtitle}
+              tagline={meta.tagline}
+              align="center"
+            />
           </div>
         )}
 
-        {/* Carousel */}
-        <ViewCarousel
-          items={activeImages}
-          onTileClick={(index) => {
-            setSelectedIndex(index);
-            setLightboxOpen(true);
-          }}
-        />
+        {/* ─────────────────────────────
+           VISUAL DISCOVERY (PRIMARY)
+        ───────────────────────────── */}
+        <div className="fade-up">
+          <ViewCarousel
+            items={activeImages}
+            onTileClick={(index) => {
+              setSelectedIndex(index);
+              setLightboxOpen(true);
+            }}
+          />
+        </div>
       </div>
 
-      {/* Lightbox */}
+      {/* ─────────────────────────────
+         LIGHTBOX (IMMERSIVE, SECONDARY)
+      ───────────────────────────── */}
       <ViewLightbox
         open={lightboxOpen}
         index={selectedIndex}

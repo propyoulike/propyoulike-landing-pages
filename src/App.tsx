@@ -23,6 +23,8 @@ import PrivacyPage from "@/components/legal/PrivacyPage";
 import TermsPage from "@/components/legal/TermsPage";
 import ReraPage from "@/components/legal/ReraPage";
 
+import { LeadCTAProvider } from "@/components/lead/LeadCTAProvider";
+
 const queryClient = new QueryClient();
 
 function DisableScrollRestoration() {
@@ -37,6 +39,7 @@ const App = () => {
     <HelmetProvider>
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
+          <LeadCTAProvider>
           <Toaster />
           <Sonner />
           <Tracking />
@@ -67,6 +70,7 @@ const App = () => {
             {/* Not found */}
             <Route path="*" element={<NotFound />} />
           </Routes>
+          </LeadCTAProvider>
         </TooltipProvider>
       </QueryClientProvider>
     </HelmetProvider>

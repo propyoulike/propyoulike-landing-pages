@@ -42,6 +42,8 @@ export default function ZonePage() {
           ))}
         </div>
       )}
+      <Footer city={city} zone={zone} />
+
     </div>
   );
 }

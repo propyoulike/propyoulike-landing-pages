@@ -1,63 +1,115 @@
+// src/templates/common/PaymentPlans/PaymentPlans_component.tsx
+
 import { Button } from "@/components/ui/button";
 import { useLeadCTAContext } from "@/components/lead/LeadCTAProvider";
+
 import PricingBlockList from "./PricingBlockList";
 import PaymentScheduleTimeline from "./PaymentScheduleTimeline";
 
+import SectionHeader from "../SectionHeader";
+import type { SectionMeta } from "@/content/types/sectionMeta";
+
+/* ---------------------------------------------------------------------
+   TYPES
+------------------------------------------------------------------------*/
+interface PaymentPlansProps {
+  id?: string;
+
+  /** Canonical section meta */
+  meta?: SectionMeta;
+
+  /** Pricing computation */
+  pricingTitle?: string;
+  pricingComputation?: any[];
+
+  /** Payment schedule */
+  scheduleTitle?: string;
+  paymentSchedule?: any[];
+}
+
+/* ---------------------------------------------------------------------
+   COMPONENT
+------------------------------------------------------------------------*/
 export default function PaymentPlans_component({
-  sectionId = "payment-plans",
-  sectionTitle = "Pricing & Payment Plans",
-  sectionSubtitle,
-  pricingTitle = "Pricing Computation",
+  id = "payment-plans",
+
+  meta = {
+    eyebrow: "PRICING",
+    title: "Pricing & payment plans",
+    subtitle:
+      "Understand total cost, stage-wise payments, and what you pay when",
+    tagline:
+      "No surprises — full clarity before you decide",
+  },
+
+  pricingTitle = "Pricing computation",
   pricingComputation = [],
-  scheduleTitle = "Construction Payment Schedule",
+
+  scheduleTitle = "Construction-linked payment schedule",
   paymentSchedule = [],
-}) {
+}: PaymentPlansProps) {
   const { openCTA } = useLeadCTAContext();
 
-  if (!pricingComputation.length && !paymentSchedule.length) return null;
+  if (
+    !pricingComputation.length &&
+    !paymentSchedule.length
+  ) {
+    return null;
+  }
 
   return (
     <section
-      id={sectionId}
-      className="py-20 lg:py-28 bg-background scroll-mt-32"
+      id={id}
+      className="py-12 md:py-16 bg-background scroll-mt-32"
     >
-      <div className="container mx-auto px-4">
+      <div className="container max-w-6xl">
 
-        {/* HEADER */}
-        <div className="text-center max-w-3xl mx-auto mb-14">
-          <h2 className="text-2xl md:text-3xl font-semibold mb-3">
-            {sectionTitle}
-          </h2>
+        {/* ─────────────────────────────
+           SECTION HEADER (SYSTEMIC)
+        ───────────────────────────── */}
+        <div className="mb-12">
+          <SectionHeader
+            eyebrow={meta.eyebrow}
+            title={meta.title}
+            subtitle={meta.subtitle}
+            tagline={meta.tagline}
+            align="center"
+          />
+        </div>
 
-          {sectionSubtitle && (
-            <p className="text-muted-foreground text-lg">
-              {sectionSubtitle}
-            </p>
+        {/* ─────────────────────────────
+           CONTENT GRID
+        ───────────────────────────── */}
+        <div className="grid lg:grid-cols-2 gap-14">
+
+          {/* Pricing computation */}
+          {pricingComputation.length > 0 && (
+            <div>
+              <h3 className="text-xl font-semibold mb-6">
+                {pricingTitle}
+              </h3>
+              <PricingBlockList
+                blocks={pricingComputation}
+              />
+            </div>
+          )}
+
+          {/* Payment schedule */}
+          {paymentSchedule.length > 0 && (
+            <div>
+              <h3 className="text-xl font-semibold mb-6">
+                {scheduleTitle}
+              </h3>
+              <PaymentScheduleTimeline
+                stages={paymentSchedule}
+              />
+            </div>
           )}
         </div>
 
-        {/* CONTENT GRID */}
-        <div className="grid lg:grid-cols-2 gap-14">
-
-          {/* Pricing */}
-          <div>
-            <h3 className="text-xl font-semibold mb-6">
-              {pricingTitle}
-            </h3>
-            <PricingBlockList blocks={pricingComputation} />
-          </div>
-
-          {/* Payment Schedule */}
-          <div>
-            <h3 className="text-xl font-semibold mb-6">
-              {scheduleTitle}
-            </h3>
-            <PaymentScheduleTimeline stages={paymentSchedule} />
-          </div>
-
-        </div>
-
-        {/* SINGLE, TRUST-LED CTA */}
+        {/* ─────────────────────────────
+           SINGLE, TRUST-LED CTA
+        ───────────────────────────── */}
         <div className="mt-16 text-center">
           <Button
             size="lg"
@@ -65,14 +117,13 @@ export default function PaymentPlans_component({
             onClick={() =>
               openCTA({
                 source: "section",
-                label: "Pricing – Get Detailed Breakdown",
+                label: "payment_plans_detailed_pricing",
               })
             }
           >
-            Get Detailed Pricing & Payment Breakup
+            Get detailed pricing & payment breakup
           </Button>
         </div>
-
       </div>
     </section>
   );

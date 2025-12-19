@@ -1,0 +1,7 @@
+project,index,hero,summary,amenities,views,locationUI,propertyPlans,construction,testimonials,faq
+provident/botanico,"OK","OK","ERROR: Expected string, received object","OK","OK","—","—","ERROR: Expected object, received array","OK","—"
+provident/capella,"OK","OK","ERROR: Expected string, received object","OK","OK","—","—","ERROR: Expected object, received array","OK","—"
+provident/deansgate,"OK","OK","ERROR: Expected string, received object","OK","OK","—","—","ERROR: Expected object, received array","OK","—"
+provident/ecopolitan,"OK","OK","ERROR: Expected string, received object","OK","OK","—","—","ERROR: Expected object, received array","OK","—"
+provident/park-square,"OK","OK","ERROR: Expected string, received object","OK","OK","—","—","ERROR: Expected object, received array","OK","—"
+provident/sunworth-city,"OK","OK","OK","OK","ERROR: Required","ERROR: Required","ERROR: PropertyPlans must include at least one: modelFlats, unitPlans, floorPlans, or masterPlan","OK","ERROR: Expected array, received object","—"

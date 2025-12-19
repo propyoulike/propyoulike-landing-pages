@@ -1,0 +1,30 @@
+{
+  "slug": "",
+  "projectName": "",
+  "builder": "",
+  "city": "",
+  "zone": "East",
+  "area": "",
+  "locality": "",
+  "state": "",
+  "country": "",
+  "status": "",
+  "type": "",
+  "sections": {
+    "hero": "hero.json",
+    "summary": "summary.json",
+    "amenities": "amenities.json",
+    "views": "views.json",
+    "locationUI": "locationUI.json",
+    "propertyPlans": "propertyPlans.json",
+    "paymentPlans": "paymentPlans.json",
+    "brochure": "brochure.json",
+    "testimonials": "testimonials.json",
+    "aboutBuilder": "aboutBuilder.json",
+    "construction": "construction.json",
+    "faq": "faq.json",
+    "localityProjects": "localityProjects.json",
+    "builderProjects": "builderProjects.json",
+    "loanSupport": "loanSupport.json"
+  }
+}

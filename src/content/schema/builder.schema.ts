@@ -8,17 +8,17 @@ export const SectionNames = z.enum([
   "Navbar",
   "Hero",
   "Summary",
-  "FloorPlans",
+  "PropoertyPlans",
   "Location",
   "Amenities",
   "Views",
   "Construction",
   "PaymentPlans",
-  "LoanEligibility",
-  "CustomerSpeaks",
+  "LoanApplication",
+  "Testimonials",
   "Brochure",
   "FAQ",
-  "BuilderAbout",
+  "AboutBuilder",
 ]);
 
 /* --------------------------------------------
@@ -32,12 +32,13 @@ export const BuilderBaseSchema = z.object({
   website: z.string().optional(),
 
   title: z.string().optional(),
-  subtitle: z.string().optional(),       // ⭐ ADDED
+  subtitle: z.string().optional(),      
+  tagline: z.string().optional(),      
   description: z.string().optional(),
   descriptionExpanded: z.string().optional(),
 
   /* -------- NEW: Builder Badges -------- */
-  badges: z.array(z.string()).optional(),   // ⭐ ADDED
+  badges: z.array(z.string()).optional(),  
 
   /* -------- NEW: Stats -------- */
   stats: z.array(
@@ -46,7 +47,7 @@ export const BuilderBaseSchema = z.object({
       label: z.string().optional(),
       value: z.string().optional(),
     })
-  ).optional(), // ⭐ ADDED
+  ).optional(), 
 
   /* -------- Brand Colors -------- */
   theme: z

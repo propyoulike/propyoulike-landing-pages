@@ -65,7 +65,7 @@ export default function CityPage() {
       </main>
 
       {/* Footer (generic) */}
-      <Footer />
+      <Footer city={city}/>
     </>
   );
 }

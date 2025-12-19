@@ -4,12 +4,17 @@
   "projectName": "Provident Sunworth City",
   "type": "apartment",
   "status": "under-construction",
-  "city": "Bengaluru",
-  "zone": "West",
+
+
   "area": "Kengeri",
   "locality": "Mysore Road",
+  "zone": "West",
+  "city": "Bengaluru",
   "state": "Karnataka",
   "country": "India",
+
+  "featured": true,
+
   "files": {
     "hero": "hero.json",
     "summary": "summary.json",

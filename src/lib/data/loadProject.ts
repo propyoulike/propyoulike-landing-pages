@@ -34,6 +34,13 @@ const globalLoanSupport = getJSON(
 export const allProjectMetas = buildAllProjectMetas(contentFiles);
 
 /* -------------------------------------------------
+   Public accessor (used by homepage, etc.)
+-------------------------------------------------- */
+export function getAllProjectMetas() {
+  return allProjectMetas;
+}
+
+/* -------------------------------------------------
    Slug guard
 -------------------------------------------------- */
 export function isProjectSlug(slug: string): boolean {

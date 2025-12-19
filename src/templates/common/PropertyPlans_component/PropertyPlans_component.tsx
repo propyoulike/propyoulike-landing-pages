@@ -9,13 +9,26 @@ import FloorPlanCard from "./FloorPlanCard";
 import UnitPlanCard from "./UnitPlanCard";
 import CTAButtons from "@/components/CTAButtons";
 
-interface Props {
-  title?: string;
-  subtitle?: string;
-  tagline?: string;
+import SectionHeader from "../SectionHeader";
+import type { SectionMeta } from "@/content/types/sectionMeta";
 
-  floorPlans?: { title?: string; image?: string; description?: string }[];
+/* ---------------------------------------------------------------------
+   TYPES
+------------------------------------------------------------------------*/
+interface Props {
+  id?: string;
+
+  /** Canonical section meta */
+  meta?: SectionMeta;
+
+  floorPlans?: {
+    title?: string;
+    image?: string;
+    description?: string;
+  }[];
+
   unitPlans?: any[];
+
   masterPlan?: {
     image?: string;
     title?: string;
@@ -25,20 +38,30 @@ interface Props {
   onCtaClick?: () => void;
 }
 
-export default function PropertyPlans_component(props: Props) {
-  const {
-    title,
-    subtitle,
-    tagline,
-    floorPlans = [],
-    unitPlans = [],
-    masterPlan,
-    onCtaClick,
-  } = props;
+/* ---------------------------------------------------------------------
+   COMPONENT
+------------------------------------------------------------------------*/
+export default function PropertyPlans_component({
+  id = "plans",
 
+  meta = {
+    eyebrow: "LAYOUTS",
+    title: "Property plans & layouts",
+    subtitle:
+      "Explore master plans, floor layouts, and unit configurations",
+    tagline:
+      "Designed for comfort, efficiency, and long-term value",
+  },
+
+  floorPlans = [],
+  unitPlans = [],
+  masterPlan,
+
+  onCtaClick,
+}: Props) {
   const [zoomImage, setZoomImage] = useState<string | null>(null);
 
-  const hasMaster = !!masterPlan?.image;
+  const hasMaster = Boolean(masterPlan?.image);
   const hasFloor = floorPlans.length > 0;
   const hasUnits = unitPlans.length > 0;
 
@@ -46,58 +69,52 @@ export default function PropertyPlans_component(props: Props) {
 
   return (
     <section
-      id="plans"
-      className="py-16 lg:py-20 scroll-mt-32 bg-background"
+      id={id}
+      className="py-12 md:py-16 scroll-mt-32 bg-background"
     >
-      <div className="container mx-auto px-4">
+      <div className="container max-w-6xl">
 
-        {/* ---------- Header ---------- */}
-        {(title || subtitle || tagline) && (
-          <div className="max-w-3xl mx-auto text-center mb-12">
-            {title && (
-              <h2 className="text-3xl font-semibold mb-3">
-                {title}
-              </h2>
-            )}
-            {subtitle && (
-              <p className="text-lg text-muted-foreground mb-3">
-                {subtitle}
-              </p>
-            )}
-            {tagline && (
-              <p className="text-muted-foreground">
-                {tagline}
-              </p>
-            )}
-          </div>
-        )}
+        {/* ─────────────────────────────
+           SECTION HEADER (SYSTEMIC)
+        ───────────────────────────── */}
+        <div className="mb-12">
+          <SectionHeader
+            eyebrow={meta.eyebrow}
+            title={meta.title}
+            subtitle={meta.subtitle}
+            tagline={meta.tagline}
+            align="center"
+          />
+        </div>
 
-        {/* ---------- Tabs ---------- */}
+        {/* ─────────────────────────────
+           TABS
+        ───────────────────────────── */}
         <Tabs
           defaultValue={
             hasMaster ? "master" : hasFloor ? "floor" : "unit"
           }
           className="max-w-5xl mx-auto"
         >
-          <TabsList className="grid w-full grid-cols-3 mb-10 h-auto bg-muted rounded-xl p-1">
+          <TabsList className="grid w-full grid-cols-3 mb-10 bg-muted rounded-xl p-1">
             {hasMaster && (
               <TabsTrigger value="master">
-                Master Plan
+                Master plan
               </TabsTrigger>
             )}
             {hasFloor && (
               <TabsTrigger value="floor">
-                Floor Plans
+                Floor plans
               </TabsTrigger>
             )}
             {hasUnits && (
               <TabsTrigger value="unit">
-                Unit Plans
+                Unit plans
               </TabsTrigger>
             )}
           </TabsList>
 
-          {/* ---------- MASTER PLAN ---------- */}
+          {/* MASTER PLAN */}
           {hasMaster && (
             <TabsContent value="master">
               <div className="flex justify-center">
@@ -110,7 +127,7 @@ export default function PropertyPlans_component(props: Props) {
             </TabsContent>
           )}
 
-          {/* ---------- FLOOR PLANS ---------- */}
+          {/* FLOOR PLANS */}
           {hasFloor && (
             <TabsContent value="floor">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-10 place-items-center">
@@ -118,14 +135,17 @@ export default function PropertyPlans_component(props: Props) {
                   <FloorPlanCard
                     key={i}
                     {...plan}
-                    onZoom={() => setZoomImage(plan.image)}
+                    onZoom={() =>
+                      plan.image &&
+                      setZoomImage(plan.image)
+                    }
                   />
                 ))}
               </div>
             </TabsContent>
           )}
 
-          {/* ---------- UNIT PLANS ---------- */}
+          {/* UNIT PLANS */}
           {hasUnits && (
             <TabsContent value="unit">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-10 place-items-center">
@@ -143,22 +163,25 @@ export default function PropertyPlans_component(props: Props) {
           )}
         </Tabs>
 
-        {/* ---------- CTA (Decision Confirmation) ---------- */}
+        {/* ─────────────────────────────
+           CTA — DECISION CONFIRMATION
+        ───────────────────────────── */}
         {onCtaClick && (
-          <div className="mt-14 flex justify-center">
+          <div className="mt-16 flex justify-center">
             <CTAButtons
               onPrimaryClick={onCtaClick}
               intent={{
                 source: "section",
-                label: "Property Plans CTA",
+                label: "property_plans_viewed",
               }}
             />
           </div>
         )}
-
       </div>
 
-      {/* ---------- Global Zoom Modal ---------- */}
+      {/* ─────────────────────────────
+           GLOBAL ZOOM MODAL
+        ───────────────────────────── */}
       <ImageZoomModal
         src={zoomImage}
         onClose={() => setZoomImage(null)}

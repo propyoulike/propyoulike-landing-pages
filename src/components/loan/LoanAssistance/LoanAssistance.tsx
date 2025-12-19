@@ -1,59 +1,80 @@
 // src/templates/common/LoanAssistance.tsx
 
 import { CheckCircle } from "lucide-react";
+import SectionHeader from "@/templates/common/SectionHeader";
+import type { SectionMeta } from "@/content/types/sectionMeta";
 
 interface LoanAssistanceProps {
+  id?: string;
+
+  meta?: SectionMeta;
+
   loanSupport?: {
     enabled?: boolean;
-    headline?: string;
-    subtext?: string;
     banks?: { name: string }[];
     highlights?: string[];
     disclaimer?: string;
   };
 }
 
-export default function LoanAssistance({ loanSupport }: LoanAssistanceProps) {
+export default function LoanAssistance({
+  id = "loan-assistance",
+
+  meta = {
+    eyebrow: "FINANCING SUPPORT",
+    title: "Home loan assistance available",
+    subtitle:
+      "Get guidance on loans, approvals, and documentation — without any obligation",
+    tagline:
+      "We help you understand your options so you can decide confidently",
+  },
+
+  loanSupport,
+}: LoanAssistanceProps) {
   if (!loanSupport?.enabled) return null;
 
   const {
-    headline = "Home Loan Assistance Available",
-    subtext = "Guidance on home loans, approvals, and documentation — with no obligation.",
     banks = [],
     highlights = [
       "No obligation support",
       "Guidance during site visit",
-      "Help with documents & approvals",
+      "Help with documentation & approvals",
     ],
     disclaimer,
   } = loanSupport;
 
   return (
-    <section className="py-14 md:py-16 bg-muted/30">
-      <div className="container mx-auto px-4 max-w-4xl">
+    <section
+      id={id}
+      className="py-12 md:py-16 bg-muted/30 scroll-mt-32"
+    >
+      <div className="container max-w-4xl">
+
+        {/* ─────────────────────────────
+           SECTION HEADER (SYSTEMIC)
+        ───────────────────────────── */}
+        <div className="mb-10">
+          <SectionHeader
+            eyebrow={meta.eyebrow}
+            title={meta.title}
+            subtitle={meta.subtitle}
+            tagline={meta.tagline}
+            align="center"
+          />
+        </div>
+
+        {/* ─────────────────────────────
+           CONTENT CARD
+        ───────────────────────────── */}
         <div className="rounded-2xl border bg-card p-8 md:p-10 text-center shadow-sm space-y-6">
 
-          {/* Section Title */}
-          <h2 className="text-2xl md:text-3xl font-semibold text-foreground">
-            {headline}
-          </h2>
-
-          {/* Subtitle */}
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            {subtext}
-          </p>
-
-          {/* Bank Logos / Names */}
+          {/* Banks */}
           {banks.length > 0 && (
-            <div className="flex justify-center gap-3 flex-wrap pt-2">
+            <div className="flex justify-center gap-3 flex-wrap">
               {banks.map((bank) => (
                 <span
                   key={bank.name}
-                  className="
-                    px-4 py-1.5 rounded-full 
-                    border bg-background 
-                    text-sm font-medium text-muted-foreground
-                  "
+                  className="px-4 py-1.5 rounded-full border bg-background text-sm font-medium text-muted-foreground"
                 >
                   {bank.name}
                 </span>
@@ -62,7 +83,7 @@ export default function LoanAssistance({ loanSupport }: LoanAssistanceProps) {
           )}
 
           {/* Highlights */}
-          <ul className="space-y-3 max-w-md mx-auto text-left pt-2">
+          <ul className="space-y-3 max-w-md mx-auto text-left">
             {highlights.map((item) => (
               <li
                 key={item}
@@ -80,7 +101,6 @@ export default function LoanAssistance({ loanSupport }: LoanAssistanceProps) {
               {disclaimer}
             </p>
           )}
-
         </div>
       </div>
     </section>

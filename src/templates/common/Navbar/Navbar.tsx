@@ -1,4 +1,5 @@
 // src/templates/common/Navbar/Navbar.tsx
+
 import { memo, useMemo, useRef } from "react";
 
 import Shell from "./components/Shell";
@@ -19,12 +20,19 @@ export interface NavbarMenuItem {
 }
 
 interface NavbarProps {
+  /** Brand logos */
   logo?: string;
   builderLogo?: string;
+
+  /** Context */
   projectName?: string;
+
+  /** Auto-generated menu from sections */
   autoMenu?: NavbarMenuItem[];
+
+  /** CTA */
   ctaLabel?: string;
-  onCtaClick?: () => void;
+  onCtaClick?: (source?: string) => void;
 }
 
 /* -------------------------------------------------
@@ -35,25 +43,38 @@ function Navbar({
   builderLogo,
   projectName,
   autoMenu = [],
-  ctaLabel,
+  ctaLabel = "Book site visit",
   onCtaClick,
 }: NavbarProps) {
-  const { sticky, shrink, mobileOpen, toggleMobile, closeMobile } =
-    useNavbarState();
+  const {
+    sticky,
+    shrink,
+    mobileOpen,
+    toggleMobile,
+    closeMobile,
+  } = useNavbarState();
 
-  // 🔒 shared lock between scrollTo & scrollSpy
+  // 🔒 Shared lock between scrollTo & scrollSpy
   const scrollLockRef = useRef(false);
 
   const scrollTo = useScrollTo(scrollLockRef);
 
-  // stable ids for spy
-  const ids = useMemo(() => autoMenu.map((m) => m.id), [autoMenu]);
+  // Stable ids for scroll spy
+  const ids = useMemo(
+    () => autoMenu.map((m) => m.id),
+    [autoMenu]
+  );
 
   const activeId = useScrollSpy(ids, scrollLockRef);
 
   const handleSelect = (id: string) => {
     scrollTo(id);
-    closeMobile(); // mobile UX fix
+    closeMobile();
+  };
+
+  const handleCta = () => {
+    onCtaClick?.("navbar_primary");
+    closeMobile();
   };
 
   return (
@@ -71,6 +92,8 @@ function Navbar({
           menu={autoMenu}
           activeId={activeId}
           onSelect={handleSelect}
+          ctaLabel={ctaLabel}
+          onCtaClick={handleCta}
         />
 
         <button
@@ -89,7 +112,7 @@ function Navbar({
         onSelect={handleSelect}
         onClose={closeMobile}
         ctaLabel={ctaLabel}
-        onCtaClick={onCtaClick}
+        onCtaClick={handleCta}
       />
     </>
   );

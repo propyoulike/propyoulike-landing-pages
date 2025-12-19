@@ -1,0 +1,357 @@
+{
+  /* ============================================================
+     PROJECT IDENTITY (MANDATORY – LOCKED)
+     ============================================================ */
+
+  "slug": "",
+  "builder": "",
+  "projectName": "",
+
+  "type": "",
+  "status": "",
+  "featured": false,
+
+  "area": "",
+  "locality": "",
+  "zone": "",
+  "city": "",
+  "state": "",
+  "country": "",
+  "pincode": "",
+
+  /* ============================================================
+     HERO (MANDATORY SECTION)
+     ============================================================ */
+
+  "hero": {
+    "videoId": "",
+    "images": [
+      {
+        "image": ""
+      }
+    ],
+
+    "overlayTitle": "",
+    "overlaySubtitle": "",
+
+    "eyebrow": "",
+    "title": "",
+    "subtitle": "",
+    "tagline": "",
+
+    "quickInfo": {
+      "price": "",
+      "typology": "",
+      "size": ""
+    }
+  },
+
+  /* ============================================================
+     SUMMARY
+     ============================================================ */
+
+  "summary": {
+    "eyebrow": "",
+    "title": "",
+    "subtitle": "",
+    "tagline": "",
+    "description": "",
+
+    "highlights": [
+      {
+        "highlight": ""
+      }
+    ]
+  },
+
+  /* ============================================================
+     AMENITIES
+     ============================================================ */
+
+  "amenities": {
+    "eyebrow": "",
+    "title": "",
+    "subtitle": "",
+    "tagline": "",
+
+    "heroTitle": "",
+    "heroSubtitle": "",
+
+    "amenityImages": [
+      {
+        "src": "",
+        "title": "",
+        "description": "",
+        "media_type": "image"
+      }
+    ],
+
+    "amenityCategories": [
+      {
+        "title": "",
+        "items": ""
+      }
+    ]
+  },
+
+  /* ============================================================
+     VIEWS
+     ============================================================ */
+
+  "views": {
+    "eyebrow": "",
+    "title": "",
+    "subtitle": "",
+    "tagline": "",
+
+    "images": [
+      {
+        "src": "",
+        "title": "",
+        "order": "",
+        "is_active": true
+      }
+    ]
+  },
+
+  /* ============================================================
+     LOCATION UI
+     ============================================================ */
+
+  "locationUI": {
+    "eyebrow": "",
+    "title": "",
+    "subtitle": "",
+    "tagline": "",
+
+    "videoId": "",
+    "mapUrl": "",
+
+    "categories": [
+      {
+        "title": "",
+        "items": ""
+      }
+    ]
+  },
+
+  /* ============================================================
+     PROPERTY PLANS
+     ============================================================ */
+
+  "propertyPlans": {
+    "eyebrow": "",
+    "title": "",
+    "subtitle": "",
+    "tagline": "",
+
+    "modelFlats": [
+      {
+        "title": "",
+        "youtubeId": "",
+        "order": ""
+      }
+    ],
+
+    "unitPlans": [
+      {
+        "title": "",
+        "description": "",
+        "sba": "",
+        "ca": "",
+        "usable": "",
+        "uds": "",
+        "price": "",
+        "floorPlanImage": ""
+      }
+    ],
+
+    "floorPlans": [
+      {
+        "title": "",
+        "image": "",
+        "description": ""
+      }
+    ],
+
+    "masterPlan": {
+      "image": "",
+      "title": "",
+      "description": ""
+    }
+  },
+
+  /* ============================================================
+     PAYMENT & PRICING PLANS
+     ============================================================ */
+
+  "paymentPlans": {
+    "eyebrow": "",
+    "title": "",
+    "subtitle": "",
+    "tagline": "",
+
+    "pricing": {
+      "title": "",
+      "computation": [
+        {
+          "title": "",
+          "points": ""
+        }
+      ]
+    },
+
+    "schedule": {
+      "title": "",
+      "items": [
+        {
+          "title": "",
+          "percentage": "",
+          "breakdown": ""
+        }
+      ]
+    },
+
+    "status": "",
+    "note": ""
+  },
+
+  /* ============================================================
+     CONSTRUCTION
+     ============================================================ */
+
+  "construction": {
+    "eyebrow": "",
+    "title": "",
+    "subtitle": "",
+    "tagline": "",
+
+    "status": "",
+    "note": "",
+
+    "updates": [
+      {
+        "name": "",
+        "type": "image",
+        "image": "",
+        "videoId": ""
+      }
+    ]
+  },
+
+  /* ============================================================
+     TESTIMONIALS
+     ============================================================ */
+
+  "testimonials": {
+    "eyebrow": "",
+    "title": "",
+    "subtitle": "",
+    "tagline": "",
+
+    "testimonials": [
+      {
+        "name": "",
+        "quote": "",
+        "videoId": "",
+        "rating": "",
+        "thumbUrl": ""
+      }
+    ]
+  },
+
+  /* ============================================================
+     ABOUT BUILDER
+     ============================================================ */
+
+  "aboutBuilder": {
+    "name": "",
+
+    "eyebrow": "",
+    "title": "",
+    "subtitle": "",
+    "tagline": "",
+
+    "description": "",
+    "descriptionExpanded": "",
+
+    "stats": [
+      {
+        "icon": "",
+        "label": "",
+        "value": ""
+      }
+    ]
+  },
+
+  /* ============================================================
+     LOAN SUPPORT
+     ============================================================ */
+
+  "loanSupport": {
+    "enabled": false,
+
+    "eyebrow": "",
+    "title": "",
+    "subtitle": "",
+    "tagline": "",
+
+    "banks": [
+      {
+        "name": "",
+        "logo": ""
+      }
+    ],
+
+    "ctaText": ""
+  },
+
+  /* ============================================================
+     BROCHURE
+     ============================================================ */
+
+  "brochure": {
+    "eyebrow": "",
+    "title": "",
+    "subtitle": "",
+    "tagline": "",
+
+    "heroTitle": "",
+    "heroSubtitle": "",
+
+    "coverImage": null,
+
+    "documents": [
+      {
+        "title": "",
+        "url": ""
+      }
+    ],
+
+    "status": "",
+    "note": ""
+  },
+
+  /* ============================================================
+     FAQ
+     ============================================================ */
+
+  "faq": {
+    "eyebrow": "",
+    "title": "",
+    "subtitle": "",
+    "tagline": "",
+
+    "faqs": [
+      {
+        "question": "",
+        "answer": "",
+        "category": "",
+        "subCategory": "",
+        "isPopular": false,
+        "order": "",
+        "source": "project"
+      }
+    ]
+  }
+}

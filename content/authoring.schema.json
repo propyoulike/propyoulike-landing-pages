@@ -1,0 +1,562 @@
+{
+  "slug": {
+    "type": "string",
+    "visible": true,
+    "requiredForAuthoring": false
+  },
+  "projectName": {
+    "type": "string",
+    "visible": true,
+    "requiredForAuthoring": false
+  },
+  "builder": {
+    "type": "string",
+    "visible": true,
+    "requiredForAuthoring": false
+  },
+  "city": {
+    "type": "string",
+    "visible": true,
+    "requiredForAuthoring": false
+  },
+  "zone": {
+    "type": "enum",
+    "enumValues": [
+      "East",
+      "West",
+      "North",
+      "South",
+      "Central"
+    ],
+    "visible": true,
+    "requiredForAuthoring": true
+  },
+  "area": {
+    "type": "string",
+    "visible": true,
+    "requiredForAuthoring": false
+  },
+  "locality": {
+    "type": "string",
+    "visible": true,
+    "requiredForAuthoring": false
+  },
+  "state": {
+    "type": "string",
+    "visible": true,
+    "requiredForAuthoring": false
+  },
+  "country": {
+    "type": "string",
+    "visible": true,
+    "requiredForAuthoring": false
+  },
+  "status": {
+    "type": "string",
+    "visible": true,
+    "requiredForAuthoring": false
+  },
+  "type": {
+    "type": "string",
+    "visible": true,
+    "requiredForAuthoring": false
+  },
+  "hero": {
+    "type": "object",
+    "visible": true,
+    "requiredForAuthoring": false,
+    "fields": {
+      "videoId": {
+        "type": "string",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "images": {
+        "type": "array",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "overlayTitle": {
+        "type": "string",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "overlaySubtitle": {
+        "type": "string",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "quickInfo": {
+        "type": "object",
+        "visible": true,
+        "requiredForAuthoring": false,
+        "fields": {
+          "price": {
+            "type": "string",
+            "visible": true,
+            "requiredForAuthoring": false
+          },
+          "typology": {
+            "type": "string",
+            "visible": true,
+            "requiredForAuthoring": false
+          },
+          "size": {
+            "type": "string",
+            "visible": true,
+            "requiredForAuthoring": false
+          }
+        }
+      }
+    }
+  },
+  "summary": {
+    "type": "object",
+    "visible": true,
+    "requiredForAuthoring": false,
+    "fields": {
+      "title": {
+        "type": "string",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "subtitle": {
+        "type": "string",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "tagline": {
+        "type": "string",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "description": {
+        "type": "string",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "highlights": {
+        "type": "array",
+        "visible": true,
+        "requiredForAuthoring": false
+      }
+    }
+  },
+  "amenities": {
+    "type": "object",
+    "visible": true,
+    "requiredForAuthoring": false,
+    "fields": {
+      "title": {
+        "type": "string",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "subtitle": {
+        "type": "string",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "tagline": {
+        "type": "string",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "amenityImages": {
+        "type": "array",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "amenityCategories": {
+        "type": "array",
+        "visible": true,
+        "requiredForAuthoring": false
+      }
+    },
+    "note": "At least one amenity category with one item is required."
+  },
+  "views": {
+    "type": "object",
+    "visible": true,
+    "requiredForAuthoring": false,
+    "fields": {
+      "title": {
+        "type": "string",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "subtitle": {
+        "type": "string",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "tagline": {
+        "type": "string",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "images": {
+        "type": "array",
+        "visible": true,
+        "requiredForAuthoring": true
+      }
+    }
+  },
+  "locationUI": {
+    "type": "object",
+    "visible": true,
+    "requiredForAuthoring": false,
+    "fields": {
+      "title": {
+        "type": "string",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "subtitle": {
+        "type": "string",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "tagline": {
+        "type": "string",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "videoId": {
+        "type": "string",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "mapUrl": {
+        "type": "string",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "categories": {
+        "type": "array",
+        "visible": true,
+        "requiredForAuthoring": false
+      }
+    }
+  },
+  "propertyPlans": {
+    "type": "object",
+    "visible": true,
+    "requiredForAuthoring": true,
+    "fields": {
+      "title": {
+        "type": "string",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "subtitle": {
+        "type": "string",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "tagline": {
+        "type": "string",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "modelFlats": {
+        "type": "array",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "unitPlans": {
+        "type": "array",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "floorPlans": {
+        "type": "array",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "masterPlan": {
+        "type": "object",
+        "visible": true,
+        "requiredForAuthoring": false,
+        "fields": {
+          "image": {
+            "type": "string",
+            "visible": true,
+            "requiredForAuthoring": false
+          },
+          "title": {
+            "type": "string",
+            "visible": true,
+            "requiredForAuthoring": false
+          },
+          "description": {
+            "type": "string",
+            "visible": true,
+            "requiredForAuthoring": false
+          }
+        }
+      }
+    },
+    "note": "Add at least one of: modelFlats, unitPlans, floorPlans, or masterPlan.image"
+  },
+  "paymentPlans": {
+    "type": "object",
+    "visible": true,
+    "requiredForAuthoring": false,
+    "fields": {
+      "title": {
+        "type": "string",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "subtitle": {
+        "type": "string",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "tagline": {
+        "type": "string",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "pricing": {
+        "type": "object",
+        "visible": true,
+        "requiredForAuthoring": false,
+        "fields": {
+          "title": {
+            "type": "string",
+            "visible": true,
+            "requiredForAuthoring": false
+          },
+          "computation": {
+            "type": "array",
+            "visible": true,
+            "requiredForAuthoring": false
+          }
+        }
+      },
+      "schedule": {
+        "type": "object",
+        "visible": true,
+        "requiredForAuthoring": false,
+        "fields": {
+          "title": {
+            "type": "string",
+            "visible": true,
+            "requiredForAuthoring": false
+          },
+          "items": {
+            "type": "array",
+            "visible": true,
+            "requiredForAuthoring": false
+          }
+        }
+      }
+    }
+  },
+  "brochure": {
+    "type": "object",
+    "visible": true,
+    "requiredForAuthoring": false,
+    "fields": {
+      "title": {
+        "type": "string",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "subtitle": {
+        "type": "string",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "tagline": {
+        "type": "string",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "coverImage": {
+        "type": "string",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "documents": {
+        "type": "array",
+        "visible": true,
+        "requiredForAuthoring": false
+      }
+    }
+  },
+  "testimonials": {
+    "type": "object",
+    "visible": true,
+    "requiredForAuthoring": false,
+    "fields": {
+      "title": {
+        "type": "string",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "subtitle": {
+        "type": "string",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "tagline": {
+        "type": "string",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "testimonials": {
+        "type": "array",
+        "visible": true,
+        "requiredForAuthoring": false
+      }
+    },
+    "note": "Each testimonial must include `name` and either `quote` or `videoId`."
+  },
+  "aboutBuilder": {
+    "type": "object",
+    "visible": true,
+    "requiredForAuthoring": false,
+    "fields": {
+      "name": {
+        "type": "string",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "title": {
+        "type": "string",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "subtitle": {
+        "type": "string",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "tagline": {
+        "type": "string",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "description": {
+        "type": "string",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "descriptionExpanded": {
+        "type": "string",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "stats": {
+        "type": "array",
+        "visible": true,
+        "requiredForAuthoring": false
+      }
+    }
+  },
+  "construction": {
+    "type": "object",
+    "visible": true,
+    "requiredForAuthoring": false,
+    "fields": {
+      "title": {
+        "type": "string",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "subtitle": {
+        "type": "string",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "tagline": {
+        "type": "string",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "updates": {
+        "type": "array",
+        "visible": true,
+        "requiredForAuthoring": false
+      }
+    }
+  },
+  "faq": {
+    "type": "object",
+    "visible": true,
+    "requiredForAuthoring": false,
+    "fields": {
+      "title": {
+        "type": "string",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "subtitle": {
+        "type": "string",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "tagline": {
+        "type": "string",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "faqs": {
+        "type": "array",
+        "visible": true,
+        "requiredForAuthoring": false
+      }
+    },
+    "note": "Each FAQ must have a question and an answer."
+  },
+  "localityProjects": {
+    "type": "array",
+    "visible": true,
+    "requiredForAuthoring": false
+  },
+  "builderProjects": {
+    "type": "array",
+    "visible": true,
+    "requiredForAuthoring": false
+  },
+  "loanSupport": {
+    "type": "object",
+    "visible": true,
+    "requiredForAuthoring": false,
+    "fields": {
+      "enabled": {
+        "type": "boolean",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "title": {
+        "type": "string",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "subtitle": {
+        "type": "string",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "tagline": {
+        "type": "string",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "banks": {
+        "type": "array",
+        "visible": true,
+        "requiredForAuthoring": false
+      },
+      "ctaText": {
+        "type": "string",
+        "visible": true,
+        "requiredForAuthoring": false
+      }
+    }
+  }
+}

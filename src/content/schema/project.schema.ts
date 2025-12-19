@@ -1,338 +1,531 @@
 import { z } from "zod";
 
-/* ============================================================
-   COMMON SECTION HEADER (MENTAL MODEL)
-   title?: string
-   subtitle?: string
-   tagline?: string
-============================================================ */
+/**
+ * ============================================================
+ * IMPORTANT ARCHITECTURE NOTES
+ * ============================================================
+ * - All schemas below are AUTHORING schemas unless stated.
+ * - ProjectCard + *Projects arrays are DERIVED at runtime.
+ * - No empty arrays or empty strings are allowed as meaning.
+ * - Sections may be optional, but when present must be meaningful.
+ *
+ * IDENTITY RULE (LOCKED):
+ * - builder, slug, city, locality, zone are PROJECT-LEVEL identity
+ * - sections NEVER contain identity fields
+ * - sections may READ identity, not own it
+ * - ProjectCard is DERIVED, never authored
+ */
 
 /* ============================================================
    HERO
 ============================================================ */
-const HeroSchema = z.object({
-  videoId: z.string().optional(),
-  images: z.array(z.string()).optional(),
 
-  overlayTitle: z.string().optional(),
-  overlaySubtitle: z.string().optional(),
-
-  quickInfo: z.object({
-    price: z.string().optional(),
-    typology: z.string().optional(),
-    size: z.string().optional(),
-  }).optional(),
+export const HeroQuickInfoSchema = z.object({
+  price: z.string().optional(),
+  typology: z.string().optional(),
+  size: z.string().optional(),
 });
+
+export const HeroSchema = z
+  .object({
+    videoId: z.string().optional(),
+    images: z.array(z.string().min(1)).optional(),
+
+    overlayTitle: z.string().min(1).optional(),
+    overlaySubtitle: z.string().min(1).optional(),
+
+    eyebrow: z.string().min(1).optional(),
+    title: z.string().min(1).optional(),
+    subtitle: z.string().min(1).optional(),
+    tagline: z.string().min(1).optional(),
+
+    quickInfo: HeroQuickInfoSchema.optional(),
+  })
+  .refine(
+    (v) => v.videoId || v.images?.length || v.title,
+    {
+      message:
+        "Hero must have at least one of: videoId, images, or title",
+    }
+  );
 
 /* ============================================================
    SUMMARY
 ============================================================ */
-const SummarySchema = z.object({
-  title: z.string().optional(),
-  subtitle: z.string().optional(),
-  tagline: z.string().optional(),
 
-  description: z.string().optional(),
-  highlights: z.array(z.string()).optional(),
-});
+export const SummarySchema = z
+  .object({
+    eyebrow: z.string().min(1).optional(),
+    title: z.string().min(1).optional(),
+    subtitle: z.string().min(1).optional(),
+    tagline: z.string().min(1).optional(),
+
+    description: z.string().min(1).optional(),
+
+    highlights: z
+      .array(z.string().min(1))
+      .min(1, "Highlights must contain at least one item")
+      .optional(),
+  })
+  .refine(
+    (v) =>
+      v.title ||
+      v.subtitle ||
+      v.tagline ||
+      v.description ||
+      v.highlights,
+    {
+      message: "Summary must contain at least some content",
+    }
+  );
 
 /* ============================================================
    AMENITIES
 ============================================================ */
-const AmenitiesSchema = z.object({
-  title: z.string().optional(),
-  subtitle: z.string().optional(),
-  tagline: z.string().optional(),
 
-  amenityImages: z.array(
-    z.object({
-      src: z.string(),
-      title: z.string().optional(),
-    })
-  ).optional(),
-
-  amenityCategories: z.array(
-    z.object({
-      title: z.string(),
-      items: z.array(z.string()).min(1),
-    })
-  ).min(1),
+const AmenityImageSchema = z.object({
+  src: z.string().min(1),
+  title: z.string().min(1).optional(),
+  description: z.string().min(1).optional(),
+  media_type: z.enum(["image", "video"]).optional(),
 });
+
+const AmenityCategorySchema = z.object({
+  title: z.string().min(1),
+  items: z.array(z.string().min(1)).min(1),
+});
+
+export const AmenitiesSchema = z
+  .object({
+    eyebrow: z.string().min(1).optional(),
+    title: z.string().min(1).optional(),
+    subtitle: z.string().min(1).optional(),
+    tagline: z.string().min(1).optional(),
+
+    heroTitle: z.string().min(1).optional(),
+    heroSubtitle: z.string().min(1).optional(),
+
+    amenityImages: z.array(AmenityImageSchema).min(1).optional(),
+    amenityCategories: z.array(AmenityCategorySchema).min(1).optional(),
+  })
+  .refine(
+    (v) => v.amenityImages || v.amenityCategories,
+    {
+      message:
+        "Amenities must include at least one of amenityImages or amenityCategories",
+    }
+  );
 
 /* ============================================================
    VIEWS
 ============================================================ */
-const ViewsSchema = z.object({
-  title: z.string().optional(),
-  subtitle: z.string().optional(),
-  tagline: z.string().optional(),
 
-  images: z.array(
-    z.object({
-      src: z.string(),
-      title: z.string().optional(),
-    })
-  ).min(1),
+const ViewImageSchema = z.object({
+  src: z.string().min(1),
+  title: z.string().min(1).optional(),
+  order: z.number().int().optional(),
+  is_active: z.boolean().default(true),
 });
+
+export const ViewsSchema = z
+  .object({
+    eyebrow: z.string().min(1).optional(),
+    title: z.string().min(1).optional(),
+    subtitle: z.string().min(1).optional(),
+    tagline: z.string().min(1).optional(),
+
+    images: z.array(ViewImageSchema).min(1),
+  })
+  .refine(
+    (v) => v.images.some((img) => img.is_active !== false),
+    {
+      message: "At least one view image must be active",
+    }
+  );
 
 /* ============================================================
    LOCATION UI
 ============================================================ */
-const LocationUISchema = z.object({
-  title: z.string().optional(),
-  subtitle: z.string().optional(),
-  tagline: z.string().optional(),
 
-  videoId: z.string().optional(),
-  mapUrl: z.string(),
-
-  categories: z.array(
-    z.object({
-      title: z.string(),
-      items: z.array(z.string()).optional(),
-    })
-  ).optional(),
+const LocationCategorySchema = z.object({
+  title: z.string().min(1),
+  items: z.array(z.string().min(1)).min(1),
 });
+
+export const LocationUISchema = z
+  .object({
+    eyebrow: z.string().min(1).optional(),
+    title: z.string().min(1).optional(),
+    subtitle: z.string().min(1).optional(),
+    tagline: z.string().min(1).optional(),
+
+    videoId: z.string().optional(),
+    mapUrl: z.string().optional(),
+
+    categories: z.array(LocationCategorySchema).min(1).optional(),
+  })
+  .refine(
+    (v) => v.videoId || v.mapUrl,
+    {
+      message: "LocationUI must have at least a videoId or a mapUrl",
+    }
+  );
 
 /* ============================================================
    PROPERTY PLANS
 ============================================================ */
-const PropertyPlansSchema = z.object({
-  title: z.string().optional(),
-  subtitle: z.string().optional(),
-  tagline: z.string().optional(),
 
-  modelFlats: z.array(
-    z.object({
-      title: z.string().optional(),
-      youtubeId: z.string().optional(),
-    })
-  ).optional(),
+const ModelFlatSchema = z.object({
+  title: z.string().min(1),
+  youtubeId: z.string().min(1),
+  order: z.number().int().optional(),
+});
 
-  unitPlans: z.array(
-    z.object({
-      title: z.string().optional(),
-      description: z.string().optional(),
-      sba: z.string().optional(),
-      ca: z.string().optional(),
-      usable: z.string().optional(),
-      uds: z.string().optional(),
-      price: z.string().optional(),
-      floorPlanImage: z.string().optional(),
-    })
-  ).optional(),
+const UnitPlanSchema = z.object({
+  title: z.string().min(1),
+  description: z.string().min(1).optional(),
+  sba: z.string().optional(),
+  ca: z.string().optional(),
+  usable: z.string().optional(),
+  uds: z.string().optional(),
+  price: z.string().optional(),
+  floorPlanImage: z.string().optional(),
+});
 
-  floorPlans: z.array(
-    z.object({
-      title: z.string().optional(),
-      image: z.string().optional(),
-      description: z.string().optional(),
-    })
-  ).optional(),
+const FloorPlanSchema = z.object({
+  title: z.string().min(1),
+  image: z.string().min(1),
+  description: z.string().min(1).optional(),
+});
 
-  masterPlan: z.object({
-    image: z.string().optional(),
-    title: z.string().optional(),
-    description: z.string().optional(),
-  }).optional(),
-}).refine(
-  v =>
-    (v.modelFlats?.length ?? 0) > 0 ||
-    (v.unitPlans?.length ?? 0) > 0 ||
-    (v.floorPlans?.length ?? 0) > 0 ||
-    !!v.masterPlan?.image,
-  {
-    message:
-      "PropertyPlans must include at least one: modelFlats, unitPlans, floorPlans, or masterPlan",
-  }
-);
+const MasterPlanSchema = z.object({
+  image: z.string().min(1),
+  title: z.string().min(1).optional(),
+  description: z.string().min(1).optional(),
+});
+
+export const PropertyPlansSchema = z
+  .object({
+    eyebrow: z.string().min(1).optional(),
+    title: z.string().min(1).optional(),
+    subtitle: z.string().min(1).optional(),
+    tagline: z.string().min(1).optional(),
+
+    modelFlats: z.array(ModelFlatSchema).min(1).optional(),
+    unitPlans: z.array(UnitPlanSchema).min(1).optional(),
+    floorPlans: z.array(FloorPlanSchema).min(1).optional(),
+    masterPlan: MasterPlanSchema.optional(),
+  })
+  .refine(
+    (v) =>
+      v.modelFlats ||
+      v.unitPlans ||
+      v.floorPlans ||
+      v.masterPlan,
+    {
+      message:
+        "PropertyPlans must include at least one content block",
+    }
+  );
 
 /* ============================================================
-   PAYMENT PLANS (FIXED)
+   PAYMENT & PRICING PLANS
 ============================================================ */
-const PaymentPlansSchema = z.object({
-  title: z.string().optional(),
-  subtitle: z.string().optional(),
-  tagline: z.string().optional(),
 
-  pricing: z.object({
-    title: z.string().optional(),
-    computation: z.array(
-      z.object({
-        title: z.string().optional(),
-        points: z.array(z.string()).optional(),
-      })
-    ).optional().default([]),
-  }).optional(),
-
-  schedule: z.object({
-    title: z.string().optional(),
-    items: z.array(
-      z.object({
-        title: z.string().optional(),
-        percentage: z.string().optional(),
-        items: z.array(z.string()).optional(),
-      })
-    ).optional().default([]),
-  }).optional(),
+const PricingComputationBlockSchema = z.object({
+  title: z.string().min(1),
+  points: z.array(z.string().min(1)).min(1),
 });
+
+const PaymentScheduleItemSchema = z.object({
+  title: z.string().min(1),
+  percentage: z.string().min(1),
+  breakdown: z.array(z.string().min(1)).min(1),
+});
+
+export const PaymentPlansSchema = z
+  .object({
+    eyebrow: z.string().min(1).optional(),
+    title: z.string().min(1).optional(),
+    subtitle: z.string().min(1).optional(),
+    tagline: z.string().min(1).optional(),
+
+    pricing: z
+      .object({
+        title: z.string().min(1).optional(),
+        computation: z.array(PricingComputationBlockSchema).min(1),
+      })
+      .optional(),
+
+    schedule: z
+      .object({
+        title: z.string().min(1).optional(),
+        items: z.array(PaymentScheduleItemSchema).min(1),
+      })
+      .optional(),
+
+    status: z
+      .enum(["known", "on-request", "to-be-announced"])
+      .optional(),
+
+    note: z.string().min(1).optional(),
+  })
+  .refine(
+    (v) => v.status === "known" || v.pricing || v.schedule,
+    {
+      message:
+        "If pricing is known, pricing or schedule must be provided",
+    }
+  );
 
 /* ============================================================
    CONSTRUCTION
 ============================================================ */
-const ConstructionUpdateSchema = z.object({
-  name: z.string(),
-  image: z.string().optional(),
-  videoId: z.string().optional(),
-  type: z.enum(["image", "video"]).default("image"),
 
-  status: z.array(z.string()).optional(),
-  achieved: z.array(z.string()).optional(),
-  upcoming: z.array(z.string()).optional(),
-});
+const ConstructionUpdateSchema = z
+  .object({
+    name: z.string().min(1),
+    image: z.string().min(1).optional(),
+    videoId: z.string().min(1).optional(),
+    type: z.enum(["image", "video"]).default("image"),
+  })
+  .refine(
+    (v) =>
+      (v.type === "image" && !!v.image) ||
+      (v.type === "video" && !!v.videoId),
+    {
+      message:
+        "Construction update must match its media type",
+    }
+  );
 
-const ConstructionSchema = z.object({
-  title: z.string().optional(),
-  subtitle: z.string().optional(),
-  tagline: z.string().optional(),
+export const ConstructionSchema = z
+  .object({
+    eyebrow: z.string().min(1).optional(),
+    title: z.string().min(1).optional(),
+    subtitle: z.string().min(1).optional(),
+    tagline: z.string().min(1).optional(),
 
-  updates: z.array(ConstructionUpdateSchema).default([]),
-});
+    status: z
+      .enum(["not-started", "in-progress", "updates-coming-soon"])
+      .optional(),
+
+    updates: z.array(ConstructionUpdateSchema).optional(),
+    note: z.string().min(1).optional(),
+  })
+  .refine(
+    (v) => v.updates?.length || v.status || v.note,
+    {
+      message:
+        "Construction must have updates or a status/note",
+    }
+  );
 
 /* ============================================================
    TESTIMONIALS
 ============================================================ */
-const TestimonialsSchema = z.object({
-  title: z.string().optional(),
-  subtitle: z.string().optional(),
-  tagline: z.string().optional(),
 
-  testimonials: z.array(
-    z.object({
-      name: z.string(),
-      quote: z.string().optional(),
-      videoId: z.string().optional(),
-      rating: z.number().min(1).max(5).optional(),
-      thumbUrl: z.string().optional(),
-    }).refine(
-      v => v.quote || v.videoId,
-      { message: "Testimonial must have quote or videoId" }
-    )
-  ).default([]),
+const TestimonialItemSchema = z
+  .object({
+    name: z.string().min(1),
+    quote: z.string().min(1).optional(),
+    videoId: z.string().min(1).optional(),
+    rating: z.number().int().min(1).max(5).optional(),
+    thumbUrl: z.string().min(1).optional(),
+  })
+  .refine(
+    (v) => v.quote || v.videoId,
+    {
+      message:
+        "Testimonial must have either quote or videoId",
+    }
+  );
+
+export const TestimonialsSchema = z.object({
+  eyebrow: z.string().min(1).optional(),
+  title: z.string().min(1).optional(),
+  subtitle: z.string().min(1).optional(),
+  tagline: z.string().min(1).optional(),
+
+  testimonials: z.array(TestimonialItemSchema).min(1),
 });
 
 /* ============================================================
    BUILDER ABOUT
 ============================================================ */
-const AboutBuilderSchema = z.object({
-  name: z.string(),
-  title: z.string().optional(),
-  subtitle: z.string().optional(),
-  tagline: z.string().optional(),
 
-  description: z.string().optional(),
-  descriptionExpanded: z.string().optional(),
-
-  stats: z.array(
-    z.object({
-      icon: z.string().optional(),
-      label: z.string(),
-      value: z.string(),
-    })
-  ).optional(),
+const BuilderStatSchema = z.object({
+  icon: z.string().optional(),
+  label: z.string().min(1),
+  value: z.string().min(1),
 });
+
+export const AboutBuilderSchema = z
+  .object({
+    name: z.string().min(1),
+
+    eyebrow: z.string().min(1).optional(),
+    title: z.string().min(1).optional(),
+    subtitle: z.string().min(1).optional(),
+    tagline: z.string().min(1).optional(),
+
+    description: z.string().min(1).optional(),
+    descriptionExpanded: z.string().min(1).optional(),
+
+    stats: z.array(BuilderStatSchema).min(1).optional(),
+  })
+  .refine(
+    (v) =>
+      v.title ||
+      v.subtitle ||
+      v.tagline ||
+      v.description ||
+      v.descriptionExpanded ||
+      v.stats,
+    {
+      message:
+        "AboutBuilder must include some descriptive content",
+    }
+  );
 
 /* ============================================================
-   PROJECT CARD
+   PROJECT CARD (DERIVED)
 ============================================================ */
-const ProjectCardSchema = z.object({
-  slug: z.string(),
-  builder: z.string(),
-  projectName: z.string(),
 
-  city: z.string().optional(),
-  zone: z.string().optional(),
-  locality: z.string().optional(),
+export const ProjectCardSchema = z
+  .object({
+    slug: z.string().min(1),
+    builder: z.string().min(1),
+    projectName: z.string().min(1),
 
-  heroImage: z.string().nullable().optional(),
-  heroVideoId: z.string().nullable().optional(),
-});
+    city: z.string().optional(),
+    locality: z.string().optional(),
+    zone: z.enum(["East", "West", "North", "South", "Central"]).optional(),
+
+    heroImage: z.string().min(1).nullable().optional(),
+    heroVideoId: z.string().min(1).nullable().optional(),
+  })
+  .refine(
+    (v) => v.heroImage || v.heroVideoId,
+    {
+      message:
+        "ProjectCard must have at least one visual",
+    }
+  );
 
 /* ============================================================
-   LOAN SUPPORT (ALIGNED)
+   LOAN SUPPORT
 ============================================================ */
-const LoanSupportSchema = z.object({
-  enabled: z.boolean().default(true),
 
-  title: z.string().optional(),
-  subtitle: z.string().optional(),
-  tagline: z.string().optional(),
-
-  banks: z.array(
-    z.object({
-      name: z.string(),
-      logo: z.string().optional(),
-    })
-  ).optional(),
-
-  ctaText: z.string().optional(),
+const LoanBankSchema = z.object({
+  name: z.string().min(1),
+  logo: z.string().optional(),
 });
+
+export const LoanSupportSchema = z
+  .object({
+    enabled: z.boolean().default(true),
+
+    eyebrow: z.string().min(1).optional(),
+    title: z.string().min(1).optional(),
+    subtitle: z.string().min(1).optional(),
+    tagline: z.string().min(1).optional(),
+
+    banks: z.array(LoanBankSchema).min(1).optional(),
+    ctaText: z.string().min(1).optional(),
+  })
+  .refine(
+    (v) => v.enabled === false || v.banks || v.ctaText,
+    {
+      message:
+        "LoanSupport enabled=true requires banks or CTA",
+    }
+  );
 
 /* ============================================================
    BROCHURE
 ============================================================ */
-const BrochureSchema = z.object({
-  title: z.string().optional(),
-  subtitle: z.string().optional(),
-  tagline: z.string().optional(),
 
-  coverImage: z.string().url().optional(),
-
-  documents: z.array(
-    z.object({
-      title: z.string(),
-      url: z.string().url(),
-    })
-  ).default([]),
+const BrochureDocumentSchema = z.object({
+  title: z.string().min(1),
+  url: z.string().url(),
 });
+
+export const BrochureSchema = z
+  .object({
+    eyebrow: z.string().min(1).optional(),
+    title: z.string().min(1).optional(),
+    subtitle: z.string().min(1).optional(),
+    tagline: z.string().min(1).optional(),
+
+    heroTitle: z.string().min(1).optional(),
+    heroSubtitle: z.string().min(1).optional(),
+
+    coverImage: z.string().url().nullable().optional(),
+    documents: z.array(BrochureDocumentSchema).min(1).optional(),
+
+    status: z
+      .enum(["available", "on-request", "coming-soon"])
+      .optional(),
+
+    note: z.string().min(1).optional(),
+  })
+  .refine(
+    (v) => v.documents || v.status || v.note,
+    {
+      message:
+        "Brochure must have documents or a status/note",
+    }
+  );
 
 /* ============================================================
    FAQ
 ============================================================ */
+
 const FAQItemSchema = z.object({
-  question: z.string(),
-  answer: z.string(),
-  category: z.string().optional().default("General"),
-  order: z.number().optional(),
+  question: z.string().min(1),
+  answer: z.string().min(1),
+
+  category: z.string().min(1).optional(),
+  subCategory: z.string().min(1).optional(),
+  isPopular: z.boolean().optional(),
+
+  order: z.number().int().optional(),
   source: z.enum(["builder", "project", "global"]).optional(),
 });
 
-const FAQSchema = z.object({
-  title: z.string().optional(),
-  subtitle: z.string().optional(),
-  tagline: z.string().optional(),
-  faqs: z.array(FAQItemSchema),
+export const FAQSchema = z.object({
+  eyebrow: z.string().min(1).optional(),
+  title: z.string().min(1).optional(),
+  subtitle: z.string().min(1).optional(),
+  tagline: z.string().min(1).optional(),
+
+  faqs: z.array(FAQItemSchema).min(1),
 });
 
 /* ============================================================
    FINAL PROJECT SCHEMA
 ============================================================ */
-export const ProjectSchema = z.object({
-  slug: z.string(),
-  projectName: z.string(),
-  builder: z.string(),
 
-  city: z.string(),
-  zone: z.enum(["East", "West", "North", "South", "Central"]).optional(),
+export const ProjectSchema = z.object({
+  slug: z.string().min(1),
+  builder: z.string().min(1),
+  projectName: z.string().min(1),
+
+  type: z.string().optional(),
+  status: z.string().optional(),
+  featured: z.boolean().optional(),
+
   area: z.string().optional(),
   locality: z.string().optional(),
+  zone: z.enum(["East", "West", "North", "South", "Central"]).optional(),
+  city: z.string().min(1),
   state: z.string().optional(),
   country: z.string().optional(),
-
-  status: z.string().optional(),
-  type: z.string().optional(),
+  pincode: z.string().optional(),
 
   hero: HeroSchema,
+
   summary: SummarySchema.optional(),
   amenities: AmenitiesSchema.optional(),
   views: ViewsSchema.optional(),
@@ -344,10 +537,11 @@ export const ProjectSchema = z.object({
   aboutBuilder: AboutBuilderSchema.optional(),
   construction: ConstructionSchema.optional(),
   faq: FAQSchema.optional(),
+  loanSupport: LoanSupportSchema.optional(),
 
+  /* Derived (runtime only) */
   localityProjects: z.array(ProjectCardSchema).optional(),
   builderProjects: z.array(ProjectCardSchema).optional(),
-  loanSupport: LoanSupportSchema.optional(),
 });
 
 export type ProjectData = z.infer<typeof ProjectSchema>;
