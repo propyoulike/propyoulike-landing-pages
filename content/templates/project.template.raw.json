@@ -22,12 +22,10 @@
         "image": ""
       }
     ],
-
     "eyebrow": "",
     "title": "",
     "subtitle": "",
     "tagline": "",
-
     "quickInfo": {
       "price": "",
       "typology": "",
@@ -41,7 +39,6 @@
     "subtitle": "",
     "tagline": "",
     "description": "",
-
     "highlights": [
       {
         "highlight": ""
@@ -54,7 +51,6 @@
     "title": "",
     "subtitle": "",
     "tagline": "",
-
     "amenityImages": [
       {
         "src": "",
@@ -63,7 +59,6 @@
         "media_type": "image"
       }
     ],
-
     "amenityCategories": [
       {
         "title": "",
@@ -77,7 +72,6 @@
     "title": "",
     "subtitle": "",
     "tagline": "",
-
     "images": [
       {
         "src": "",
@@ -93,10 +87,8 @@
     "title": "",
     "subtitle": "",
     "tagline": "",
-
     "videoId": "",
     "mapUrl": "",
-
     "categories": [
       {
         "title": "",
@@ -110,7 +102,6 @@
     "title": "",
     "subtitle": "",
     "tagline": "",
-
     "modelFlats": [
       {
         "title": "",
@@ -118,7 +109,6 @@
         "order": ""
       }
     ],
-
     "unitPlans": [
       {
         "title": "",
@@ -131,7 +121,6 @@
         "floorPlanImage": ""
       }
     ],
-
     "floorPlans": [
       {
         "title": "",
@@ -139,7 +128,6 @@
         "description": ""
       }
     ],
-
     "masterPlan": {
       "image": "",
       "title": "",
@@ -155,20 +143,30 @@
 
     "pricingTitle": "",
     "pricingComputation": [
-	{"title": "",
-	 "points": [{"points": ""}]
-        }
-      	],
+      {
+        "title": "",
+        "points": [
+          {
+            "points": ""
+          }
+        ]
+      }
+    ],
+
     "scheduleTitle": "",
     "paymentSchedule": [
       {
         "title": "",
         "percentage": "",
         "items": [
-          {"items": ""}
-        ],
-    "ctaText": ""
+          {
+            "item": ""
+          }
+        ]
       }
+    ],
+
+    "ctaText": ""
   },
 
   "construction": {
@@ -191,7 +189,6 @@
     "title": "",
     "subtitle": "",
     "tagline": "",
-
     "testimonials": [
       {
         "name": "",
@@ -205,15 +202,12 @@
 
   "aboutBuilder": {
     "name": "",
-
     "eyebrow": "",
     "title": "",
     "subtitle": "",
     "tagline": "",
-
     "description": "",
     "descriptionExpanded": "",
-
     "stats": [
       {
         "icon": "",
@@ -225,19 +219,16 @@
 
   "loanSupport": {
     "enabled": false,
-
     "eyebrow": "",
     "title": "",
     "subtitle": "",
     "tagline": "",
-
     "banks": [
       {
         "name": "",
         "logo": ""
       }
     ],
-
     "ctaText": ""
   },
 
@@ -247,7 +238,6 @@
     "subtitle": "",
     "tagline": "",
     "coverImage": null,
-
     "documents": [
       {
         "title": "",
@@ -261,7 +251,6 @@
     "title": "",
     "subtitle": "",
     "tagline": "",
-
     "faqs": [
       {
         "question": "",
