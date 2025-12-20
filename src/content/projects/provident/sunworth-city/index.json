@@ -1,31 +1,572 @@
 {
-  "slug": "sunworth-city",
-  "builder": "provident",
-  "projectName": "Provident Sunworth City",
-  "type": "apartment",
-  "status": "under-construction",
-
-
-  "area": "Kengeri",
-  "locality": "Mysore Road",
-  "zone": "West",
-  "city": "Bengaluru",
-  "state": "Karnataka",
-  "country": "India",
-
-  "featured": true,
-
-  "files": {
-    "hero": "hero.json",
-    "summary": "summary.json",
-    "propertyPlans": "propertyPlans.json",
-    "amenities": "amenities.json",
-    "views": "views.json",
-    "locationUI": "locationUI.json",
-    "construction": "construction.json",
-    "paymentPlans": "paymentPlans.json",
-    "testimonials": "testimonials.json",
-    "brochure": "brochure.json",
-    "aboutBuilder": "../aboutBuilder.json"
+    "slug": "sunworth-city",
+    "builder": "provident",
+    "projectName": "Provident Sunworth City",
+    "type": "Apartment",
+    "status": "Under Construction",
+    "featured": true,
+    "area": "Kengeri",
+    "locality": "Mysore Road",
+    "zone": "West",
+    "city": "Bengaluru",
+    "state": "Karnataka",
+    "country": "India",
+    "pincode": "560060",
+  "hero": {
+    "videoId": "WZsF7PUHpRs",
+    "eyebrow": "Hero",
+    "title": "Find a Home That Fits Your Life",
+    "subtitle": "Verified projects • Clear pricing • Guided site visits",
+    "tagline": "Built for your today. Planned for your tomorrow.",
+    "quickInfo": {
+      "price": "69.99 onwards*",
+      "typology": "2 and 3 BHK",
+      "size": "60 acres"
+    },
+    "images": [
+      "https://www.providenthousing.com/wp-content/uploads/2022/12/2-bhk-apartments-mysore-road.webp"
+    ]
+  },
+  "summary": {
+    "eyebrow": "Summary",
+    "title": "Designed for Everyday Living",
+    "subtitle": "A thoughtfully planned community that balances comfort, connectivity, and long-term value",
+    "tagline": "Where location, layout, and lifestyle come together",
+    "description": "Provident Sunworth City – The City of More\n \n Provident Sunworth City is a 60-acre integrated township located off Mysore Road near the NICE Junction, offering a rare blend of scale, greenery, and seamless connectivity in South Bengaluru. With Challaghatta Metro Station nearby and easy access to NICE Road, the township ensures convenient connectivity to key parts of the city.\n \n Designed as a self-sustained community, the project features expansive green spaces, thoughtfully planned homes, and everyday conveniences within the premises. Offering well-designed 2 & 3 BHK homes, extensive lifestyle amenities, an in-campus school, and retail spaces, Provident Sunworth City is ideal for families seeking a balanced, future-ready township lifestyle.",
+    "highlights": [
+      "60-acre integrated township in Bengaluru",
+      "Located off Mysore Road near NICE Junction",
+      "Challaghatta Metro Station in close proximity",
+      "19 acres of green open spaces with over 7,000 trees",
+      "In-campus School"
+    ]
+  },
+  "amenities": {
+    "eyebrow": "Amenities",
+    "title": "Your Leisure Adorned With Opulence",
+    "subtitle": "From sports to leisure, wellness to education…",
+    "tagline": "Thoughtfully curated spaces for every stage of life.",
+    "amenityImages": [
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2022/12/amenitie-basketball-court-3-1.jpg",
+        "title": "Basketball Court",
+        "description": "Professional court for sports enthusiasts",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2022/12/amenitie-gym-2-1-1.jpg",
+        "title": "Gymnasium",
+        "description": "Gymnasium to keep you fit",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2022/12/amenitie-swimming-2-2-1.jpg",
+        "title": "Swimming Pool",
+        "description": "Olympic-size pool for all ages",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2022/12/amenitie-tennis-court-2-2-1.jpg",
+        "title": "Tennis Court",
+        "description": "Premium tennis facilities",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2022/12/child-play-area-5-2.png",
+        "title": "Childrens Play Area",
+        "description": "Safe and fun play zones for kids",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2022/12/reading-room-amenitie-1-1.jpg",
+        "title": "Library",
+        "description": "Quiet reading and study space",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2022/12/amenitie-forest-1-1-new.jpg",
+        "title": "Forest Walk",
+        "description": "Scenic nature trails within the township",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2022/12/amenitie-criket-1-1-2.webp",
+        "title": "Cricket Pitch",
+        "description": "Full-sized cricket ground",
+        "media_type": "image"
+      }
+    ],
+    "amenityCategories": [
+      {
+        "title": "Sports & Fitness",
+        "items": [
+          "Cricket Pitch",
+          "Badminton Courts",
+          "Tennis Courts",
+          "Basketball Court",
+          "Skating Rink",
+          "Jogging Track",
+          "Gym",
+          "Yoga Deck"
+        ]
+      },
+      {
+        "title": "Recreation",
+        "items": [
+          "Swimming Pool",
+          "Kids Play Area",
+          "Amphitheater",
+          "Party Lawn",
+          "Clubhouse",
+          "Indoor Games",
+          "Library",
+          "Multipurpose Hall"
+        ]
+      },
+      {
+        "title": "Wellness & Nature",
+        "items": [
+          "Reflexology Path",
+          "Meditation Zone",
+          "Outdoor Gym",
+          "Senior Citizen Corner",
+          "Pet Park",
+          "Butterfly Garden",
+          "7000+ Trees",
+          "19 Acres Green Cover"
+        ]
+      },
+      {
+        "title": "Essential Services",
+        "items": [
+          "Chrysalis High School",
+          "Retail Commercial",
+          "24/7 Security",
+          "Power Backup",
+          "Water Supply",
+          "Maintenance Services"
+        ]
+      }
+    ]
+  },
+  "views": {
+    "eyebrow": "Views",
+    "title": "Mesmerizing Views",
+    "subtitle": "Wake up to greenery and breathtaking vistas.",
+    "tagline": "Every window opens to calm, light, and openness.",
+    "images": [
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2022/12/Front-elevation-01-1-1.webp",
+        "title": "Provident Sunworth Elevation",
+        "order": 1,
+        "is_active": true
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2022/12/1-4-1-1-1.webp",
+        "title": "Provident Sunworth Elevation View",
+        "order": 2,
+        "is_active": true
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2022/12/Rightside-01-1-1.webp",
+        "title": "Provident Sunworth Night View",
+        "order": 3,
+        "is_active": true
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2022/12/Clubhouse-scaled-1.webp",
+        "title": "Clubhouse Night View",
+        "order": 4,
+        "is_active": true
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2022/12/elevation2-01-1-1.webp",
+        "title": "Viewing Deck",
+        "order": 5,
+        "is_active": true
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2022/12/treehouse-01-2-1-1.webp",
+        "title": "Tree House View",
+        "order": 6,
+        "is_active": true
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2022/12/Topcam-01-1-1.webp",
+        "title": "Clubhouse Aerial View",
+        "order": 7,
+        "is_active": true
+      }
+    ]
+  },
+  "locationUI": {
+    "eyebrow": "Location",
+    "title": "The Perfect Setting",
+    "subtitle": "Everything you need within easy reach — schools, hospitals, connectivity & more.",
+    "tagline": "Life. Convenience. Future-ready.",
+    "videoId": "m2yHZe55aVg",
+    "mapUrl": "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15558.830074988791!2d77.541299!3d12.862158!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae417a8e22df31%3A0xf75cab391d57204e!2sProvident%20Park%20Square!5e0!3m2!1sen!2sin!4v1765259800590!5m2!1sen!2sin",
+    "categories": [
+      {
+        "title": "COMMUTE",
+        "items": [
+          "Challaghatta Metro Station",
+          "NICE Road Junction",
+          "Kengeri Metro Station",
+          "Kengeri Railway Station",
+          "Kengeri Bus Terminal"
+        ]
+      },
+      {
+        "title": "OFFICES",
+        "items": [
+          "Global Village Tech Park",
+          "Bidadi Industrial Estate",
+          "Hindustan Coca Cola Beverages Ltd",
+          "Toyota Kirloskar Motor Pvt. Ltd."
+        ]
+      },
+      {
+        "title": "HOSPITALS",
+        "items": [
+          "Raja Rajeshwari Medical College and Hospital",
+          "Raja Rajeshwari Dental College and Hospital",
+          "BGS Hospital",
+          "Medisol Hospital"
+        ]
+      },
+      {
+        "title": "ENTERTAINMENT",
+        "items": [
+          "Good Earth Eco Tourism",
+          "Grips Gokarting and Clubbing",
+          "Decathalon",
+          "The Garden Asia Resort",
+          "Gopalan Arcade Mall",
+          "Wonderla"
+        ]
+      },
+      {
+        "title": "SCHOOLS",
+        "items": [
+          "National Public School",
+          "Marigold International School",
+          "Gurukula Vidya Peetha School",
+          "Gopalan National School",
+          "Tattva School"
+        ]
+      },
+      {
+        "title": "COLLEGES",
+        "items": [
+          "ACS College of Engineering",
+          "RR College of Engineering",
+          "Don-Bosco Institute of Technology",
+          "RV College of Engineering",
+          "Bangalore University"
+        ]
+      }
+    ]
+  },
+  "propertyPlans": {
+    "eyebrow": "Layouts",
+    "title": "Meticulously Designed Homes",
+    "subtitle": "Explore our thoughtfully designed homes with virtual walkthroughs and detailed floor plans",
+    "tagline": "Homes designed around real life, not just square feet.",
+    "masterPlan": {
+      "image": "https://www.providenthousing.com/wp-content/uploads/2022/12/sunworth-city-master-plan.webp",
+      "title": "Master Plan",
+      "description": "Master plan for the township"
+    },
+    "modelFlats": [
+      {
+        "title": "2 BHK Flat",
+        "youtubeId": "z6-d5uB4rRA",
+        "order": 1
+      },
+      {
+        "title": "3 BHK Regular Flat",
+        "youtubeId": "QEtUBt1Ac3U",
+        "order": 2
+      },
+      {
+        "title": "3 BHK Royale Flat",
+        "youtubeId": "B2izuPDFLak",
+        "order": 3
+      }
+    ],
+    "unitPlans": [
+      {
+        "title": "2 BHK Flat",
+        "description": "Experience the thoughtful design and smart use of space",
+        "sba": "883 sq.ft",
+        "ca": "628 sq.ft",
+        "usable": "655 sq.ft",
+        "uds": "321 sq.ft",
+        "price": "₹69.99 L*",
+        "floorPlanImage": "https://www.providenthousing.com/wp-content/uploads/2022/12/2_bhk_plan.webp"
+      },
+      {
+        "title": "3 BHK Regular Flat",
+        "description": "Explore premium homes designed for growing families",
+        "sba": "1082 sq.ft",
+        "ca": "779 sq.ft",
+        "usable": "805 sq.ft",
+        "uds": "398 sq.ft",
+        "price": "₹79.99 L*",
+        "floorPlanImage": "https://www.providenthousing.com/wp-content/uploads/2022/12/3_bhk_plan.webp"
+      },
+      {
+        "title": "3 BHK Royale Flat",
+        "description": "Discover luxurious living with premium finishes",
+        "sba": "1779 sq.ft",
+        "ca": "1287 sq.ft",
+        "usable": "1351 sq.ft",
+        "uds": "658 sq.ft",
+        "price": "₹149.99 L*",
+        "floorPlanImage": "https://www.providenthousing.com/wp-content/uploads/2022/12/3bhk_royale.webp"
+      }
+    ],
+    "floorPlans": [
+      {
+        "title": "Type 1",
+        "image": "https://www.providenthousing.com/wp-content/uploads/2022/12/type_1.webp",
+        "description": "Type 1 floor plan"
+      },
+      {
+        "title": "Type 2",
+        "image": "https://www.providenthousing.com/wp-content/uploads/2022/12/AD-G-WING-RENDER-1.webp",
+        "description": "Type 2 floor plan"
+      }
+    ]
+  },
+  "paymentPlans": {
+    "eyebrow": "Payment Plans",
+    "title": "Pricing & Payment Plans",
+    "subtitle": "Transparent costing • Milestone-based • RERA compliant",
+    "tagline": "Pay as construction progresses. No surprises later.",
+    "pricingTitle": "How much to pay?",
+    "scheduleTitle": "When to pay?",
+    "ctaText": "Get pricing and payment details",
+    "pricingComputation": [
+      {
+        "title": "Sales Consideration",
+        "items": [
+          "Flat/Unit Cost",
+          "Club Development Charges",
+          "Premium Location Charges",
+          "Floor Rise Charges",
+          "Car Park Charges"
+        ]
+      },
+      {
+        "title": "GST on Sale Consideration",
+        "items": [
+          "Under-Construction Units",
+          "Ready-to-Move Units",
+          "Charged as per IT Act",
+          "Applied milestone-wise"
+        ]
+      },
+      {
+        "title": "Other / Possession Charges",
+        "items": [
+          "Advance Maintenance (Actuals) ",
+          "Electricity & Water Infra Charges: ",
+          "Corpus Fund – 0/-",
+          "Legal Charges",
+          "Modifications (if applicable)"
+        ]
+      },
+      {
+        "title": "Stamp Duty & Registration",
+        "items": [
+          "Stamp / Admin Fees (if applicable)",
+          "GST on Other Charges",
+          "Approx. total",
+          "Stamp Duty",
+          "Cess",
+          "Surcharge",
+          "Registration"
+        ]
+      }
+    ],
+    "paymentSchedule": [
+      {
+        "title": "Agreement Stage",
+        "items": [
+          "Initial Advance",
+          "Balance Advance",
+          "Post Agreement Execution"
+        ]
+      },
+      {
+        "title": "Structure Completion",
+        "items": [
+          "Ground/Stilt Slab",
+          "Third Floor Slab",
+          "Sixth Floor Slab",
+          "Ninth Floor Slab"
+        ]
+      },
+      {
+        "title": "Possession",
+        "items": [
+          "Terrace Slab",
+          "Flooring Completion",
+          "External Windows",
+          "Lift Erection"
+        ]
+      }
+    ]
+  },
+  "construction": {
+    "eyebrow": "Progress",
+    "title": "Construction Progress",
+    "subtitle": "Stay updated with the work happening on-site.",
+    "tagline": "Track real progress with verified on-site updates.",
+    "updates": [
+      {
+        "name": "Tower 4J",
+        "type": "image",
+        "image": "/images/construction/tower-4j.png"
+      },
+      {
+        "name": "Tower 4H",
+        "type": "image",
+        "image": "/images/construction/tower-4h.png"
+      },
+      {
+        "name": "Tower 4G",
+        "type": "image",
+        "image": "/images/construction/tower-4g.png"
+      },
+      {
+        "name": "Tower 4F",
+        "type": "image",
+        "image": "/images/construction/tower-4f.png"
+      },
+      {
+        "name": "Tower 4E",
+        "type": "image",
+        "image": "/images/construction/tower-4e.png"
+      },
+      {
+        "name": "Tower 4D",
+        "type": "image",
+        "image": "/images/construction/tower-4d.png"
+      },
+      {
+        "name": "Tower 4C",
+        "type": "image",
+        "image": "/images/construction/tower-4c.png"
+      }
+    ]
+  },
+  "testimonials": {
+    "eyebrow": "Testimonials",
+    "title": "What Our Customers Say",
+    "subtitle": "Hear from families living here",
+    "tagline": "Real stories from families who chose to live here.",
+    "testimonials": [
+      {
+        "name": "Resident Family 1",
+        "quote": "k-dD6PtfrC8",
+        "videoId": "The amenities and green spaces are exactly what we were looking for. Our kids love it here!",
+        "rating": 5
+      },
+      {
+        "name": "Resident Family 2",
+        "quote": "iwLw1Xu312s",
+        "videoId": "Great connectivity and peaceful environment. Best decision we made for our family.",
+        "rating": 5
+      },
+      {
+        "name": "Resident Family 3",
+        "quote": "MxtoYCTGaCE",
+        "videoId": "The construction quality and attention to detail is impressive. Highly recommended!",
+        "rating": 4
+      }
+    ]
+  },
+  "aboutBuilder": {
+    "name": "Provident",
+    "eyebrow": "Developer",
+    "title": "About the Developer",
+    "subtitle": "A trusted name with a proven track record in delivering quality homes",
+    "tagline": "Built on credibility. Known for consistency.",
+    "description": "Established in 2008, Provident Housing Limited is a large-scale community developer, offering the greatest value within the residential segment. The company caters to the diverse residential needs of buyers, with a focus on aspirational home ownership.",
+    "descriptionExpanded": "A 100% subsidiary of Puravankara Limited, Provident Housing carries its legacy with a portfolio of remarkable residential developments across 9 cities, namely, Bengaluru, Kochi, Mumbai, Goa, Hyderabad, Mangalore, Chennai, Coimbatore, and Pune. With a family of 55,000+ happy residents, the company’s mammoth scale of development is evidenced by its track record of ~20 million square feet of projects: ~12.8 million square feet completed and ~7.2 million square feet of ongoing projects. Additionally, ~5.2 million square feet are planned and are under approval for new launches.\n \n Customer obsession is at the heart of everything we do at Provident Housing. This credo guides us in every aspect of our work, from design to handover, ensuring that we consistently enhance the customer’s experience and elevate their lifestyle with homes designed for more.",
+    "stats": [
+      {
+        "label": "Years Experience",
+        "value": "16 +"
+      },
+      {
+        "label": "Happy Customers",
+        "value": "55,000 +"
+      },
+      {
+        "label": "Million Sq.Ft. Delivered",
+        "value": "12.8"
+      },
+      {
+        "label": "Cities",
+        "value": "9"
+      },
+      {
+        "label": "Homes in the Making",
+        "value": "11,000 +"
+      },
+      {
+        "label": "Homes Delivered",
+        "value": "14,000 +"
+      }
+    ]
+  },
+  "loanSupport": {
+    "banks": [
+      {
+        "name": "SBI"
+      },
+      {
+        "name": "HDFC"
+      },
+      {
+        "name": "ICICI"
+      },
+      {
+        "name": "AXIS"
+      },
+      {
+        "name": "PNB"
+      },
+      {
+        "name": "Canara"
+      }
+    ]
+  },
+  "brochure": {
+    "eyebrow": "Document",
+    "title": "A lifestyle project that suits your needs.",
+    "subtitle": "Explore detailed information on floor plans, amenities, pricing, layout plans and official project documents.",
+    "tagline": "Official documents, layouts, and details — all in one place.",
+    "coverImage": "https://www.providenthousing.com/wp-content/uploads/2022/12/sunworthcity-brochure-cover-1.png",
+    "documents": [
+      {
+        "title": "RERA Certificate",
+        "url": "https://www.providenthousing.com/wp-content/uploads/2022/12/Provident-Sunworth-City-RERA-Certificate-1.pdf"
+      },
+      {
+        "title": "MOEF Certificate",
+        "url": "https://www.providenthousing.com/wp-content/uploads/2022/12/MOEF-sunworth-city.pdf"
+      }
+    ]
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "title": "Frequently Asked Questions",
+    "subtitle": "Everything you need to know before making a decision",
+    "tagline": "Clear answers. No guesswork."
   }
 }

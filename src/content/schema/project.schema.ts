@@ -229,20 +229,17 @@ export const PropertyPlansSchema = z
   );
 
 /* ============================================================
-   PAYMENT & PRICING PLANS
+   SHARED SCHEMAS
 ============================================================ */
 
-const PricingComputationItemSchema = z.object({
-  price_parameter_category: z.string().min(1),
-  price_parameter: z.string().min(1),
-  price_value: z.string().min(1),
+const GroupedListSchema = z.object({
+  title: z.string().min(1),
+  items: z.array(z.string().min(1)).min(1),
 });
 
-const PaymentScheduleItemSchema = z.object({
-  payment_parameter_category: z.string().min(1),
-  payment_parameter: z.string().min(1),
-  payment_value: z.string().min(1),
-});
+/* ============================================================
+   PAYMENT & PRICING PLANS (GROUPED)
+============================================================ */
 
 export const PaymentPlansSchema = z.object({
   eyebrow: z.string().min(1).optional(),
@@ -251,21 +248,21 @@ export const PaymentPlansSchema = z.object({
   tagline: z.string().min(1).optional(),
 
   /* ----------------------------
-     PRICING (OPTIONAL)
+     PRICING
   ----------------------------- */
   pricingTitle: z.string().min(1).optional(),
 
   pricingComputation: z
-    .array(PricingComputationItemSchema)
+    .array(GroupedListSchema)
     .optional(),
 
   /* ----------------------------
-     PAYMENT SCHEDULE (OPTIONAL)
+     PAYMENT SCHEDULE
   ----------------------------- */
   scheduleTitle: z.string().min(1).optional(),
 
   paymentSchedule: z
-    .array(PaymentScheduleItemSchema)
+    .array(GroupedListSchema)
     .optional(),
 
   /* ----------------------------

@@ -1,44 +1,34 @@
-// src/templates/common/PaymentPlans_component/PricingBlockList.tsx
+// src/templates/common/PaymentPlans/PricingBlockList.tsx
 
-import { useState } from "react";
-import { CheckCircle } from "lucide-react";
-import PaymentAccordionItem from "./PaymentAccordionItem";
-
-interface PricingBlock {
-  title: string;
-  points: string[];
+interface PricingBlockListProps {
+  blocks?: {
+    title?: string;
+    items?: string[];
+  }[];
 }
 
 export default function PricingBlockList({
   blocks = [],
-}: {
-  blocks: PricingBlock[];
-}) {
-  const [openIndex, setOpenIndex] = useState<number | null>(0); // ✅ open first by default
+}: PricingBlockListProps) {
+  if (!blocks.length) return null;
 
   return (
-    <div className="space-y-5">
-      {blocks.map((block, i) => {
-        const open = openIndex === i;
+    <div className="space-y-6">
+      {blocks.map((block, i) => (
+        <div key={i}>
+          {block.title && (
+            <h4 className="font-semibold mb-2">
+              {block.title}
+            </h4>
+          )}
 
-        return (
-          <PaymentAccordionItem
-            key={i}
-            title={block.title}
-            open={open}
-            onToggle={() => setOpenIndex(open ? null : i)}
-          >
-            <ul className="space-y-3 text-sm text-muted-foreground">
-              {block.points.map((p, idx) => (
-                <li key={idx} className="flex gap-3">
-                  <CheckCircle className="text-primary w-4 h-4 mt-0.5 shrink-0" />
-                  <span>{p}</span>
-                </li>
-              ))}
-            </ul>
-          </PaymentAccordionItem>
-        );
-      })}
+          <ul className="list-disc pl-5 space-y-1 text-sm text-muted-foreground">
+            {(block.items ?? []).map((item, j) => (
+              <li key={j}>{item}</li>
+            ))}
+          </ul>
+        </div>
+      ))}
     </div>
   );
 }
