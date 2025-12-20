@@ -144,25 +144,18 @@
     "pricingTitle": "",
     "pricingComputation": [
       {
-        "title": "",
-        "points": [
-          {
-            "points": ""
-          }
-        ]
+        "price_parameter_category": "",
+        "price_parameter": "",
+	"price_value": ""
       }
     ],
 
     "scheduleTitle": "",
     "paymentSchedule": [
       {
-        "title": "",
-        "percentage": "",
-        "items": [
-          {
-            "item": ""
-          }
-        ]
+        "payment_parameter_category": "",
+        "payment_parameter": "",
+        "payment_value": ""
       }
     ],
 

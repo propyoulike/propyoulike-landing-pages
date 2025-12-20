@@ -232,51 +232,47 @@ export const PropertyPlansSchema = z
    PAYMENT & PRICING PLANS
 ============================================================ */
 
-const PricingComputationBlockSchema = z.object({
-  title: z.string().min(1),
-  points: z.array(z.string().min(1)).min(1),
+const PricingComputationItemSchema = z.object({
+  price_parameter_category: z.string().min(1),
+  price_parameter: z.string().min(1),
+  price_value: z.string().min(1),
 });
 
 const PaymentScheduleItemSchema = z.object({
-  title: z.string().min(1),
-  percentage: z.string().min(1),
-  breakdown: z.array(z.string().min(1)).min(1),
+  payment_parameter_category: z.string().min(1),
+  payment_parameter: z.string().min(1),
+  payment_value: z.string().min(1),
 });
 
-export const PaymentPlansSchema = z
-  .object({
-    eyebrow: z.string().min(1).optional(),
-    title: z.string().min(1).optional(),
-    subtitle: z.string().min(1).optional(),
-    tagline: z.string().min(1).optional(),
+export const PaymentPlansSchema = z.object({
+  eyebrow: z.string().min(1).optional(),
+  title: z.string().min(1).optional(),
+  subtitle: z.string().min(1).optional(),
+  tagline: z.string().min(1).optional(),
 
-    pricing: z
-      .object({
-        title: z.string().min(1).optional(),
-        computation: z.array(PricingComputationBlockSchema).min(1),
-      })
-      .optional(),
+  /* ----------------------------
+     PRICING (OPTIONAL)
+  ----------------------------- */
+  pricingTitle: z.string().min(1).optional(),
 
-    schedule: z
-      .object({
-        title: z.string().min(1).optional(),
-        items: z.array(PaymentScheduleItemSchema).min(1),
-      })
-      .optional(),
+  pricingComputation: z
+    .array(PricingComputationItemSchema)
+    .optional(),
 
-    status: z
-      .enum(["known", "on-request", "to-be-announced"])
-      .optional(),
+  /* ----------------------------
+     PAYMENT SCHEDULE (OPTIONAL)
+  ----------------------------- */
+  scheduleTitle: z.string().min(1).optional(),
 
-    note: z.string().min(1).optional(),
-  })
-  .refine(
-    (v) => v.status === "known" || v.pricing || v.schedule,
-    {
-      message:
-        "If pricing is known, pricing or schedule must be provided",
-    }
-  );
+  paymentSchedule: z
+    .array(PaymentScheduleItemSchema)
+    .optional(),
+
+  /* ----------------------------
+     CTA
+  ----------------------------- */
+  ctaText: z.string().min(1).optional(),
+});
 
 /* ============================================================
    CONSTRUCTION
