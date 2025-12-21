@@ -388,8 +388,8 @@
         "title": "Other / Possession Charges",
         "items": [
           "Advance Maintenance (Actuals) ",
-          "Electricity & Water Infra Charges: ",
-          "Corpus Fund – 0/-",
+          "Electricity & Water Infra Charges",
+          "Corpus Fund",
           "Legal Charges",
           "Modifications (if applicable)"
         ]
@@ -547,6 +547,13 @@
     ]
   },
   "loanSupport": {
+    "enabled": true,
+    "meta": {
+      "eyebrow": "Loans",
+      "title": "Check Your Home Loan Eligibility",
+      "subtitle": "Know your budget and EMI options before you decide",
+      "tagline": "Plan with confidence. Buy with clarity."
+    },
     "banks": [
       {
         "name": "SBI"
