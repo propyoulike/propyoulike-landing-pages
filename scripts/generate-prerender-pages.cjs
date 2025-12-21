@@ -1,72 +1,118 @@
 /**
- * Simple prerender: creates /dist/<slug>/index.html
+ * PRERENDER (MUST-HAVE LOCKED VERSION)
+ *
+ * Output:
+ *  /dist/<builder>-<slug>/index.html
+ *
+ * Guarantees:
+ * - File-based projects only
+ * - Identity resolved via shared helper
+ * - Public URL = /<builder>-<slug>
+ * - Filename must match public URL
+ * - Duplicate URLs forbidden
+ * - ❌ Build FAILS if ZERO projects found
  */
 
 const fs = require("fs");
 const path = require("path");
+const {
+  getProjectIdentity,
+  enforceProjectGuards,
+} = require("./utils/projectIdentity.cjs");
 
-// ---------------------------------------------
-// Scan project slugs
-// ---------------------------------------------
-function getProjectSlugs() {
-  const base = path.resolve("src/content/projects");
-  const slugs = [];
+const DOMAIN = "https://propyoulike.com";
+const PROJECTS_DIR = path.resolve("src/content/projects");
 
-  for (const builder of fs.readdirSync(base)) {
-    const builderDir = path.join(base, builder);
-    if (!fs.statSync(builderDir).isDirectory()) continue;
+// --------------------------------------------------
+function isDirectory(p) {
+  try {
+    return fs.statSync(p).isDirectory();
+  } catch {
+    return false;
+  }
+}
 
-    for (const projectSlug of fs.readdirSync(builderDir)) {
-      const projectDir = path.join(builderDir, projectSlug);
+// --------------------------------------------------
+function getProjects() {
+  const projects = [];
 
-      if (fs.existsSync(path.join(projectDir, "index.json"))) {
-        slugs.push(`${builder}-${projectSlug}`);
+  for (const builderDirName of fs.readdirSync(PROJECTS_DIR)) {
+    const builderDir = path.join(PROJECTS_DIR, builderDirName);
+    if (!isDirectory(builderDir)) continue;
+
+    for (const file of fs.readdirSync(builderDir)) {
+      if (!file.endsWith(".json")) continue;
+
+      const filePath = path.join(builderDir, file);
+      let data;
+
+      try {
+        data = JSON.parse(fs.readFileSync(filePath, "utf8"));
+      } catch {
+        continue;
       }
+
+      const identity = getProjectIdentity(data);
+      if (!identity) continue;
+
+      projects.push({
+        ...identity,
+        fileName: file,
+      });
     }
   }
 
-  return slugs;
+  return projects;
 }
 
-const slugs = getProjectSlugs();
-
-// ---------------------------------------------
-// Ensure dist exists
-// ---------------------------------------------
+// --------------------------------------------------
+// PRECHECKS
+// --------------------------------------------------
 if (!fs.existsSync("dist")) {
-  console.error("❌ dist/ folder missing. Run Vite build first.");
-  process.exit(1);
+  throw new Error("❌ dist/ missing. Run Vite build first.");
 }
 
-// ---------------------------------------------
-// Load base project template
-// ---------------------------------------------
 const baseTemplatePath = path.resolve("dist/project.html");
 if (!fs.existsSync(baseTemplatePath)) {
-  console.error("❌ dist/project.html missing! Build failed?");
-  process.exit(1);
+  throw new Error("❌ dist/project.html missing.");
 }
 
-const html = fs.readFileSync(baseTemplatePath, "utf8");
+const baseHtml = fs.readFileSync(baseTemplatePath, "utf8");
 
-// ---------------------------------------------
-// Generate output pages
-// ---------------------------------------------
-slugs.forEach((slug) => {
-  const outDir = path.resolve(`dist/${slug}`);
+// --------------------------------------------------
+// COLLECT + GUARD
+// --------------------------------------------------
+const projects = getProjects();
+
+// 🔒 MUST-HAVE GUARD #1: zero projects = hard fail
+if (projects.length === 0) {
+  throw new Error("❌ No valid projects found. Prerender aborted.");
+}
+
+// 🔒 MUST-HAVE GUARD #2: URL + filename invariants
+enforceProjectGuards(projects);
+
+// --------------------------------------------------
+// PRERENDER
+// --------------------------------------------------
+projects.forEach((p) => {
+  const outDir = path.resolve(`dist/${p.publicSlug}`);
   const outFile = path.join(outDir, "index.html");
 
   fs.mkdirSync(outDir, { recursive: true });
-  fs.writeFileSync(
-  outFile,
-  html.replace(
-    "<!--__PROJECT_ENTRY__-->",
-    `<script type="module" src="../projectEntry.js"></script>`
-  )
-);
 
+  const html = baseHtml
+    .replace(
+      "<!--__PROJECT_ENTRY__-->",
+      `<script type="module" src="/projectEntry.js"></script>`
+    )
+    .replace(
+      "</head>",
+      `  <link rel="canonical" href="${DOMAIN}/${p.publicSlug}" />\n</head>`
+    );
 
-  console.log(`✓ Prerendered: /${slug}/index.html`);
+  fs.writeFileSync(outFile, html);
+  console.log(`✓ Prerendered: /${p.publicSlug}`);
 });
 
-console.log(`\n✨ Completed prerender of ${slugs.length} project page(s).`);
+console.log(`\n✨ Prerendered ${projects.length} project page(s).`);

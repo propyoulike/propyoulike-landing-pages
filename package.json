@@ -25,8 +25,9 @@
       "cross-env TS_NODE_PROJECT=tsconfig.node.json node --loader ts-node/esm scripts/jsonTemplateGenerator/validateTemplates.ts",
 
     "generate:authoring-templates":
-      "cross-env TS_NODE_PROJECT=tsconfig.node.json node --loader ts-node/esm scripts/jsonTemplateGenerator/authoring/generateAuthoringTemplates.ts"
+      "cross-env TS_NODE_PROJECT=tsconfig.node.json node --loader ts-node/esm scripts/jsonTemplateGenerator/authoring/generateAuthoringTemplates.ts",
 
+    "deploy:bigrock": "npm run build:bigrock && scripts\\deploy-bigrock.bat"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
