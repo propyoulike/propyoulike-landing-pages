@@ -1,14 +1,9 @@
-import type { ProjectMeta } from "./buildProjectMeta";
+// src/lib/data/project/getProjectsByCity.ts
+export function getProjectsByCity(projects: any[], city: string) {
+  const c = city.toLowerCase();
 
-export function getProjectsByCity(
-  allMetas: ProjectMeta[] = [],
-  city?: string
-): ProjectMeta[] {
-  if (!city || !allMetas.length) return [];
-
-  const normalizedCity = city.trim().toLowerCase();
-
-  return allMetas.filter(
-    (p) => p.city?.toLowerCase() === normalizedCity
+  return projects.filter(
+    (p) =>
+      p.locationMeta?.city?.toLowerCase() === c
   );
 }

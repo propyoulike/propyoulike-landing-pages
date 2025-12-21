@@ -1,18 +1,15 @@
-import type { ProjectMeta } from "./buildProjectMeta";
-
+// src/lib/data/project/getProjectsByZone.ts
 export function getProjectsByZone(
-  allMetas: ProjectMeta[] = [],
-  city?: string,
-  zone?: string
-): ProjectMeta[] {
-  if (!city || !zone || !allMetas.length) return [];
+  projects: any[],
+  city: string,
+  zone: string
+) {
+  const c = city.toLowerCase();
+  const z = zone.toLowerCase();
 
-  const normalizedCity = city.trim().toLowerCase();
-  const normalizedZone = zone.trim().toLowerCase();
-
-  return allMetas.filter(
+  return projects.filter(
     (p) =>
-      p.city?.toLowerCase() === normalizedCity &&
-      p.zone?.toLowerCase() === normalizedZone
+      p.locationMeta?.city?.toLowerCase() === c &&
+      p.locationMeta?.zone?.toLowerCase() === z
   );
 }

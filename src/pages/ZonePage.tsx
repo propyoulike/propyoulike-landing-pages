@@ -1,58 +1,79 @@
-import { useParams } from "react-router-dom";
+// src/pages/ZonePage.tsx
 import { useMemo } from "react";
 
-import SEO from "@/components/seo/SEO";
-import ProjectCard from "@/components/project/ProjectCard";
+import ProjectGrid from "@/components/ProjectGrid";
+import Breadcrumbs from "@/components/navigation/Breadcrumbs";
+import ZoneSEO from "@/components/seo/ZoneSEO";
 
-import { allProjectMetas } from "@/lib/data/loadProject";
-import { getProjectsByZone } from "@/lib/data/project/getProjectsByZone";
-import type { ProjectMeta } from "@/lib/data/project/buildProjectMeta";
+interface Props {
+  city: string;
+  zone: string;
+  projects: any[];
+}
 
-export default function ZonePage() {
-  const { city, zone } = useParams<{ city: string; zone: string }>();
+export default function ZonePage({ city, zone, projects }: Props) {
+  const cityName = prettify(city);
+  const zoneName = prettify(zone);
 
-  const projects = useMemo<ProjectMeta[]>(() => {
-    if (!city || !zone) return [];
-    return getProjectsByZone(allProjectMetas, city, zone);
-  }, [city, zone]);
-
-  if (!city || !zone) {
-    return <div className="container py-20">Invalid zone</div>;
-  }
+  /* ---------------------------------------
+     Derive localities (internal linking)
+  ---------------------------------------- */
+  const localities = useMemo(() => {
+    return [
+      ...new Set(
+        projects
+          .map((p) => p.locationMeta?.locality)
+          .filter(Boolean)
+      ),
+    ];
+  }, [projects]);
 
   return (
-    <div className="container py-10">
-      <SEO
-        title={`Projects in ${formatLabel(zone)}, ${formatLabel(city)}`}
-        description={`Explore residential projects in ${formatLabel(
-          zone
-        )}, ${formatLabel(city)}.`}
-      />
+    <>
+      <ZoneSEO city={city} zone={zone} projects={projects} />
 
-      <h1 className="text-3xl font-bold mb-6">
-        Projects in {formatLabel(zone)}, {formatLabel(city)}
-      </h1>
+      <Breadcrumbs />
 
-      {projects.length === 0 ? (
-        <p>No projects found in this zone.</p>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.map((p) => (
-            <ProjectCard key={p.slug} project={p} />
+      {/* Page header */}
+      <header className="px-4 py-6">
+        <h1 className="text-2xl font-semibold">
+          Apartments in {cityName} {zoneName}
+        </h1>
+        <p className="text-muted-foreground mt-1">
+          Explore {projects.length} residential projects in{" "}
+          {zoneName}, {cityName}.
+        </p>
+      </header>
+
+      {/* Locality links */}
+      {localities.length > 0 && (
+        <section className="px-4 pb-4 text-sm">
+          <span className="text-muted-foreground mr-2">
+            Localities:
+          </span>
+          {localities.map((locality) => (
+            <a
+              key={locality}
+              href={`/${city}/${locality}`}
+              className="mr-3 underline text-primary"
+            >
+              {prettify(locality)}
+            </a>
           ))}
-        </div>
+        </section>
       )}
-      <Footer city={city} zone={zone} />
 
-    </div>
+      <ProjectGrid projects={projects} />
+    </>
   );
 }
 
-/* ---------------------------------------------
+/* ---------------------------------------
    Helpers
----------------------------------------------- */
-function formatLabel(slug: string) {
-  return slug
-    .replace(/-/g, " ")
-    .replace(/\b\w/g, (c) => c.toUpperCase());
+---------------------------------------- */
+function prettify(str = "") {
+  return str
+    .split("-")
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(" ");
 }

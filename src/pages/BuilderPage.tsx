@@ -1,138 +1,86 @@
 // src/pages/BuilderPage.tsx
 import { useParams } from "react-router-dom";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 
-import { loadBuilder } from "@/lib/data/loadBuilder";
-import {
-  allProjectMetas,
-} from "@/lib/data/loadProject";
-import { getRelatedProjects } from "@/lib/data/project/getRelatedProjects";
-
-import type { BuilderData } from "@/content/schema/builder.schema";
-import type { ProjectMeta } from "@/lib/data/project/buildProjectMeta";
-
-import ProjectSEO from "@/components/seo/ProjectSEO";
+import ProjectGrid from "@/components/ProjectGrid";
 import Breadcrumbs from "@/components/navigation/Breadcrumbs";
-import Footer from "@/components/footer/Footer";
-import ProjectCard from "@/components/project/ProjectCard";
+import BuilderSEO from "@/components/seo/BuilderSEO";
+
+import { allProjectMetas } from "@/lib/data/loadProject";
+import { getProjectsByBuilder } from "@/lib/data/project/getProjectsByBuilder";
+import NotFound from "./NotFound";
 
 export default function BuilderPage() {
-  const { builderId } = useParams<{ builderId: string }>();
+  const { builder } = useParams<{ builder: string }>();
 
-  const [builder, setBuilder] = useState<BuilderData | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const projects = useMemo(() => {
+    if (!builder) return [];
+    return getProjectsByBuilder(allProjectMetas, builder);
+  }, [builder]);
 
-  /* -------------------------------------------
-     Load builder
-  -------------------------------------------- */
-  useEffect(() => {
-    if (!builderId) {
-      setError("Invalid builder");
-      setLoading(false);
-      return;
-    }
+  if (!projects.length) return <NotFound />;
 
-    try {
-      const data = loadBuilder(builderId);
-      if (!data) {
-        setError("Builder not found");
-      } else {
-        setBuilder(data);
-      }
-    } catch (err) {
-      console.error("❌ BuilderPage error:", err);
-      setError("Failed to load builder");
-    } finally {
-      setLoading(false);
-    }
-  }, [builderId]);
+  const builderName = prettify(builder!);
 
-  /* -------------------------------------------
-     Related projects (same builder)
-  -------------------------------------------- */
-  const builderProjects: ProjectMeta[] = useMemo(() => {
-    if (!builderId) return [];
-    return getBuilderProjects(
-      allProjectMetas,
-      builderId,
-      "" // no current project to exclude
-    );
-  }, [builderId]);
+  /* ---------------------------------------
+     Derive cities (internal linking)
+  ---------------------------------------- */
+  const cities = [
+    ...new Set(
+      projects
+        .map((p) => p.locationMeta?.city)
+        .filter(Boolean)
+    ),
+  ];
 
-  /* -------------------------------------------
-     Guards
-  -------------------------------------------- */
-  if (loading) return <div className="p-6">Loading…</div>;
-  if (error) return <div className="p-6 text-red-500">{error}</div>;
-  if (!builder) return <div className="p-6">Builder not found</div>;
-
-  /* -------------------------------------------
-     Render
-  -------------------------------------------- */
   return (
     <>
-      {/* SEO */}
-      <ProjectSEO
-        project={{
-          projectName: builder.name,
-          builder: builder.name,
-          city: "",
-          slug: `builder-${builderId}`,
-        } as any}
+      <BuilderSEO
+        builder={builder!}
+        projects={projects}
       />
 
       <Breadcrumbs />
 
-      <main className="container mx-auto px-4 py-16 max-w-6xl">
-        {/* Header */}
-        <header className="text-center mb-14">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold">
-            {builder.name}
-          </h1>
+      <header className="px-4 py-6">
+        <h1 className="text-2xl font-semibold">
+          {builderName} Projects
+        </h1>
+        <p className="text-muted-foreground mt-1">
+          Explore {projects.length} residential projects by{" "}
+          {builderName}.
+        </p>
+      </header>
 
-          {builder.subtitle && (
-            <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
-              {builder.subtitle}
-            </p>
-          )}
-        </header>
+      {/* Internal city links (SEO juice) */}
+      {cities.length > 0 && (
+        <section className="px-4 pb-4 text-sm">
+          <span className="text-muted-foreground mr-2">
+            Cities:
+          </span>
+          {cities.map((city) => (
+            <a
+              key={city}
+              href={`/${city}`}
+              className="mr-3 underline text-primary"
+            >
+              {prettify(city)}
+            </a>
+          ))}
+        </section>
+      )}
 
-        {/* Description */}
-        {builder.description && (
-          <section className="max-w-3xl mx-auto text-center text-lg text-muted-foreground mb-20">
-            {builder.description}
-          </section>
-        )}
-
-        {/* -------------------------------
-           Builder Projects
-        -------------------------------- */}
-        {builderProjects.length > 0 && (
-          <section className="mt-12">
-            <h2 className="text-2xl font-bold mb-8 text-center">
-              Projects by {builder.name}
-            </h2>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {builderProjects.map((project) => (
-                <ProjectCard
-                  key={project.slug}
-                  project={project}
-                />
-              ))}
-            </div>
-          </section>
-        )}
-      </main>
-
-      {/* --------------------------------
-         Builder-aware footer
-      --------------------------------- */}
-      <Footer
-        builder={builder}
-        builderProjects={builderProjects}
-      />
+      <ProjectGrid projects={projects} />
     </>
   );
+}
+
+/* ---------------------------------------
+   Helpers
+---------------------------------------- */
+function prettify(str = "") {
+  return str
+    .split("-")
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(" ");
 }

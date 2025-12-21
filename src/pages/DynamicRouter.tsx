@@ -1,3 +1,4 @@
+// src/pages/DynamicRouter.tsx
 import { useLocation } from "react-router-dom";
 
 import ProjectPage from "@/pages/ProjectPage";
@@ -5,45 +6,57 @@ import CityPage from "@/pages/CityPage";
 import ZonePage from "@/pages/ZonePage";
 import NotFound from "@/pages/NotFound";
 
-import { allProjectMetas } from "@/lib/data/loadProject";
+import {
+  isProjectSlug,
+  allProjectMetas,
+} from "@/lib/data/loadProject";
+
 import { getProjectsByCity } from "@/lib/data/project/getProjectsByCity";
-import { getProjectsByZone } from "@/lib/data/project/getProjectsByZone";
+import { getProjectsByZoneSlug } from "@/lib/data/project/getProjectsByZoneSlug";
 
 export default function DynamicRouter() {
   const location = useLocation();
 
-  // Normalize once
-  const slug = location.pathname.replace(/^\/|\/$/g, "").toLowerCase();
+  // "/provident-sunworth-city/" → "provident-sunworth-city"
+  const slug = location.pathname.replace(/^\/|\/$/g, "");
 
   /* -------------------------------------------------
-     1️⃣ PROJECT PAGE (structural rule)
-     builder-slug always contains a dash
+     1️⃣ PROJECT PAGE (highest priority)
   ------------------------------------------------- */
-  if (slug.includes("-")) {
-    return <ProjectPage slug={slug} />;
+  if (isProjectSlug(slug)) {
+    return <ProjectPage />;
   }
 
   /* -------------------------------------------------
      2️⃣ CITY PAGE
+     Example: /bangalore
   ------------------------------------------------- */
   const cityProjects = getProjectsByCity(allProjectMetas, slug);
   if (cityProjects.length > 0) {
-    return <CityPage />;
+    return <CityPage city={slug} projects={cityProjects} />;
   }
 
   /* -------------------------------------------------
-     3️⃣ ZONE PAGE
+     3️⃣ ZONE PAGE (DATA-DRIVEN, SAFE)
+     Example: /bangalore-west
   ------------------------------------------------- */
-  const zoneProjects = slug.includes("-")
-    ? getProjectsByZone(allProjectMetas, ...slug.split("-"))
-    : [];
+  const zoneResult = getProjectsByZoneSlug(
+    allProjectMetas,
+    slug
+  );
 
-  if (zoneProjects.length > 0) {
-    return <ZonePage />;
+  if (zoneResult) {
+    return (
+      <ZonePage
+        city={zoneResult.city}
+        zone={zoneResult.zone}
+        projects={zoneResult.projects}
+      />
+    );
   }
 
   /* -------------------------------------------------
-     4️⃣ 404
+     4️⃣ NOT FOUND
   ------------------------------------------------- */
   return <NotFound />;
 }

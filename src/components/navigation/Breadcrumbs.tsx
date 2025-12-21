@@ -1,117 +1,138 @@
+// src/components/navigation/Breadcrumbs.tsx
 import { Link, useLocation } from "react-router-dom";
 import { allProjectMetas } from "@/lib/data/loadProject";
 
 /* ---------------------------------------------------------
-   Breadcrumbs Component
+   Breadcrumbs
 --------------------------------------------------------- */
 export default function Breadcrumbs() {
   const location = useLocation();
-  const path = location.pathname.replace(/^\/|\/$/g, ""); // trim slashes
+  const path = location.pathname.replace(/^\/|\/$/g, "");
 
-  // Root ("/") → no breadcrumbs
   if (!path) return null;
 
   const segments = path.split("/");
-  const breadcrumbs: { name: string; url: string }[] = [];
+  const crumbs: { name: string; url: string }[] = [];
+
+  // Home is always first
+  crumbs.push({ name: "Home", url: "/" });
 
   /* ---------------------------------------------------------
-      ALWAYS include Home
+     1️⃣ PROJECT PAGE
+     /provident-sunworth-city
   --------------------------------------------------------- */
-  breadcrumbs.push({ name: "Home", url: "/" });
+  const project = allProjectMetas.find(
+    (p) => p.slug === path
+  );
 
-  /* ---------------------------------------------------------
-      CASE 1: PROJECT PAGE (slug match)
-  --------------------------------------------------------- */
-  const projectMeta = allProjectMetas.find((p) => p.slug === path);
+  if (project) {
+    const { city, zone, locality } = project.locationMeta || {};
 
-  if (projectMeta) {
-    const citySlug = slugify(projectMeta.city);
-    const zoneSlug = slugify(projectMeta.zone);
-
-    if (projectMeta.city) {
-      breadcrumbs.push({
-        name: projectMeta.city,
-        url: `/${citySlug}`,
+    if (city) {
+      crumbs.push({
+        name: prettify(city),
+        url: `/${city}`,
       });
     }
 
-    if (projectMeta.city && projectMeta.zone) {
-      breadcrumbs.push({
-        name: projectMeta.zone,
-        url: `/${citySlug}/${zoneSlug}`,
+    if (city && zone) {
+      crumbs.push({
+        name: prettify(zone),
+        url: `/${city}-${zone}`,
       });
     }
 
-    breadcrumbs.push({
-      name: projectMeta.projectName || path,
-      url: `/${path}`,
+    if (city && locality) {
+      crumbs.push({
+        name: prettify(locality),
+        url: `/${city}/${locality}`,
+      });
+    }
+
+    crumbs.push({
+      name: project.projectName,
+      url: `/${project.slug}`,
     });
 
-    return <BreadcrumbUI items={breadcrumbs} />;
+    return <BreadcrumbUI items={crumbs} />;
   }
 
   /* ---------------------------------------------------------
-      CASE 2: BUILDER PAGE → /builder/provident
+     2️⃣ BUILDER PAGE
+     /builder/provident
   --------------------------------------------------------- */
   if (segments[0] === "builder" && segments[1]) {
-    breadcrumbs.push({ name: "Builders", url: "/builder" });
-    breadcrumbs.push({
+    crumbs.push({
+      name: "Builders",
+      url: "/builder",
+    });
+
+    crumbs.push({
       name: prettify(segments[1]),
       url: `/builder/${segments[1]}`,
     });
 
-    return <BreadcrumbUI items={breadcrumbs} />;
+    return <BreadcrumbUI items={crumbs} />;
   }
 
   /* ---------------------------------------------------------
-      CASE 3: LOCALITY PAGE → /locality/whitefield
-  --------------------------------------------------------- */
-  if (segments[0] === "locality" && segments[1]) {
-    breadcrumbs.push({ name: "Localities", url: "/locality" });
-    breadcrumbs.push({
-      name: prettify(segments[1]),
-      url: `/locality/${segments[1]}`,
-    });
-
-    return <BreadcrumbUI items={breadcrumbs} />;
-  }
-
-  /* ---------------------------------------------------------
-      CASE 4: CITY PAGE → /bangalore
-  --------------------------------------------------------- */
-  if (segments.length === 1) {
-    breadcrumbs.push({
-      name: prettify(segments[0]),
-      url: `/${segments[0]}`,
-    });
-
-    return <BreadcrumbUI items={breadcrumbs} />;
-  }
-
-  /* ---------------------------------------------------------
-      CASE 5: ZONE PAGE → /bangalore/west
+     3️⃣ LOCALITY PAGE
+     /bangalore/mysore-road
   --------------------------------------------------------- */
   if (segments.length === 2) {
-    const [city, zone] = segments;
+    const [city, locality] = segments;
 
-    breadcrumbs.push({
+    crumbs.push({
       name: prettify(city),
       url: `/${city}`,
     });
 
-    breadcrumbs.push({
-      name: prettify(zone),
-      url: `/${city}/${zone}`,
+    crumbs.push({
+      name: prettify(locality),
+      url: `/${city}/${locality}`,
     });
 
-    return <BreadcrumbUI items={breadcrumbs} />;
+    return <BreadcrumbUI items={crumbs} />;
+  }
+
+  /* ---------------------------------------------------------
+     4️⃣ ZONE PAGE
+     /bangalore-west
+  --------------------------------------------------------- */
+  if (segments.length === 1 && segments[0].includes("-")) {
+    const [city, zone] = segments[0].split("-");
+
+    crumbs.push({
+      name: prettify(city),
+      url: `/${city}`,
+    });
+
+    crumbs.push({
+      name: prettify(zone),
+      url: `/${city}-${zone}`,
+    });
+
+    return <BreadcrumbUI items={crumbs} />;
+  }
+
+  /* ---------------------------------------------------------
+     5️⃣ CITY PAGE
+     /bangalore
+  --------------------------------------------------------- */
+  if (segments.length === 1) {
+    crumbs.push({
+      name: prettify(segments[0]),
+      url: `/${segments[0]}`,
+    });
+
+    return <BreadcrumbUI items={crumbs} />;
   }
 
   return null;
 }
 
 /* ---------------------------------------------------------
-    Breadcrumb UI
+   UI
 --------------------------------------------------------- */
 function BreadcrumbUI({
   items,
@@ -128,7 +149,7 @@ function BreadcrumbUI({
           const isLast = i === items.length - 1;
 
           return (
-            <li key={i} className="flex items-center">
+            <li key={item.url} className="flex items-center">
               {i > 0 && <span className="mx-1">›</span>}
 
               {isLast ? (
@@ -152,15 +173,11 @@ function BreadcrumbUI({
 }
 
 /* ---------------------------------------------------------
-    Helpers
+   Helpers
 --------------------------------------------------------- */
 function prettify(str = "") {
   return str
     .split("-")
     .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
     .join(" ");
-}
-
-function slugify(str?: string) {
-  return str ? str.toLowerCase().replace(/\s+/g, "-") : "";
 }

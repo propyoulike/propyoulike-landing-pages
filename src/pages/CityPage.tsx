@@ -1,71 +1,108 @@
 // src/pages/CityPage.tsx
-import { useParams } from "react-router-dom";
 import { useMemo } from "react";
 
-import { allProjectMetas } from "@/lib/data/loadProject";
-import { getProjectsByCity } from "@/lib/data/project/getProjectsByCity";
-import type { ProjectMeta } from "@/lib/data/project/buildProjectMeta";
+import ProjectGrid from "@/components/ProjectGrid";
+import Breadcrumbs from "@/components/navigation/Breadcrumbs";
+import CitySEO from "@/components/seo/CitySEO";
 
-import ProjectCard from "@/components/project/ProjectCard";
-import SEO from "@/components/seo/SEO";
-import Footer from "@/components/footer/Footer";
+interface Props {
+  city: string;
+  projects: any[];
+}
 
-export default function CityPage() {
-  const { city } = useParams<{ city: string }>();
+export default function CityPage({ city, projects }: Props) {
+  const cityName = prettify(city);
 
-  /* -------------------------------------------
-     Defensive guard
-  -------------------------------------------- */
-  const cityName = city?.toLowerCase();
+  /* ---------------------------------------
+     Derive zones (internal linking)
+  ---------------------------------------- */
+  const zones = useMemo(() => {
+    return [
+      ...new Set(
+        projects
+          .map((p) => p.locationMeta?.zone)
+          .filter(Boolean)
+      ),
+    ];
+  }, [projects]);
 
-  /* -------------------------------------------
-     Get projects (SYNC, from meta index)
-  -------------------------------------------- */
-  const projects: ProjectMeta[] = useMemo(() => {
-    if (!cityName) return [];
-    return getProjectsByCity(allProjectMetas, cityName);
-  }, [cityName]);
+  /* ---------------------------------------
+     Derive localities (internal linking)
+  ---------------------------------------- */
+  const localities = useMemo(() => {
+    return [
+      ...new Set(
+        projects
+          .map((p) => p.locationMeta?.locality)
+          .filter(Boolean)
+      ),
+    ];
+  }, [projects]);
 
-  /* -------------------------------------------
-     Guards
-  -------------------------------------------- */
-  if (!cityName) {
-    return <div className="container py-20">Invalid city</div>;
-  }
-
-  /* -------------------------------------------
-     Render
-  -------------------------------------------- */
   return (
     <>
-      <SEO
-        title={`Projects in ${cityName} | PropYouLike`}
-        description={`Explore apartments, townships and residential projects in ${cityName}.`}
-      />
+      <CitySEO city={city} projects={projects} />
 
-      <main className="container mx-auto px-4 py-14 max-w-6xl">
-        <h1 className="text-3xl sm:text-4xl font-bold mb-8 capitalize">
-          Projects in {cityName}
+      <Breadcrumbs />
+
+      {/* Page header */}
+      <header className="px-4 py-6">
+        <h1 className="text-2xl font-semibold">
+          Apartments in {cityName}
         </h1>
+        <p className="text-muted-foreground mt-1">
+          Explore {projects.length} residential projects in{" "}
+          {cityName}.
+        </p>
+      </header>
 
-        {projects.length === 0 ? (
-          <p className="text-muted-foreground">
-            No projects found in this city.
-          </p>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {projects.map((project) => (
-              <ProjectCard
-                key={project.slug}
-                project={project}
-              />
-            ))}
-          </div>
-        )}
-      </main>
+      {/* Zone links */}
+      {zones.length > 0 && (
+        <section className="px-4 pb-2 text-sm">
+          <span className="text-muted-foreground mr-2">
+            Zones:
+          </span>
+          {zones.map((zone) => (
+            <a
+              key={zone}
+              href={`/${city}-${zone}`}
+              className="mr-3 underline text-primary"
+            >
+              {prettify(zone)}
+            </a>
+          ))}
+        </section>
+      )}
 
-      {/* Footer (generic) */}
-      <Footer city={city}/>
+      {/* Locality links */}
+      {localities.length > 0 && (
+        <section className="px-4 pb-4 text-sm">
+          <span className="text-muted-foreground mr-2">
+            Localities:
+          </span>
+          {localities.map((locality) => (
+            <a
+              key={locality}
+              href={`/${city}/${locality}`}
+              className="mr-3 underline text-primary"
+            >
+              {prettify(locality)}
+            </a>
+          ))}
+        </section>
+      )}
+
+      <ProjectGrid projects={projects} />
     </>
   );
+}
+
+/* ---------------------------------------
+   Helpers
+---------------------------------------- */
+function prettify(str = "") {
+  return str
+    .split("-")
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(" ");
 }

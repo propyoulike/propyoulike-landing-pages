@@ -1,6 +1,9 @@
 import { Helmet } from "react-helmet-async";
 import type { ProjectData } from "@/content/schema/project.schema";
 
+import { resolveBreadcrumbs } from "@/lib/seo/resolveBreadcrumbs";
+import { buildBreadcrumbSchema } from "@/lib/seo/buildBreadcrumbSchema";
+
 interface SEOProps {
   project: ProjectData;
 }
@@ -33,7 +36,7 @@ export default function ProjectSEO({ project }: SEOProps) {
     `Explore ${project.projectName} – pricing, floor plans, amenities, location and brochure.`;
 
   /* -----------------------------------------------
-      OG IMAGE (DYNAMIC, AUTO-GENERATED)
+      OG IMAGE (AUTO-GENERATED)
   ----------------------------------------------- */
   const ogImage = `https://og.propyoulike.com/${project.slug}.png`;
 
@@ -99,32 +102,14 @@ export default function ProjectSEO({ project }: SEOProps) {
       : null;
 
   /* -----------------------------------------------
-      BREADCRUMB SCHEMA
+      BREADCRUMB JSON-LD (SINGLE SOURCE)
   ----------------------------------------------- */
-  const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Home",
-        item: ORIGIN,
-      },
-      city && {
-        "@type": "ListItem",
-        position: 2,
-        name: city,
-        item: `${ORIGIN}/${encodeURIComponent(city)}`,
-      },
-      {
-        "@type": "ListItem",
-        position: city ? 3 : 2,
-        name: project.projectName,
-        item: url,
-      },
-    ].filter(Boolean),
-  };
+  const breadcrumbs = resolveBreadcrumbs({
+    type: "project",
+    project,
+  });
+
+  const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs);
 
   return (
     <Helmet>
