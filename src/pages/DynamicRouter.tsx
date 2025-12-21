@@ -5,30 +5,26 @@ import CityPage from "@/pages/CityPage";
 import ZonePage from "@/pages/ZonePage";
 import NotFound from "@/pages/NotFound";
 
-import {
-  isProjectSlug,
-  allProjectMetas,
-} from "@/lib/data/loadProject";
-
+import { allProjectMetas } from "@/lib/data/loadProject";
 import { getProjectsByCity } from "@/lib/data/project/getProjectsByCity";
 import { getProjectsByZone } from "@/lib/data/project/getProjectsByZone";
 
 export default function DynamicRouter() {
   const location = useLocation();
 
-  // clean path → "bangalore", "bangalore-east", "provident-sunworth-city"
-  const slug = location.pathname.replace(/^\/|\/$/g, "");
+  // Normalize once
+  const slug = location.pathname.replace(/^\/|\/$/g, "").toLowerCase();
 
   /* -------------------------------------------------
-     1️⃣ PROJECT PAGE (highest priority)
+     1️⃣ PROJECT PAGE (structural rule)
+     builder-slug always contains a dash
   ------------------------------------------------- */
-  if (isProjectSlug(slug)) {
-    return <ProjectPage />;
+  if (slug.includes("-")) {
+    return <ProjectPage slug={slug} />;
   }
 
   /* -------------------------------------------------
      2️⃣ CITY PAGE
-     Example: /bangalore
   ------------------------------------------------- */
   const cityProjects = getProjectsByCity(allProjectMetas, slug);
   if (cityProjects.length > 0) {
@@ -37,20 +33,13 @@ export default function DynamicRouter() {
 
   /* -------------------------------------------------
      3️⃣ ZONE PAGE
-     Example: /bangalore-east
   ------------------------------------------------- */
-  if (slug.includes("-")) {
-    const [city, zone] = slug.split("-");
+  const zoneProjects = slug.includes("-")
+    ? getProjectsByZone(allProjectMetas, ...slug.split("-"))
+    : [];
 
-    const zoneProjects = getProjectsByZone(
-      allProjectMetas,
-      city,
-      zone
-    );
-
-    if (zoneProjects.length > 0) {
-      return <ZonePage />;
-    }
+  if (zoneProjects.length > 0) {
+    return <ZonePage />;
   }
 
   /* -------------------------------------------------

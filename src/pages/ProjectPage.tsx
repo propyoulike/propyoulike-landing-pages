@@ -1,6 +1,5 @@
 // src/pages/ProjectPage.tsx
 import { useEffect, useState, useMemo } from "react";
-import { useParams } from "react-router-dom";
 import { useProject } from "@/lib/data/useProject";
 import { getTemplate } from "@/templates/getTemplate";
 import { LeadCTAProvider } from "@/components/lead/LeadCTAProvider";
@@ -10,11 +9,13 @@ import ProjectSEO from "@/components/seo/ProjectSEO";
 import Breadcrumbs from "@/components/navigation/Breadcrumbs";
 import FloatingQuickNav from "@/templates/common/FloatingQuickNav";
 
-export default function ProjectPage() {
-  const { slug } = useParams<{ slug: string }>();
+interface ProjectPageProps {
+  slug: string;
+}
 
+export default function ProjectPage({ slug }: ProjectPageProps) {
   /* ---------------------------------------
-     Slug resolution (router-first)
+     Slug resolution (router-owned)
   ---------------------------------------- */
   const resolvedSlug = useMemo(() => {
     return slug && slug.trim() !== "" ? slug : null;
@@ -74,9 +75,7 @@ export default function ProjectPage() {
         <Template project={project} />
       </LeadCTAProvider>
 
-      {/* ⭐ Floating Quick Nav (mobile only)
-          – outside CTA provider
-          – auto-hides near footer */}
+      {/* Floating Quick Nav (mobile only) */}
       <FloatingQuickNav footerId="site-footer" />
 
       {/* Footer */}

@@ -6,7 +6,6 @@ interface SEOProps {
 }
 
 const ORIGIN = "https://propyoulike.com";
-const DEFAULT_OG_IMAGE = "/images/og-default.jpg";
 
 export default function ProjectSEO({ project }: SEOProps) {
   if (!project) return null;
@@ -25,19 +24,18 @@ export default function ProjectSEO({ project }: SEOProps) {
     project.locationUI?.title?.split(",").pop()?.trim() ||
     "";
 
-  const title = `${project.projectName}${city ? " | " + city : ""} | Price, Floor Plans, Brochure`;
+  const title = `${project.projectName}${
+    city ? " | " + city : ""
+  } | Price, Floor Plans, Brochure`;
 
   const desc =
     project.summary?.description ||
     `Explore ${project.projectName} – pricing, floor plans, amenities, location and brochure.`;
 
   /* -----------------------------------------------
-      HERO IMAGE (SAFE, LOCAL, OPTIONAL)
+      OG IMAGE (DYNAMIC, AUTO-GENERATED)
   ----------------------------------------------- */
-  const heroImage =
-    project.hero?.images?.[0] ||
-    project.brochure?.coverImage ||
-    DEFAULT_OG_IMAGE;
+  const ogImage = `https://og.propyoulike.com/${project.slug}.png`;
 
   /* -----------------------------------------------
       FAQ JSON-LD
@@ -68,7 +66,7 @@ export default function ProjectSEO({ project }: SEOProps) {
     "@type": "ApartmentComplex",
     name: project.projectName,
     url,
-    image: heroImage,
+    image: ogImage,
     address: {
       "@type": "PostalAddress",
       addressLocality: city,
@@ -138,17 +136,13 @@ export default function ProjectSEO({ project }: SEOProps) {
       {/* OpenGraph */}
       <meta property="og:title" content={title} />
       <meta property="og:description" content={desc} />
-      {heroImage && <meta property="og:image" content={heroImage} />}
+      <meta property="og:image" content={ogImage} />
       <meta property="og:url" content={url} />
       <meta property="og:type" content="website" />
 
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
-
-      {/* Preload ONLY real image */}
-      {heroImage && (
-        <link rel="preload" as="image" href={heroImage} fetchPriority="high" />
-      )}
+      <meta name="twitter:image" content={ogImage} />
 
       {/* JSON-LD */}
       <script type="application/ld+json">

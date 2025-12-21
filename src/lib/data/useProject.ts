@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import type { ProjectData } from "@/content/schema/project.schema";
 import { loadProject } from "./loadProject";
+import { normalizeProjectImages } from "./normalizeProjectImages";
 
 interface UseProjectResult {
   project: ProjectData | null;
@@ -41,8 +42,10 @@ export function useProject(slug: string | null): UseProjectResult {
           return;
         }
 
-        // ✅ DO NOT mutate or normalize here
-        setProject(data);
+        // ✅ Normalize ONCE at data boundary (pure, no mutation)
+        const normalized = normalizeProjectImages(data);
+
+        setProject(normalized);
       } catch (err) {
         if (!cancelled) {
           console.error("❌ useProject error:", err);
