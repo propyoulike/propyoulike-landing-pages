@@ -1,33 +1,52 @@
 // src/templates/common/Construction_component/Construction_component.tsx
 
 import { memo, useState, useMemo, useCallback } from "react";
+
 import MediaCarousel from "@/components/media/MediaCarousel";
 import MediaModal from "@/components/media/MediaModal";
 import ConstructionTile from "./ConstructionTile";
 import { cn } from "@/lib/utils";
 
+import BaseSection from "../BaseSection";
+import type { SectionMeta } from "@/content/types/sectionMeta";
+
+/* ---------------------------------------------------------------------
+   TYPES
+------------------------------------------------------------------------*/
 interface ConstructionUpdate {
-  name: string;        // Tower 4G
+  name: string;
   image: string;
   type?: "image" | "video";
   videoId?: string;
 }
 
-interface Props {
+interface ConstructionProps {
   id?: string;
-  title?: string;
-  subtitle?: string;
-  tagline?: string;
-  updates: ConstructionUpdate[];
+
+  /** Canonical section meta */
+  meta?: SectionMeta | null;
+
+  /** Construction updates */
+  updates?: ConstructionUpdate[];
 }
 
+/* ---------------------------------------------------------------------
+   COMPONENT
+------------------------------------------------------------------------*/
 const Construction_component = memo(function Construction_component({
   id = "construction",
-  title,
-  subtitle,
-  tagline,
+
+  meta = {
+    eyebrow: "PROGRESS",
+    title: "Construction updates",
+    subtitle:
+      "Track the latest construction progress with photos and videos",
+    tagline:
+      "Updated regularly to reflect on-site progress",
+  },
+
   updates = [],
-}: Props) {
+}: ConstructionProps) {
   const [activeTower, setActiveTower] = useState<string>("All");
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
@@ -61,29 +80,16 @@ const Construction_component = memo(function Construction_component({
   if (!updates.length) return null;
 
   return (
-    <section id={id} className="py-20 lg:py-28 scroll-mt-32 bg-background">
-      <div className="container mx-auto px-4">
-
-        {/* ---------- Header ---------- */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          {title && (
-            <h2 className="text-3xl lg:text-5xl font-bold mb-4">
-              {title}
-            </h2>
-          )}
-          {subtitle && (
-            <p className="text-lg text-muted-foreground">
-              {subtitle}
-            </p>
-          )}
-          {tagline && (
-            <p className="text-sm text-muted-foreground mt-2 italic">
-              {tagline}
-            </p>
-          )}
-        </div>
-
-        {/* ---------- Tower Selector (KEY UX) ---------- */}
+    <BaseSection
+      id={id}
+      meta={meta}
+      align="center"
+      padding="lg"
+    >
+      {/* ─────────────────────────────
+         TOWER SELECTOR (KEY UX)
+      ───────────────────────────── */}
+      {towers.length > 1 && (
         <div className="flex flex-wrap justify-center gap-2 mb-12">
           {towers.map((tower) => (
             <button
@@ -100,36 +106,40 @@ const Construction_component = memo(function Construction_component({
             </button>
           ))}
         </div>
+      )}
 
-        {/* ---------- Media Carousel ---------- */}
-        {visibleUpdates.length > 0 ? (
-          <MediaCarousel items={visibleUpdates}>
-            {(item, i) => (
-              <div
-                key={`${item.name}-${i}`}
-                className="flex-[0_0_90%] sm:flex-[0_0_80%] md:flex-[0_0_70%] lg:flex-[0_0_60%]"
-              >
-                <ConstructionTile
-                  tower={item}
-                  onClick={() => openMedia(i)}
-                />
-              </div>
-            )}
-          </MediaCarousel>
-        ) : (
-          <p className="text-center text-muted-foreground">
-            No updates available for this tower.
-          </p>
-        )}
-      </div>
+      {/* ─────────────────────────────
+         MEDIA CAROUSEL
+      ───────────────────────────── */}
+      {visibleUpdates.length > 0 ? (
+        <MediaCarousel items={visibleUpdates}>
+          {(item, i) => (
+            <div
+              key={`${item.name}-${i}`}
+              className="flex-[0_0_90%] sm:flex-[0_0_80%] md:flex-[0_0_70%] lg:flex-[0_0_60%]"
+            >
+              <ConstructionTile
+                tower={item}
+                onClick={() => openMedia(i)}
+              />
+            </div>
+          )}
+        </MediaCarousel>
+      ) : (
+        <p className="text-center text-muted-foreground">
+          No updates available for this tower.
+        </p>
+      )}
 
-      {/* ---------- Modal ---------- */}
+      {/* ─────────────────────────────
+         MEDIA MODAL
+      ───────────────────────────── */}
       <MediaModal
         open={!!activeMedia}
         media={activeMedia}
         onClose={closeMedia}
       />
-    </section>
+    </BaseSection>
   );
 });
 

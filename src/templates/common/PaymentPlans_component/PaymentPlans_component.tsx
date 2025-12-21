@@ -1,4 +1,4 @@
-// src/templates/common/PaymentPlans/PaymentPlans_component.tsx
+// src/templates/common/PaymentPlans_component/PaymentPlans_component.tsx
 
 import { Button } from "@/components/ui/button";
 import { useLeadCTAContext } from "@/components/lead/LeadCTAProvider";
@@ -6,7 +6,7 @@ import { useLeadCTAContext } from "@/components/lead/LeadCTAProvider";
 import PricingBlockList from "./PricingBlockList";
 import PaymentScheduleTimeline from "./PaymentScheduleTimeline";
 
-import SectionHeader from "../SectionHeader";
+import BaseSection from "../BaseSection";
 import type { SectionMeta } from "@/content/types/sectionMeta";
 
 /* ---------------------------------------------------------------------
@@ -14,33 +14,32 @@ import type { SectionMeta } from "@/content/types/sectionMeta";
 ------------------------------------------------------------------------*/
 interface PaymentPlansProps {
   id?: string;
+  meta?: SectionMeta | null;
 
-  /** Canonical section meta */
-  meta?: SectionMeta;
-
-  /** Pricing computation */
   pricingTitle?: string;
   pricingComputation?: any[];
 
-  /** Payment schedule */
   scheduleTitle?: string;
   paymentSchedule?: any[];
 }
+
+/* ---------------------------------------------------------------------
+   DEFAULT META
+------------------------------------------------------------------------*/
+const DEFAULT_META: SectionMeta = {
+  eyebrow: "PRICING",
+  title: "Pricing & payment plans",
+  subtitle:
+    "Understand total cost, stage-wise payments, and what you pay when",
+  tagline: "No surprises — full clarity before you decide",
+};
 
 /* ---------------------------------------------------------------------
    COMPONENT
 ------------------------------------------------------------------------*/
 export default function PaymentPlans_component({
   id = "payment-plans",
-
-  meta = {
-    eyebrow: "PRICING",
-    title: "Pricing & payment plans",
-    subtitle:
-      "Understand total cost, stage-wise payments, and what you pay when",
-    tagline:
-      "No surprises — full clarity before you decide",
-  },
+  meta = DEFAULT_META,
 
   pricingTitle = "Pricing computation",
   pricingComputation = [],
@@ -50,81 +49,69 @@ export default function PaymentPlans_component({
 }: PaymentPlansProps) {
   const { openCTA } = useLeadCTAContext();
 
-  if (
-    !pricingComputation.length &&
-    !paymentSchedule.length
-  ) {
-    return null;
-  }
+  const hasContent =
+    pricingComputation.length > 0 ||
+    paymentSchedule.length > 0;
+
+  if (!hasContent) return null;
 
   return (
-    <section
+    <BaseSection
       id={id}
-      className="py-12 md:py-16 bg-background scroll-mt-32"
+      meta={meta}
+      align="center"
+      padding="md"
     >
-      <div className="container max-w-6xl">
+      {/* ─────────────────────────────
+         PRICING + PAYMENT GRID
+      ───────────────────────────── */}
+      <div className="grid lg:grid-cols-2 gap-14">
 
-        {/* ─────────────────────────────
-           SECTION HEADER (SYSTEMIC)
-        ───────────────────────────── */}
-        <div className="mb-12">
-          <SectionHeader
-            eyebrow={meta.eyebrow}
-            title={meta.title}
-            subtitle={meta.subtitle}
-            tagline={meta.tagline}
-            align="center"
-          />
-        </div>
+        {/* PRICING BREAKUP */}
+        {pricingComputation.length > 0 && (
+          <div>
+            <h3 className="subsection-title">
+              {pricingTitle}
+            </h3>
 
-        {/* ─────────────────────────────
-           CONTENT GRID
-        ───────────────────────────── */}
-        <div className="grid lg:grid-cols-2 gap-14">
+            <PricingBlockList
+              blocks={pricingComputation}
+            />
+          </div>
+        )}
 
-          {/* Pricing computation */}
-          {pricingComputation.length > 0 && (
-            <div>
-              <h3 className="text-xl font-semibold mb-6">
-                {pricingTitle}
-              </h3>
-              <PricingBlockList
-                blocks={pricingComputation}
-              />
-            </div>
-          )}
+        {/* PAYMENT SCHEDULE */}
+        {paymentSchedule.length > 0 && (
+          <div>
+            <h3 className="subsection-title">
+              {scheduleTitle}
+            </h3>
 
-          {/* Payment schedule */}
-          {paymentSchedule.length > 0 && (
-            <div>
-              <h3 className="text-xl font-semibold mb-6">
-                {scheduleTitle}
-              </h3>
-              <PaymentScheduleTimeline
-                stages={paymentSchedule}
-              />
-            </div>
-          )}
-        </div>
-
-        {/* ─────────────────────────────
-           SINGLE, TRUST-LED CTA
-        ───────────────────────────── */}
-        <div className="mt-16 text-center">
-          <Button
-            size="lg"
-            className="rounded-xl px-10 font-semibold"
-            onClick={() =>
-              openCTA({
-                source: "section",
-                label: "payment_plans_detailed_pricing",
-              })
-            }
-          >
-            Get detailed pricing & payment breakup
-          </Button>
-        </div>
+            <PaymentScheduleTimeline
+              stages={paymentSchedule}
+            />
+          </div>
+        )}
       </div>
-    </section>
+
+      {/* ─────────────────────────────
+         PRIMARY CTA
+      ───────────────────────────── */}
+      <div className="mt-16 text-center">
+        <Button
+          size="lg"
+          className="rounded-xl px-10 font-semibold"
+          onClick={() =>
+            openCTA({
+              source: "section",
+              label:
+                "payment_plans_detailed_pricing",
+            })
+          }
+        >
+          Get detailed pricing & payment breakup
+        </Button>
+      </div>
+    </BaseSection>
   );
 }

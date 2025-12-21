@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import * as Icons from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-import SectionHeader from "../SectionHeader";
+import BaseSection from "../BaseSection";
 import type { SectionMeta } from "@/content/types/sectionMeta";
 
 /* ---------------------------------------------------------------------
@@ -18,20 +18,10 @@ interface StatItem {
 
 interface BuilderAboutProps {
   id?: string;
-
-  /** Canonical section meta */
   meta?: SectionMeta;
-
-  /** Builder name (used in copy + tracking only) */
   name?: string;
-
-  /** Short intro */
   description?: string;
-
-  /** Long-form expandable content */
   descriptionExpanded?: string;
-
-  /** Builder credibility stats */
   stats?: StatItem[];
 }
 
@@ -82,7 +72,6 @@ export default function AboutBuilder_component({
     return () => observer.disconnect();
   }, [name]);
 
-  /* ---------------- Expand ---------------- */
   const toggleExpand = () => {
     const next = !expanded;
     setExpanded(next);
@@ -112,38 +101,22 @@ export default function AboutBuilder_component({
   if (!hasContent) return null;
 
   return (
-    <section
+    <BaseSection
       id={id}
-      ref={sectionRef}
-      className="py-12 md:py-16 scroll-mt-32 bg-background"
+      meta={meta}
+      align="center"
+      padding="md"
     >
-      <div className="container max-w-5xl">
+      <div ref={sectionRef}>
 
-        {/* ─────────────────────────────
-           SECTION HEADER (SYSTEMIC)
-        ───────────────────────────── */}
-        <div className="mb-10">
-          <SectionHeader
-            eyebrow={meta.eyebrow}
-            title={meta.title}
-            subtitle={meta.subtitle}
-            tagline={meta.tagline}
-            align="center"
-          />
-        </div>
-
-        {/* ─────────────────────────────
-           SHORT DESCRIPTION
-        ───────────────────────────── */}
+        {/* Short description */}
         {description && (
           <p className="text-muted-foreground text-center max-w-3xl mx-auto mb-8">
             {description}
           </p>
         )}
 
-        {/* ─────────────────────────────
-           EXPANDED CONTENT
-        ───────────────────────────── */}
+        {/* Expanded content */}
         <div
           ref={expandedRef}
           className={`transition-[max-height,opacity] duration-700 ease-in-out overflow-hidden ${
@@ -181,9 +154,7 @@ export default function AboutBuilder_component({
           )}
         </div>
 
-        {/* ─────────────────────────────
-           TOGGLE
-        ───────────────────────────── */}
+        {/* Toggle */}
         {(descriptionExpanded || stats.length > 0) && (
           <div className="text-center">
             <Button
@@ -196,6 +167,6 @@ export default function AboutBuilder_component({
           </div>
         )}
       </div>
-    </section>
+    </BaseSection>
   );
 }

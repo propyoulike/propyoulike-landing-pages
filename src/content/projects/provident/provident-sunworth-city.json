@@ -5,21 +5,23 @@
     "projectName": "Provident Sunworth City",
     "type": "Apartment",
     "status": "Under Construction",
-    "featured": "Yes",
+    "featured": true,
     "area": "Kengeri",
     "locality": "Mysore Road",
     "zone": "West",
     "city": "Bengaluru",
     "state": "Karnataka",
     "country": "India",
-    "pincode": 560060
+    "pincode": "560060"
   },
   "hero": {
     "videoId": "WZsF7PUHpRs",
-    "eyebrow": "Hero",
-    "title": "Find a Home That Fits Your Life",
-    "subtitle": "Verified projects • Clear pricing • Guided site visits",
-    "tagline": "Built for your today. Planned for your tomorrow.",
+    "meta": {
+      "eyebrow": "Hero",
+      "title": "Find a Home That Fits Your Life",
+      "subtitle": "Verified projects • Clear pricing • Guided site visits",
+      "tagline": "Built for your today. Planned for your tomorrow."
+    },
     "quickInfo": {
       "price": "69.99 onwards*",
       "typology": "2 and 3 BHK",
@@ -30,10 +32,12 @@
     ]
   },
   "summary": {
-    "eyebrow": "Summary",
-    "title": "Designed for Everyday Living",
-    "subtitle": "A thoughtfully planned community that balances comfort, connectivity, and long-term value",
-    "tagline": "Where location, layout, and lifestyle come together",
+    "meta": {
+      "eyebrow": "Highlights",
+      "title": "Designed for Everyday Living",
+      "subtitle": "A thoughtfully planned community that balances comfort, connectivity, and long-term value",
+      "tagline": "Where location, layout, and lifestyle come together"
+    },
     "description": "Provident Sunworth City – The City of More\n \n Provident Sunworth City is a 60-acre integrated township located off Mysore Road near the NICE Junction, offering a rare blend of scale, greenery, and seamless connectivity in South Bengaluru. With Challaghatta Metro Station nearby and easy access to NICE Road, the township ensures convenient connectivity to key parts of the city.\n \n Designed as a self-sustained community, the project features expansive green spaces, thoughtfully planned homes, and everyday conveniences within the premises. Offering well-designed 2 & 3 BHK homes, extensive lifestyle amenities, an in-campus school, and retail spaces, Provident Sunworth City is ideal for families seeking a balanced, future-ready township lifestyle.",
     "highlights": [
       "60-acre integrated township in Bengaluru",
@@ -44,10 +48,12 @@
     ]
   },
   "amenities": {
-    "eyebrow": "Amenities",
-    "title": "Your Leisure Adorned With Opulence",
-    "subtitle": "From sports to leisure, wellness to education…",
-    "tagline": "Thoughtfully curated spaces for every stage of life.",
+    "meta": {
+      "eyebrow": "Amenities",
+      "title": "Your Leisure Adorned With Opulence",
+      "subtitle": "From sports to leisure, wellness to education…",
+      "tagline": "Thoughtfully curated spaces for every stage of life."
+    },
     "amenityImages": [
       {
         "src": "https://www.providenthousing.com/wp-content/uploads/2022/12/amenitie-basketball-court-3-1.jpg",
@@ -152,10 +158,12 @@
     ]
   },
   "views": {
-    "eyebrow": "Views",
-    "title": "Mesmerizing Views",
-    "subtitle": "Wake up to greenery and breathtaking vistas.",
-    "tagline": "Every window opens to calm, light, and openness.",
+    "meta": {
+      "eyebrow": "Views",
+      "title": "Mesmerizing Views",
+      "subtitle": "Wake up to greenery and breathtaking vistas.",
+      "tagline": "Every window opens to calm, light, and openness."
+    },
     "images": [
       {
         "src": "https://www.providenthousing.com/wp-content/uploads/2022/12/Front-elevation-01-1-1.webp",
@@ -202,10 +210,12 @@
     ]
   },
   "locationUI": {
-    "eyebrow": "Location",
-    "title": "The Perfect Setting",
-    "subtitle": "Everything you need within easy reach — schools, hospitals, connectivity & more.",
-    "tagline": "Life. Convenience. Future-ready.",
+    "meta": {
+      "eyebrow": "Location",
+      "title": "The Perfect Setting",
+      "subtitle": "Everything you need within easy reach — schools, hospitals, connectivity & more.",
+      "tagline": "Life. Convenience. Future-ready."
+    },
     "videoId": "m2yHZe55aVg",
     "mapUrl": "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15558.830074988791!2d77.541299!3d12.862158!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae417a8e22df31%3A0xf75cab391d57204e!2sProvident%20Park%20Square!5e0!3m2!1sen!2sin!4v1765259800590!5m2!1sen!2sin",
     "categories": [
@@ -271,10 +281,12 @@
     ]
   },
   "propertyPlans": {
-    "eyebrow": "Layouts",
-    "title": "Meticulously Designed Homes",
-    "subtitle": "Explore our thoughtfully designed homes with virtual walkthroughs and detailed floor plans",
-    "tagline": "Homes designed around real life, not just square feet.",
+    "meta": {
+      "eyebrow": "Layouts",
+      "title": "Meticulously Designed Homes",
+      "subtitle": "Explore our thoughtfully designed homes with virtual walkthroughs and detailed floor plans",
+      "tagline": "Homes designed around real life, not just square feet."
+    },
     "masterPlan": {
       "image": "https://www.providenthousing.com/wp-content/uploads/2022/12/sunworth-city-master-plan.webp",
       "title": "Master Plan",
@@ -343,10 +355,12 @@
     ]
   },
   "paymentPlans": {
-    "eyebrow": "Payment Plans",
-    "title": "Pricing & Payment Plans",
-    "subtitle": "Transparent costing • Milestone-based • RERA compliant",
-    "tagline": "Pay as construction progresses. No surprises later.",
+    "meta": {
+      "eyebrow": "Payment Plans",
+      "title": "Pricing & Payment Plans",
+      "subtitle": "Transparent costing • Milestone-based • RERA compliant",
+      "tagline": "Pay as construction progresses. No surprises later."
+    },
     "pricingTitle": "How much to pay?",
     "scheduleTitle": "When to pay?",
     "ctaText": "Get pricing and payment details",
@@ -423,10 +437,12 @@
     ]
   },
   "construction": {
-    "eyebrow": "Progress",
-    "title": "Construction Progress",
-    "subtitle": "Stay updated with the work happening on-site.",
-    "tagline": "Track real progress with verified on-site updates.",
+    "meta": {
+      "eyebrow": "Progress",
+      "title": "Construction Progress",
+      "subtitle": "Stay updated with the work happening on-site.",
+      "tagline": "Track real progress with verified on-site updates."
+    },
     "updates": [
       {
         "name": "Tower 4J",
@@ -466,37 +482,41 @@
     ]
   },
   "testimonials": {
-    "eyebrow": "Testimonials",
-    "title": "What Our Customers Say",
-    "subtitle": "Hear from families living here",
-    "tagline": "Real stories from families who chose to live here.",
+    "meta": {
+      "eyebrow": "Testimonials",
+      "title": "What Our Customers Say",
+      "subtitle": "Hear from families living here",
+      "tagline": "Real stories from families who chose to live here."
+    },
     "testimonials": [
       {
         "name": "Resident Family 1",
-        "quote": "k-dD6PtfrC8",
-        "videoId": "The amenities and green spaces are exactly what we were looking for. Our kids love it here!",
+        "quote": "The amenities and green spaces are exactly what we were looking for. Our kids love it here!",
+        "videoId": "k-dD6PtfrC8",
         "rating": 5
       },
       {
         "name": "Resident Family 2",
-        "quote": "iwLw1Xu312s",
-        "videoId": "Great connectivity and peaceful environment. Best decision we made for our family.",
+        "quote": "Great connectivity and peaceful environment. Best decision we made for our family.",
+        "videoId": "iwLw1Xu312s",
         "rating": 5
       },
       {
         "name": "Resident Family 3",
-        "quote": "MxtoYCTGaCE",
-        "videoId": "The construction quality and attention to detail is impressive. Highly recommended!",
+        "quote": "The construction quality and attention to detail is impressive. Highly recommended!",
+        "videoId": "MxtoYCTGaCE",
         "rating": 4
       }
     ]
   },
   "aboutBuilder": {
     "name": "Provident",
-    "eyebrow": "Developer",
-    "title": "About the Developer",
-    "subtitle": "A trusted name with a proven track record in delivering quality homes",
-    "tagline": "Built on credibility. Known for consistency.",
+    "meta": {
+      "eyebrow": "Developer",
+      "title": "About the Developer",
+      "subtitle": "A trusted name with a proven track record in delivering quality homes",
+      "tagline": "Built on credibility. Known for consistency."
+    },
     "description": "Established in 2008, Provident Housing Limited is a large-scale community developer, offering the greatest value within the residential segment. The company caters to the diverse residential needs of buyers, with a focus on aspirational home ownership.",
     "descriptionExpanded": "A 100% subsidiary of Puravankara Limited, Provident Housing carries its legacy with a portfolio of remarkable residential developments across 9 cities, namely, Bengaluru, Kochi, Mumbai, Goa, Hyderabad, Mangalore, Chennai, Coimbatore, and Pune. With a family of 55,000+ happy residents, the company’s mammoth scale of development is evidenced by its track record of ~20 million square feet of projects: ~12.8 million square feet completed and ~7.2 million square feet of ongoing projects. Additionally, ~5.2 million square feet are planned and are under approval for new launches.\n \n Customer obsession is at the heart of everything we do at Provident Housing. This credo guides us in every aspect of our work, from design to handover, ensuring that we consistently enhance the customer’s experience and elevate their lifestyle with homes designed for more.",
     "stats": [
@@ -510,11 +530,11 @@
       },
       {
         "label": "Million Sq.Ft. Delivered",
-        "value": 12.8
+        "value": "12.8 +"
       },
       {
         "label": "Cities",
-        "value": 9
+        "value": "9 Cities"
       },
       {
         "label": "Homes in the Making",
@@ -549,10 +569,12 @@
     ]
   },
   "brochure": {
-    "eyebrow": "Document",
-    "title": "A lifestyle project that suits your needs.",
-    "subtitle": "Explore detailed information on floor plans, amenities, pricing, layout plans and official project documents.",
-    "tagline": "Official documents, layouts, and details — all in one place.",
+    "meta": {
+      "eyebrow": "Document",
+      "title": "A lifestyle project that suits your needs.",
+      "subtitle": "Explore detailed information on floor plans, amenities, pricing, layout plans and official project documents.",
+      "tagline": "Official documents, layouts, and details — all in one place."
+    },
     "coverImage": "https://www.providenthousing.com/wp-content/uploads/2022/12/sunworthcity-brochure-cover-1.png",
     "documents": [
       {
@@ -566,9 +588,11 @@
     ]
   },
   "faq": {
-    "eyebrow": "FAQ",
-    "title": "Frequently Asked Questions",
-    "subtitle": "Everything you need to know before making a decision",
-    "tagline": "Clear answers. No guesswork."
+    "meta": {
+      "eyebrow": "FAQ",
+      "title": "Frequently Asked Questions",
+      "subtitle": "Everything you need to know before making a decision",
+      "tagline": "Clear answers. No guesswork."
+    }
   }
 }

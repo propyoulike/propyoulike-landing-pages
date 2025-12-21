@@ -3,16 +3,18 @@
 import CTAButtons from "@/components/CTAButtons";
 
 interface HeroContentProps {
-  overlayTitle?: string;
-  overlaySubtitle?: string;
+  Title?: string;
+  Subtitle?: string;
+  Tagline?: string;
   ctaEnabled?: boolean;
   hasMedia: boolean;
   onCtaClick?: () => void;
 }
 
 export default function HeroContent({
-  overlayTitle,
-  overlaySubtitle,
+  Title,
+  Subtitle,
+  Tagline,
   ctaEnabled = true,
   onCtaClick,
   hasMedia,
@@ -26,15 +28,21 @@ export default function HeroContent({
           : "py-20 text-foreground",
       ].join(" ")}
     >
-      {overlayTitle && (
+      {Title && (
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4">
-          {overlayTitle}
+          {Title}
         </h1>
       )}
 
-      {overlaySubtitle && (
+      {Subtitle && (
         <p className="text-base md:text-lg max-w-xl mx-auto text-white/90">
-          {overlaySubtitle}
+          {Subtitle}
+        </p>
+      )}
+
+      {Tagline && (
+        <p className="text-base md:text-lg max-w-xl mx-auto text-white/90">
+          {Tagline}
         </p>
       )}
 

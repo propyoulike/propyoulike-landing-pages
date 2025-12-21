@@ -16,7 +16,7 @@ export function loadBaseProject(
     throw new Error(`❌ Invalid project slug format: "${slug}"`);
   }
 
-  const basePath = `/src/content/projects/${builder}/${projectSlug}/index.json`;
+  const basePath = `/src/content/projects/${builder}/${builder}-${projectSlug}.json`;
   const base = getJSON(basePath);
 
   if (!base) {

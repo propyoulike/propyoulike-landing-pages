@@ -3,66 +3,69 @@
 import SummaryList from "./SummaryList";
 import VideoScroller from "@/components/ui/propyoulike/VideoScroller";
 import VideoTile from "@/components/video/VideoTile";
-import SectionHeader from "../SectionHeader";
+
+import BaseSection from "../BaseSection";
 import type { SectionMeta } from "@/content/types/sectionMeta";
 
+/* ---------------------------------------------------------------------
+   TYPES
+------------------------------------------------------------------------*/
 interface SummaryProps {
   id?: string;
-
-  /** Canonical section meta (REQUIRED for visible sections) */
-  meta?: SectionMeta;
-
-  /** Supporting description (1–2 short paragraphs max) */
+  meta?: SectionMeta | null;
   description?: string;
-
-  /** Key bullet highlights */
   highlights?: string[];
-
-  /** Optional walkthrough / model flat videos */
   modelFlats?: {
     youtubeId?: string;
     title?: string;
   }[];
 }
 
+/* ---------------------------------------------------------------------
+   DEFAULT META
+------------------------------------------------------------------------*/
+const DEFAULT_META: SectionMeta = {
+  eyebrow: "OVERVIEW",
+  title: "Project Overview",
+  subtitle: "Everything you should know before you visit",
+  tagline: "A quick snapshot before you explore further",
+};
+
+/* ---------------------------------------------------------------------
+   COMPONENT
+------------------------------------------------------------------------*/
 export default function Summary_component({
   id = "overview",
-
-  meta = {
-    title: "Project Overview",
-    subtitle: "Everything you should know before you visit",
-  },
-
+  meta,
   description,
   highlights = [],
   modelFlats = [],
 }: SummaryProps) {
+
+  const resolvedMeta =
+    meta === null
+      ? null
+      : { ...DEFAULT_META, ...meta };
+
   const hasPrimaryContent =
-    meta?.title ||
-    meta?.subtitle ||
-    description ||
+    !!resolvedMeta?.title ||
+    !!resolvedMeta?.subtitle ||
+    !!description ||
     highlights.length > 0;
 
-  if (!hasPrimaryContent && modelFlats.length === 0) return null;
+  if (!hasPrimaryContent && modelFlats.length === 0) {
+    return null;
+  }
 
   return (
-    <section
+    <BaseSection
       id={id}
-      className="py-12 md:py-16 bg-background"
+      meta={resolvedMeta}
+      padding="md"
+      align="center"
     >
-      {/* ─────────────────────────────
-         PRIMARY CONTENT
-      ───────────────────────────── */}
-      <div className="container max-w-4xl">
-        {meta?.title && (
-          <SectionHeader
-            eyebrow={meta.eyebrow}
-            title={meta.title}
-            subtitle={meta.subtitle}
-            tagline={meta.tagline}
-          />
-        )}
-
+      {/* PRIMARY CONTENT */}
+      <div className="max-w-4xl">
         {description && (
           <p className="mt-6 text-muted-foreground leading-relaxed">
             {description}
@@ -76,16 +79,12 @@ export default function Summary_component({
         )}
       </div>
 
-      {/* ─────────────────────────────
-         SECONDARY: WALKTHROUGH VIDEOS
-      ───────────────────────────── */}
+      {/* SECONDARY: WALKTHROUGH VIDEOS */}
       {modelFlats.length > 0 && (
-        <div className="mt-12">
-          <div className="container mb-3">
-            <p className="text-xs font-medium tracking-widest text-muted-foreground uppercase">
-              Model Flat Walkthroughs
-            </p>
-          </div>
+        <div className="mt-14">
+          <p className="mb-4 text-xs font-medium tracking-widest text-muted-foreground uppercase">
+            Model Flat Walkthroughs
+          </p>
 
           <VideoScroller
             items={modelFlats}
@@ -102,6 +101,6 @@ export default function Summary_component({
           />
         </div>
       )}
-    </section>
+    </BaseSection>
   );
 }

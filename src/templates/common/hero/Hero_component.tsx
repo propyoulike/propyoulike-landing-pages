@@ -4,6 +4,9 @@ import HeroMedia from "./HeroMedia";
 import HeroContent from "./HeroContent";
 import HeroQuickInfo from "./HeroQuickInfo";
 
+/* ---------------------------------------------------------------------
+   TYPES
+------------------------------------------------------------------------*/
 interface HeroMeta {
   title?: string;
   subtitle?: string;
@@ -11,18 +14,18 @@ interface HeroMeta {
 }
 
 interface HeroProps {
-  /** Media */
+  /* Media */
   videoId?: string;
   images?: string[];
 
-  /** Copy (meta-like, enforced) */
+  /* Copy (hero-only, NOT SectionMeta) */
   meta?: HeroMeta;
 
-  /** CTA */
+  /* CTA */
   ctaEnabled?: boolean;
   onCtaClick?: () => void;
 
-  /** Reassurance strip */
+  /* Reassurance strip */
   quickInfo?: {
     price?: string;
     typology?: string;
@@ -31,29 +34,33 @@ interface HeroProps {
   };
 }
 
-export default function Hero_component(props: HeroProps) {
-  const {
-    videoId,
-    images = [],
-    meta,
-    quickInfo,
-  } = props;
-
+/* ---------------------------------------------------------------------
+   COMPONENT
+------------------------------------------------------------------------*/
+export default function Hero_component({
+  videoId,
+  images = [],
+  meta,
+  ctaEnabled,
+  onCtaClick,
+  quickInfo,
+}: HeroProps) {
   const title = meta?.title;
   const subtitle = meta?.subtitle;
   const tagline = meta?.tagline;
 
-  /* ─────────────────────────────
-     SINGLE DOMINANT VISUAL
-  ───────────────────────────── */
+  /* -------------------------------------------------
+     MEDIA RESOLUTION
+  ------------------------------------------------- */
   const hasVideo = Boolean(videoId);
   const hasImages = !hasVideo && images.length > 0;
   const hasMedia = hasVideo || hasImages;
+
+  /* -------------------------------------------------
+     CONTENT GUARD
+  ------------------------------------------------- */
   const hasText = Boolean(title || subtitle || tagline);
 
-  /* ─────────────────────────────
-     RENDER GUARD
-  ───────────────────────────── */
   if (!hasMedia && !hasText) return null;
 
   return (
@@ -66,7 +73,9 @@ export default function Hero_component(props: HeroProps) {
           : "py-20 bg-background",
       ].join(" ")}
     >
-      {/* Visual */}
+      {/* ─────────────────────────────
+         MEDIA LAYER
+      ───────────────────────────── */}
       {hasMedia && (
         <HeroMedia
           videoId={hasVideo ? videoId : undefined}
@@ -74,18 +83,22 @@ export default function Hero_component(props: HeroProps) {
         />
       )}
 
-      {/* Copy + CTA */}
+      {/* ─────────────────────────────
+         COPY + PRIMARY CTA
+      ───────────────────────────── */}
       <HeroContent
         title={title}
         subtitle={subtitle}
         tagline={tagline}
         hasMedia={hasMedia}
-        ctaEnabled={props.ctaEnabled}
-        onCtaClick={props.onCtaClick}
+        ctaEnabled={ctaEnabled}
+        onCtaClick={onCtaClick}
         ctaSource="hero_primary"
       />
 
-      {/* Reassurance strip */}
+      {/* ─────────────────────────────
+         REASSURANCE STRIP
+      ───────────────────────────── */}
       {hasMedia && quickInfo && (
         <HeroQuickInfo quickInfo={quickInfo} />
       )}

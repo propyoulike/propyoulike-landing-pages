@@ -6,7 +6,7 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 import ViewCarousel from "./ViewCarousel";
 import ViewLightbox from "./ViewLightbox";
 
-import SectionHeader from "../SectionHeader";
+import BaseSection from "../BaseSection";
 import type { SectionMeta } from "@/content/types/sectionMeta";
 
 /* -----------------------------------------
@@ -24,17 +24,21 @@ interface ViewsProps {
   id?: string;
 
   /** Canonical section meta */
-  meta?: SectionMeta;
+  meta?: SectionMeta | null;
 
   /** View / perspective images */
   images?: ViewImage[];
 }
 
-const Views_component = memo(function Views({
+/* ---------------------------------------------------------------------
+   COMPONENT
+------------------------------------------------------------------------*/
+const Views_component = memo(function Views_component({
   id = "views",
 
   meta = {
-    title: "Views & Surroundings",
+    eyebrow: "VIEWS",
+    title: "Views & surroundings",
     subtitle:
       "A glimpse of the surroundings, open spaces, and perspectives from the project",
   },
@@ -54,39 +58,23 @@ const Views_component = memo(function Views({
   if (!activeImages.length) return null;
 
   return (
-    <section
+    <BaseSection
       id={id}
-      className="py-12 md:py-16 scroll-mt-32 bg-background"
+      meta={meta}
+      align="center"
+      padding="md"
     >
-      <div className="container">
-
-        {/* ─────────────────────────────
-           SECTION HEADER (SYSTEMIC)
-        ───────────────────────────── */}
-        {meta?.title && (
-          <div className="mb-12 fade-up">
-            <SectionHeader
-              eyebrow={meta.eyebrow}
-              title={meta.title}
-              subtitle={meta.subtitle}
-              tagline={meta.tagline}
-              align="center"
-            />
-          </div>
-        )}
-
-        {/* ─────────────────────────────
-           VISUAL DISCOVERY (PRIMARY)
-        ───────────────────────────── */}
-        <div className="fade-up">
-          <ViewCarousel
-            items={activeImages}
-            onTileClick={(index) => {
-              setSelectedIndex(index);
-              setLightboxOpen(true);
-            }}
-          />
-        </div>
+      {/* ─────────────────────────────
+         VISUAL DISCOVERY (PRIMARY)
+      ───────────────────────────── */}
+      <div className="fade-up">
+        <ViewCarousel
+          items={activeImages}
+          onTileClick={(index) => {
+            setSelectedIndex(index);
+            setLightboxOpen(true);
+          }}
+        />
       </div>
 
       {/* ─────────────────────────────
@@ -98,7 +86,7 @@ const Views_component = memo(function Views({
         images={activeImages}
         onClose={() => setLightboxOpen(false)}
       />
-    </section>
+    </BaseSection>
   );
 });
 

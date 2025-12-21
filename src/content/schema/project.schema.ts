@@ -17,6 +17,26 @@ import { z } from "zod";
  */
 
 /* ============================================================
+   SHARED SCHEMAS
+============================================================ */
+
+const GroupedListSchema = z.object({
+  title: z.string().min(1),
+  items: z.array(z.string().min(1)).min(1),
+});
+
+/* ============================================================
+   SECTION META (CANONICAL)
+============================================================ */
+
+export const SectionMetaSchema = z.object({
+  eyebrow: z.string().min(1).optional(),
+  title: z.string().min(1).optional(),
+  subtitle: z.string().min(1).optional(),
+  tagline: z.string().min(1).optional(),
+});
+
+/* ============================================================
    HERO
 ============================================================ */
 
@@ -31,13 +51,7 @@ export const HeroSchema = z
     videoId: z.string().optional(),
     images: z.array(z.string().min(1)).optional(),
 
-    overlayTitle: z.string().min(1).optional(),
-    overlaySubtitle: z.string().min(1).optional(),
-
-    eyebrow: z.string().min(1).optional(),
-    title: z.string().min(1).optional(),
-    subtitle: z.string().min(1).optional(),
-    tagline: z.string().min(1).optional(),
+    meta: SectionMetaSchema.optional(),
 
     quickInfo: HeroQuickInfoSchema.optional(),
   })
@@ -55,10 +69,7 @@ export const HeroSchema = z
 
 export const SummarySchema = z
   .object({
-    eyebrow: z.string().min(1).optional(),
-    title: z.string().min(1).optional(),
-    subtitle: z.string().min(1).optional(),
-    tagline: z.string().min(1).optional(),
+    meta: SectionMetaSchema.optional(),
 
     description: z.string().min(1).optional(),
 
@@ -97,13 +108,7 @@ const AmenityCategorySchema = z.object({
 
 export const AmenitiesSchema = z
   .object({
-    eyebrow: z.string().min(1).optional(),
-    title: z.string().min(1).optional(),
-    subtitle: z.string().min(1).optional(),
-    tagline: z.string().min(1).optional(),
-
-    heroTitle: z.string().min(1).optional(),
-    heroSubtitle: z.string().min(1).optional(),
+    meta: SectionMetaSchema.optional(),
 
     amenityImages: z.array(AmenityImageSchema).min(1).optional(),
     amenityCategories: z.array(AmenityCategorySchema).min(1).optional(),
@@ -129,10 +134,7 @@ const ViewImageSchema = z.object({
 
 export const ViewsSchema = z
   .object({
-    eyebrow: z.string().min(1).optional(),
-    title: z.string().min(1).optional(),
-    subtitle: z.string().min(1).optional(),
-    tagline: z.string().min(1).optional(),
+    meta: SectionMetaSchema.optional(),
 
     images: z.array(ViewImageSchema).min(1),
   })
@@ -154,10 +156,7 @@ const LocationCategorySchema = z.object({
 
 export const LocationUISchema = z
   .object({
-    eyebrow: z.string().min(1).optional(),
-    title: z.string().min(1).optional(),
-    subtitle: z.string().min(1).optional(),
-    tagline: z.string().min(1).optional(),
+    meta: SectionMetaSchema.optional(),
 
     videoId: z.string().optional(),
     mapUrl: z.string().optional(),
@@ -206,10 +205,7 @@ const MasterPlanSchema = z.object({
 
 export const PropertyPlansSchema = z
   .object({
-    eyebrow: z.string().min(1).optional(),
-    title: z.string().min(1).optional(),
-    subtitle: z.string().min(1).optional(),
-    tagline: z.string().min(1).optional(),
+    meta: SectionMetaSchema.optional(),
 
     modelFlats: z.array(ModelFlatSchema).min(1).optional(),
     unitPlans: z.array(UnitPlanSchema).min(1).optional(),
@@ -229,23 +225,11 @@ export const PropertyPlansSchema = z
   );
 
 /* ============================================================
-   SHARED SCHEMAS
-============================================================ */
-
-const GroupedListSchema = z.object({
-  title: z.string().min(1),
-  items: z.array(z.string().min(1)).min(1),
-});
-
-/* ============================================================
    PAYMENT & PRICING PLANS (GROUPED)
 ============================================================ */
 
 export const PaymentPlansSchema = z.object({
-  eyebrow: z.string().min(1).optional(),
-  title: z.string().min(1).optional(),
-  subtitle: z.string().min(1).optional(),
-  tagline: z.string().min(1).optional(),
+    meta: SectionMetaSchema.optional(),
 
   /* ----------------------------
      PRICING
@@ -294,10 +278,7 @@ const ConstructionUpdateSchema = z
 
 export const ConstructionSchema = z
   .object({
-    eyebrow: z.string().min(1).optional(),
-    title: z.string().min(1).optional(),
-    subtitle: z.string().min(1).optional(),
-    tagline: z.string().min(1).optional(),
+    meta: SectionMetaSchema.optional(),
 
     status: z
       .enum(["not-started", "in-progress", "updates-coming-soon"])
@@ -335,10 +316,7 @@ const TestimonialItemSchema = z
   );
 
 export const TestimonialsSchema = z.object({
-  eyebrow: z.string().min(1).optional(),
-  title: z.string().min(1).optional(),
-  subtitle: z.string().min(1).optional(),
-  tagline: z.string().min(1).optional(),
+    meta: SectionMetaSchema.optional(),
 
   testimonials: z.array(TestimonialItemSchema).min(1),
 });
@@ -357,10 +335,7 @@ export const AboutBuilderSchema = z
   .object({
     name: z.string().min(1),
 
-    eyebrow: z.string().min(1).optional(),
-    title: z.string().min(1).optional(),
-    subtitle: z.string().min(1).optional(),
-    tagline: z.string().min(1).optional(),
+    meta: SectionMetaSchema.optional(),
 
     description: z.string().min(1).optional(),
     descriptionExpanded: z.string().min(1).optional(),
@@ -419,10 +394,7 @@ export const LoanSupportSchema = z
   .object({
     enabled: z.boolean().default(true),
 
-    eyebrow: z.string().min(1).optional(),
-    title: z.string().min(1).optional(),
-    subtitle: z.string().min(1).optional(),
-    tagline: z.string().min(1).optional(),
+    meta: SectionMetaSchema.optional(),
 
     banks: z.array(LoanBankSchema).min(1).optional(),
     ctaText: z.string().min(1).optional(),
@@ -446,13 +418,7 @@ const BrochureDocumentSchema = z.object({
 
 export const BrochureSchema = z
   .object({
-    eyebrow: z.string().min(1).optional(),
-    title: z.string().min(1).optional(),
-    subtitle: z.string().min(1).optional(),
-    tagline: z.string().min(1).optional(),
-
-    heroTitle: z.string().min(1).optional(),
-    heroSubtitle: z.string().min(1).optional(),
+    meta: SectionMetaSchema.optional(),
 
     coverImage: z.string().url().nullable().optional(),
     documents: z.array(BrochureDocumentSchema).min(1).optional(),
@@ -488,10 +454,7 @@ const FAQItemSchema = z.object({
 });
 
 export const FAQSchema = z.object({
-  eyebrow: z.string().min(1).optional(),
-  title: z.string().min(1).optional(),
-  subtitle: z.string().min(1).optional(),
-  tagline: z.string().min(1).optional(),
+    meta: SectionMetaSchema.optional(),
 
   faqs: z.array(FAQItemSchema).min(1),
 });

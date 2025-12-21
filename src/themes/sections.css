@@ -1,0 +1,29 @@
+/* src/themes/sections.css */
+
+.section-header {
+  @apply max-w-4xl space-y-4;
+}
+
+.section-header--center {
+  @apply mx-auto text-center;
+}
+
+/* Eyebrow */
+.section-header__eyebrow {
+  @apply text-xs font-medium tracking-widest uppercase text-muted-foreground;
+}
+
+/* Title */
+.section-header__title {
+  @apply text-3xl md:text-4xl font-semibold leading-tight;
+}
+
+/* Subtitle */
+.section-header__subtitle {
+  @apply text-lg text-muted-foreground;
+}
+
+/* Tagline */
+.section-header__tagline {
+  @apply text-sm italic text-muted-foreground;
+}

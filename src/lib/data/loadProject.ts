@@ -98,11 +98,30 @@ export async function loadProject(
     getJSON,
   });
 
+  /* =================================================
+     🔴 NEW: FLATTEN PROJECT IDENTITY (CRITICAL FIX)
+     -------------------------------------------------
+     Authoring JSON:
+       {
+         project: { slug, builder, city, ... },
+         summary: {...}
+       }
+
+     Runtime schema expects:
+       { slug, builder, city, summary, ... }
+  ================================================== */
+  const flattened = {
+    ...hydrated.project, // 🔴 brings slug, builder, projectName, city, etc.
+    ...hydrated,         // sections
+  };
+
+  delete flattened.project; // 🔴 remove nested project block
+
   /* ------------------ Schema validation ------------------ */
   let parsed: ProjectData;
 
   try {
-    parsed = ProjectSchema.parse(hydrated);
+    parsed = ProjectSchema.parse(flattened); // 🔴 validate FLATTENED object
   } catch (err) {
     console.error("❌ Project schema validation failed:", slug, err);
     throw err;

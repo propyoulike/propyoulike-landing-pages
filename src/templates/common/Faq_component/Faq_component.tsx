@@ -12,26 +12,26 @@ import { useFaqCategories } from "./hooks/useFaqCategories";
 import { useFaqSuggestions } from "./hooks/useFaqSuggestions";
 import { useFaqPopularity } from "./hooks/useFaqPopularity";
 
-import SectionHeader from "../SectionHeader";
+import BaseSection from "../BaseSection";
 import type { SectionMeta } from "@/content/types/sectionMeta";
 
 /* ---------------------------------------------------------------------
    TYPES
 ------------------------------------------------------------------------*/
-type FaqProps = {
+interface FaqProps {
   id?: string;
 
   /** Canonical section meta */
-  meta?: SectionMeta;
+  meta?: SectionMeta | null;
 
   faqs?: any[];
   onCtaClick?: () => void;
-};
+}
 
 /* ---------------------------------------------------------------------
    COMPONENT
 ------------------------------------------------------------------------*/
-function Faq({
+function Faq_component({
   id = "faq",
 
   meta = {
@@ -46,23 +46,24 @@ function Faq({
   faqs = [],
   onCtaClick,
 }: FaqProps) {
-  /** ✅ Normalize first */
+  /** Normalize input */
   const safeFaqs = Array.isArray(faqs) ? faqs : [];
 
-  /** ✅ ALL hooks must run unconditionally */
+  /** State */
   const [showAll, setShowAll] = useState(false);
   const [activeCategory, setActiveCategory] =
     useState<string | null>(null);
   const [lastClickedQuestion, setLastClickedQuestion] =
     useState<string | null>(null);
 
+  /** Hooks (must be unconditional) */
   const { query, setQuery, filtered } =
     useFaqSearch(safeFaqs);
   const categories = useFaqCategories(safeFaqs);
   const suggestions = useFaqSuggestions(query, safeFaqs);
   const popular = useFaqPopularity(safeFaqs);
 
-  /** ✅ Safe early exit */
+  /** Early exit */
   if (!safeFaqs.length) return null;
 
   const hasQuery = query.trim().length > 0;
@@ -99,96 +100,82 @@ function Faq({
   };
 
   return (
-    <section
+    <BaseSection
       id={id}
-      className="py-12 md:py-16 scroll-mt-32 bg-background"
+      meta={meta}
+      align="center"
+      padding="md"
     >
-      <div className="container max-w-5xl">
+      {/* ─────────────────────────────
+         SEARCH
+      ───────────────────────────── */}
+      <FAQSearch
+        query={query}
+        setQuery={setQuery}
+        suggestions={suggestions}
+        resultsCount={baseFaqs.length}
+      />
 
-        {/* ─────────────────────────────
-           SECTION HEADER (SYSTEMIC)
-        ───────────────────────────── */}
-        <div className="mb-10">
-          <SectionHeader
-            eyebrow={meta.eyebrow}
-            title={meta.title}
-            subtitle={meta.subtitle}
-            tagline={meta.tagline}
-            align="center"
-          />
-        </div>
-
-        {/* ─────────────────────────────
-           SEARCH
-        ───────────────────────────── */}
-        <FAQSearch
-          query={query}
-          setQuery={setQuery}
-          suggestions={suggestions}
-          resultsCount={baseFaqs.length}
+      {/* ─────────────────────────────
+         CATEGORIES (ONLY WHEN EXPANDED)
+      ───────────────────────────── */}
+      {showAll && (
+        <FAQCategories
+          categories={categories}
+          onSelectCategory={(cat) => {
+            setActiveCategory(
+              cat === "All" ? null : cat
+            );
+            setShowAll(true);
+          }}
         />
+      )}
 
-        {/* ─────────────────────────────
-           CATEGORIES (ONLY WHEN EXPANDED)
-        ───────────────────────────── */}
-        {showAll && (
-          <FAQCategories
-            categories={categories}
-            onSelectCategory={(cat) => {
-              setActiveCategory(
-                cat === "All" ? null : cat
-              );
-              setShowAll(true);
-            }}
-          />
+      {/* ─────────────────────────────
+         FAQ LIST
+      ───────────────────────────── */}
+      <FAQList
+        faqs={visibleFaqs}
+        autoExpandFirst={!showAll && !hasQuery}
+        onFaqClick={(q) =>
+          setLastClickedQuestion(q)
+        }
+        onInlineCTA={handleWhatsappCTA}
+      />
+
+      {/* ─────────────────────────────
+         SHOW ALL
+      ───────────────────────────── */}
+      {!showAll &&
+        !hasQuery &&
+        safeFaqs.length > 5 && (
+          <div className="mt-6 text-center">
+            <button
+              onClick={() => setShowAll(true)}
+              className="text-primary text-sm underline"
+            >
+              View all {safeFaqs.length} questions →
+            </button>
+          </div>
         )}
 
-        {/* ─────────────────────────────
-           FAQ LIST
-        ───────────────────────────── */}
-        <FAQList
-          faqs={visibleFaqs}
-          autoExpandFirst={!showAll && !hasQuery}
-          onFaqClick={(q) =>
-            setLastClickedQuestion(q)
-          }
-          onInlineCTA={handleWhatsappCTA}
-        />
+      {/* ─────────────────────────────
+         FINAL CTA
+      ───────────────────────────── */}
+      <div className="mt-14 text-center border-t pt-8">
+        <p className="text-muted-foreground mb-4">
+          Still unsure? Talk to someone who knows this
+          project.
+        </p>
 
-        {/* ─────────────────────────────
-           SHOW ALL
-        ───────────────────────────── */}
-        {!showAll &&
-          !hasQuery &&
-          safeFaqs.length > 5 && (
-            <div className="mt-6 text-center">
-              <button
-                onClick={() => setShowAll(true)}
-                className="text-primary text-sm underline"
-              >
-                View all {safeFaqs.length} questions →
-              </button>
-            </div>
-          )}
-
-        {/* ─────────────────────────────
-           FINAL CTA
-        ───────────────────────────── */}
-        <div className="mt-14 text-center border-t pt-8">
-          <p className="text-muted-foreground mb-4">
-            Still unsure? Talk to someone who knows this
-            project.
-          </p>
-
-          {onCtaClick && (
-            <CTAButtons
-              onPrimaryClick={handleWhatsappCTA}
-            />
-          )}
-        </div>
+        {onCtaClick && (
+          <CTAButtons
+            onPrimaryClick={handleWhatsappCTA}
+          />
+        )}
       </div>
-    </section>
+    </BaseSection>
   );
 }
 
-export default memo(Faq);
+export default memo(Faq_component);

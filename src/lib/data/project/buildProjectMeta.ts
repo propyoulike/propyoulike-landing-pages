@@ -1,5 +1,3 @@
-// src/lib/data/project/buildProjectMeta.ts
-
 export type ProjectMeta = {
   slug: string;
 
@@ -23,7 +21,9 @@ export type ProjectMeta = {
 
 /* -------------------------------------------------
    Build ALL project metas
-   (index.json + hero.json merged)
+   Supports:
+   1️⃣ Folder-based projects (index.json + hero.json)
+   2️⃣ Flat-file projects (project.json)
 -------------------------------------------------- */
 export function buildAllProjectMetas(
   contentFiles: Record<string, any>
@@ -35,28 +35,52 @@ export function buildAllProjectMetas(
       slug: string;
       index?: any;
       hero?: any;
+      flat?: any;
     }
   >();
 
   /* ---------------------------------------------
-     1️⃣ Group files by project folder
+     1️⃣ Scan all content files
   ---------------------------------------------- */
   for (const [path, mod] of Object.entries(contentFiles)) {
     const data = mod?.default ?? mod;
     if (!data || typeof data !== "object") continue;
 
-    /**
-     * Matches:
-     * /src/content/projects/builder/project/index.json
-     * /src/content/projects/builder/project/hero.json
-     */
-    const match = path.match(
+    /* =================================================
+       🟢 NEW: FLAT FILE SUPPORT
+       Matches:
+       /projects/{builder}/{slug}.json
+    ================================================== */
+    const flatMatch = path.match(
+      /\/projects\/([^/]+)\/([^/]+)\.json$/
+    );
+
+    if (flatMatch) {
+      const [, builder, slug] = flatMatch;
+      const key = `${builder}-${slug}`;
+
+      projectMap.set(key, {
+        builder,
+        slug,
+        flat: data,
+      });
+
+      continue;
+    }
+
+    /* =================================================
+       🔵 EXISTING: FOLDER-BASED SUPPORT
+       Matches:
+       /projects/{builder}/{slug}/index.json
+       /projects/{builder}/{slug}/hero.json
+    ================================================== */
+    const folderMatch = path.match(
       /\/projects\/([^/]+)\/([^/]+)\/(index|hero)\.json$/
     );
 
-    if (!match) continue;
+    if (!folderMatch) continue;
 
-    const [, builder, slug, file] = match;
+    const [, builder, slug, file] = folderMatch;
     const key = `${builder}-${slug}`;
 
     if (!projectMap.has(key)) {
@@ -71,27 +95,104 @@ export function buildAllProjectMetas(
   ---------------------------------------------- */
   const metas: ProjectMeta[] = [];
 
-  for (const [fullSlug, entry] of projectMap.entries()) {
-    const { builder, slug, index, hero } = entry;
+  for (const entry of projectMap.values()) {
+    const { builder, slug, index, hero, flat } = entry;
 
-    // index.json is mandatory
-    if (!index || !builder || !slug) continue;
+    /* =================================================
+       🟢 FLAT FILE PROJECT
+    ================================================== */
+    if (flat) {
+      const project = flat.project ?? flat;
 
-    // Sanitize city (never allow "India")
+      const rawCity =
+        typeof project.city === "string" &&
+        project.city.toLowerCase() !== "india"
+          ? project.city
+          : undefined;
+
+      const heroBlock = flat.hero ?? {};
+
+      const heroImage =
+        Array.isArray(heroBlock.images) && heroBlock.images.length > 0
+          ? heroBlock.images[0]
+          : null;
+
+      metas.push({
+        slug,
+        builder,
+
+        projectName:
+          typeof project.projectName === "string"
+            ? project.projectName
+            : undefined,
+
+        type:
+          typeof project.type === "string"
+            ? project.type
+            : undefined,
+
+        status:
+          typeof project.status === "string"
+            ? project.status
+            : undefined,
+
+        area:
+          typeof project.area === "string"
+            ? project.area
+            : undefined,
+
+        locality:
+          typeof project.locality === "string"
+            ? project.locality
+            : undefined,
+
+        city: rawCity,
+
+        state:
+          typeof project.state === "string"
+            ? project.state
+            : undefined,
+
+        country:
+          typeof project.country === "string"
+            ? project.country
+            : undefined,
+
+        zone:
+          typeof project.zone === "string"
+            ? project.zone
+            : undefined,
+
+        heroImage,
+        heroVideoId:
+          typeof heroBlock.videoId === "string"
+            ? heroBlock.videoId
+            : null,
+
+        featured: project.featured === true,
+      });
+
+      continue;
+    }
+
+    /* =================================================
+       🔵 FOLDER-BASED PROJECT (LEGACY)
+    ================================================== */
+    if (!index) continue;
+
     const rawCity =
       typeof index.city === "string" &&
       index.city.toLowerCase() !== "india"
         ? index.city
         : undefined;
 
-    // Extract hero data from hero.json
     const heroImage =
       Array.isArray(hero?.hero?.images) && hero.hero.images.length > 0
         ? hero.hero.images[0]
         : null;
 
     metas.push({
-      slug: fullSlug,
+      slug,
       builder,
 
       projectName:

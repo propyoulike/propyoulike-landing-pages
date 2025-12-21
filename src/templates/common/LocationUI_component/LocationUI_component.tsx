@@ -8,7 +8,7 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 import LocationMediaPanel from "./LocationMediaPanel";
 import LocationCategoryAccordion from "./LocationCategoryAccordion";
 
-import SectionHeader from "../SectionHeader";
+import BaseSection from "../BaseSection";
 import type { SectionMeta } from "@/content/types/sectionMeta";
 
 /* ---------------------------------------------------------------------
@@ -18,7 +18,7 @@ interface LocationUIProps {
   id?: string;
 
   /** Canonical section meta */
-  meta?: SectionMeta;
+  meta?: SectionMeta | null;
 
   videoId?: string;
   mapUrl?: string;
@@ -29,7 +29,7 @@ interface LocationUIProps {
 /* ---------------------------------------------------------------------
    COMPONENT
 ------------------------------------------------------------------------*/
-const LocationUI_component = memo(function LocationUI({
+const LocationUI_component = memo(function LocationUI_component({
   id = "location",
 
   meta = {
@@ -48,70 +48,59 @@ const LocationUI_component = memo(function LocationUI({
   useScrollReveal(".fade-up");
   const { openCTA } = useLeadCTAContext();
 
-  if (!videoId && !mapUrl && !categories.length) return null;
+  const hasContent =
+    !!videoId || !!mapUrl || categories.length > 0;
+
+  if (!hasContent) return null;
 
   return (
-    <section
+    <BaseSection
       id={id}
-      className="py-12 md:py-16 scroll-mt-32 bg-background"
+      meta={meta}
+      align="center"
+      padding="md"
     >
-      <div className="container max-w-6xl">
-
-        {/* ─────────────────────────────
-           SECTION HEADER (SYSTEMIC)
-        ───────────────────────────── */}
-        <div className="mb-10 fade-up">
-          <SectionHeader
-            eyebrow={meta.eyebrow}
-            title={meta.title}
-            subtitle={meta.subtitle}
-            tagline={meta.tagline}
-            align="center"
+      {/* ─────────────────────────────
+         MEDIA (VIDEO / MAP)
+      ───────────────────────────── */}
+      {(videoId || mapUrl) && (
+        <div className="fade-up">
+          <LocationMediaPanel
+            videoId={videoId}
+            mapUrl={mapUrl}
           />
         </div>
+      )}
 
-        {/* ─────────────────────────────
-           MEDIA (VIDEO / MAP)
-        ───────────────────────────── */}
-        {(videoId || mapUrl) && (
-          <div className="fade-up">
-            <LocationMediaPanel
-              videoId={videoId}
-              mapUrl={mapUrl}
-            />
-          </div>
-        )}
-
-        {/* ─────────────────────────────
-           DISTANCES / CATEGORIES
-        ───────────────────────────── */}
-        {categories.length > 0 && (
-          <div className="max-w-4xl mx-auto mt-10 fade-up">
-            <LocationCategoryAccordion
-              categories={categories}
-            />
-          </div>
-        )}
-
-        {/* ─────────────────────────────
-           SINGLE, SOFT CTA
-        ───────────────────────────── */}
-        <div className="mt-14 text-center fade-up">
-          <Button
-            size="lg"
-            className="rounded-xl px-12"
-            onClick={() =>
-              openCTA({
-                source: "section",
-                label: "location_book_site_visit",
-              })
-            }
-          >
-            Book site visit
-          </Button>
+      {/* ─────────────────────────────
+         DISTANCES / CATEGORIES
+      ───────────────────────────── */}
+      {categories.length > 0 && (
+        <div className="max-w-4xl mx-auto mt-10 fade-up">
+          <LocationCategoryAccordion
+            categories={categories}
+          />
         </div>
+      )}
+
+      {/* ─────────────────────────────
+         SINGLE, SOFT CTA
+      ───────────────────────────── */}
+      <div className="mt-14 text-center fade-up">
+        <Button
+          size="lg"
+          className="rounded-xl px-12"
+          onClick={() =>
+            openCTA({
+              source: "section",
+              label: "location_book_site_visit",
+            })
+          }
+        >
+          Book site visit
+        </Button>
       </div>
-    </section>
+    </BaseSection>
   );
 });
 

@@ -4,14 +4,18 @@ import { memo } from "react";
 import AmenityCarousel from "./AmenityCarousel";
 import AmenityCategoryList from "./AmenityCategoryList";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
-import SectionHeader from "../SectionHeader";
+
+import BaseSection from "../BaseSection";
 import type { SectionMeta } from "@/content/types/sectionMeta";
 
+/* ---------------------------------------------------------------------
+   TYPES
+------------------------------------------------------------------------*/
 interface AmenitiesProps {
   id?: string;
 
-  /** Canonical section meta (REQUIRED when visible) */
-  meta?: SectionMeta;
+  /** Canonical section meta */
+  meta?: SectionMeta | null;
 
   /** Visual amenity gallery */
   amenityImages?: any[];
@@ -20,10 +24,14 @@ interface AmenitiesProps {
   amenityCategories?: any[];
 }
 
-const Amenities_component = memo(function Amenities({
+/* ---------------------------------------------------------------------
+   COMPONENT
+------------------------------------------------------------------------*/
+const Amenities_component = memo(function Amenities_component({
   id = "amenities",
 
   meta = {
+    eyebrow: "AMENITIES",
     title: "Amenities for Everyday Living",
     subtitle:
       "Thoughtfully curated spaces that support leisure, wellness, and community life",
@@ -34,51 +42,38 @@ const Amenities_component = memo(function Amenities({
 }: AmenitiesProps) {
   useScrollReveal(".fade-up");
 
-  if (!amenityImages.length && !amenityCategories.length) return null;
+  const hasContent =
+    amenityImages.length > 0 || amenityCategories.length > 0;
+
+  if (!hasContent) return null;
 
   return (
-    <section
+    <BaseSection
       id={id}
-      className="py-12 md:py-16 scroll-mt-32 bg-background"
+      meta={meta}
+      align="center"
+      padding="md"
     >
-      <div className="container">
+      {/* ─────────────────────────────
+         VISUAL DISCOVERY (PRIMARY)
+      ───────────────────────────── */}
+      {amenityImages.length > 0 && (
+        <div className="fade-up">
+          <AmenityCarousel items={amenityImages} />
+        </div>
+      )}
 
-        {/* ─────────────────────────────
-           SECTION HEADER (SYSTEMIC)
-        ───────────────────────────── */}
-        {meta?.title && (
-          <div className="mb-12 fade-up">
-            <SectionHeader
-              eyebrow={meta.eyebrow}
-              title={meta.title}
-              subtitle={meta.subtitle}
-              tagline={meta.tagline}
-              align="center"
-            />
-          </div>
-        )}
-
-        {/* ─────────────────────────────
-           VISUAL DISCOVERY (PRIMARY)
-        ───────────────────────────── */}
-        {amenityImages.length > 0 && (
-          <div className="fade-up">
-            <AmenityCarousel items={amenityImages} />
-          </div>
-        )}
-
-        {/* ─────────────────────────────
-           TEXTUAL SCAN (SECONDARY)
-        ───────────────────────────── */}
-        {amenityCategories.length > 0 && (
-          <div className="mt-10 fade-up">
-            <AmenityCategoryList
-              categories={amenityCategories}
-            />
-          </div>
-        )}
-      </div>
-    </section>
+      {/* ─────────────────────────────
+         TEXTUAL SCAN (SECONDARY)
+      ───────────────────────────── */}
+      {amenityCategories.length > 0 && (
+        <div className="mt-10 fade-up">
+          <AmenityCategoryList
+            categories={amenityCategories}
+          />
+        </div>
+      )}
+    </BaseSection>
   );
 });
 

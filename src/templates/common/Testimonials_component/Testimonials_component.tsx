@@ -1,20 +1,21 @@
 // src/templates/common/Testimonials_component.tsx
 
 import { memo, useRef } from "react";
+
 import TestimonialCarousel from "./TestimonialCarousel";
 import TestimonialSingle from "./TestimonialSingle";
 
-import SectionHeader from "../SectionHeader";
+import BaseSection from "../BaseSection";
 import type { SectionMeta } from "@/content/types/sectionMeta";
 
 /* ---------------------------------------------------------------------
    TYPES
 ------------------------------------------------------------------------*/
-interface Props {
+interface TestimonialsProps {
   id?: string;
 
   /** Canonical section meta */
-  meta?: SectionMeta;
+  meta?: SectionMeta | null;
 
   testimonials?: any[];
   autoScrollSpeed?: number;
@@ -25,7 +26,7 @@ interface Props {
 /* ---------------------------------------------------------------------
    COMPONENT
 ------------------------------------------------------------------------*/
-const Testimonials_component = memo(function Testimonials({
+const Testimonials_component = memo(function Testimonials_component({
   id = "testimonials",
 
   meta = {
@@ -40,7 +41,7 @@ const Testimonials_component = memo(function Testimonials({
   testimonials = [],
   autoScrollSpeed = 0.6,
   onCtaClick,
-}: Props) {
+}: TestimonialsProps) {
   const sectionRef = useRef<HTMLDivElement | null>(null);
 
   if (!testimonials.length) return null;
@@ -60,29 +61,13 @@ const Testimonials_component = memo(function Testimonials({
   };
 
   return (
-    <section
+    <BaseSection
       id={id}
-      ref={sectionRef}
-      className="py-12 md:py-16 scroll-mt-32 bg-background"
+      meta={meta}
+      align="center"
+      padding="md"
     >
-      <div className="container max-w-6xl">
-
-        {/* ─────────────────────────────
-           SECTION HEADER (SYSTEMIC)
-        ───────────────────────────── */}
-        <div className="mb-12">
-          <SectionHeader
-            eyebrow={meta.eyebrow}
-            title={meta.title}
-            subtitle={meta.subtitle}
-            tagline={meta.tagline}
-            align="center"
-          />
-        </div>
-
-        {/* ─────────────────────────────
-           CONTENT
-        ───────────────────────────── */}
+      <div ref={sectionRef}>
         {isSingle ? (
           <TestimonialSingle
             t={testimonials[0]}
@@ -96,7 +81,7 @@ const Testimonials_component = memo(function Testimonials({
           />
         )}
       </div>
-    </section>
+    </BaseSection>
   );
 });
 
