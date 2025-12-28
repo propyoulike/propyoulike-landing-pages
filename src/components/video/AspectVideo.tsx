@@ -1,5 +1,3 @@
-// src/components/video/AspectVideo.tsx
-
 import YouTubePlayer from "./YouTubePlayer";
 
 export default function AspectVideo({
@@ -9,6 +7,8 @@ export default function AspectVideo({
   videoId: string;
   title?: string;
 }) {
+  if (!videoId) return null;
+
   return (
     <div className="space-y-2">
       <div className="aspect-video w-full rounded-2xl overflow-hidden bg-black">

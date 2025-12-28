@@ -1,7 +1,38 @@
 // src/templates/common/Views_component/Views_component.tsx
 
-import { memo, useState } from "react";
-import { useScrollReveal } from "@/hooks/useScrollReveal";
+/**
+ * ============================================================
+ * Views_component
+ * ============================================================
+ *
+ * ROLE
+ * ------------------------------------------------------------
+ * - Displays perspective / surroundings imagery
+ * - Supports carousel + immersive lightbox
+ *
+ * ARCHITECTURAL GUARANTEES
+ * ------------------------------------------------------------
+ * - Pure render from props
+ * - No routing or project identity logic
+ * - Browser-only enhancements are optional
+ * - Hydration-safe
+ *
+ * DESIGN PRINCIPLES
+ * ------------------------------------------------------------
+ * 1. PURE BY DEFAULT
+ *    → Rendering must succeed without browser APIs
+ *
+ * 2. PROGRESSIVE ENHANCEMENT
+ *    → Scroll animation must never block render
+ *
+ * 3. SCHEMA-ALIGNED
+ *    → Input matches authoring JSON exactly
+ *
+ * ============================================================
+ */
+
+import { memo, useEffect, useMemo, useState } from "react";
+import { scrollReveal } from "@/lib/scrollReveal";
 
 import ViewCarousel from "./ViewCarousel";
 import ViewLightbox from "./ViewLightbox";
@@ -10,7 +41,7 @@ import BaseSection from "../BaseSection";
 import type { SectionMeta } from "@/content/types/sectionMeta";
 
 /* -----------------------------------------
-   Types match JSON exactly
+   Types (JSON-aligned)
 ------------------------------------------ */
 interface ViewImage {
   image_id: string;
@@ -22,11 +53,7 @@ interface ViewImage {
 
 interface ViewsProps {
   id?: string;
-
-  /** Canonical section meta */
   meta?: SectionMeta | null;
-
-  /** View / perspective images */
   images?: ViewImage[];
 }
 
@@ -45,15 +72,28 @@ const Views_component = memo(function Views_component({
 
   images = [],
 }: ViewsProps) {
-  useScrollReveal(".fade-up");
+  /* ------------------------------------------------------------
+     Progressive enhancement (SAFE)
+  ------------------------------------------------------------ */
+  useEffect(() => {
+    return scrollReveal(".fade-up");
+  }, []);
 
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  /** Only active images, ordered */
-  const activeImages = images
-    .filter((img) => img.is_active !== false)
-    .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+  /* ------------------------------------------------------------
+     Normalize images (PURE)
+  ------------------------------------------------------------ */
+  const activeImages = useMemo(
+    () =>
+      images
+        .filter((img) => img.is_active !== false)
+        .sort(
+          (a, b) => (a.order ?? 0) - (b.order ?? 0)
+        ),
+    [images]
+  );
 
   if (!activeImages.length) return null;
 
@@ -65,7 +105,7 @@ const Views_component = memo(function Views_component({
       padding="md"
     >
       {/* ─────────────────────────────
-         VISUAL DISCOVERY (PRIMARY)
+         VISUAL DISCOVERY
       ───────────────────────────── */}
       <div className="fade-up">
         <ViewCarousel
@@ -78,7 +118,7 @@ const Views_component = memo(function Views_component({
       </div>
 
       {/* ─────────────────────────────
-         LIGHTBOX (IMMERSIVE, SECONDARY)
+         IMMERSIVE LIGHTBOX
       ───────────────────────────── */}
       <ViewLightbox
         open={lightboxOpen}

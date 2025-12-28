@@ -1,24 +1,60 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-
-import ProjectPage from "./pages/ProjectPage";
+import {
+  RouterProvider,
+  createBrowserRouter,
+} from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 
-console.log("📌 ProjectEntry booting...");
-console.log("📌 Current URL:", window.location.pathname);
-console.log("📌 Expected slug:", window.location.pathname.replace(/^\/|\/$/g, ""));
+import ProjectPage from "@/pages/ProjectPage";
+import { runtimeLog } from "@/lib/log/runtimeLog";
 
+/* ============================================================
+   Router (PROD MUST MATCH DEV)
+============================================================ */
+const router = createBrowserRouter([
+  {
+    path: "/*",
+    element: <ProjectPageWrapper />,
+  },
+]);
 
-function Root() {
-  return (
-    <HelmetProvider>
-      <ProjectPage />
-    </HelmetProvider>
+/* ============================================================
+   Wrapper to inject prerendered data
+============================================================ */
+function ProjectPageWrapper() {
+  const raw = window.__PROJECT__ as Record<string, any>;
+
+  const identity = raw.project;
+
+  const project = {
+    slug: identity.slug,
+    builder: identity.builder,
+    type: identity.type,
+    projectName: identity.projectName,
+    status: identity.status,
+  };
+
+  const payload = Object.fromEntries(
+    Object.entries(raw).filter(([key]) => key !== "project")
   );
+
+  return <ProjectPage project={project} payload={payload} />;
 }
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
+/* ============================================================
+   Mount
+============================================================ */
+const rootEl = document.getElementById("root");
+
+if (!rootEl) {
+  throw new Error("ROOT_ELEMENT_MISSING");
+}
+
+ReactDOM.createRoot(rootEl).render(
   <React.StrictMode>
-    <Root />
+    <HelmetProvider>
+      <RouterProvider router={router} />
+    </HelmetProvider>
   </React.StrictMode>
 );

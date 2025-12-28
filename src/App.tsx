@@ -1,80 +1,110 @@
 // src/App.tsx
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { Routes, Route, ScrollRestoration } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HelmetProvider } from "react-helmet-async";
+
+import { IS_DEV } from "@/env/runtime";
 import { useResetScrollOnLoad } from "@/hooks/useResetScrollOnLoad";
 
-import Index from "./pages/Index";
-import ProjectPage from "./pages/ProjectPage";
-import DynamicRouter from "./pages/DynamicRouter";
-import NotFound from "./pages/NotFound";
-import Tracking from "./templates/common/Tracking";
+import Index from "@/pages/Index";
+import DynamicRouter from "@/pages/DynamicRouter";
+import NotFound from "@/pages/NotFound";
 
-import BuilderPage from "./pages/BuilderPage";
-import LocalityPage from "./pages/LocalityPage";
-import CityPage from "./pages/CityPage";
-import ZonePage from "./pages/ZonePage";
+import BuilderPage from "@/pages/BuilderPage";
+import LocalityPage from "@/pages/LocalityPage";
+import CityPage from "@/pages/CityPage";
+import ZonePage from "@/pages/ZonePage";
 
 import PrivacyPage from "@/components/legal/PrivacyPage";
 import TermsPage from "@/components/legal/TermsPage";
 import ReraPage from "@/components/legal/ReraPage";
 
 import { LeadCTAProvider } from "@/components/lead/LeadCTAProvider";
+import Tracking from "@/templates/common/Tracking";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { Toaster } from "@/components/ui/toaster";
+import { Toaster as Sonner } from "@/components/ui/sonner";
 
+import { runtimeLog } from "@/lib/log/runtimeLog";
+
+/* ------------------------------------------------------------
+   Query client (singleton)
+------------------------------------------------------------ */
 const queryClient = new QueryClient();
 
+/* ------------------------------------------------------------
+   Scroll restoration override (router-safe)
+------------------------------------------------------------ */
 function DisableScrollRestoration() {
   return <ScrollRestoration getKey={() => "always-new"} />;
 }
 
-const App = () => {
-  // ✅ Hook must be inside the component body
+/* ------------------------------------------------------------
+   App Root
+------------------------------------------------------------ */
+export default function App() {
   useResetScrollOnLoad();
+
+  /* ----------------------------------------------------------
+     App lifecycle log (ONE per mount)
+  ---------------------------------------------------------- */
+  runtimeLog("App", "info", "App rendered", {
+    env: IS_DEV ? "development" : "production",
+  });
 
   return (
     <HelmetProvider>
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <LeadCTAProvider>
-          <Toaster />
-          <Sonner />
-          <Tracking />
+            {/* Global UI utilities */}
+            <Toaster />
+            <Sonner />
+            <Tracking />
+            <DisableScrollRestoration />
 
-          {/* Disable React Router scroll restore */}
-          <DisableScrollRestoration />
+            {/* DEV banner is intentional and allowed */}
+            {IS_DEV && (
+              <div
+                style={{
+                  position: "fixed",
+                  bottom: 8,
+                  right: 8,
+                  fontSize: 11,
+                  opacity: 0.5,
+                  zIndex: 9999,
+                }}
+              >
+                DEV MODE — prerender disabled
+              </div>
+            )}
 
-          <Routes>
-            <Route path="/" element={<Index />} />
+            {/* ------------------------------------------------
+               Routes (NO logic, NO logging here)
+            ------------------------------------------------ */}
+            <Routes>
+              <Route path="/" element={<Index />} />
 
-            {/* Legal */}
-            <Route path="/legal/privacy" element={<PrivacyPage />} />
-            <Route path="/legal/terms" element={<TermsPage />} />
-            <Route path="/legal/rera" element={<ReraPage />} />
+              {/* Legal */}
+              <Route path="/legal/privacy" element={<PrivacyPage />} />
+              <Route path="/legal/terms" element={<TermsPage />} />
+              <Route path="/legal/rera" element={<ReraPage />} />
 
-            {/* Builder */}
-            <Route path="/builder/:builder" element={<BuilderPage />} />
+              {/* Explicit known routes */}
+              <Route path="/builder/:builder" element={<BuilderPage />} />
+              <Route path="/locality/:locality" element={<LocalityPage />} />
+              <Route path="/:city/:zone" element={<ZonePage />} />
 
-            {/* Locality */}
-            <Route path="/locality/:locality" element={<LocalityPage />} />
+              {/* 🔑 Catch-all resolver */}
+              <Route path="/:slug" element={<DynamicRouter />} />
 
-            {/* City / Zone */}
-            <Route path="/:city/:zone" element={<ZonePage />} />
-
-            {/* Resolver */}
-            <Route path="/:slug" element={<DynamicRouter />} />
-
-            {/* Not found */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+              {/* Final fallback */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
           </LeadCTAProvider>
         </TooltipProvider>
       </QueryClientProvider>
     </HelmetProvider>
   );
-};
-
-export default App;
+}

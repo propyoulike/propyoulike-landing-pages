@@ -1,5 +1,37 @@
 // src/templates/common/Construction_component/Construction_component.tsx
 
+/**
+ * ============================================================
+ * Construction Section
+ * ============================================================
+ *
+ * ROLE
+ * ------------------------------------------------------------
+ * - Displays construction progress media (images / videos)
+ * - Allows filtering by tower / phase
+ * - Provides modal media viewing
+ *
+ * ARCHITECTURAL GUARANTEES
+ * ------------------------------------------------------------
+ * - Pure render from props
+ * - No project identity access
+ * - No routing or global state
+ * - Hydration-safe
+ *
+ * DESIGN PRINCIPLES
+ * ------------------------------------------------------------
+ * 1. SCHEMA-ALIGNED
+ *    Props represent authoring intent, not UI accidents
+ *
+ * 2. UI STATE ISOLATION
+ *    Filtering and modal state never corrupt each other
+ *
+ * 3. DEFENSIVE RENDERING
+ *    No assumptions about list stability
+ *
+ * ============================================================
+ */
+
 import { memo, useState, useMemo, useCallback } from "react";
 
 import MediaCarousel from "@/components/media/MediaCarousel";
@@ -11,22 +43,30 @@ import BaseSection from "../BaseSection";
 import type { SectionMeta } from "@/content/types/sectionMeta";
 
 /* ---------------------------------------------------------------------
-   TYPES
+   TYPES (SCHEMA-ALIGNED)
 ------------------------------------------------------------------------*/
 interface ConstructionUpdate {
-  name: string;
+  /** Tower / phase label (UI grouping key) */
+  tower: string;
+
+  /** Image preview URL */
   image: string;
+
+  /** Media type (defaults to image) */
   type?: "image" | "video";
+
+  /** Optional YouTube video id */
   videoId?: string;
 }
 
 interface ConstructionProps {
+  /** Section anchor id */
   id?: string;
 
   /** Canonical section meta */
-  meta?: SectionMeta | null;
+  meta?: SectionMeta;
 
-  /** Construction updates */
+  /** Construction progress updates */
   updates?: ConstructionUpdate[];
 }
 
@@ -47,37 +87,63 @@ const Construction_component = memo(function Construction_component({
 
   updates = [],
 }: ConstructionProps) {
-  const [activeTower, setActiveTower] = useState<string>("All");
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  /* ------------------------------------------------------------
+     DEV SAFETY GUARD (FAIL LOUD)
+     ------------------------------------------------------------
+     - Catches resolver / wiring bugs immediately
+     - Stripped from production builds
+  ------------------------------------------------------------ */
+  if (import.meta.env.DEV && !Array.isArray(updates)) {
+    throw new Error(
+      "[Construction_component] `updates` must be an array of ConstructionUpdate"
+    );
+  }
 
-  /* ----------------------------------
-     Tower list
-  ---------------------------------- */
+  /* ------------------------------------------------------------
+     Guard — no content
+  ------------------------------------------------------------ */
+  if (!updates.length) return null;
+
+  /* ------------------------------------------------------------
+     UI STATE
+  ------------------------------------------------------------ */
+  const [activeTower, setActiveTower] = useState<string>("All");
+  const [activeMedia, setActiveMedia] =
+    useState<ConstructionUpdate | null>(null);
+
+  /* ------------------------------------------------------------
+     Tower list (UI grouping)
+  ------------------------------------------------------------ */
   const towers = useMemo(() => {
-    const unique = Array.from(new Set(updates.map((u) => u.name)));
+    const unique = Array.from(
+      new Set(updates.map((u) => u.name))
+    );
     return ["All", ...unique];
   }, [updates]);
 
-  /* ----------------------------------
-     Filter updates
-  ---------------------------------- */
+  /* ------------------------------------------------------------
+     Filtered updates
+  ------------------------------------------------------------ */
   const visibleUpdates = useMemo(() => {
     if (activeTower === "All") return updates;
-    return updates.filter((u) => u.name === activeTower);
+    return updates.filter(
+      (u) => u.tower === activeTower
+    );
   }, [updates, activeTower]);
 
-  const activeMedia =
-    activeIndex !== null ? visibleUpdates[activeIndex] : null;
-
-  const openMedia = useCallback((i: number) => {
-    setActiveIndex(i);
-  }, []);
+  /* ------------------------------------------------------------
+     Event handlers
+  ------------------------------------------------------------ */
+  const openMedia = useCallback(
+    (item: ConstructionUpdate) => {
+      setActiveMedia(item);
+    },
+    []
+  );
 
   const closeMedia = useCallback(() => {
-    setActiveIndex(null);
+    setActiveMedia(null);
   }, []);
-
-  if (!updates.length) return null;
 
   return (
     <BaseSection
@@ -87,13 +153,13 @@ const Construction_component = memo(function Construction_component({
       padding="lg"
     >
       {/* ─────────────────────────────
-         TOWER SELECTOR (KEY UX)
+         TOWER SELECTOR
       ───────────────────────────── */}
       {towers.length > 1 && (
         <div className="flex flex-wrap justify-center gap-2 mb-12">
           {towers.map((tower) => (
             <button
-              key={tower}
+              key={`tower-${tower}`}
               onClick={() => setActiveTower(tower)}
               className={cn(
                 "px-4 py-2 rounded-full text-sm font-medium transition-all",
@@ -113,21 +179,21 @@ const Construction_component = memo(function Construction_component({
       ───────────────────────────── */}
       {visibleUpdates.length > 0 ? (
         <MediaCarousel items={visibleUpdates}>
-          {(item, i) => (
+          {(item) => (
             <div
-              key={`${item.name}-${i}`}
+              key={`${item.tower}-${item.image}`}
               className="flex-[0_0_90%] sm:flex-[0_0_80%] md:flex-[0_0_70%] lg:flex-[0_0_60%]"
             >
               <ConstructionTile
                 tower={item}
-                onClick={() => openMedia(i)}
+                onClick={() => openMedia(item)}
               />
             </div>
           )}
         </MediaCarousel>
       ) : (
         <p className="text-center text-muted-foreground">
-          No updates available for this tower.
+          No updates available for this selection.
         </p>
       )}
 

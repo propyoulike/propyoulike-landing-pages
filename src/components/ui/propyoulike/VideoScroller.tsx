@@ -1,25 +1,48 @@
-// src/components/ui/propyoulike/VideoScroller.tsx
+// src/components/media/VideoScroller.tsx
 
-export default function VideoScroller({ items, renderItem }) {
+/**
+ * ============================================================
+ * VideoScroller
+ * ============================================================
+ *
+ * ROLE
+ * ------------------------------------------------------------
+ * - Layout-only horizontal video scroller
+ * - Renders children ONLY
+ *
+ * GUARANTEES
+ * ------------------------------------------------------------
+ * - No iframe logic
+ * - No YouTube knowledge
+ * - No data normalization
+ *
+ * ============================================================
+ */
+
+import React from "react";
+
+interface Props {
+  children: React.ReactNode;
+}
+
+export default function VideoScroller({ children }: Props) {
+  if (!children) return null;
+
   return (
-    <>
-      {/* MOBILE SCROLL */}
-      <div className="md:hidden flex gap-6 overflow-x-auto snap-x snap-mandatory px-4">
-        {items.map((it, i) => (
-          <div key={i} className="snap-start min-w-[85%]">
-            {renderItem(it)}
-          </div>
-        ))}
-      </div>
-
-      {/* DESKTOP GRID */}
-      <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-8 container">
-        {items.map((it, i) => (
-          <div key={i}>
-            {renderItem(it)}
-          </div>
-        ))}
-      </div>
-    </>
+    <div
+      className="
+        flex gap-6 overflow-x-auto snap-x snap-mandatory
+        py-2 px-1
+        [-webkit-overflow-scrolling:touch]
+        [&::-webkit-scrollbar]:hidden
+        scrollbar-hide
+      "
+    >
+      {React.Children.map(children, (child, idx) => (
+        <div key={idx} className="snap-start shrink-0 w-[85%]">
+          {child}
+        </div>
+      ))}
+    </div>
   );
 }

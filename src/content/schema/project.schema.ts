@@ -480,7 +480,7 @@ export const ProjectSchema = z.object({
   country: z.string().optional(),
   pincode: z.string().optional(),
 
-  hero: HeroSchema,
+  hero: HeroSchema.optional(),
 
   summary: SummarySchema.optional(),
   amenities: AmenitiesSchema.optional(),

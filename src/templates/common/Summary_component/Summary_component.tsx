@@ -1,24 +1,35 @@
-// src/templates/common/Summary_component/Summary_component.tsx
+/**
+ * ============================================================
+ * Summary_component
+ * ============================================================
+ *
+ * ROLE
+ * ------------------------------------------------------------
+ * - Provides a high-level overview of the project
+ * - Surfaces key highlights and positioning
+ *
+ * ARCHITECTURAL GUARANTEES
+ * ------------------------------------------------------------
+ * - Pure render from props
+ * - No side effects
+ * - No browser or routing dependencies
+ * - Safe for SSR / hydration
+ *
+ * ============================================================
+ */
 
 import SummaryList from "./SummaryList";
-import VideoScroller from "@/components/ui/propyoulike/VideoScroller";
-import VideoTile from "@/components/video/VideoTile";
-
 import BaseSection from "../BaseSection";
 import type { SectionMeta } from "@/content/types/sectionMeta";
 
 /* ---------------------------------------------------------------------
-   TYPES
+   PROPS
 ------------------------------------------------------------------------*/
 interface SummaryProps {
   id?: string;
   meta?: SectionMeta | null;
   description?: string;
   highlights?: string[];
-  modelFlats?: {
-    youtubeId?: string;
-    title?: string;
-  }[];
 }
 
 /* ---------------------------------------------------------------------
@@ -35,36 +46,24 @@ const DEFAULT_META: SectionMeta = {
    COMPONENT
 ------------------------------------------------------------------------*/
 export default function Summary_component({
-  id = "overview",
+  id = "summary",
   meta,
   description,
   highlights = [],
-  modelFlats = [],
 }: SummaryProps) {
-
   const resolvedMeta =
-    meta === null
-      ? null
-      : { ...DEFAULT_META, ...meta };
+    meta === null ? null : { ...DEFAULT_META, ...meta };
 
-  const hasPrimaryContent =
+  const hasContent =
     !!resolvedMeta?.title ||
     !!resolvedMeta?.subtitle ||
     !!description ||
     highlights.length > 0;
 
-  if (!hasPrimaryContent && modelFlats.length === 0) {
-    return null;
-  }
+  if (!hasContent) return null;
 
   return (
-    <BaseSection
-      id={id}
-      meta={resolvedMeta}
-      padding="md"
-      align="center"
-    >
-      {/* PRIMARY CONTENT */}
+    <BaseSection id={id} meta={resolvedMeta} padding="md" align="center">
       <div className="max-w-4xl">
         {description && (
           <p className="mt-6 text-muted-foreground leading-relaxed">
@@ -78,29 +77,6 @@ export default function Summary_component({
           </div>
         )}
       </div>
-
-      {/* SECONDARY: WALKTHROUGH VIDEOS */}
-      {modelFlats.length > 0 && (
-        <div className="mt-14">
-          <p className="mb-4 text-xs font-medium tracking-widest text-muted-foreground uppercase">
-            Model Flat Walkthroughs
-          </p>
-
-          <VideoScroller
-            items={modelFlats}
-            renderItem={(flat) =>
-              flat.youtubeId ? (
-                <div className="aspect-video">
-                  <VideoTile
-                    videoId={flat.youtubeId}
-                    title={flat.title}
-                  />
-                </div>
-              ) : null
-            }
-          />
-        </div>
-      )}
     </BaseSection>
   );
 }

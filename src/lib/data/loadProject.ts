@@ -1,17 +1,39 @@
 // src/lib/data/loadProject.ts
 
-import { ProjectSchema, type ProjectData } from "@/content/schema/project.schema";
-import {
-  buildAllProjectMetas,
-  loadBaseProject,
-  hydrateFiles,
-  mergeFaqs,
-} from "./project";
-import { getRelatedProjects } from "./project/getRelatedProjects";
+/**
+ * ============================================================
+ * loadProject (DEV Runtime Loader)
+ * ============================================================
+ *
+ * ROLE
+ * ------------------------------------------------------------
+ * - DEV-only orchestration layer
+ * - Delegates ALL real work to resolveProject
+ *
+ * GUARANTEES (HARD)
+ * ------------------------------------------------------------
+ * - Dev and Prod use the SAME resolver
+ * - No conditional logic, no data mutation
+ * - No schema branching
+ * - No environment-specific behavior
+ *
+ * RESULT
+ * ------------------------------------------------------------
+ * ❌ Dev/Prod divergence is impossible
+ * ✅ Single source of truth for project resolution
+ * ============================================================
+ */
 
-/* -------------------------------------------------
+import { buildAllProjectMetas } from "./project";
+import { resolveProject } from "@/lib/project/resolveProject";
+import { runtimeLog } from "@/lib/log/runtimeLog";
+
+/* ------------------------------------------------------------
    Load ALL JSON files once (Vite eager glob)
--------------------------------------------------- */
+   ------------------------------------------------------------
+   - Mirrors prod prerender behavior
+   - Deterministic, hash-safe
+------------------------------------------------------------ */
 const contentFiles = import.meta.glob("/src/content/**/*.json", {
   eager: true,
 }) as Record<string, any>;
@@ -21,141 +43,67 @@ function getJSON(path: string) {
   return mod ? mod.default ?? mod : null;
 }
 
-/* -------------------------------------------------
-   Global fallback data
--------------------------------------------------- */
-const globalLoanSupport = getJSON(
-  "/src/content/global/loanSupport.json"
-);
-
-/* -------------------------------------------------
+/* ------------------------------------------------------------
    Build project meta index ONCE
--------------------------------------------------- */
-export const allProjectMetas = buildAllProjectMetas(contentFiles);
+------------------------------------------------------------ */
+export const allProjectMetas =
+  buildAllProjectMetas(contentFiles);
 
-/* -------------------------------------------------
-   Public accessor (used by homepage, etc.)
--------------------------------------------------- */
 export function getAllProjectMetas() {
   return allProjectMetas;
 }
 
-/* -------------------------------------------------
-   Slug guard
--------------------------------------------------- */
-export function isProjectSlug(slug: string): boolean {
-  return allProjectMetas.some((p) => p.slug === slug);
+/* ------------------------------------------------------------
+   Slug guard (DEV convenience only)
+------------------------------------------------------------ */
+export function isProjectSlug(urlSlug: string) {
+  return allProjectMetas.some((project) => {
+    const fullSlug = `${project.builder}-${project.slug}`;
+    return fullSlug === urlSlug;
+  });
 }
 
-/* -------------------------------------------------
-   City helpers (used elsewhere)
--------------------------------------------------- */
-export function getProjectsByCity(city: string) {
-  return allProjectMetas.filter(
-    (p) => p.city?.toLowerCase() === city.toLowerCase()
-  );
-}
-
-/* -------------------------------------------------
-   MAIN PROJECT LOADER
--------------------------------------------------- */
-export async function loadProject(
-  slug: string
-): Promise<
-  ProjectData & {
-    resolved: {
-      loanSupport: any;
-    };
-  }
-> {
+/* ------------------------------------------------------------
+   MAIN DEV ENTRY
+------------------------------------------------------------ */
+export async function loadProject(slug: string) {
   if (!slug) {
-    throw new Error("❌ loadProject called without slug");
+    runtimeLog("loadProject", "fatal", "Missing slug");
+    throw new Error("PROJECT_SLUG_MISSING");
   }
 
   if (!isProjectSlug(slug)) {
-    throw new Error(`❌ Invalid project slug: ${slug}`);
+    runtimeLog("loadProject", "fatal", "Invalid project slug", {
+      slug,
+    });
+    throw new Error("PROJECT_SLUG_INVALID");
   }
 
-  /* ------------------ Base project ------------------ */
-  const { builder, projectSlug, base } = loadBaseProject(
+  runtimeLog("loadProject", "info", "Resolving project", {
     slug,
-    getJSON
-  );
-
-  /* ------------------ Hydration ------------------ */
-  let hydrated = hydrateFiles(
-    structuredClone(base),
-    builder,
-    projectSlug,
-    getJSON
-  );
-
-  /* ------------------ FAQ merge ------------------ */
-  hydrated.faq = mergeFaqs({
-    builder,
-    projectSlug,
-    hydrated,
-    getJSON,
   });
 
-  /* =================================================
-     🔴 NEW: FLATTEN PROJECT IDENTITY (CRITICAL FIX)
-     -------------------------------------------------
-     Authoring JSON:
-       {
-         project: { slug, builder, city, ... },
-         summary: {...}
-       }
-
-     Runtime schema expects:
-       { slug, builder, city, summary, ... }
-  ================================================== */
-  const flattened = {
-    ...hydrated.project, // 🔴 brings slug, builder, projectName, city, etc.
-    ...hydrated,         // sections
-  };
-
-  delete flattened.project; // 🔴 remove nested project block
-
-  /* ------------------ Schema validation ------------------ */
-  let parsed: ProjectData;
-
-  try {
-    parsed = ProjectSchema.parse(flattened); // 🔴 validate FLATTENED object
-  } catch (err) {
-    console.error("❌ Project schema validation failed:", slug, err);
-    throw err;
-  }
-
-  /* -------------------------------------------------
-     🔑 RESOLVED DATA (GLOBAL → BUILDER → PROJECT)
-     SINGLE SOURCE OF TRUTH
-  -------------------------------------------------- */
-  const resolved = {
-    loanSupport:
-      parsed.loanSupport ??
-      hydrated.builder?.loanSupport ??
-      globalLoanSupport,
-  };
-
-  /* ------------------ Related projects ------------------ */
-  const related = getRelatedProjects(
-    allProjectMetas,
+  /**
+   * 🔒 SINGLE SOURCE OF TRUTH
+   * ----------------------------------------------------------
+   * - Same resolver used by:
+   *   • Dev runtime
+   *   • Prod prerender
+   *   • SEO generation
+   *   • Static export
+   *
+   * - This call MUST NEVER be wrapped, mutated, or branched
+   */
+  const resolved = resolveProject({
     slug,
-    {
-      builderLimit: 4,
-      localityLimit: 4,
-    }
-  );
+    getJSON,
+    allProjectMetas,
+  });
 
-  /* ------------------ Final enriched project ------------------ */
-  return {
-    ...parsed,
+  runtimeLog("loadProject", "info", "Project resolved", {
+    slug,
+    faqCount: resolved.faq?.faqs?.length ?? 0,
+  });
 
-    // 👇 required for $resolved.*
-    resolved,
-
-    builderProjects: related.builderProjects,
-    localityProjects: related.localityProjects,
-  };
+  return resolved;
 }

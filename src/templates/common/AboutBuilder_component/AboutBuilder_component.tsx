@@ -1,5 +1,36 @@
 // src/templates/common/AboutBuilder_component/AboutBuilder_component.tsx
 
+/**
+ * ============================================================
+ * AboutBuilder Section
+ * ============================================================
+ *
+ * ROLE
+ * ------------------------------------------------------------
+ * - Displays builder overview information
+ * - Optional expandable content with stats
+ *
+ * ARCHITECTURAL GUARANTEES
+ * ------------------------------------------------------------
+ * - Render-safe during prerender + hydration
+ * - NO required globals
+ * - Analytics are OPTIONAL and lazy
+ * - No router or navigation side-effects
+ *
+ * DESIGN PRINCIPLES
+ * ------------------------------------------------------------
+ * 1. PURE RENDER FIRST
+ *    UI must render safely even if JS is partially unavailable
+ *
+ * 2. OPTIONAL SIDE-EFFECTS
+ *    Analytics and observers must never crash rendering
+ *
+ * 3. ISOLATED RESPONSIBILITY
+ *    This component never affects routing or layout
+ *
+ * ============================================================
+ */
+
 import { useEffect, useRef, useState } from "react";
 import * as Icons from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -26,6 +57,11 @@ interface BuilderAboutProps {
 }
 
 /* ---------------------------------------------------------------------
+   SAFE GLOBAL HELPERS
+------------------------------------------------------------------------*/
+const isBrowser = typeof window !== "undefined";
+
+/* ---------------------------------------------------------------------
    COMPONENT
 ------------------------------------------------------------------------*/
 export default function AboutBuilder_component({
@@ -49,20 +85,27 @@ export default function AboutBuilder_component({
   const expandedRef = useRef<HTMLDivElement | null>(null);
   const viewedOnce = useRef(false);
 
-  /* ---------------- View tracking ---------------- */
+  /* ------------------------------------------------------------
+     View tracking (SAFE, OPTIONAL)
+  ------------------------------------------------------------ */
   useEffect(() => {
+    if (!isBrowser) return;
     if (!sectionRef.current) return;
+    if (!("IntersectionObserver" in window)) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !viewedOnce.current) {
-          viewedOnce.current = true;
+        if (!entry.isIntersecting || viewedOnce.current) return;
+        viewedOnce.current = true;
 
-          window?.gtag?.("event", "builder_about_view", {
+        // Analytics must NEVER throw
+        try {
+          window.gtag?.("event", "builder_about_view", {
             builder: name,
           });
-
-          window?.fbq?.("trackCustom", "BuilderAboutViewed");
+          window.fbq?.("trackCustom", "BuilderAboutViewed");
+        } catch {
+          // Silent fail — analytics must not break UI
         }
       },
       { threshold: 0.35 }
@@ -72,34 +115,45 @@ export default function AboutBuilder_component({
     return () => observer.disconnect();
   }, [name]);
 
+  /* ------------------------------------------------------------
+     Expand toggle
+  ------------------------------------------------------------ */
   const toggleExpand = () => {
     const next = !expanded;
     setExpanded(next);
 
-    if (next) {
-      window?.gtag?.("event", "builder_about_expand", {
-        builder: name,
-      });
+    if (next && isBrowser) {
+      try {
+        window.gtag?.("event", "builder_about_expand", {
+          builder: name,
+        });
+        window.fbq?.("trackCustom", "BuilderAboutExpanded");
+      } catch {}
 
-      window?.fbq?.("trackCustom", "BuilderAboutExpanded");
-
-      setTimeout(() => {
+      // Scroll only if DOM is ready
+      requestAnimationFrame(() => {
         expandedRef.current?.scrollIntoView({
           behavior: "smooth",
           block: "start",
         });
-      }, 120);
+      });
     }
   };
 
+  /* ------------------------------------------------------------
+     Icon resolver (SAFE)
+  ------------------------------------------------------------ */
   const resolveIcon = (icon?: string) =>
     (Icons as any)[icon || ""] || Icons.Circle;
 
   const hasContent =
-    description || descriptionExpanded || stats.length > 0;
+    !!description || !!descriptionExpanded || stats.length > 0;
 
   if (!hasContent) return null;
 
+  /* ------------------------------------------------------------
+     Render
+  ------------------------------------------------------------ */
   return (
     <BaseSection
       id={id}
@@ -108,7 +162,6 @@ export default function AboutBuilder_component({
       padding="md"
     >
       <div ref={sectionRef}>
-
         {/* Short description */}
         {description && (
           <p className="text-muted-foreground text-center max-w-3xl mx-auto mb-8">

@@ -1,223 +1,275 @@
-// src/content/global/sections.config.ts
-
-import { COMPONENT_REGISTRY } from "@/content/registry/componentRegistry";
+/**
+ * ============================================================
+ * Sections Configuration (GLOBAL)
+ * ============================================================
+ *
+ * PURPOSE
+ * ------------------------------------------------------------
+ * - Declarative source of truth for ALL project page sections
+ * - Defines:
+ *    • Render order
+ *    • Menu visibility
+ *    • Component mapping
+ *    • Explicit data wiring
+ *
+ * THIS FILE IS PURE CONFIG
+ * ------------------------------------------------------------
+ * - No logic
+ * - No conditionals
+ * - No component imports
+ *
+ * ============================================================
+ *
+ * DATA SOURCES (STRICT)
+ * ------------------------------------------------------------
+ * 1. project
+ *    → Flat identity only (slug, builder, type, projectName)
+ *
+ * 2. $payload
+ *    → Structured content sections (amenities, views, etc.)
+ *
+ * 3. $ctx
+ *    → Runtime helpers (CTA handlers, menuItems)
+ *
+ * 4. $resolved
+ *    → Derived / global / normalized data
+ *
+ * ❌ NEVER mix these responsibilities
+ *
+ * ============================================================
+ */
 
 const sectionsConfig = [
+  /* ==========================================================
+     HERO
+     ========================================================== */
   {
     id: "hero",
     component: "Hero_component",
     menu: { visible: false, order: 1 },
-  meta: {
-    title: "hero.heading.title",
-    subtitle: "hero.heading.subtitle",
-    tagline: "hero.heading.tagline",
-  },    props: {
-      "...hero": true,
+
+    meta: "$payload.hero.meta",
+
+    props: {
+      hero: "$payload.hero",
       onCtaClick: "$ctx.openCTA",
     },
   },
 
+  /* ==========================================================
+     NAVBAR
+     ========================================================== */
   {
     id: "navbar",
     component: "Navbar_component",
     menu: { visible: false, order: 2 },
-  meta: {
-    title: "navbar.heading.title",
-    subtitle: "navbar.heading.subtitle",
-    tagline: "navbar.heading.tagline",
-  },
+
     props: {
-      projectName: "project.projectName",
+      projectName: "$payload.project.projectName",
       autoMenu: "$ctx.menuItems",
       onCtaClick: "$ctx.openCTA",
     },
   },
 
+  /* ==========================================================
+     SUMMARY / OVERVIEW
+     ========================================================== */
   {
     id: "summary",
     component: "Summary_component",
     menu: { visible: true, label: "Overview", order: 3 },
-  meta: {
-    title: "summary.heading.title",
-    subtitle: "summary.heading.subtitle",
-    tagline: "summary.heading.tagline",
-  },
+
+    meta: "$payload.summary.meta",
+
     props: {
-      "...summary": true,
-      modelFlats: "project.propertyPlans.modelFlats",
-      onCtaClick: "$ctx.openCTA",
+      description: "$payload.summary.description",
+      highlights: "$payload.summary.highlights",
     },
   },
 
+  /* ==========================================================
+     PROPERTY PLANS
+     ========================================================== */
   {
     id: "propertyPlans",
     component: "PropertyPlans_component",
     menu: { visible: true, label: "Plans", order: 4 },
-  meta: {
-    title: "propertyPlans.heading.title",
-    subtitle: "propertyPlans.heading.subtitle",
-    tagline: "propertyPlans.heading.tagline",
-  },
+
+    meta: "$payload.propertyPlans.meta",
+
     props: {
-      "...propertyPlans": true,
+      floorPlans: "$payload.propertyPlans.floorPlans",
+      unitPlans: "$payload.propertyPlans.unitPlans",
+      masterPlan: "$payload.propertyPlans.masterPlan",
+      modelFlats: "$payload.propertyPlans.modelFlats",
       onCtaClick: "$ctx.openCTA",
     },
   },
 
+  /* ==========================================================
+     AMENITIES
+     ========================================================== */
   {
     id: "amenities",
     component: "Amenities_component",
     menu: { visible: true, label: "Amenities", order: 5 },
-  meta: {
-    title: "amenities.heading.title",
-    subtitle: "amenities.heading.subtitle",
-    tagline: "amenities.heading.tagline",
-  },
+
+    meta: "$payload.amenities.meta",
+
     props: {
-      "...amenities": true,
-      onCtaClick: "$ctx.openCTA",
+      amenityImages: "$payload.amenities.amenityImages",
+      amenityCategories: "$payload.amenities.amenityCategories",
     },
   },
 
+  /* ==========================================================
+     VIEWS
+     ========================================================== */
   {
     id: "views",
     component: "Views_component",
     menu: { visible: true, label: "Views", order: 6 },
-  meta: {
-    title: "views.heading.title",
-    subtitle: "views.heading.subtitle",
-    tagline: "views.heading.tagline",
-  },
+
+    meta: "$payload.views.meta",
+
     props: {
-      "...views": true,
-      onCtaClick: "$ctx.openCTA",
+      images: "$payload.views.images",
     },
   },
 
+  /* ==========================================================
+     LOCATION
+     ========================================================== */
   {
     id: "locationUI",
     component: "LocationUI_component",
     menu: { visible: true, label: "Location", order: 7 },
-  meta: {
-    title: "locationUI.heading.title",
-    subtitle: "locationUI.heading.subtitle",
-    tagline: "locationUI.heading.tagline",
-  },
+
+    meta: "$payload.locationUI.meta",
+
     props: {
-      "...locationUI": true,
-      onCtaClick: "$ctx.openCTA",
+      videoId: "$payload.locationUI.videoId",
+      mapUrl: "$payload.locationUI.mapUrl",
+      categories: "$payload.locationUI.categories",
     },
   },
 
-  {
-    id: "construction",
-    component: "Construction_component",
-    menu: { visible: true, label: "Construction", order: 8 },
-  meta: {
-    title: "construction.heading.title",
-    subtitle: "construction.heading.subtitle",
-    tagline: "construction.heading.tagline",
-  },
-    props: {
-      "...construction": true,
-      onCtaClick: "$ctx.openCTA",
-    },
-  },
+  /* ==========================================================
+     CONSTRUCTION
+     ========================================================== */
+{
+  id: "construction",
+  component: "Construction_component",
+  menu: { visible: true, label: "Construction", order: 8 },
 
+  meta: "$resolved.construction.meta",
+
+  props: {
+    updates: "$resolved.construction.updates",
+  },
+},
+
+  /* ==========================================================
+     PAYMENT PLANS
+     ========================================================== */
   {
     id: "paymentPlans",
     component: "PaymentPlans_component",
     menu: { visible: false, order: 9 },
-  meta: {
-    title: "paymentPlans.heading.title",
-    subtitle: "paymentPlans.heading.subtitle",
-    tagline: "paymentPlans.heading.tagline",
-  },
+
+    meta: "$payload.paymentPlans.meta",
+
     props: {
-      "...paymentPlans": true,
-      onCtaClick: "$ctx.openCTA",
+      pricingComputation:
+        "$payload.paymentPlans.pricingComputation",
+      paymentSchedule:
+        "$payload.paymentPlans.paymentSchedule",
     },
   },
 
-  // ✅ LOAN ASSISTANCE (GLOBAL REASSURANCE BLOCK)
+  /* ==========================================================
+     LOAN ASSISTANCE (DERIVED)
+     ========================================================== */
   {
     id: "loanAssistance",
     component: "LoanAssistance",
     menu: { visible: false, order: 10 },
-  meta: {
-    title: "loanAssistance.heading.title",
-    subtitle: "loanAssistance.heading.subtitle",
-    tagline: "loanAssistance.heading.tagline",
-  },
+
+    meta: "$resolved.loanSupport.meta",
+
     props: {
       loanSupport: "$resolved.loanSupport",
       onCtaClick: "$ctx.openCTA",
     },
   },
 
+  /* ==========================================================
+     TESTIMONIALS
+     ========================================================== */
   {
     id: "testimonials",
     component: "Testimonials_component",
     menu: { visible: true, label: "Testimonials", order: 11 },
-  meta: {
-    title: "testimonials.heading.title",
-    subtitle: "testimonials.heading.subtitle",
-    tagline: "testimonials.heading.tagline",
-  },
+
+    meta: "$payload.testimonials.meta",
+
     props: {
-      "...testimonials": true,
+      testimonials: "$payload.testimonials.testimonials",
       onCtaClick: "$ctx.openCTA",
     },
   },
 
+  /* ==========================================================
+     BROCHURE
+     ========================================================== */
   {
     id: "brochure",
     component: "Brochure_component",
     menu: { visible: false, order: 12 },
-  meta: {
-    title: "brochure.heading.title",
-    subtitle: "brochure.heading.subtitle",
-    tagline: "brochure.heading.tagline",
-  },
+
+    meta: "$payload.brochure.meta",
+
     props: {
-      "...brochure": true,
-      onCtaClick: "$ctx.openCTA",
+      coverImage: "$payload.brochure.coverImage",
+      documents: "$payload.brochure.documents",
     },
   },
 
+  /* ==========================================================
+     ABOUT BUILDER
+     ========================================================== */
   {
     id: "aboutBuilder",
     component: "AboutBuilder_component",
     menu: { visible: false, order: 13 },
-  meta: {
-    title: "aboutBuilder.heading.title",
-    subtitle: "aboutBuilder.heading.subtitle",
-    tagline: "aboutBuilder.heading.tagline",
-  },
+
+    meta: "$payload.aboutBuilder.meta",
+
     props: {
-      "...aboutBuilder": true,
-      builderProjects: "project.builderProjects",
-      onCtaClick: "$ctx.openCTA",
+      name: "$payload.aboutBuilder.name",
+      description: "$payload.aboutBuilder.description",
+      descriptionExpanded:
+        "$payload.aboutBuilder.descriptionExpanded",
+      stats: "$payload.aboutBuilder.stats",
     },
   },
 
+  /* ==========================================================
+     FAQ
+     ========================================================== */
   {
     id: "faq",
     component: "Faq_component",
     menu: { visible: true, label: "FAQ", order: 14 },
-  meta: {
-    title: "faq.heading.title",
-    subtitle: "faq.heading.subtitle",
-    tagline: "faq.heading.tagline",
-  },
-    props: {
-      faqs: "project.faq.faqs",
-      title: "project.faq.title",
-      subtitle: "project.faq.subtitle",
-      onCtaClick: "$ctx.openCTA",
-    },
-  }
 
+    meta: "$payload.faq.meta",
+
+    props: {
+      faqs: "$payload.faq.faqs",
+      onCtaClick: "$ctx.openCTA",
+      whatsappNumber: "$resolved.contact.whatsapp",
+    },
+  },
 ];
 
 export default sectionsConfig;

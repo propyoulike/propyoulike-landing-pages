@@ -1,13 +1,14 @@
-// src/templates/common/brochure/BrochurePreview.tsx
-import { memo } from "react";
+import { memo, useState } from "react";
 
 const BrochurePreview = memo(function BrochurePreview({
   image,
-  title,
-  subtitle,
   onPreviewClick,
+}: {
+  image?: string | null;
+  onPreviewClick?: () => void;
 }) {
-  const hasImage = Boolean(image);
+  const [imageFailed, setImageFailed] = useState(false);
+  const hasImage = Boolean(image) && !imageFailed;
 
   return (
     <div className="lg:w-1/2 w-full">
@@ -17,23 +18,24 @@ const BrochurePreview = memo(function BrochurePreview({
           onClick={onPreviewClick}
         >
           <img
-            src={image}
-            alt={title}
+            src={image!}
+            alt="Project brochure preview"
             loading="lazy"
-            className="w-full h-auto rounded-2xl shadow-lg object-cover group-hover:opacity-90 transition"
+            onError={() => setImageFailed(true)}
+            className="
+              w-full h-auto
+              rounded-2xl shadow-lg
+              object-cover
+              group-hover:opacity-90
+              transition
+            "
           />
         </button>
       ) : (
-        <div className="w-full h-[320px] rounded-2xl bg-muted flex items-center justify-center text-muted-foreground">
+        <div className="w-full h-[320px] rounded-2xl bg-muted flex items-center justify-center text-muted-foreground text-sm">
           Brochure preview available on request
         </div>
       )}
-
-      {/* Text */}
-      <div className="mt-6">
-        <h2 className="text-3xl lg:text-4xl font-bold mb-3">{title}</h2>
-        <p className="text-muted-foreground text-lg">{subtitle}</p>
-      </div>
     </div>
   );
 });

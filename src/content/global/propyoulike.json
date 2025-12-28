@@ -50,8 +50,8 @@
   "privyrEndpoint": "https://www.privyr.com/api/v1/incoming-leads/0vZfjMQw/5xrM2juN#generic-webhook",
 
   "tracking": {
-    "gtmId": "GTM-XXXXXXX",
-    "ga4MeasurementId": "G-XXXXXXXXXX",
+    "gtmId": "GTM-PLRBWVSS",
+    "ga4MeasurementId": "G-8M375DFQZY",
 
     "facebookPixel": {
       "pixelId": "123456789012345",

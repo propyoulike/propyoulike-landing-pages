@@ -1,85 +1,123 @@
-// src/pages/ProjectPage.tsx
-import { useEffect, useState, useMemo } from "react";
-import { useProject } from "@/lib/data/useProject";
-import { getTemplate } from "@/templates/getTemplate";
-import { LeadCTAProvider } from "@/components/lead/LeadCTAProvider";
+/**
+ * ============================================================
+ * ProjectPage
+ * ============================================================
+ *
+ * ROLE
+ * ------------------------------------------------------------
+ * - Environment switch between DEV and PROD project pages
+ * - Passes an ALREADY-NORMALIZED project object downstream
+ *
+ * THIS COMPONENT IS ROUTER-SAFE
+ * ------------------------------------------------------------
+ * - NEVER throws during render
+ * - NEVER navigates
+ * - NEVER mutates router state
+ *
+ * All fatal validation MUST happen at ProjectEntry.
+ *
+ * OBSERVABILITY
+ * ------------------------------------------------------------
+ * - Boundary-level runtime logging only
+ * - No console usage
+ * - Soft-fail diagnostics for contract violations
+ *
+ * ============================================================
+ */
 
-import Footer from "@/components/footer/Footer";
-import ProjectSEO from "@/components/seo/ProjectSEO";
-import Breadcrumbs from "@/components/navigation/Breadcrumbs";
-import FloatingQuickNav from "@/templates/common/FloatingQuickNav";
+import { IS_DEV } from "@/env/runtime";
 
-interface ProjectPageProps {
-  slug: string;
-}
+import ProjectPageDev from "./ProjectPage.dev";
+import ProjectPageProd from "./ProjectPage.prod";
 
-export default function ProjectPage({ slug }: ProjectPageProps) {
-  /* ---------------------------------------
-     Slug resolution (router-owned)
-  ---------------------------------------- */
-  const resolvedSlug = useMemo(() => {
-    return slug && slug.trim() !== "" ? slug : null;
-  }, [slug]);
+import { runtimeLog } from "@/lib/log/runtimeLog";
 
-  const { project, loading, error } = useProject(resolvedSlug);
+/* ------------------------------------------------------------
+   Props Contract
+------------------------------------------------------------ */
+type ProjectPageProps = {
+  /**
+   * Fully-normalized, FLAT project identity.
+   * Guaranteed by ProjectEntry.
+   */
+  project: {
+    slug: string;
+    builder: string;
+    type: string;
+    projectName?: string;
+    status?: string;
+  };
 
-  const [Template, setTemplate] = useState<any>(null);
-  const [templateError, setTemplateError] = useState<string | null>(null);
+  /**
+   * Structured section payload.
+   * Identity MUST NOT be present here.
+   */
+  payload: Record<string, any>;
+};
 
-  /* ---------------------------------------
-     Resolve template
-  ---------------------------------------- */
-  useEffect(() => {
-    if (!project) return;
+/* ------------------------------------------------------------
+   Component
+------------------------------------------------------------ */
+export default function ProjectPage({ project, payload }: ProjectPageProps) {
+  /* ----------------------------------------------------------
+     Runtime diagnostics (Boundary-level)
+  ---------------------------------------------------------- */
+  runtimeLog("ProjectPage", "info", "Entered ProjectPage", {
+    env: IS_DEV ? "dev" : "prod",
+    slug: project?.slug,
+    builder: project?.builder,
+    type: project?.type,
+  });
 
-    if (!project.builder || !project.type) {
-      setTemplateError("No template available for this project.");
-      return;
-    }
+  /* ----------------------------------------------------------
+     SOFT GUARD #1 — identity integrity
+     (render failure UI, NEVER throw)
+  ---------------------------------------------------------- */
+  if (
+    !project ||
+    typeof project.slug !== "string" ||
+    typeof project.builder !== "string" ||
+    typeof project.type !== "string"
+  ) {
+    runtimeLog("ProjectPage", "error", "Invalid project identity", project);
 
-    const tpl = getTemplate(project.builder, project.type);
+    return (
+      <main className="p-10 font-sans">
+        <h1 className="text-xl font-bold">Invalid project data</h1>
+        <p>This project cannot be rendered.</p>
+      </main>
+    );
+  }
 
-    if (!tpl) {
-      setTemplateError("No template available for this project.");
-    } else {
-      setTemplate(() => tpl);
-    }
-  }, [project]);
+  /* ----------------------------------------------------------
+     SOFT GUARD #2 — payload leak detection
+  ---------------------------------------------------------- */
+  if ((project as any).project) {
+    runtimeLog(
+      "ProjectPage",
+      "fatal",
+      "Received full payload instead of flat project",
+      project
+    );
 
-  /* ---------------------------------------
-     Render guards
-  ---------------------------------------- */
-  if (!resolvedSlug) return <div>Invalid project URL</div>;
-  if (loading) return <div>Loading…</div>;
-  if (error) return <div>{error}</div>;
-  if (!project) return <div>Project not found</div>;
-  if (templateError) return <div>{templateError}</div>;
-  if (!Template) return <div>Loading template…</div>;
+    return (
+      <main className="p-10 font-sans">
+        <h1 className="text-xl font-bold">Project payload error</h1>
+        <p>Internal data contract violation.</p>
+      </main>
+    );
+  }
 
-  return (
-    <>
-      {/* SEO */}
-      <ProjectSEO project={project} />
+  /* ----------------------------------------------------------
+     Environment Switch (PURE)
+  ---------------------------------------------------------- */
+  runtimeLog("ProjectPage", "info", "Selecting environment renderer", {
+    renderer: IS_DEV ? "ProjectPageDev" : "ProjectPageProd",
+  });
 
-      {/* Breadcrumbs */}
-      <Breadcrumbs />
-
-      {/* Lead + CTA Context */}
-      <LeadCTAProvider
-        projectName={project.projectName}
-        projectId={project.slug}
-        whatsappNumber="919379822010"
-        trackEvent
-      >
-        {/* Main project content */}
-        <Template project={project} />
-      </LeadCTAProvider>
-
-      {/* Floating Quick Nav (mobile only) */}
-      <FloatingQuickNav footerId="site-footer" />
-
-      {/* Footer */}
-      <Footer id="site-footer" project={project} />
-    </>
+  return IS_DEV ? (
+    <ProjectPageDev project={project} payload={payload} />
+  ) : (
+    <ProjectPageProd project={project} payload={payload} />
   );
 }

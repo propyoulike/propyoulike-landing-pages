@@ -1,18 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Microsite Project</title>
 
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-PLRBWVSS');</script>
+<!-- End Google Tag Manager -->
+
+  <meta charset="UTF-8" />
+
+  <!--
+    Viewport:
+    - Allow zoom (accessibility)
+    - Avoid layout jumps on mobile
+  -->
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=5.0"
+  />
+
+  <!--
+    🔒 SEO / SOCIAL META (PRERENDERED)
+    - title
+    - description
+    - canonical
+    - og / twitter (optional)
+    Injected at build time ONLY
+  -->
+  <!--__SOCIAL_META__-->
+
+  <!--
+    🔒 STATIC CSS
+    Must load BEFORE hydration to avoid CLS
+  -->
   <link rel="stylesheet" href="/assets/main.css" />
 </head>
 
 <body>
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PLRBWVSS"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-8M375DFQZY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-8M375DFQZY');
+</script>
+
+  <!--
+    ❌ NO PRERENDERED UI HERE
+    React must own the entire DOM below
+  -->
+
+  <!--
+    🔑 React Root
+    Must be EMPTY at load time
+    Any HTML here will break hydration
+  -->
   <div id="root"></div>
 
-  <!-- THE ENTRY WILL BE INJECTED AT PRERENDER -->
-  <!--__PROJECT_ENTRY__-->
+  <!--
+    🔒 PROJECT PAYLOAD
+    - Single source of truth
+    - Consumed by projectEntry.js
+    - MUST be present before hydrate
+  -->
+  <script>
+    window.__PROJECT__ = __PROJECT_JSON__;
+  </script>
 
+  <!--
+    🔑 Hydration Entry
+    - Reads window.__PROJECT__
+    - Mounts React into #root
+    - Renders ALL sections dynamically
+  -->
+<!--__PROJECT_ENTRY__-->
 </body>
 </html>

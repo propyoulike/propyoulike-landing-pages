@@ -1,5 +1,37 @@
 // src/templates/common/LocationUI/LocationUI_component.tsx
 
+/**
+ * ============================================================
+ * LocationUI_component
+ * ============================================================
+ *
+ * ROLE
+ * ------------------------------------------------------------
+ * - Displays location media (map / video)
+ * - Shows categorized distance & connectivity data
+ * - Provides a single, soft site-visit CTA
+ *
+ * ARCHITECTURAL GUARANTEES
+ * ------------------------------------------------------------
+ * - Pure render from props
+ * - No project identity or routing logic
+ * - Hydration-safe
+ * - Optional browser-only enhancements
+ *
+ * DESIGN PRINCIPLES
+ * ------------------------------------------------------------
+ * 1. PURE BY DEFAULT
+ *    → Rendering must succeed without browser APIs
+ *
+ * 2. OPTIONAL ENHANCEMENTS
+ *    → Animations must never block rendering
+ *
+ * 3. SCHEMA-ALIGNED
+ *    → Props reflect authoring intent, not runtime guesses
+ *
+ * ============================================================
+ */
+
 import { memo } from "react";
 import { Button } from "@/components/ui/button";
 import { useLeadCTAContext } from "@/components/lead/LeadCTAProvider";
@@ -12,13 +44,13 @@ import BaseSection from "../BaseSection";
 import type { SectionMeta } from "@/content/types/sectionMeta";
 
 /* ---------------------------------------------------------------------
-   TYPES
+   TYPES (SCHEMA-ALIGNED)
 ------------------------------------------------------------------------*/
 interface LocationUIProps {
   id?: string;
 
   /** Canonical section meta */
-  meta?: SectionMeta | null;
+  meta?: SectionMeta;
 
   videoId?: string;
   mapUrl?: string;
@@ -30,7 +62,7 @@ interface LocationUIProps {
    COMPONENT
 ------------------------------------------------------------------------*/
 const LocationUI_component = memo(function LocationUI_component({
-  id = "location",
+  id = "locationUI",
 
   meta = {
     eyebrow: "LOCATION",
@@ -45,7 +77,12 @@ const LocationUI_component = memo(function LocationUI_component({
   mapUrl,
   categories = [],
 }: LocationUIProps) {
+  /* ------------------------------------------------------------
+     Optional animation enhancement
+     (Safe: hook self-guards for browser / SSR)
+  ------------------------------------------------------------ */
   useScrollReveal(".fade-up");
+
   const { openCTA } = useLeadCTAContext();
 
   const hasContent =

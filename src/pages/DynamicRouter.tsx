@@ -1,62 +1,133 @@
 // src/pages/DynamicRouter.tsx
+
+/**
+ * ============================================================
+ * DynamicRouter (DEV Runtime Resolver)
+ * ============================================================
+ *
+ * ROLE
+ * ------------------------------------------------------------
+ * - DEV-only dynamic route resolver
+ * - Determines WHICH page to render for a given slug
+ *
+ * IMPORTANT
+ * ------------------------------------------------------------
+ * - MUST NOT partially render ProjectPage
+ * - MUST respect ProjectPage contract strictly
+ * - PROD does NOT use this path (ProjectEntry handles it)
+ *
+ * ============================================================
+ */
+
 import { useLocation } from "react-router-dom";
 
 import ProjectPage from "@/pages/ProjectPage";
 import CityPage from "@/pages/CityPage";
 import ZonePage from "@/pages/ZonePage";
+import LocalityPage from "@/pages/LocalityPage";
+import BuilderPage from "@/pages/BuilderPage";
 import NotFound from "@/pages/NotFound";
 
-import {
-  isProjectSlug,
-  allProjectMetas,
-} from "@/lib/data/loadProject";
+import { useProject } from "@/lib/data/useProject";
+import { resolveSlugFromPath } from "@/lib/routing/resolveSlug";
 
-import { getProjectsByCity } from "@/lib/data/project/getProjectsByCity";
-import { getProjectsByZoneSlug } from "@/lib/data/project/getProjectsByZoneSlug";
+import { isCitySlug } from "@/lib/routing/isCitySlug";
+import { isZoneSlug } from "@/lib/routing/isZoneSlug";
+import { isLocalitySlug } from "@/lib/routing/isLocalitySlug";
+import { isBuilderSlug } from "@/lib/routing/isBuilderSlug";
+
+import { runtimeLog } from "@/lib/log/runtimeLog";
 
 export default function DynamicRouter() {
   const location = useLocation();
+  const slug = resolveSlugFromPath(location.pathname);
 
-  // "/provident-sunworth-city/" → "provident-sunworth-city"
-  const slug = location.pathname.replace(/^\/|\/$/g, "");
+  runtimeLog("DynamicRouter", "info", "Resolved slug", {
+    slug,
+    path: location.pathname,
+  });
 
-  /* -------------------------------------------------
-     1️⃣ PROJECT PAGE (highest priority)
-  ------------------------------------------------- */
-  if (isProjectSlug(slug)) {
-    return <ProjectPage />;
+  if (!slug) {
+    return <NotFound />;
   }
 
-  /* -------------------------------------------------
-     2️⃣ CITY PAGE
-     Example: /bangalore
-  ------------------------------------------------- */
-  const cityProjects = getProjectsByCity(allProjectMetas, slug);
-  if (cityProjects.length > 0) {
-    return <CityPage city={slug} projects={cityProjects} />;
-  }
+  /* ----------------------------------------------------------
+     1️⃣ Project (DEV ONLY)
+     ----------------------------------------------------------
+     useProject MUST return:
+     { project, payload }
+  ---------------------------------------------------------- */
+  const {
+    project,
+    payload,
+    loading,
+    error,
+  } = useProject(slug);
 
-  /* -------------------------------------------------
-     3️⃣ ZONE PAGE (DATA-DRIVEN, SAFE)
-     Example: /bangalore-west
-  ------------------------------------------------- */
-  const zoneResult = getProjectsByZoneSlug(
-    allProjectMetas,
-    slug
-  );
-
-  if (zoneResult) {
+  if (loading) {
     return (
-      <ZonePage
-        city={zoneResult.city}
-        zone={zoneResult.zone}
-        projects={zoneResult.projects}
+      <div style={{ padding: 24 }}>
+        Resolving page…
+      </div>
+    );
+  }
+
+  if (project && payload) {
+    runtimeLog("DynamicRouter", "info", "Rendering ProjectPage", {
+      slug,
+      projectName: project.projectName,
+    });
+
+    return (
+      <ProjectPage
+        project={project}
+        payload={payload}
       />
     );
   }
 
-  /* -------------------------------------------------
-     4️⃣ NOT FOUND
-  ------------------------------------------------- */
+  if (error) {
+    runtimeLog(
+      "DynamicRouter",
+      "warn",
+      "useProject failed, falling back to non-project routes",
+      { slug, error }
+    );
+  }
+
+  /* ----------------------------------------------------------
+     2️⃣ Builder
+  ---------------------------------------------------------- */
+  if (isBuilderSlug(slug)) {
+    return <BuilderPage builder={slug} />;
+  }
+
+  /* ----------------------------------------------------------
+     3️⃣ Locality
+  ---------------------------------------------------------- */
+  if (isLocalitySlug(slug)) {
+    return <LocalityPage locality={slug} />;
+  }
+
+  /* ----------------------------------------------------------
+     4️⃣ City / Zone
+  ---------------------------------------------------------- */
+  if (slug.includes("/")) {
+    const [city, zone] = slug.split("/");
+    if (isCitySlug(city) && isZoneSlug(city, zone)) {
+      return <ZonePage city={city} zone={zone} />;
+    }
+  }
+
+  /* ----------------------------------------------------------
+     5️⃣ City
+  ---------------------------------------------------------- */
+  if (isCitySlug(slug)) {
+    return <CityPage city={slug} />;
+  }
+
+  /* ----------------------------------------------------------
+     Fallback
+  ---------------------------------------------------------- */
   return <NotFound />;
 }

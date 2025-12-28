@@ -9,6 +9,9 @@ import FloorPlanCard from "./FloorPlanCard";
 import UnitPlanCard from "./UnitPlanCard";
 import CTAButtons from "@/components/CTAButtons";
 
+import VideoScroller from "@/components/ui/propyoulike/VideoScroller";
+import VideoTile from "@/components/video/VideoTile";
+
 import BaseSection from "../BaseSection";
 import type { SectionMeta } from "@/content/types/sectionMeta";
 
@@ -17,8 +20,6 @@ import type { SectionMeta } from "@/content/types/sectionMeta";
 ------------------------------------------------------------------------*/
 interface PropertyPlansProps {
   id?: string;
-
-  /** Canonical section meta */
   meta?: SectionMeta | null;
 
   floorPlans?: {
@@ -35,6 +36,12 @@ interface PropertyPlansProps {
     description?: string;
   };
 
+  modelFlats?: {
+    youtubeId?: string;
+    title?: string;
+    order?: number;
+  }[];
+
   onCtaClick?: () => void;
 }
 
@@ -42,7 +49,7 @@ interface PropertyPlansProps {
    COMPONENT
 ------------------------------------------------------------------------*/
 export default function PropertyPlans_component({
-  id = "plans",
+  id = "propertyPlans",
 
   meta = {
     eyebrow: "LAYOUTS",
@@ -56,6 +63,7 @@ export default function PropertyPlans_component({
   floorPlans = [],
   unitPlans = [],
   masterPlan,
+  modelFlats = [],
 
   onCtaClick,
 }: PropertyPlansProps) {
@@ -64,17 +72,41 @@ export default function PropertyPlans_component({
   const hasMaster = Boolean(masterPlan?.image);
   const hasFloor = floorPlans.length > 0;
   const hasUnits = unitPlans.length > 0;
+  const hasModelFlats = modelFlats.length > 0;
 
-  const hasContent = hasMaster || hasFloor || hasUnits;
+  const hasContent =
+    hasMaster || hasFloor || hasUnits || hasModelFlats;
+
   if (!hasContent) return null;
 
+  const normalizedModelFlats = modelFlats
+    .filter((f) => typeof f.youtubeId === "string")
+    .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+
   return (
-    <BaseSection
-      id={id}
-      meta={meta}
-      align="center"
-      padding="md"
-    >
+    <BaseSection id={id} meta={meta} align="center" padding="md">
+      {/* ─────────────────────────────
+         MODEL FLAT WALKTHROUGHS
+      ───────────────────────────── */}
+      {hasModelFlats && (
+        <div className="mt-20 max-w-6xl mx-auto">
+          <p className="mb-4 text-xs font-medium tracking-widest text-muted-foreground uppercase">
+            Model Flat Walkthroughs
+          </p>
+
+          <VideoScroller>
+            {normalizedModelFlats.map((flat) => (
+              <div key={flat.youtubeId} className="aspect-video">
+                <VideoTile
+                  videoId={flat.youtubeId!}
+                  title={flat.title}
+                />
+              </div>
+            ))}
+          </VideoScroller>
+        </div>
+      )}
+
       {/* ─────────────────────────────
          TABS
       ───────────────────────────── */}
@@ -86,46 +118,31 @@ export default function PropertyPlans_component({
       >
         <TabsList className="grid w-full grid-cols-3 mb-10 bg-muted rounded-xl p-1">
           {hasMaster && (
-            <TabsTrigger value="master">
-              Master plan
-            </TabsTrigger>
+            <TabsTrigger value="master">Master plan</TabsTrigger>
           )}
           {hasFloor && (
-            <TabsTrigger value="floor">
-              Floor plans
-            </TabsTrigger>
+            <TabsTrigger value="floor">Floor plans</TabsTrigger>
           )}
           {hasUnits && (
-            <TabsTrigger value="unit">
-              Unit plans
-            </TabsTrigger>
+            <TabsTrigger value="unit">Unit plans</TabsTrigger>
           )}
         </TabsList>
 
-        {/* MASTER PLAN */}
         {hasMaster && (
           <TabsContent value="master">
-            <div className="flex justify-center">
-              <MasterPlanBlock
-                image={masterPlan?.image}
-                title={masterPlan?.title}
-                description={masterPlan?.description}
-              />
-            </div>
+            <MasterPlanBlock {...masterPlan} />
           </TabsContent>
         )}
 
-        {/* FLOOR PLANS */}
         {hasFloor && (
           <TabsContent value="floor">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 place-items-center">
+            <div className="grid md:grid-cols-2 gap-10">
               {floorPlans.map((plan, i) => (
                 <FloorPlanCard
                   key={i}
                   {...plan}
                   onZoom={() =>
-                    plan.image &&
-                    setZoomImage(plan.image)
+                    plan.image && setZoomImage(plan.image)
                   }
                 />
               ))}
@@ -133,10 +150,9 @@ export default function PropertyPlans_component({
           </TabsContent>
         )}
 
-        {/* UNIT PLANS */}
         {hasUnits && (
           <TabsContent value="unit">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 place-items-center">
+            <div className="grid md:grid-cols-2 gap-10">
               {unitPlans.map((plan, i) => (
                 <UnitPlanCard
                   key={i}
@@ -152,23 +168,14 @@ export default function PropertyPlans_component({
       </Tabs>
 
       {/* ─────────────────────────────
-         CTA — DECISION CONFIRMATION
+         CTA
       ───────────────────────────── */}
       {onCtaClick && (
         <div className="mt-16 flex justify-center">
-          <CTAButtons
-            onPrimaryClick={onCtaClick}
-            intent={{
-              source: "section",
-              label: "property_plans_viewed",
-            }}
-          />
+          <CTAButtons onPrimaryClick={onCtaClick} />
         </div>
       )}
 
-      {/* ─────────────────────────────
-         GLOBAL ZOOM MODAL
-      ───────────────────────────── */}
       <ImageZoomModal
         src={zoomImage}
         onClose={() => setZoomImage(null)}

@@ -9,25 +9,31 @@ import BaseSection from "../BaseSection";
 import type { SectionMeta } from "@/content/types/sectionMeta";
 
 /* ---------------------------------------------------------------------
-   TYPES
+   TYPES (MATCH project.schema EXACTLY)
 ------------------------------------------------------------------------*/
+interface AmenityImage {
+  src: string;
+  title?: string;
+  description?: string;
+  media_type?: "image" | "video";
+}
+
+interface AmenityCategory {
+  title: string;
+  items: string[];
+}
+
 interface AmenitiesProps {
   id?: string;
-
-  /** Canonical section meta */
-  meta?: SectionMeta | null;
-
-  /** Visual amenity gallery */
-  amenityImages?: any[];
-
-  /** Categorised amenity list */
-  amenityCategories?: any[];
+  meta?: SectionMeta;
+  amenityImages?: AmenityImage[];
+  amenityCategories?: AmenityCategory[];
 }
 
 /* ---------------------------------------------------------------------
    COMPONENT
 ------------------------------------------------------------------------*/
-const Amenities_component = memo(function Amenities_component({
+const AmenitiesComponent = memo(function AmenitiesComponent({
   id = "amenities",
 
   meta = {
@@ -40,10 +46,17 @@ const Amenities_component = memo(function Amenities_component({
   amenityImages = [],
   amenityCategories = [],
 }: AmenitiesProps) {
+  /* ------------------------------------------------------------
+     Progressive enhancement
+     ------------------------------------------------------------
+     - Hook called unconditionally
+     - Hook internally guards SSR
+  ------------------------------------------------------------ */
   useScrollReveal(".fade-up");
 
   const hasContent =
-    amenityImages.length > 0 || amenityCategories.length > 0;
+    amenityImages.length > 0 ||
+    amenityCategories.length > 0;
 
   if (!hasContent) return null;
 
@@ -54,18 +67,14 @@ const Amenities_component = memo(function Amenities_component({
       align="center"
       padding="md"
     >
-      {/* ─────────────────────────────
-         VISUAL DISCOVERY (PRIMARY)
-      ───────────────────────────── */}
+      {/* VISUAL AMENITIES */}
       {amenityImages.length > 0 && (
         <div className="fade-up">
           <AmenityCarousel items={amenityImages} />
         </div>
       )}
 
-      {/* ─────────────────────────────
-         TEXTUAL SCAN (SECONDARY)
-      ───────────────────────────── */}
+      {/* CATEGORY LIST */}
       {amenityCategories.length > 0 && (
         <div className="mt-10 fade-up">
           <AmenityCategoryList
@@ -77,4 +86,4 @@ const Amenities_component = memo(function Amenities_component({
   );
 });
 
-export default Amenities_component;
+export default AmenitiesComponent;

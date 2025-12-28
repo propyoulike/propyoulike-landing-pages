@@ -1,8 +1,8 @@
 import { Helmet } from "react-helmet-async";
 import type { ProjectData } from "@/content/schema/project.schema";
 
-import { resolveBreadcrumbs } from "@/lib/seo/resolveBreadcrumbs";
-import { buildBreadcrumbSchema } from "@/lib/seo/buildBreadcrumbSchema";
+import { resolveBreadcrumbs } from "@/components/seo/resolveBreadcrumbs";
+import { buildBreadcrumbSchema } from "@/components/seo/buildBreadcrumbSchema";
 
 interface SEOProps {
   project: ProjectData;
@@ -13,10 +13,11 @@ const ORIGIN = "https://propyoulike.com";
 export default function ProjectSEO({ project }: SEOProps) {
   if (!project) return null;
 
-  /* -----------------------------------------------
-      URL & CANONICAL
-  ----------------------------------------------- */
-  const url = `${ORIGIN}/${project.slug}`;
+/* -----------------------------------------------
+    URL & CANONICAL (LOCKED)
+----------------------------------------------- */
+const canonicalSlug = `${project.builder}-${project.slug}`;
+const url = `${ORIGIN}/${canonicalSlug}`;
 
   /* -----------------------------------------------
       TITLE + DESCRIPTION
@@ -38,12 +39,14 @@ export default function ProjectSEO({ project }: SEOProps) {
   /* -----------------------------------------------
       OG IMAGE (AUTO-GENERATED)
   ----------------------------------------------- */
-  const ogImage = `https://og.propyoulike.com/${project.slug}.png`;
+  const ogImage = `https://og.propyoulike.com/${canonicalSlug}.png`;
 
   /* -----------------------------------------------
       FAQ JSON-LD
   ----------------------------------------------- */
-  const faqList = Array.isArray(project.faq) ? project.faq : [];
+const faqList = Array.isArray(project.faq?.items)
+  ? project.faq.items
+  : [];
 
   const faqSchema =
     faqList.length > 0

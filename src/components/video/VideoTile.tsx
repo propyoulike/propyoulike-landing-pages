@@ -1,5 +1,3 @@
-// src/components/video/VideoTile.tsx
-
 import AspectVideo from "./AspectVideo";
 
 interface VideoTileProps {
@@ -7,7 +5,10 @@ interface VideoTileProps {
   title?: string;
 }
 
-export default function VideoTile({ videoId, title }) {
+export default function VideoTile({
+  videoId,
+  title,
+}: VideoTileProps) {
   return (
     <div className="w-full">
       <AspectVideo videoId={videoId} title={title} />

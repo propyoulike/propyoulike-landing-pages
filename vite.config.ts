@@ -1,150 +1,190 @@
+// vite.config.ts
+
+/**
+ * ============================================================
+ * Vite Configuration — Canonical Runtime Build
+ * ============================================================
+ *
+ * GOALS
+ * ------------------------------------------------------------
+ * 1. Guarantee SINGLE React instance (critical for hooks)
+ * 2. Support multiple real entry points (app + projectEntry)
+ * 3. Prevent chunk duplication across entries
+ * 4. Keep build deterministic and debuggable
+ *
+ * THIS CONFIG IS ARCHITECTURALLY LOCKED
+ * ------------------------------------------------------------
+ * - Changing React-related settings without understanding
+ *   WILL reintroduce Invalid Hook Call errors.
+ *
+ * ============================================================
+ */
+
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
-import fs from "fs";
 
-import { componentTagger } from "lovable-tagger";
+/* ============================================================
+   🔑 BUILD LOGGING SWITCH (SILENT BY DEFAULT)
+============================================================ */
+const DEBUG_BUILD = process.env.VITE_DEBUG_BUILD === "true";
 
-// -------------------------------------------------------
-// AUTO DISCOVER PROJECT SLUGS FROM content/projects
-// -------------------------------------------------------
-
-function getProjectSlugs() {
-  const base = path.resolve(__dirname, "src/content/projects");
-  const slugs: string[] = [];
-
-  for (const builder of fs.readdirSync(base)) {
-    const builderDir = path.join(base, builder);
-    if (!fs.statSync(builderDir).isDirectory()) continue;
-
-    for (const projectSlug of fs.readdirSync(builderDir)) {
-      const projectDir = path.join(builderDir, projectSlug);
-
-      if (fs.existsSync(path.join(projectDir, "index.json"))) {
-        slugs.push(`${builder}-${projectSlug}`);
-      }
-    }
+function buildLog(...args: any[]) {
+  if (DEBUG_BUILD) {
+    console.log("[VITE]", ...args);
   }
-
-  return slugs;
 }
 
-const projectSlugs = getProjectSlugs();
+/* ============================================================
+   CONFIG
+============================================================ */
+export default defineConfig(({ mode }) => {
+  buildLog("Build mode:", mode);
 
-// -------------------------------------------------------
-// ❌ BEFORE (WRONG):
-// multiEntries[slug] = "project.html"
-// Produced one HTML per project → **not needed**.
-// -------------------------------------------------------
-// ✅ AFTER (FIXED):
-// Only TWO entry points:
-// 1. index.html (main site)
-// 2. project.html (for ALL microsites)
-// -------------------------------------------------------
+  return {
+    /* ---------------------------------------------------------
+       BASE
+       ---------------------------------------------------------
+       Must be "/" because:
+       - projectEntry.js is referenced from prerendered HTML
+       - absolute asset paths are required in production
+    --------------------------------------------------------- */
+    base: "/",
 
-const multiEntries: Record<string, string> = {
-  main: path.resolve(__dirname, "index.html"),
-
-  // ⭐ NEW: single microsite entry
-  // ❗ Highlighted Change
-  project: path.resolve(__dirname, "project.html"),
-  projectEntry: path.resolve(__dirname, "src/projectEntry.tsx"),
-};
-
-// -------------------------------------------------------
-// FINAL VITE CONFIG
-// -------------------------------------------------------
-
-export default defineConfig(({ mode }) => ({
-  base: "/",
-
-  server: {
-    host: "::",
-    port: 5173,
-  },
-
-  plugins: [
-    react(),
-    mode === "development" && componentTagger(),
-  ].filter(Boolean),
-
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
+    /* ---------------------------------------------------------
+       DEV SERVER
+    --------------------------------------------------------- */
+    server: {
+      host: "::",
+      port: 5173,
     },
-  },
 
-  build: {
-    outDir: "dist",
-    sourcemap: false,
-    emptyOutDir: true,
-    assetsInlineLimit: 4096,
-    cssCodeSplit: true,
+    /* ---------------------------------------------------------
+       PLUGINS
+       ---------------------------------------------------------
+       ❗ NO dev-only tagging plugins
+       ❗ Keep transform pipeline minimal
+    --------------------------------------------------------- */
+    plugins: [
+      react(),
+    ],
 
-    rollupOptions: {
-      input: multiEntries,
+    /* ---------------------------------------------------------
+       MODULE RESOLUTION (CRITICAL)
+       ---------------------------------------------------------
+       🔒 SINGLE REACT GUARANTEE
+    --------------------------------------------------------- */
+    resolve: {
+      alias: {
+        "@": path.resolve(__dirname, "./src"),
 
-      output: {
-        // ------------------------------------------------------
-        // ❌ BEFORE (WRONG):
-        // entryFileNames(`${slug}/assets/[name].[hash].js`)
-        //
-        // This produced:
-        //   dist/provident-sunworth-city/assets/..js
-        //
-        // Your uploaded site loads from:
-        //   /projectEntry.js
-        //   /shared/*.js
-        //   /assets/main.css
-        // ------------------------------------------------------
-        // ✅ AFTER (FIXED):
-        // One entry for main site and one for ALL microsites.
-        // ------------------------------------------------------
+        // 🔑 HARD DEDUPE — DO NOT REMOVE
+        react: path.resolve(__dirname, "./node_modules/react"),
+        "react-dom": path.resolve(__dirname, "./node_modules/react-dom"),
+        "react/jsx-runtime": path.resolve(
+          __dirname,
+          "./node_modules/react/jsx-runtime"
+        ),
+      },
 
-        entryFileNames(chunk) {
-          // ⭐ Highlighted Change
-          if (chunk.name === "main") return "assets/main.js";
-          if (chunk.name === "projectEntry") return "projectEntry.js"; // ⭐ FIXED
-          return "shared/[name].[hash].js"; // ⭐ FIXED
+      // Extra safety: force dependency dedupe
+      dedupe: ["react", "react-dom"],
+    },
+
+    /* ---------------------------------------------------------
+       BUILD CONFIG
+    --------------------------------------------------------- */
+    build: {
+      manifest: true,          // 🔒 REQUIRED FOR PRERENDER
+      outDir: "dist",
+      emptyOutDir: true,
+      sourcemap: false,
+      cssCodeSplit: true,
+      assetsInlineLimit: 4096,
+
+      /* -------------------------------------------------------
+         MULTI-ENTRY STRATEGY
+         -------------------------------------------------------
+         Allowed entries:
+         - index.html → main app shell
+         - projectEntry.tsx → prerender hydration boundary
+      ------------------------------------------------------- */
+      rollupOptions: {
+        input: {
+          main: path.resolve(__dirname, "index.html"),
+          projectEntry: path.resolve(
+            __dirname,
+            "src/projectEntry.tsx"
+          ),
         },
 
-        // All lazy-loaded chunks go to shared/
-        chunkFileNames() {
-          return "shared/[name].[hash].js"; // ⭐ FIXED
-        },
+        output: {
+          /* ---------------------------------------------------
+             ENTRY OUTPUT NAMING
+          --------------------------------------------------- */
+entryFileNames(chunk) {
+  if (chunk.name === "main") return "assets/main.js";
 
-        // ------------------------------------------------------
-        // FIXED ASSET OUTPUT — consistent with your live site
-        // ------------------------------------------------------
-        assetFileNames(asset) {
-          // ⭐ NEW FIX: favicon at top-level
-          if (asset.name?.includes("favicon")) return "favicon.ico";
+  // 🔒 projectEntry MUST be hashed
+  if (chunk.name === "projectEntry")
+    return "assets/projectEntry.[hash].js";
 
-          // ⭐ NEW FIX: everything else in /assets/
-          return "assets/[name].[ext]";
-        },
+  return "shared/[name].[hash].js";
+},
 
-        // KEEP YOUR MANUAL CHUNKING
-        manualChunks: {
-          react: ["react", "react-dom"],
-          router: ["react-router-dom"],
-          form: ["react-hook-form", "@hookform/resolvers"],
-          charts: ["recharts"],
-          radixAccordion: ["@radix-ui/react-accordion"],
-          radixDialog: ["@radix-ui/react-dialog"],
-          radixTabs: ["@radix-ui/react-tabs"],
-          radixSelect: ["@radix-ui/react-select"],
-          radixPopover: ["@radix-ui/react-popover"],
-          date: ["date-fns"],
-          animation: ["framer-motion"],
+          /* ---------------------------------------------------
+             SHARED CHUNKS
+          --------------------------------------------------- */
+          chunkFileNames: "shared/[name].[hash].js",
+
+          assetFileNames(asset) {
+            if (asset.name === "favicon.ico") return "favicon.ico";
+            return "assets/[name].[ext]";
+          },
+
+          /* ---------------------------------------------------
+             MANUAL CHUNKS (SAFE VERSION)
+             ---------------------------------------------------
+             ❗ React is isolated AND shared
+             ❗ No duplicate React per entry
+          --------------------------------------------------- */
+          manualChunks(id) {
+            if (id.includes("node_modules")) {
+              if (
+                id.includes("react") ||
+                id.includes("react-dom")
+              ) {
+                return "react";
+              }
+
+              if (id.includes("react-router-dom")) {
+                return "router";
+              }
+
+              if (id.includes("framer-motion")) {
+                return "animation";
+              }
+
+              if (id.includes("@radix-ui")) {
+                return "radix";
+              }
+
+              if (id.includes("date-fns")) {
+                return "date";
+              }
+            }
+          },
         },
       },
+
+      chunkSizeWarningLimit: 800,
     },
 
-    chunkSizeWarningLimit: 800,
-  },
-
-  preview: {
-    port: 4173,
-  },
-}));
+    /* ---------------------------------------------------------
+       PREVIEW
+    --------------------------------------------------------- */
+    preview: {
+      port: 4173,
+    },
+  };
+});

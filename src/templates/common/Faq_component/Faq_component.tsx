@@ -1,6 +1,6 @@
 // src/templates/common/Faq_component/Faq_component.tsx
 
-import { memo, useState } from "react";
+import { memo, useState, useMemo } from "react";
 import CTAButtons from "@/components/CTAButtons";
 
 import FAQSearch from "./components/FAQSearch";
@@ -16,17 +16,27 @@ import BaseSection from "../BaseSection";
 import type { SectionMeta } from "@/content/types/sectionMeta";
 
 /* ---------------------------------------------------------------------
-   TYPES
+   TYPES (SCHEMA-ALIGNED)
 ------------------------------------------------------------------------*/
+export interface FaqItem {
+  question: string;
+  answer: string;
+  category?: string;
+  popularity?: number;
+}
+
 interface FaqProps {
   id?: string;
-
-  /** Canonical section meta */
-  meta?: SectionMeta | null;
-
-  faqs?: any[];
+  meta?: SectionMeta;
+  faqs?: FaqItem[];
   onCtaClick?: () => void;
+  whatsappNumber?: string;
 }
+
+/* ---------------------------------------------------------------------
+   ENV GUARD
+------------------------------------------------------------------------*/
+const isBrowser = typeof window !== "undefined";
 
 /* ---------------------------------------------------------------------
    COMPONENT
@@ -43,27 +53,53 @@ function Faq_component({
       "If something isn’t clear, you can always speak to an expert",
   },
 
-  faqs = [],
+  faqs,
   onCtaClick,
+  whatsappNumber = "919379822010",
 }: FaqProps) {
-  /** Normalize input */
-  const safeFaqs = Array.isArray(faqs) ? faqs : [];
+  /* ------------------------------------------------------------
+     DEV SAFETY GUARD (FAIL LOUD)
+  ------------------------------------------------------------ */
+  if (import.meta.env.DEV && faqs && !Array.isArray(faqs)) {
+    throw new Error(
+      "[Faq_component] `faqs` must be an array of FAQ items"
+    );
+  }
 
-  /** State */
+  /* ------------------------------------------------------------
+     Normalization (STABLE, SIDE-EFFECT FREE)
+  ------------------------------------------------------------ */
+  const safeFaqs = useMemo<FaqItem[]>(() => {
+    return Array.isArray(faqs) ? faqs : [];
+  }, [faqs]);
+
+  /* ------------------------------------------------------------
+     UI STATE (MUST RUN ALWAYS)
+  ------------------------------------------------------------ */
   const [showAll, setShowAll] = useState(false);
   const [activeCategory, setActiveCategory] =
     useState<string | null>(null);
   const [lastClickedQuestion, setLastClickedQuestion] =
     useState<string | null>(null);
 
-  /** Hooks (must be unconditional) */
+  /* ------------------------------------------------------------
+     DERIVED DATA (HOOKS MUST BE UNCONDITIONAL)
+  ------------------------------------------------------------ */
   const { query, setQuery, filtered } =
     useFaqSearch(safeFaqs);
-  const categories = useFaqCategories(safeFaqs);
-  const suggestions = useFaqSuggestions(query, safeFaqs);
-  const popular = useFaqPopularity(safeFaqs);
 
-  /** Early exit */
+  const categories =
+    useFaqCategories(safeFaqs);
+
+  const suggestions =
+    useFaqSuggestions(query, safeFaqs);
+
+  const popular =
+    useFaqPopularity(safeFaqs);
+
+  /* ------------------------------------------------------------
+     NOW IT IS SAFE TO GUARD
+  ------------------------------------------------------------ */
   if (!safeFaqs.length) return null;
 
   const hasQuery = query.trim().length > 0;
@@ -86,17 +122,27 @@ function Faq_component({
     ? baseFaqs
     : defaultFaqs.slice(0, 3);
 
-  /* ---------------- WhatsApp CTA ---------------- */
+  /* ------------------------------------------------------------
+     WhatsApp CTA (GUARDED)
+  ------------------------------------------------------------ */
   const handleWhatsappCTA = () => {
+    if (!isBrowser) return;
+
+    if (onCtaClick) {
+      onCtaClick();
+      return;
+    }
+
     const text = lastClickedQuestion
       ? `Hi, I have a question about this project:\n\n"${lastClickedQuestion}"`
       : `Hi, I’d like to know more about this project.`;
 
-    const url = `https://wa.me/919379822010?text=${encodeURIComponent(
-      text
-    )}`;
-
-    window.open(url, "_blank");
+    window.open(
+      `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
+        text
+      )}`,
+      "_blank"
+    );
   };
 
   return (
@@ -106,9 +152,6 @@ function Faq_component({
       align="center"
       padding="md"
     >
-      {/* ─────────────────────────────
-         SEARCH
-      ───────────────────────────── */}
       <FAQSearch
         query={query}
         setQuery={setQuery}
@@ -116,9 +159,6 @@ function Faq_component({
         resultsCount={baseFaqs.length}
       />
 
-      {/* ─────────────────────────────
-         CATEGORIES (ONLY WHEN EXPANDED)
-      ───────────────────────────── */}
       {showAll && (
         <FAQCategories
           categories={categories}
@@ -131,21 +171,13 @@ function Faq_component({
         />
       )}
 
-      {/* ─────────────────────────────
-         FAQ LIST
-      ───────────────────────────── */}
       <FAQList
         faqs={visibleFaqs}
         autoExpandFirst={!showAll && !hasQuery}
-        onFaqClick={(q) =>
-          setLastClickedQuestion(q)
-        }
+        onFaqClick={setLastClickedQuestion}
         onInlineCTA={handleWhatsappCTA}
       />
 
-      {/* ─────────────────────────────
-         SHOW ALL
-      ───────────────────────────── */}
       {!showAll &&
         !hasQuery &&
         safeFaqs.length > 5 && (
@@ -159,20 +191,15 @@ function Faq_component({
           </div>
         )}
 
-      {/* ─────────────────────────────
-         FINAL CTA
-      ───────────────────────────── */}
       <div className="mt-14 text-center border-t pt-8">
         <p className="text-muted-foreground mb-4">
           Still unsure? Talk to someone who knows this
           project.
         </p>
 
-        {onCtaClick && (
-          <CTAButtons
-            onPrimaryClick={handleWhatsappCTA}
-          />
-        )}
+        <CTAButtons
+          onPrimaryClick={handleWhatsappCTA}
+        />
       </div>
     </BaseSection>
   );

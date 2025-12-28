@@ -1,55 +1,84 @@
 // src/lib/data/project/mergeFaqs.ts
 
+import type { SectionMeta } from "@/content/types/sectionMeta";
+
+interface MergeFaqsArgs {
+  builder: string;
+  projectSlug: string;
+  hydrated: any;
+  getJSON: (path: string) => any;
+}
+
 export function mergeFaqs({
   builder,
   projectSlug,
   hydrated,
   getJSON,
-}: {
-  builder: string;
-  projectSlug: string;
-  hydrated: any;
-  getJSON: (path: string) => any;
-}) {
-  /* -----------------------------
-     Load FAQ sources (safe)
-  ------------------------------ */
-  const globalFaq =
-    getJSON("/src/content/projects/faq.json")?.faqs ?? [];
+}: MergeFaqsArgs) {
+  /* -------------------------------------------------
+     Load FAQ sources (DATA ONLY)
+  -------------------------------------------------- */
+  const globalFaqs =
+    getJSON("/src/content/global/faq.json")?.faqs ?? [];
 
-  const builderFaq =
-    getJSON(`/src/content/projects/${builder}/builder_faq.json`)?.faqs ?? [];
-
-  const projectFaq =
+  const builderFaqs =
     getJSON(
-      `/src/content/projects/${builder}/${projectSlug}/faq.json`
+      `/src/content/builders/${builder}/builder_faq.json`
     )?.faqs ?? [];
 
-  /* -----------------------------
-     Title & subtitle precedence
-     Project > Builder > Global > Default
-  ------------------------------ */
-  const title =
-    hydrated.faq?.title ??
-    hydrated.builder?.faq?.title ??
-    "Frequently Asked Questions";
+  const projectFaqBlock =
+    getJSON(
+      `/src/content/projects/${builder}/${builder}-${projectSlug}.json`
+    )?.faq ?? {};
 
-  const subtitle =
-    hydrated.faq?.subtitle ??
-    hydrated.builder?.faq?.subtitle ??
-    "Everything you should know before buying this home";
+  const projectFaqs = projectFaqBlock.faqs ?? [];
 
-  /* -----------------------------
-     Merge order matters
-     (lowest → highest priority)
-  ------------------------------ */
+  /* -------------------------------------------------
+     DEV SAFETY (fail loud)
+  -------------------------------------------------- */
+  if (import.meta.env.DEV) {
+    if (
+      !Array.isArray(globalFaqs) ||
+      !Array.isArray(builderFaqs) ||
+      !Array.isArray(projectFaqs)
+    ) {
+      throw new Error(
+        "[mergeFaqs] FAQ sources must be arrays"
+      );
+    }
+  }
+
+  /* -------------------------------------------------
+     META (PROJECT-OWNED ONLY)
+  -------------------------------------------------- */
+  const meta: SectionMeta = {
+    eyebrow: projectFaqBlock.meta?.eyebrow ?? "FAQ",
+    title:
+      projectFaqBlock.meta?.title ??
+      "Frequently Asked Questions",
+    subtitle:
+      projectFaqBlock.meta?.subtitle ??
+      "Everything you should know before buying this home",
+    tagline: projectFaqBlock.meta?.tagline,
+  };
+
+  /* -------------------------------------------------
+     MERGE + DEDUPE (by question)
+     Priority: Global → Builder → Project
+  -------------------------------------------------- */
+  const map = new Map<string, any>();
+
+  for (const faq of globalFaqs) map.set(faq.question, faq);
+  for (const faq of builderFaqs) map.set(faq.question, faq);
+  for (const faq of projectFaqs) map.set(faq.question, faq);
+
+  const faqs = Array.from(map.values());
+
+  /* -------------------------------------------------
+     FINAL SHAPE
+  -------------------------------------------------- */
   return {
-    title,
-    subtitle,
-    faqs: [
-      ...globalFaq,
-      ...builderFaq,
-      ...projectFaq,
-    ],
+    meta,
+    faqs,
   };
 }

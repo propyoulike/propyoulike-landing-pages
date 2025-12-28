@@ -1,7 +1,7 @@
 // src/pages/CityPage.tsx
 import { useMemo } from "react";
 
-import ProjectGrid from "@/components/ProjectGrid";
+import ProjectGrid from "@/components/project/ProjectGrid";
 import Breadcrumbs from "@/components/navigation/Breadcrumbs";
 import CitySEO from "@/components/seo/CitySEO";
 

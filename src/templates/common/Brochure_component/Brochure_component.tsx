@@ -1,6 +1,39 @@
 // src/templates/common/brochure/Brochure_component.tsx
 
-import { memo, useState } from "react";
+/**
+ * ============================================================
+ * Brochure Section
+ * ============================================================
+ *
+ * ROLE
+ * ------------------------------------------------------------
+ * - Displays brochure cover preview
+ * - Lists downloadable official documents
+ * - Provides CTA to request brochure/pricing
+ *
+ * ARCHITECTURAL GUARANTEES
+ * ------------------------------------------------------------
+ * - Pure render from props
+ * - No project identity access
+ * - No resolver / authoring assumptions
+ * - Safe in SSR / prerender / runtime
+ * - Identical behavior in DEV and PROD
+ *
+ * DESIGN PRINCIPLES
+ * ------------------------------------------------------------
+ * 1. CONTRACT FIRST
+ *    → Component consumes ONLY UI contract
+ *
+ * 2. FAIL LOUD IN DEV, SILENT IN PROD
+ *    → Resolver bugs are caught early
+ *
+ * 3. DEFENSIVE RENDERING
+ *    → Invalid data never breaks UI
+ *
+ * ============================================================
+ */
+
+import { memo, useState, useMemo } from "react";
 
 import BrochurePreview from "./BrochurePreview";
 import DocumentList from "./DocumentList";
@@ -13,49 +46,125 @@ import BaseSection from "../BaseSection";
 import type { SectionMeta } from "@/content/types/sectionMeta";
 
 /* ---------------------------------------------------------------------
-   TYPES
+   UI CONTRACT TYPES
 ------------------------------------------------------------------------*/
+interface BrochureDocument {
+  /** Display title (mapped from authoring title) */
+  title: string;
+
+  /** Absolute document URL */
+  url: string;
+}
+
 interface BrochureProps {
+  /** Section anchor id */
   id?: string;
 
   /** Canonical section meta */
-  meta?: SectionMeta | null;
+  meta?: SectionMeta;
 
-  /** Preview image */
-  coverImage?: string;
+  /** Brochure cover image URL */
+  coverImage?: unknown;
 
-  /** Documents list */
-  documents?: {
-    label?: string;
-    url?: string;
-    type?: string;
-  }[];
+  /** Resolver-mapped documents list */
+  documents?: unknown;
+}
+
+/* ---------------------------------------------------------------------
+   DEFAULT META (STABLE FALLBACK)
+------------------------------------------------------------------------*/
+const DEFAULT_META: SectionMeta = {
+  eyebrow: "DOWNLOADS",
+  title: "Brochure & official documents",
+  subtitle:
+    "Access brochures, floor plans, approvals and key project details",
+  tagline:
+    "Everything you need to evaluate the project — in one place",
+};
+
+/* ---------------------------------------------------------------------
+   SAFE CONTEXT ACCESS
+   (Component must not assume provider presence)
+------------------------------------------------------------------------*/
+function useOptionalLeadCTA() {
+  try {
+    return useLeadCTAContext();
+  } catch {
+    return null;
+  }
 }
 
 /* ---------------------------------------------------------------------
    COMPONENT
 ------------------------------------------------------------------------*/
-const Brochure_component = memo(function Brochure_component({
+const BrochureComponent = memo(function BrochureComponent({
   id = "brochure",
-
-  meta = {
-    eyebrow: "DOWNLOADS",
-    title: "Brochure & official documents",
-    subtitle:
-      "Access brochures, floor plans, approvals and key project details",
-    tagline:
-      "Everything you need to evaluate the project — in one place",
-  },
-
+  meta = DEFAULT_META,
   coverImage,
-  documents = [],
+  documents,
 }: BrochureProps) {
   const [modalOpen, setModalOpen] = useState(false);
-  const { openCTA } = useLeadCTAContext();
+  const leadCTA = useOptionalLeadCTA();
 
-  const hasContent = !!coverImage || documents.length > 0;
-  if (!hasContent) return null;
+  /* ------------------------------------------------------------
+     DEV SAFETY GUARD
+     ------------------------------------------------------------
+     Ensures resolver mapping obeys UI contract:
+     [{ title: string, url: string }]
+  ------------------------------------------------------------ */
+  if (import.meta.env.DEV && documents !== undefined) {
+    if (!Array.isArray(documents)) {
+      throw new Error(
+        "[Brochure_component] `documents` must be an array"
+      );
+    }
 
+    const invalid = documents.some(
+      (d: any) =>
+        !d ||
+        typeof d.title !== "string" ||
+        typeof d.url !== "string"
+    );
+
+    if (invalid) {
+      throw new Error(
+        "[Brochure_component] Invalid document mapping. Expected { title, url }"
+      );
+    }
+  }
+
+  /* ------------------------------------------------------------
+     SANITIZATION (PROD SAFE)
+  ------------------------------------------------------------ */
+  const safeCoverImage =
+    typeof coverImage === "string" &&
+    coverImage.trim().length > 0
+      ? coverImage
+      : null;
+
+  const safeDocuments: BrochureDocument[] = useMemo(() => {
+    if (!Array.isArray(documents)) return [];
+
+    return documents.filter(
+      (d): d is BrochureDocument =>
+        typeof d?.title === "string" &&
+        typeof d?.url === "string" &&
+        d.url.trim().length > 0
+    );
+  }, [documents]);
+
+  /* ------------------------------------------------------------
+     GUARD — NO CONTENT
+     ------------------------------------------------------------
+     Section renders ONLY when meaningful content exists
+  ------------------------------------------------------------ */
+  if (!safeCoverImage && safeDocuments.length === 0) {
+    return null;
+  }
+
+  /* ------------------------------------------------------------
+     RENDER
+  ------------------------------------------------------------ */
   return (
     <BaseSection
       id={id}
@@ -64,53 +173,53 @@ const Brochure_component = memo(function Brochure_component({
       padding="md"
       background="muted"
     >
-      {/* ─────────────────────────────
-         CONTENT
-      ───────────────────────────── */}
       <div className="flex flex-col lg:flex-row gap-12 items-start">
-
-        {/* LEFT — Preview */}
-        {coverImage && (
+        {/* LEFT — COVER PREVIEW (VISUAL ONLY) */}
+        {safeCoverImage && (
           <BrochurePreview
-            image={coverImage}
+            image={safeCoverImage}
             onPreviewClick={() => setModalOpen(true)}
           />
         )}
 
-        {/* RIGHT — Docs + CTA */}
+        {/* RIGHT — DOCUMENTS + CTA */}
         <div className="lg:w-1/2 w-full flex flex-col gap-6">
-          {documents.length > 0 && (
-            <DocumentList documents={documents} />
+          {safeDocuments.length > 0 && (
+            <DocumentList
+              documents={safeDocuments.map((d) => ({
+                title: d.title,
+                url: d.url,
+              }))}
+            />
           )}
 
-          {/* PRIMARY ACTION */}
-          <Button
-            size="lg"
-            className="w-full rounded-xl font-semibold"
-            onClick={() =>
-              openCTA({
-                source: "section",
-                label: "brochure_download",
-              })
-            }
-          >
-            Get brochure & pricing
-          </Button>
+          {leadCTA && (
+            <Button
+              size="lg"
+              className="w-full rounded-xl font-semibold"
+              onClick={() =>
+                leadCTA.openCTA({
+                  source: "section",
+                  title: "brochure_download",
+                })
+              }
+            >
+              Get brochure & pricing
+            </Button>
+          )}
         </div>
       </div>
 
-      {/* ─────────────────────────────
-         PREVIEW MODAL (UNGATED)
-      ───────────────────────────── */}
-      {coverImage && (
+      {/* MODAL PREVIEW */}
+      {safeCoverImage && modalOpen && (
         <BrochureModal
-          open={modalOpen}
+          open
           onClose={() => setModalOpen(false)}
-          image={coverImage}
+          image={safeCoverImage}
         />
       )}
     </BaseSection>
   );
 });
 
-export default Brochure_component;
+export default BrochureComponent;

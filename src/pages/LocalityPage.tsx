@@ -1,7 +1,7 @@
 // src/pages/LocalityPage.tsx
 import { useMemo } from "react";
 
-import ProjectGrid from "@/components/ProjectGrid";
+import ProjectGrid from "@/components/project/ProjectGrid";
 import Breadcrumbs from "@/components/navigation/Breadcrumbs";
 import LocalitySEO from "@/components/seo/LocalitySEO";
 
