@@ -1,10 +1,19 @@
 // src/components/lead/LeadForm.tsx
+
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { useRef } from "react";
+
 import type { LeadIntent } from "./types/LeadIntent";
 import { LeadPipeline } from "./LeadPipeline";
 
+import { useTracking } from "@/lib/tracking/TrackingContext";
+import { EventName } from "@/lib/analytics/events";
+
+/* -------------------------------------------------
+   Schema
+-------------------------------------------------- */
 const schema = z.object({
   name: z.string().min(2),
   phone: z.string().regex(/^\d{10}$/),
@@ -21,6 +30,9 @@ interface Props {
   onSuccess?: () => void;
 }
 
+/* -------------------------------------------------
+   Component
+-------------------------------------------------- */
 export default function LeadForm({
   projectName,
   projectId = "UNKNOWN",
@@ -32,7 +44,26 @@ export default function LeadForm({
     resolver: zodResolver(schema),
   });
 
+  const { track } = useTracking();
+  const hasStartedRef = useRef(false);
+
+  /* -----------------------------------------------
+     Diagnostics: form_start (once)
+  ------------------------------------------------ */
+  const handleFormStart = () => {
+    if (hasStartedRef.current) return;
+    hasStartedRef.current = true;
+
+    track(EventName.FormStart);
+  };
+
+  /* -----------------------------------------------
+     Submit handler
+  ------------------------------------------------ */
   const onSubmit = async (data: FormData) => {
+    // Diagnostic signal (NOT a conversion)
+    track(EventName.FormSubmit);
+
     const waUrl = LeadPipeline.buildWhatsAppUrl(
       data,
       projectName,
@@ -61,11 +92,27 @@ export default function LeadForm({
         </div>
       )}
 
-      <input {...register("name")} placeholder="Name" />
-      <input {...register("phone")} placeholder="Phone" />
-      <textarea {...register("message")} placeholder="Your message" />
+      <input
+        {...register("name")}
+        placeholder="Name"
+        onFocus={handleFormStart}
+      />
 
-      <button className="w-full btn-gradient">Get Best Offers</button>
+      <input
+        {...register("phone")}
+        placeholder="Phone"
+        onFocus={handleFormStart}
+      />
+
+      <textarea
+        {...register("message")}
+        placeholder="Your message"
+        onFocus={handleFormStart}
+      />
+
+      <button type="submit" className="w-full btn-gradient">
+        Get Best Offers
+      </button>
     </form>
   );
 }

@@ -1,46 +1,8 @@
-// src/utils/resolveSectionProps.ts
-
 /**
  * ============================================================
  * resolveSectionProps
  * ============================================================
- *
- * ROLE
- * ------------------------------------------------------------
- * - Resolves a section's props config into runtime props
- * - Acts as the SINGLE data-wiring layer for all sections
- *
- * INPUTS
- * ------------------------------------------------------------
- * - propsConfig : declarative config from sections.config
- * - project     : normalized, flat project identity object
- * - ctx         : runtime context (menuItems, CTA handlers, payload)
- * - resolved    : optional precomputed/global resolved data
- *
- * OUTPUT
- * ------------------------------------------------------------
- * - Plain object of resolved props passed to a section component
- *
- * ============================================================
- *
- * DESIGN PRINCIPLES
- * ------------------------------------------------------------
- * 1. SINGLE SOURCE OF TRUTH
- *    All prop resolution happens HERE — nowhere else
- *
- * 2. EXPLICIT RESOLUTION RULES
- *    No guessing, no implicit fallbacks
- *
- * 3. PURE & DETERMINISTIC
- *    Same inputs → same outputs
- *
- * 4. SECTION-AGNOSTIC
- *    This function does NOT know about Hero, Summary, etc.
- *
- * 5. FAIL SILENTLY AT LEAF, LOUDLY AT ROOT
- *    - Missing values resolve to undefined
- *    - Sections decide how to handle absence
- *
+ * SINGLE data-wiring layer for all section components
  * ============================================================
  */
 
@@ -50,9 +12,6 @@
 
 /**
  * Safely resolves a dotted path on an object.
- *
- * Example:
- *   getValueFromPath(obj, "hero.meta.title")
  */
 function getValueFromPath(obj: any, path: string) {
   if (!obj || !path) return undefined;
@@ -71,24 +30,6 @@ function getValueFromPath(obj: any, path: string) {
 
 /**
  * Resolves a single config value into a runtime value.
- *
- * SUPPORTED SYNTAX
- * ------------------------------------------------------------
- * 1. Literal override
- *    { "$value": 123 }
- *
- * 2. Context reference
- *    "$ctx.menuItems"
- *
- * 3. Resolved/global reference
- *    "$resolved.builder.theme"
- *
- * 4. Project reference
- *    "project.projectName"
- *
- * 5. Arrays (resolved recursively)
- *
- * 6. Objects (resolved recursively)
  */
 function resolveValue(
   value: any,
@@ -96,9 +37,7 @@ function resolveValue(
   ctx: any,
   resolved: any
 ): any {
-  /* ----------------------------------------------------------
-     1. Literal override
-  ---------------------------------------------------------- */
+  /* 1️⃣ Literal override */
   if (
     typeof value === "object" &&
     value !== null &&
@@ -107,9 +46,7 @@ function resolveValue(
     return value.$value;
   }
 
-  /* ----------------------------------------------------------
-     2. Context reference ($ctx.*)
-  ---------------------------------------------------------- */
+  /* 2️⃣ Context reference */
   if (
     typeof value === "string" &&
     value.startsWith("$ctx.")
@@ -117,9 +54,7 @@ function resolveValue(
     return getValueFromPath(ctx, value.slice(5));
   }
 
-  /* ----------------------------------------------------------
-     3. Resolved/global reference ($resolved.*)
-  ---------------------------------------------------------- */
+  /* 3️⃣ Resolved/global reference */
   if (
     typeof value === "string" &&
     value.startsWith("$resolved.")
@@ -127,9 +62,7 @@ function resolveValue(
     return getValueFromPath(resolved, value.slice(10));
   }
 
-  /* ----------------------------------------------------------
-     4. Project reference (project.*)
-  ---------------------------------------------------------- */
+  /* 4️⃣ Payload reference */
   if (
     typeof value === "string" &&
     value.startsWith("$payload.")
@@ -137,9 +70,7 @@ function resolveValue(
     return getValueFromPath(resolved, value.slice(9));
   }
 
-  /* ----------------------------------------------------------
-     5. Array (recursive)
-  ---------------------------------------------------------- */
+  /* 5️⃣ Arrays (recursive) */
   if (Array.isArray(value)) {
     return value
       .map((v) =>
@@ -148,9 +79,7 @@ function resolveValue(
       .filter((v) => v !== undefined);
   }
 
-  /* ----------------------------------------------------------
-     6. Object (recursive)
-  ---------------------------------------------------------- */
+  /* 6️⃣ Objects (recursive) */
   if (
     typeof value === "object" &&
     value !== null
@@ -168,9 +97,7 @@ function resolveValue(
     return out;
   }
 
-  /* ----------------------------------------------------------
-     7. Primitive passthrough
-  ---------------------------------------------------------- */
+  /* 7️⃣ Primitive passthrough */
   return value;
 }
 
@@ -178,18 +105,6 @@ function resolveValue(
    Main Resolver
 ------------------------------------------------------------ */
 
-/**
- * Resolves a section's props config into runtime props.
- *
- * SPECIAL FEATURE
- * ------------------------------------------------------------
- * - Spread support:
- *     "...hero" → spreads project.hero into props
- *
- * NOTE:
- * - Spreads ONLY read from project
- * - No deep merging is performed
- */
 export function resolveSectionProps(
   propsConfig: Record<string, any> = {},
   project: any,
@@ -199,18 +114,31 @@ export function resolveSectionProps(
 ) {
   const resolvedProps: any = {};
 
+  /* --------------------------------------------------------
+     1️⃣ Inject cross-cutting runtime props (EXPLICIT)
+  -------------------------------------------------------- */
+  if (ctx?.analytics) {
+    resolvedProps.analytics = ctx.analytics;
+  }
+
+  if (ctx?.openCTA) {
+    resolvedProps.openCTA = ctx.openCTA;
+  }
+
+  if (ctx?.menuItems) {
+    resolvedProps.menuItems = ctx.menuItems;
+  }
+
+  /* --------------------------------------------------------
+     2️⃣ Resolve section-authored props
+  -------------------------------------------------------- */
   for (const [key, value] of Object.entries(propsConfig)) {
-    /* --------------------------------------------------------
-       Spread support (...hero, ...faq, etc.)
-    -------------------------------------------------------- */
+    /* Spread support */
     if (key.startsWith("...")) {
       const path = key.slice(3);
       const spreadObj = getValueFromPath(project, path);
 
-      if (
-        spreadObj &&
-        typeof spreadObj === "object"
-      ) {
+      if (spreadObj && typeof spreadObj === "object") {
         Object.assign(resolvedProps, spreadObj);
       } else {
         console.warn(
@@ -222,9 +150,6 @@ export function resolveSectionProps(
       continue;
     }
 
-    /* --------------------------------------------------------
-       Normal value resolution
-    -------------------------------------------------------- */
     const resolvedValue = resolveValue(
       value,
       project,

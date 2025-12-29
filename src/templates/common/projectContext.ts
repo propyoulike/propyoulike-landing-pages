@@ -14,6 +14,8 @@
  *                ↓
  *        Section Renderer (Hero, Summary, etc.)
  *
+ * - Provides canonical analytics context (flat, reusable)
+ *
  * ============================================================
  */
 
@@ -23,14 +25,20 @@ import { runtimeLog } from "@/lib/log/runtimeLog";
    Types
 ------------------------------------------------------------ */
 
+/**
+ * Raw project identity coming from routing / data layer
+ */
 export type ProjectIdentity = {
-  slug: string;
-  builder: string;
+  slug: string;          // canonical project_id
+  builder: string;       // canonical builder_id (slug)
   type: string;
   projectName?: string;
   [key: string]: any;
 };
 
+/**
+ * Runtime context passed to ALL project sections
+ */
 export type ProjectContext = {
   /**
    * Full structured payload for section resolution.
@@ -48,6 +56,20 @@ export type ProjectContext = {
    * Sections may call this without knowing implementation.
    */
   openCTA: () => void;
+
+  /**
+   * ----------------------------------------------------------
+   * Canonical analytics context (FLAT, READ-ONLY)
+   * ----------------------------------------------------------
+   * - Injected once at page creation
+   * - Reused by all tracking calls
+   * - Must conform to DATA_LAYER_CONTRACT
+   */
+  analytics: {
+    project_id: string;
+    builder_id: string;
+    project_name?: string;
+  };
 };
 
 /* ------------------------------------------------------------
@@ -65,15 +87,18 @@ export function createProjectContext(
   project: ProjectIdentity,
   payload: Record<string, any>
 ): ProjectContext {
+  // Canonical identifiers (NO enums, NO UI labels)
+  const project_id = project.slug;
+  const builder_id = project.builder;
+
   /* ----------------------------------------------------------
-     Runtime diagnostics (DEBUG only, structured)
-     Safe because:
-     - Runs once per page
-     - Logs shape, not data
+     Runtime diagnostics (DEBUG only)
+     - Logs shape, never business data
+     - Safe: runs once per page
   ---------------------------------------------------------- */
   runtimeLog("ProjectContext", "debug", "Context created", {
-    slug: project?.slug,
-    builder: project?.builder,
+    project_id,
+    builder_id,
     type: project?.type,
     payloadKeys: payload ? Object.keys(payload) : [],
   });
@@ -93,10 +118,21 @@ export function createProjectContext(
 
     /**
      * Central CTA handler.
+     * Implementation injected elsewhere.
      * Must remain side-effect free.
      */
     openCTA: () => {
-      /* implementation injected elsewhere */
+      /* injected elsewhere */
+    },
+
+    /**
+     * ✅ SINGLE SOURCE OF ANALYTICS TRUTH
+     * Used by ALL tracking calls
+     */
+    analytics: {
+      project_id,
+      builder_id,
+      project_name: project.projectName,
     },
   };
 }

@@ -1,29 +1,24 @@
+// src/projectEntry.tsx
+
 import React from "react";
 import ReactDOM from "react-dom/client";
-import {
-  RouterProvider,
-  createBrowserRouter,
-} from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 
 import ProjectPage from "@/pages/ProjectPage";
+import { AppProviders } from "@/app/AppProviders";
 import { runtimeLog } from "@/lib/log/runtimeLog";
 
 /* ============================================================
-   Router (PROD MUST MATCH DEV)
-============================================================ */
-const router = createBrowserRouter([
-  {
-    path: "/*",
-    element: <ProjectPageWrapper />,
-  },
-]);
-
-/* ============================================================
-   Wrapper to inject prerendered data
+   Wrapper to inject prerendered data (PURE)
 ============================================================ */
 function ProjectPageWrapper() {
-  const raw = window.__PROJECT__ as Record<string, any>;
+  const raw = (window as any).__PROJECT__ as Record<string, any>;
+
+  if (!raw || !raw.project) {
+    runtimeLog("projectEntry", "fatal", "Missing __PROJECT__ payload", raw);
+    throw new Error("PROJECT_PAYLOAD_MISSING");
+  }
 
   const identity = raw.project;
 
@@ -43,18 +38,42 @@ function ProjectPageWrapper() {
 }
 
 /* ============================================================
-   Mount
+   Router — PROVIDERS MUST BE ROUTES
+============================================================ */
+const router = createBrowserRouter([
+  {
+    element: <AppProviders />, // ✅ PROVIDER LAYER
+    children: [
+      {
+        path: "/*",
+        element: <ProjectPageWrapper />, // ✅ RENDERS INTO <Outlet />
+      },
+    ],
+  },
+]);
+
+/* ============================================================
+   Mount (HARD PROD BOUNDARY)
 ============================================================ */
 const rootEl = document.getElementById("root");
 
 if (!rootEl) {
+  runtimeLog("projectEntry", "fatal", "Root element #root missing");
   throw new Error("ROOT_ELEMENT_MISSING");
 }
+
+runtimeLog("projectEntry", "info", "Hydrating project page");
 
 ReactDOM.createRoot(rootEl).render(
   <React.StrictMode>
     <HelmetProvider>
-      <RouterProvider router={router} />
+      <RouterProvider
+        router={router}
+        future={{
+          v7_startTransition: true,
+          v7_relativeSplatPath: true,
+        }}
+      />
     </HelmetProvider>
   </React.StrictMode>
 );

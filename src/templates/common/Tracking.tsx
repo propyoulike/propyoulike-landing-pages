@@ -1,18 +1,36 @@
-// src/templates/common/Tracking.tsx
+import { useEffect, useRef } from "react";
+import { useLocation } from "react-router-dom";
+import { EventName } from "@/lib/analytics/events";
+import { useTracking } from "@/lib/tracking/TrackingContext";
 
-import { useEffect } from "react";
+/**
+ * =====================================================
+ * Global Tracking Orchestrator
+ * =====================================================
+ *
+ * Responsibilities:
+ * - Fire page_view exactly once per route
+ * - No UI
+ * - No vendor logic
+ *
+ * MUST remain lightweight and deterministic
+ */
 
 export default function Tracking() {
+  const location = useLocation();
+  const { track } = useTracking();
+
+  const lastPathRef = useRef<string | null>(null);
+
   useEffect(() => {
-    // Example: fire pageview or analytics event
-    // Replace with your actual tracking integrations
+    const currentPath = location.pathname;
 
-    // Example: Facebook Meta Pixel
-    // window.fbq?.("track", "PageView");
+    // Guard: fire once per route
+    if (lastPathRef.current === currentPath) return;
+    lastPathRef.current = currentPath;
 
-    // Example: Google Analytics
-    // window.gtag?.("event", "page_view");
-  }, []);
+    track(EventName.PageView);
+  }, [location.pathname, track]);
 
-  return null; // This component renders nothing, only tracks
+  return null;
 }

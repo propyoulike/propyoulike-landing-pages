@@ -3,6 +3,10 @@ import { Button } from "@/components/ui/button";
 import { Phone, Calendar } from "lucide-react";
 import { useLeadCTAContext } from "@/components/lead/LeadCTAProvider";
 
+import { useTracking } from "@/lib/tracking/TrackingContext";
+import { EventName } from "@/lib/analytics/events";
+import { CTAType } from "@/lib/analytics/ctaTypes";
+
 /* ---------------------------------------------
    Types
 ---------------------------------------------- */
@@ -24,20 +28,37 @@ const CTAButtons = memo(function CTAButtons({
   intent,
 }: CTAButtonsProps) {
   const { openCTA } = useLeadCTAContext();
+  const { track } = useTracking();
 
   const handleFormClick = useCallback(() => {
+    // 🔹 Analytics: intent signal
+    track(EventName.CTAClick, {
+      cta_type: CTAType.ContactForm,
+      source_section: intent?.sourceSection,
+      source_item: intent?.sourceItem ?? label,
+    });
+
+    // 🔹 Business logic (unchanged)
     openCTA(label, {
       sourceSection: intent?.sourceSection || "cta",
       sourceItem: intent?.sourceItem || label,
     });
-  }, [openCTA, label, intent]);
+  }, [track, openCTA, label, intent]);
 
   const handleWhatsAppClick = useCallback(() => {
+    // 🔹 Analytics: intent signal
+    track(EventName.CTAClick, {
+      cta_type: CTAType.ContactWhatsApp,
+      source_section: intent?.sourceSection,
+      source_item: "whatsapp",
+    });
+
+    // 🔹 Business logic (unchanged)
     openCTA("WhatsApp", {
       sourceSection: intent?.sourceSection || "cta",
       sourceItem: "whatsapp",
     });
-  }, [openCTA, intent]);
+  }, [track, openCTA, intent]);
 
   /* ---------------------------------------------
      Compact / Hero Variant

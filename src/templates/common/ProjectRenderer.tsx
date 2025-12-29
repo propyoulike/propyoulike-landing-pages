@@ -1,5 +1,3 @@
-// src/templates/common/ProjectRenderer.tsx
-
 import sectionsConfig from "@/content/global/sections.config";
 import { COMPONENT_REGISTRY } from "@/content/registry/componentRegistry";
 import { resolveSectionProps } from "@/utils/resolveSectionProps";
@@ -7,13 +5,26 @@ import { buildMenuFromSections } from "@/utils/buildMenuFromSections";
 import { normalizeComponent } from "@/lib/runtime/normalizeComponent";
 import { runtimeLog } from "@/lib/log/runtimeLog";
 
+import type { BuilderId } from "@/lib/analytics/builderIds";
+
 /* ------------------------------------------------------------
    Types
 ------------------------------------------------------------ */
 
+export interface ProjectAnalyticsContext {
+  project_id: string;
+  builder_id: BuilderId;
+}
+
 export interface ProjectRendererContext {
+  /* 🔑 REQUIRED — analytics identity */
+  analytics: ProjectAnalyticsContext;
+
+  /* Optional cross-cutting behavior */
   openCTA?: () => void;
   autoMenu?: boolean;
+
+  /* Derived (injected here) */
   menuItems?: Array<{
     id: string;
     label: string;
@@ -38,6 +49,17 @@ export default function ProjectRenderer({
   /* ----------------------------------------------------------
      Guards (fail-soft, boundary-safe)
   ---------------------------------------------------------- */
+
+  if (!ctx?.analytics) {
+    runtimeLog(
+      "ProjectRenderer",
+      "fatal",
+      "Missing analytics context",
+      ctx
+    );
+    return null;
+  }
+
   if (!Array.isArray(sectionsConfig)) {
     runtimeLog(
       "ProjectRenderer",
@@ -69,8 +91,9 @@ export default function ProjectRenderer({
   runtimeLog("ProjectRenderer", "debug", "Render plan", {
     sectionCount: sectionsConfig.length,
     sectionIds: sectionsConfig.map((s) => s.id),
-    autoMenu: ctx?.autoMenu,
-    hasCTA: Boolean(ctx?.openCTA),
+    autoMenu: ctx.autoMenu,
+    hasCTA: Boolean(ctx.openCTA),
+    analytics: ctx.analytics,
   });
 
   /* ----------------------------------------------------------
@@ -102,7 +125,10 @@ export default function ProjectRenderer({
         const resolvedProps = resolveSectionProps(
           section.props,
           project,
-          { ...ctx, menuItems },
+          {
+            ...ctx,
+            menuItems, // injected here, not upstream
+          },
           payload,
           section.id
         );

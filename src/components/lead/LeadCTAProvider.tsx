@@ -1,15 +1,23 @@
-// src/components/lead/LeadCTAProvider.tsx
-import { createContext, useContext, useState, useCallback, useEffect } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+  useEffect,
+} from "react";
+
 import LeadFormModal from "./LeadFormModal";
 import LeadFormDrawer from "./LeadFormDrawer";
 import type { LeadIntent } from "./types/LeadIntent";
 
-declare global {
-  interface Window {
-    dataLayer?: any[];
-    fbq?: (...args: any[]) => void;
-  }
-}
+/* ✅ Analytics (CANONICAL) */
+import { track } from "@/lib/tracking/track";
+import { EventName } from "@/lib/analytics/events";
+import { SectionId } from "@/lib/analytics/sectionIds";
+
+/* ------------------------------------------------------------
+   Types
+------------------------------------------------------------ */
 
 interface CTAContextType {
   openCTA: (intent?: LeadIntent) => void;
@@ -25,7 +33,15 @@ interface LeadCTAProviderProps {
   whatsappNumber?: string;
 }
 
+/* ------------------------------------------------------------
+   Context
+------------------------------------------------------------ */
+
 const CTAContext = createContext<CTAContextType | null>(null);
+
+/* ------------------------------------------------------------
+   Provider
+------------------------------------------------------------ */
 
 export const LeadCTAProvider = ({
   children,
@@ -38,7 +54,9 @@ export const LeadCTAProvider = ({
   const [intent, setIntent] = useState<LeadIntent | undefined>();
   const [isMobile, setIsMobile] = useState(false);
 
-  /** -------- Device detection -------- */
+  /* ----------------------------------------------------------
+     Device detection (SAFE)
+  ---------------------------------------------------------- */
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
     check();
@@ -46,28 +64,43 @@ export const LeadCTAProvider = ({
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  /** -------- Open CTA -------- */
-  const openCTA = useCallback((intentData?: LeadIntent) => {
-    setIntent(intentData);
+  /* ----------------------------------------------------------
+     Open CTA (CANONICAL)
+  ---------------------------------------------------------- */
+  const openCTA = useCallback(
+    (intentData?: LeadIntent) => {
+      setIntent(intentData);
 
-    window.dataLayer?.push({
-      event: "cta_open",
-      source: intentData?.source,
-      question: intentData?.question,
-      label: intentData?.label || "generic",
-    });
+      track(EventName.CTAInteraction, {
+        section_id: SectionId.LeadCTA,
+        project_id: projectId,
+        project_name: projectName,
+        source_item: intentData?.source,
+        label: intentData?.label || "generic",
+        question: intentData?.question,
+      });
 
-    isMobile ? setDrawerOpen(true) : setModalOpen(true);
-  }, [isMobile]);
+      isMobile ? setDrawerOpen(true) : setModalOpen(true);
+    },
+    [isMobile, projectId, projectName]
+  );
 
+  /* ----------------------------------------------------------
+     Close CTA
+  ---------------------------------------------------------- */
   const closeCTA = () => {
     setModalOpen(false);
     setDrawerOpen(false);
     setIntent(undefined);
   };
 
+  /* ----------------------------------------------------------
+     Render
+  ---------------------------------------------------------- */
   return (
-    <CTAContext.Provider value={{ openCTA, closeCTA, isMobile, intent }}>
+    <CTAContext.Provider
+      value={{ openCTA, closeCTA, isMobile, intent }}
+    >
       {children}
 
       <LeadFormModal
@@ -91,8 +124,16 @@ export const LeadCTAProvider = ({
   );
 };
 
+/* ------------------------------------------------------------
+   Hook (STRICT)
+------------------------------------------------------------ */
+
 export const useLeadCTAContext = () => {
   const ctx = useContext(CTAContext);
-  if (!ctx) throw new Error("useLeadCTAContext must be used inside LeadCTAProvider");
+  if (!ctx) {
+    throw new Error(
+      "useLeadCTAContext must be used inside LeadCTAProvider"
+    );
+  }
   return ctx;
 };

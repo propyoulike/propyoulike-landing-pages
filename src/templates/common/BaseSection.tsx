@@ -1,11 +1,13 @@
-// src/templates/common/BaseSection.tsx
-
-import { memo, type ReactNode } from "react";
+import { memo, type ReactNode, useEffect, useRef } from "react";
 import SectionHeader from "./SectionHeader";
 import type { SectionMeta } from "@/content/types/sectionMeta";
 
+import { useTracking } from "@/lib/tracking/TrackingContext";
+import { EventName } from "@/lib/analytics/events";
+import { SectionId } from "@/lib/analytics/sectionIds";
+
 interface BaseSectionProps {
-  id?: string;
+  id?: SectionId;
   meta?: SectionMeta | null;
   align?: "left" | "center";
   padding?: "sm" | "md" | "lg";
@@ -39,8 +41,38 @@ const BaseSection = memo(function BaseSection({
   const paddingClass = PADDING_MAP[padding] ?? PADDING_MAP.md;
   const bgClass = BG_MAP[background] ?? BG_MAP.default;
 
+  /* -------------------------------------------------
+     Analytics: auto section_view (fire once)
+  -------------------------------------------------- */
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const hasTracked = useRef(false);
+  const { track } = useTracking();
+
+  useEffect(() => {
+    if (!id || !sectionRef.current || hasTracked.current) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasTracked.current) {
+          hasTracked.current = true;
+
+          track(EventName.SectionView, {
+            section_id: id,
+          });
+
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, [id, track]);
+
   return (
     <section
+      ref={sectionRef}
       id={id}
       aria-labelledby={hasHeader ? `${id}-title` : undefined}
       className={[
@@ -53,9 +85,6 @@ const BaseSection = memo(function BaseSection({
         .join(" ")}
     >
       <div className="container max-w-6xl">
-        {/* ─────────────────────────────
-           Section Header (Single Source)
-        ───────────────────────────── */}
         {hasHeader && (
           <div className="mb-12 md:mb-14">
             <SectionHeader
@@ -69,9 +98,6 @@ const BaseSection = memo(function BaseSection({
           </div>
         )}
 
-        {/* ─────────────────────────────
-           Section Content
-        ───────────────────────────── */}
         {children}
       </div>
     </section>

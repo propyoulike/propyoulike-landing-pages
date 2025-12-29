@@ -21,34 +21,21 @@ import TermsPage from "@/components/legal/TermsPage";
 import ReraPage from "@/components/legal/ReraPage";
 
 import { LeadCTAProvider } from "@/components/lead/LeadCTAProvider";
-import Tracking from "@/templates/common/Tracking";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 
 import { runtimeLog } from "@/lib/log/runtimeLog";
 
-/* ------------------------------------------------------------
-   Query client (singleton)
------------------------------------------------------------- */
 const queryClient = new QueryClient();
 
-/* ------------------------------------------------------------
-   Scroll restoration override (router-safe)
------------------------------------------------------------- */
 function DisableScrollRestoration() {
   return <ScrollRestoration getKey={() => "always-new"} />;
 }
 
-/* ------------------------------------------------------------
-   App Root
------------------------------------------------------------- */
 export default function App() {
   useResetScrollOnLoad();
 
-  /* ----------------------------------------------------------
-     App lifecycle log (ONE per mount)
-  ---------------------------------------------------------- */
   runtimeLog("App", "info", "App rendered", {
     env: IS_DEV ? "development" : "production",
   });
@@ -58,13 +45,10 @@ export default function App() {
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <LeadCTAProvider>
-            {/* Global UI utilities */}
             <Toaster />
             <Sonner />
-            <Tracking />
             <DisableScrollRestoration />
 
-            {/* DEV banner is intentional and allowed */}
             {IS_DEV && (
               <div
                 style={{
@@ -80,9 +64,6 @@ export default function App() {
               </div>
             )}
 
-            {/* ------------------------------------------------
-               Routes (NO logic, NO logging here)
-            ------------------------------------------------ */}
             <Routes>
               <Route path="/" element={<Index />} />
 
@@ -91,15 +72,13 @@ export default function App() {
               <Route path="/legal/terms" element={<TermsPage />} />
               <Route path="/legal/rera" element={<ReraPage />} />
 
-              {/* Explicit known routes */}
+              {/* Known routes */}
               <Route path="/builder/:builder" element={<BuilderPage />} />
               <Route path="/locality/:locality" element={<LocalityPage />} />
               <Route path="/:city/:zone" element={<ZonePage />} />
 
-              {/* 🔑 Catch-all resolver */}
+              {/* Catch-all */}
               <Route path="/:slug" element={<DynamicRouter />} />
-
-              {/* Final fallback */}
               <Route path="*" element={<NotFound />} />
             </Routes>
           </LeadCTAProvider>

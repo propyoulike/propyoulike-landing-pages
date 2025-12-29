@@ -1,39 +1,5 @@
 // src/pages/ProjectPage.view.tsx
 
-/**
- * ============================================================
- * ProjectPageView
- * ============================================================
- *
- * ROLE
- * ------------------------------------------------------------
- * - Pure runtime renderer for a single Project page
- * - Resolves the correct visual template using:
- *     - project.builder
- *     - project.type
- *
- * ARCHITECTURAL GUARANTEES
- * ------------------------------------------------------------
- * ✅ PURE RENDER (no data fetching, no normalization)
- * ✅ NO schema parsing
- * ✅ NO throws during render
- * ✅ Deterministic output for given props
- *
- * FAILURE MODEL
- * ------------------------------------------------------------
- * - Contract violations render fallback UI (never crash)
- * - Template / section failures are isolated via ErrorBoundary
- * - Missing runtime providers fail fast with diagnostics
- *
- * OBSERVABILITY
- * ------------------------------------------------------------
- * - Centralized logging via runtimeLog
- * - Runtime environment probes at page boundary
- * - No ad-hoc console logs
- *
- * ============================================================
- */
-
 import React from "react";
 
 import { getTemplate } from "@/templates/getTemplate";
@@ -49,8 +15,12 @@ import { runtimeLog } from "@/lib/log/runtimeLog";
 import { assertRouterContext } from "@/lib/runtime/assertRouterContext";
 import { buildBreadcrumbs } from "@/utils/buildBreadcrumbs";
 
+/* 🔑 Global brand config */
+import propyoulike from "@/content/global/propyoulike.json";
+import { normalizeWhatsappNumber } from "@/utils/normalizeWhatsapp";
+
 /* ------------------------------------------------------------
-   Local Error Boundary (NO external deps)
+   Local Error Boundary
 ------------------------------------------------------------ */
 class ProjectErrorBoundary extends React.Component<
   { children: React.ReactNode },
@@ -69,7 +39,6 @@ class ProjectErrorBoundary extends React.Component<
         ? "Missing runtime provider"
         : "Unknown render error",
     });
-
     return { hasError: true };
   }
 
@@ -94,7 +63,7 @@ class ProjectErrorBoundary extends React.Component<
 }
 
 /* ------------------------------------------------------------
-   Props Contract (LOCKED)
+   Props Contract
 ------------------------------------------------------------ */
 interface ProjectPageViewProps {
   project: ProjectData;
@@ -109,8 +78,7 @@ export default function ProjectPageView({
   payload,
 }: ProjectPageViewProps) {
   /* ----------------------------------------------------------
-     Runtime environment probes (Layer 0)
-     MUST run before rendering Router-dependent components
+     Runtime environment probes
   ---------------------------------------------------------- */
   const hasRouter = assertRouterContext("ProjectPageView");
 
@@ -119,15 +87,12 @@ export default function ProjectPageView({
       <main className="p-10">
         <h1 className="text-xl font-bold">Application error</h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          Navigation system is not available. Please refresh or try again later.
+          Navigation system is not available.
         </p>
       </main>
     );
   }
 
-  /* ----------------------------------------------------------
-     Structured diagnostics (Layer 1)
-  ---------------------------------------------------------- */
   runtimeLog("ProjectPageView", "info", "Render start", {
     projectName: project?.projectName,
     builder: project?.builder,
@@ -135,7 +100,7 @@ export default function ProjectPageView({
   });
 
   /* ----------------------------------------------------------
-     RENDER-SAFE CONTRACT GUARDS
+     Guards
   ---------------------------------------------------------- */
   if (
     !project ||
@@ -143,24 +108,16 @@ export default function ProjectPageView({
     typeof project.type !== "string"
   ) {
     runtimeLog("ProjectPageView", "error", "Invalid project identity", project);
-    return (
-      <main className="p-10">
-        <h1 className="text-xl font-bold">Invalid project data</h1>
-      </main>
-    );
+    return <main className="p-10">Invalid project data</main>;
   }
 
   if (!payload || typeof payload !== "object") {
     runtimeLog("ProjectPageView", "error", "Invalid payload", payload);
-    return (
-      <main className="p-10">
-        <h1 className="text-xl font-bold">Invalid project data</h1>
-      </main>
-    );
+    return <main className="p-10">Invalid project data</main>;
   }
 
   /* ----------------------------------------------------------
-     TEMPLATE RESOLUTION (PURE)
+     Template
   ---------------------------------------------------------- */
   const Template = getTemplate(project.builder, project.type);
 
@@ -169,43 +126,37 @@ export default function ProjectPageView({
       builder: project.builder,
       type: project.type,
     });
-
-    return (
-      <main className="p-10">
-        <h1 className="text-xl font-bold">No template available</h1>
-      </main>
-    );
+    return <main className="p-10">No template available</main>;
   }
 
   /* ----------------------------------------------------------
-     DERIVED UI DATA (PURE)
+     Derived data
   ---------------------------------------------------------- */
   const breadcrumbs = buildBreadcrumbs(project);
 
+  const whatsappNumber = normalizeWhatsappNumber(
+    propyoulike.contact?.whatsapp ||
+      propyoulike.contact?.phone
+  );
+
   /* ----------------------------------------------------------
-     Happy Path Render (Error-Isolated)
+     Render
   ---------------------------------------------------------- */
   return (
     <>
-      {/* SEO must render before visual content */}
       <ProjectSEO project={project} />
-
-      {/* Navigation (Router-safe now) */}
       <Breadcrumbs items={breadcrumbs} />
 
-      {/* Template + sections isolated from crashing the page */}
       <ProjectErrorBoundary>
         <LeadCTAProvider
           projectName={project.projectName}
           projectId={project.slug}
-          whatsappNumber="919379822010"
-          trackEvent
+          whatsappNumber={whatsappNumber}
         >
           <Template project={project} payload={payload} />
         </LeadCTAProvider>
       </ProjectErrorBoundary>
 
-      {/* Mobile navigation & footer */}
       <FloatingQuickNav footerId="site-footer" />
       <Footer id="site-footer" project={project} />
     </>

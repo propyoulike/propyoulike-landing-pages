@@ -1,42 +1,14 @@
-// src/templates/common/AboutBuilder_component/AboutBuilder_component.tsx
-
-/**
- * ============================================================
- * AboutBuilder Section
- * ============================================================
- *
- * ROLE
- * ------------------------------------------------------------
- * - Displays builder overview information
- * - Optional expandable content with stats
- *
- * ARCHITECTURAL GUARANTEES
- * ------------------------------------------------------------
- * - Render-safe during prerender + hydration
- * - NO required globals
- * - Analytics are OPTIONAL and lazy
- * - No router or navigation side-effects
- *
- * DESIGN PRINCIPLES
- * ------------------------------------------------------------
- * 1. PURE RENDER FIRST
- *    UI must render safely even if JS is partially unavailable
- *
- * 2. OPTIONAL SIDE-EFFECTS
- *    Analytics and observers must never crash rendering
- *
- * 3. ISOLATED RESPONSIBILITY
- *    This component never affects routing or layout
- *
- * ============================================================
- */
-
 import { useEffect, useRef, useState } from "react";
 import * as Icons from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 import BaseSection from "../BaseSection";
 import type { SectionMeta } from "@/content/types/sectionMeta";
+
+/* ✅ Analytics */
+import { track } from "@/lib/tracking/track";
+import { EventName } from "@/lib/analytics/events";
+import { SectionId } from "@/lib/analytics/sectionIds";
 
 /* ---------------------------------------------------------------------
    TYPES
@@ -48,9 +20,13 @@ interface StatItem {
 }
 
 interface BuilderAboutProps {
-  id?: string;
+  id?: SectionId;
   meta?: SectionMeta;
-  name?: string;
+
+  /** Analytics identifiers (flat, injected by ProjectRenderer) */
+  builder_id?: string;
+  project_id?: string;
+
   description?: string;
   descriptionExpanded?: string;
   stats?: StatItem[];
@@ -64,8 +40,15 @@ const isBrowser = typeof window !== "undefined";
 /* ---------------------------------------------------------------------
    COMPONENT
 ------------------------------------------------------------------------*/
+/**
+ * ⚠️ CONTRACT
+ * ------------------------------------------------------------
+ * - NO ProjectContext
+ * - Flat props only
+ * - Analytics identifiers are optional & fail-safe
+ */
 export default function AboutBuilder_component({
-  id = "about-builder",
+  id = SectionId.AboutBuilder,
 
   meta = {
     eyebrow: "BUILDER",
@@ -74,7 +57,9 @@ export default function AboutBuilder_component({
       "Track record, values, and experience behind this project",
   },
 
-  name,
+  builder_id,
+  project_id,
+
   description,
   descriptionExpanded,
   stats = [],
@@ -85,52 +70,53 @@ export default function AboutBuilder_component({
   const expandedRef = useRef<HTMLDivElement | null>(null);
   const viewedOnce = useRef(false);
 
+  const hasContent =
+    !!description || !!descriptionExpanded || stats.length > 0;
+
   /* ------------------------------------------------------------
-     View tracking (SAFE, OPTIONAL)
+     VIEW TRACKING (CANONICAL, FAIL-SAFE)
   ------------------------------------------------------------ */
   useEffect(() => {
     if (!isBrowser) return;
+    if (!hasContent) return;
+    if (!builder_id || !project_id) return;
     if (!sectionRef.current) return;
     if (!("IntersectionObserver" in window)) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (!entry.isIntersecting || viewedOnce.current) return;
+
         viewedOnce.current = true;
 
-        // Analytics must NEVER throw
-        try {
-          window.gtag?.("event", "builder_about_view", {
-            builder: name,
-          });
-          window.fbq?.("trackCustom", "BuilderAboutViewed");
-        } catch {
-          // Silent fail — analytics must not break UI
-        }
+        track(EventName.SectionView, {
+          section_id: SectionId.AboutBuilder,
+          builder_id,
+          project_id,
+        });
       },
       { threshold: 0.35 }
     );
 
     observer.observe(sectionRef.current);
     return () => observer.disconnect();
-  }, [name]);
+  }, [hasContent, builder_id, project_id]);
 
   /* ------------------------------------------------------------
-     Expand toggle
+     Expand toggle (CANONICAL)
   ------------------------------------------------------------ */
   const toggleExpand = () => {
     const next = !expanded;
     setExpanded(next);
 
-    if (next && isBrowser) {
-      try {
-        window.gtag?.("event", "builder_about_expand", {
-          builder: name,
-        });
-        window.fbq?.("trackCustom", "BuilderAboutExpanded");
-      } catch {}
+    if (next && builder_id && project_id) {
+      track(EventName.CTAInteraction, {
+        section_id: SectionId.AboutBuilder,
+        builder_id,
+        project_id,
+        source_item: "expand_builder_about",
+      });
 
-      // Scroll only if DOM is ready
       requestAnimationFrame(() => {
         expandedRef.current?.scrollIntoView({
           behavior: "smooth",
@@ -146,9 +132,6 @@ export default function AboutBuilder_component({
   const resolveIcon = (icon?: string) =>
     (Icons as any)[icon || ""] || Icons.Circle;
 
-  const hasContent =
-    !!description || !!descriptionExpanded || stats.length > 0;
-
   if (!hasContent) return null;
 
   /* ------------------------------------------------------------
@@ -162,14 +145,12 @@ export default function AboutBuilder_component({
       padding="md"
     >
       <div ref={sectionRef}>
-        {/* Short description */}
         {description && (
           <p className="text-muted-foreground text-center max-w-3xl mx-auto mb-8">
             {description}
           </p>
         )}
 
-        {/* Expanded content */}
         <div
           ref={expandedRef}
           className={`transition-[max-height,opacity] duration-700 ease-in-out overflow-hidden ${
@@ -207,7 +188,6 @@ export default function AboutBuilder_component({
           )}
         </div>
 
-        {/* Toggle */}
         {(descriptionExpanded || stats.length > 0) && (
           <div className="text-center">
             <Button
