@@ -1,0 +1,566 @@
+{
+  "project": {
+    "slug": "deansgate",
+    "builder": "provident",
+    "projectName": "Provident Deansgate",
+    "type": "Apartment",
+    "status": "Under Construction",
+    "featured": true,
+    "area": "IVC Road",
+    "locality": "Devanahalli",
+    "zone": "North",
+    "city": "Bengaluru",
+    "state": "Karnataka",
+    "country": "India",
+    "pincode": "562110"
+  },
+  "hero": {
+    "videoId": "k8cxpokf1js",
+    "meta": {
+      "eyebrow": "Hero",
+      "title": "Find a Home That Fits Your Life",
+      "subtitle": "Verified projects ? Clear pricing ? Guided site visits",
+      "tagline": "Built for your today. Planned for your tomorrow."
+    },
+    "quickInfo": {
+      "price": "?2.35 Cr Onwards",
+      "typology": "3 BHK",
+      "size": "15 Acres"
+    },
+    "images": [
+      "https://www.providenthousing.com/wp-content/uploads/2023/08/DG_1600px-x-550px-11.webp"
+    ]
+  },
+  "summary": {
+    "meta": {
+      "eyebrow": "Highlights",
+      "title": "Designed for Everyday Living",
+      "subtitle": "A thoughtfully planned community that balances comfort, connectivity, and long-term value",
+      "tagline": "Where location, layout, and lifestyle come together"
+    },
+    "description": "Elevating luxury living to unparalleled heights, Provident Deansgate embodies the captivating essence of Manchester right in the heart of North Bengaluru. Drawing inspiration from the enchanting allure of the English city, these pioneering residences in Bengaluru harmonise flawlessly designed red brick abodes, vintage-themed lampposts, and an exceptionally designed clubhouse crowned by a majestic clock tower. The atmosphere is further enriched by picket fences, English sculptures, and cobblestone pathways, transporting you to an era of timeless elegance. A mere 15 minutes from Kempegowda International Airport, Provident Deansgate stands amidst the dynamic hub of IT parks and corporations. Spread across sprawling 15 acres of lush greenery, this development comprises meticulously designed 3-BHK Villaments-styled homes that seamlessly blend nature with luxury.",
+    "highlights": [
+      "Signature 3 BHK villaments with private gardens and terraces",
+      "Prestigious IVC Road address near the airport",
+      "Low-density, resort-style gated luxury community",
+      "Designed for privacy, space and elevated living"
+    ]
+  },
+  "amenities": {
+    "meta": {
+      "eyebrow": "Amenities",
+      "title": "Your Leisure Adorned With Opulence",
+      "subtitle": "From sports to leisure, wellness to education?",
+      "tagline": "Thoughtfully curated spaces for every stage of life."
+    },
+    "amenityImages": [
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2023/08/Amphitheater_View-1.webp",
+        "title": "Amphitheatre",
+        "description": "Amphitheatre",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2023/08/Deans_Clubhouse_Pool_night_view-1.webp",
+        "title": "Swimming Pool",
+        "description": "Pool for all ages",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2023/08/Multipurpose-Court-and-Fottball-1.webp",
+        "title": "Sports Court",
+        "description": "Premium sports facilities",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2023/08/Childrens_park-1.webp",
+        "title": "Childrens Play Area",
+        "description": "Safe and fun play zones for kids",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2023/08/CLuhouse-with-Clock-tower-1.webp",
+        "title": "Clocktower",
+        "description": "Clocktower",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2023/08/Heaton-Park-1.webp",
+        "title": "Heaton Park",
+        "description": "Scenic nature trails within the township",
+        "media_type": "image"
+      }
+    ]
+  },
+  "views": {
+    "meta": {
+      "eyebrow": "Views",
+      "title": "Mesmerizing Views",
+      "subtitle": "Wake up to greenery and breathtaking vistas.",
+      "tagline": "Every window opens to calm, light, and openness."
+    },
+    "images": [
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2023/08/Deansgate_Cross-section.webp",
+        "title": "Cross Sectional View",
+        "order": 1,
+        "is_active": true
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2023/08/Deansgate_gallery-interior-img-1.webp",
+        "title": "Living Dining",
+        "order": 2,
+        "is_active": true
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2023/08/Deansgate_gallery-interior-img-3.webp",
+        "title": "Kitchen",
+        "order": 3,
+        "is_active": true
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2023/08/Deansgate_gallery-interior-img-2-new.webp",
+        "title": "Bedroom",
+        "order": 4,
+        "is_active": true
+      }
+    ]
+  },
+  "locationUI": {
+    "meta": {
+      "eyebrow": "Location",
+      "title": "The Perfect Setting",
+      "subtitle": "Everything you need within easy reach ? schools, hospitals, connectivity & more.",
+      "tagline": "Life. Convenience. Future-ready."
+    },
+    "videoId": "3wkUObyTLdQ",
+    "mapUrl": "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7767.780709844857!2d77.651902!3d13.232197!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1f156e4bf947%3A0x99ff9175bc295b0b!2sProvident%20Deansgate!5e0!3m2!1sen!2sin!4v1765174543804!5m2!1sen!2sin",
+    "categories": [
+      {
+        "title": "Commute",
+        "items": [
+          "IVC Road - 1 min",
+          "Sadahalli Main Road - 2 mins",
+          "NH-44 - 6 mins",
+          "Doddaballapur Main Road - 16 mins",
+          "Kempegowda International Airport - 16 mins",
+          "Yehalanka Railway Station - 30 mins"
+        ]
+      },
+      {
+        "title": "Corporate",
+        "items": [
+          "Prestige Tech Cloud Park - 10 mins",
+          "ITC Factory - 13 mins",
+          "Ecopolis - 19 mins",
+          "North Gate - 25 mins",
+          "KIADB SEZ - 29 mins",
+          "Manyata Tech Park - 37 mins"
+        ]
+      },
+      {
+        "title": "Hospitals",
+        "items": [
+          "Akash Multispeciality Hospital - 17 mins",
+          "Cytecare Hospital - 24 mins",
+          "Aster CMI Hospital - 34 mins",
+          "Omega Multispeciality Hospital - 35 mins",
+          "Manipal Hospital - 35 mins"
+        ]
+      },
+      {
+        "title": "Shopping & Entertainment",
+        "items": [
+          "The School of Ancient Wisdom - 6 mins",
+          "Clarks Exotica - 13 mins",
+          "Padukone-Dravid Centre for Sports Excellence - 16 mins",
+          "D-Mart - 20 mins",
+          "RMZ Galleria Mall - 35 mins",
+          "Phoenix Mall of Asia - 35 mins",
+          "Nandi Hills - 48 mins"
+        ]
+      },
+      {
+        "title": "Schools",
+        "items": [
+          "NAFL-North Urbana - 12 mins",
+          "Stonehill International School - 15 mins",
+          "Vidyashilp Academy - 22 mins",
+          "Chrysalis High School - 25 mins",
+          "Sterling English School - 25 mins"
+        ]
+      },
+      {
+        "title": "Colleges",
+        "items": [
+          "Akash Medical College - 17 mins",
+          "Government First College -17 mins",
+          "MVIT - 22 mins",
+          "Nitte Meenakshi Institute of Technology - 25 mins",
+          "Vogue Insititute of Fashion Technology - 30 mins"
+        ]
+      }
+    ]
+  },
+  "propertyPlans": {
+    "meta": {
+      "eyebrow": "Layouts",
+      "title": "Meticulously Designed Homes",
+      "subtitle": "Explore our thoughtfully designed homes with virtual walkthroughs and detailed floor plans",
+      "tagline": "Homes designed around real life, not just square feet."
+    },
+    "masterPlan": {
+      "image": "https://www.providenthousing.com/wp-content/uploads/2023/08/Deansgate-Mster-Plan_website.webp",
+      "title": "Master Plan",
+      "description": "Master plan for the township"
+    },
+    "modelFlats": [
+      {
+        "title": "Model Flat",
+        "youtubeId": "j8KYbgyGCXk",
+        "order": 1
+      }
+    ],
+    "unitPlans": [
+      {
+        "title": "Type 1",
+        "floorPlanImage": "https://www.providenthousing.com/wp-content/uploads/2023/08/Type-1-North-Series-1.webp"
+      },
+      {
+        "title": "Type 2",
+        "floorPlanImage": "https://www.providenthousing.com/wp-content/uploads/2023/08/Type-2-South-Series-1.webp"
+      },
+      {
+        "title": "Type 3",
+        "floorPlanImage": "https://www.providenthousing.com/wp-content/uploads/2023/08/Type-3-East-Series-1.webp"
+      }
+    ],
+    "floorPlans": [
+      {
+        "title": "Ground Floor",
+        "image": "https://www.providenthousing.com/wp-content/uploads/2023/08/Ground-Floor.webp"
+      },
+      {
+        "title": "First Floor",
+        "image": "https://www.providenthousing.com/wp-content/uploads/2023/08/First-Floor.webp"
+      },
+      {
+        "title": "Second Floor",
+        "image": "https://www.providenthousing.com/wp-content/uploads/2023/08/Second-Floor.webp"
+      }
+    ]
+  },
+  "paymentPlans": {
+    "meta": {
+      "eyebrow": "Payment Plans",
+      "title": "Pricing & Payment Plans",
+      "subtitle": "Transparent costing ? Milestone-based ? RERA compliant",
+      "tagline": "Pay as construction progresses. No surprises later."
+    },
+    "pricingTitle": "How much to pay?",
+    "scheduleTitle": "When to pay?",
+    "ctaText": "Get pricing and payment details",
+    "pricingComputation": [
+      {
+        "title": "Sales Consideration",
+        "items": [
+          "Flat/Unit Cost",
+          "Club Development Charges",
+          "Premium Location Charges",
+          "Floor Rise Charges",
+          "Car Park Charges"
+        ]
+      },
+      {
+        "title": "GST on Sale Consideration",
+        "items": [
+          "Under-Construction Units",
+          "Ready-to-Move Units",
+          "Charged as per IT Act",
+          "Applied milestone-wise"
+        ]
+      },
+      {
+        "title": "Other / Possession Charges",
+        "items": [
+          "Advance Maintenance (Actuals) ",
+          "Electricity & Water Infra Charges",
+          "Corpus Fund",
+          "Legal Charges",
+          "Modifications (if applicable)"
+        ]
+      },
+      {
+        "title": "Stamp Duty & Registration",
+        "items": [
+          "Stamp / Admin Fees (if applicable)",
+          "GST on Other Charges",
+          "Approx. total",
+          "Stamp Duty",
+          "Cess",
+          "Surcharge",
+          "Registration"
+        ]
+      }
+    ],
+    "paymentSchedule": [
+      {
+        "title": "Agreement Stage",
+        "items": [
+          "Initial Advance",
+          "Balance Advance",
+          "Post Agreement Execution"
+        ]
+      },
+      {
+        "title": "Structure Completion",
+        "items": [
+          "Ground/Stilt Slab",
+          "Third Floor Slab",
+          "Sixth Floor Slab",
+          "Ninth Floor Slab"
+        ]
+      },
+      {
+        "title": "Possession",
+        "items": [
+          "Terrace Slab",
+          "Flooring Completion",
+          "External Windows",
+          "Lift Erection"
+        ]
+      }
+    ]
+  },
+  "construction": {
+    "meta": {
+      "eyebrow": "Progress",
+      "title": "Construction Progress",
+      "subtitle": "Stay updated with the work happening on-site.",
+      "tagline": "Track real progress with verified on-site updates."
+    },
+    "updates": [
+      {
+        "name": "Cluster A (A01/N19 to A05/N15)",
+        "type": "image",
+        "image": "/images/construction/provident-deansgate/Provident-Deansgate-Phase1-Oct_page-0013.jpg"
+      },
+      {
+        "name": "Cluster A (A06/S16 to A09/S19)",
+        "type": "image",
+        "image": "/images/construction/provident-deansgate/Provident-Deansgate-Phase1-Oct_page-0012.jpg"
+      },
+      {
+        "name": "Cluster A (A12/S22 to A10/S20)",
+        "type": "image",
+        "image": "/images/construction/provident-deansgate/Provident-Deansgate-Phase1-Oct_page-0011.jpg"
+      },
+      {
+        "name": "Cluster B (W1/B1)",
+        "type": "image",
+        "image": "/images/construction/provident-deansgate/Provident-Deansgate-Phase1-Oct_page-0011.jpg"
+      },
+      {
+        "name": "Cluster B (W1/B1)",
+        "type": "image",
+        "image": "/images/construction/provident-deansgate/Provident-Deansgate-Phase1-Oct_page-0018.jpg"
+      },
+      {
+        "name": "Cluster B (B05/E04 to B08/E01)",
+        "type": "image",
+        "image": "/images/construction/provident-deansgate/Provident-Deansgate-Phase1-Oct_page-0017.jpg"
+      },
+      {
+        "name": "Cluster B (B02/E07 to B04/E05)",
+        "type": "image",
+        "image": "/images/construction/provident-deansgate/Provident-Deansgate-Phase1-Oct_page-0016.jpg"
+      },
+      {
+        "name": "Cluster C (C1/N14 to C4/N11)",
+        "type": "image",
+        "image": "/images/construction/provident-deansgate/Provident-Deansgate-Phase1-Oct_page-0007.jpg"
+      },
+      {
+        "name": "Cluster C (C5/N10 to C7/N8)",
+        "type": "image",
+        "image": "/images/construction/provident-deansgate/Provident-Deansgate-Phase1-Oct_page-0008.jpg"
+      },
+      {
+        "name": "Cluster C (C8/S09 to C11/S12)",
+        "type": "image",
+        "image": "/images/construction/provident-deansgate/Provident-Deansgate-Phase1-Oct_page-0009.jpg"
+      },
+      {
+        "name": "Cluster C (C12/S13 to C14/S15)",
+        "type": "image",
+        "image": "/images/construction/provident-deansgate/Provident-Deansgate-Phase1-Oct_page-0010.jpg"
+      },
+      {
+        "name": "Cluster D (D01/N07)",
+        "type": "image",
+        "image": "/images/construction/provident-deansgate/Provident-Deansgate-Phase1-Oct_page-0004.jpg"
+      },
+      {
+        "name": "Cluster D (D2/N06 to D4/N4)",
+        "type": "image",
+        "image": "/images/construction/provident-deansgate/Provident-Deansgate-Phase1-Oct_page-0005.jpg"
+      },
+      {
+        "name": "Cluster D (D5/N03 to D7/N01)",
+        "type": "image",
+        "image": "/images/construction/provident-deansgate/Provident-Deansgate-Phase1-Oct_page-0006.jpg"
+      },
+      {
+        "name": "Cluster D (D15/S08 to D12/S05)",
+        "type": "image",
+        "image": "/images/construction/provident-deansgate/Provident-Deansgate-Phase1-Oct_page-0014.jpg"
+      },
+      {
+        "name": "Cluster D (D11/S04 to D08/S01)",
+        "type": "image",
+        "image": "/images/construction/provident-deansgate/Provident-Deansgate-Phase1-Oct_page-0015.jpg"
+      },
+      {
+        "name": "Cluster F (F14/S23 to F08/S29)",
+        "type": "image",
+        "image": "/images/construction/provident-deansgate/Provident-Deansgate-Phase2-Oct_page-0004.jpg"
+      },
+      {
+        "name": "Cluster J (J1/N33 to J4/N36)",
+        "type": "image",
+        "image": "/images/construction/provident-deansgate/Provident-Deansgate-Phase2-Oct_page-0007.jpg"
+      },
+      {
+        "name": "Cluster H (H01/N27 to H06/N32)",
+        "type": "image",
+        "image": "/images/construction/provident-deansgate/Provident-Deansgate-Phase2-Oct_page-0005.jpg"
+      },
+      {
+        "name": "Cluster H (H12/S30 to H07/N35)",
+        "type": "image",
+        "image": "/images/construction/provident-deansgate/Provident-Deansgate-Phase2-Oct_page-0006.jpg"
+      },
+      {
+        "name": "Cluster J (J5/N37 to J11/N43)",
+        "type": "image",
+        "image": "/images/construction/provident-deansgate/Provident-Deansgate-Phase2-Oct_page-0008.jpg"
+      },
+      {
+        "name": "Cluster J (J12/N44 to J20/N52)",
+        "type": "image",
+        "image": "/images/construction/provident-deansgate/Provident-Deansgate-Phase2-Oct_page-0009.jpg"
+      }
+    ]
+  },
+  "testimonials": {
+    "meta": {
+      "eyebrow": "Testimonials",
+      "title": "What Our Customers Say",
+      "subtitle": "Hear from families living here",
+      "tagline": "Real stories from families who chose to live here."
+    },
+    "testimonials": [
+      {
+        "name": "Kunal Kedar and Family",
+        "videoId": "DqrUMUqOAww"
+      },
+      {
+        "name": "Rajesh and Meena",
+        "videoId": "DGU0NRmb2vQ"
+      }
+    ]
+  },
+  "aboutBuilder": {
+    "name": "Provident",
+    "meta": {
+      "eyebrow": "Developer",
+      "title": "About the Developer",
+      "subtitle": "A trusted name with a proven track record in delivering quality homes",
+      "tagline": "Built on credibility. Known for consistency."
+    },
+    "description": "Established in 2008, Provident Housing Limited is a large-scale community developer, offering the greatest value within the residential segment. The company caters to the diverse residential needs of buyers, with a focus on aspirational home ownership.",
+    "descriptionExpanded": "A 100% subsidiary of Puravankara Limited, Provident Housing carries its legacy with a portfolio of remarkable residential developments across 9 cities, namely, Bengaluru, Kochi, Mumbai, Goa, Hyderabad, Mangalore, Chennai, Coimbatore, and Pune. With a family of 55,000+ happy residents, the company?s mammoth scale of development is evidenced by its track record of ~20 million square feet of projects: ~12.8 million square feet completed and ~7.2 million square feet of ongoing projects. Additionally, ~5.2 million square feet are planned and are under approval for new launches.\n \n Customer obsession is at the heart of everything we do at Provident Housing. This credo guides us in every aspect of our work, from design to handover, ensuring that we consistently enhance the customer?s experience and elevate their lifestyle with homes designed for more.",
+    "stats": [
+      {
+        "label": "Years Experience",
+        "value": "16 +"
+      },
+      {
+        "label": "Happy Customers",
+        "value": "55,000 +"
+      },
+      {
+        "label": "Million Sq.Ft. Delivered",
+        "value": "12.8 +"
+      },
+      {
+        "label": "Cities",
+        "value": "9 Cities"
+      },
+      {
+        "label": "Homes in the Making",
+        "value": "11,000 +"
+      },
+      {
+        "label": "Homes Delivered",
+        "value": "14,000 +"
+      }
+    ]
+  },
+  "loanSupport": {
+    "enabled": true,
+    "meta": {
+      "eyebrow": "Loans",
+      "title": "Check Your Home Loan Eligibility",
+      "subtitle": "Know your budget and EMI options before you decide",
+      "tagline": "Plan with confidence. Buy with clarity."
+    },
+    "banks": [
+      {
+        "name": "SBI"
+      },
+      {
+        "name": "HDFC"
+      },
+      {
+        "name": "ICICI"
+      },
+      {
+        "name": "AXIS"
+      },
+      {
+        "name": "PNB"
+      },
+      {
+        "name": "Canara"
+      }
+    ]
+  },
+  "brochure": {
+    "meta": {
+      "eyebrow": "Document",
+      "title": "A lifestyle project that suits your needs.",
+      "subtitle": "Explore detailed information on floor plans, amenities, pricing, layout plans and official project documents.",
+      "tagline": "Official documents, layouts, and details ? all in one place."
+    },
+    "coverImage": "https://www.providenthousing.com/wp-content/uploads/2023/08/PROVIDENT-DEANSGATE-MOCKUP-front.webp",
+    "documents": [
+      {
+        "title": "RERA Certificate",
+        "url": "https://www.providenthousing.com/wp-content/uploads/2023/08/Provident-Deansgate-RERA-1.pdf"
+      },
+      {
+        "title": "EC Certificate",
+        "url": "https://www.providenthousing.com/wp-content/themes/provident/assets/images/pdf.png"
+      }
+    ]
+  },
+  "faq": {
+    "meta": {
+      "eyebrow": "FAQ",
+      "title": "Frequently Asked Questions",
+      "subtitle": "Everything you need to know before making a decision",
+      "tagline": "Clear answers. No guesswork."
+    }
+  }
+}
