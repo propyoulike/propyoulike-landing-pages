@@ -1,0 +1,536 @@
+{
+  "project": {
+    "slug": "atmosphere",
+    "builder": "purva",
+    "projectName": "Purva Atmosphere",
+    "type": "Apartment",
+    "status": "Under Construction",
+    "featured": true,
+    "area": "Thanisandra Road",
+    "locality": "Thanisandra",
+    "zone": "North",
+    "city": "Bengaluru",
+    "state": "Karnataka",
+    "country": "India",
+    "pincode": "560077"
+  },
+  "hero": {
+    "videoId": "R_H71arYMzg",
+    "meta": {
+      "eyebrow": "Hero",
+      "title": "Find a Home That Fits Your Life",
+      "subtitle": "Verified projects ? Clear pricing ? Guided site visits",
+      "tagline": "Built for your today. Planned for your tomorrow."
+    },
+    "quickInfo": {
+      "price": "? 2.85 Cr Onwards*",
+      "typology": "3 BHK",
+      "size": "9 Acres"
+    },
+    "images": [
+      "https://backend.puravankara.com/uploads/Purva_Atmosphere_59c2f79612.jpg"
+    ]
+  },
+  "summary": {
+    "meta": {
+      "eyebrow": "Highlights",
+      "title": "Designed for Everyday Living",
+      "subtitle": "A thoughtfully planned community that balances comfort, connectivity, and long-term value",
+      "tagline": "Where location, layout, and lifestyle come together"
+    },
+    "description": "Experience elevated living at Purva Atmosphere.\nSet across 13 acres of landscaped greenery near Manyata Tech Park, these luxury 3 BHK residences in Thanisandra offer rare calm amidst North Bangalore?s growth corridor. Thoughtfully designed spacious homes, refined amenities, and seamless connectivity to IT hubs, top schools, and lifestyle destinations create a perfect balance of serenity and city convenience.\n\nA private sanctuary for those who value space, sophistication, and location.",
+    "highlights": [
+      "9 acres of open, thoughtfully planned luxury living",
+      "Plush, tech-enabled 3 BHK residences",
+      "Iconic rooftop clubhouse with sky deck, theatre & cloud walk",
+      "40-ft Air Filtration Tower for cleaner, healthier living",
+      "Global lifestyle amenities curated for elevated urban living",
+      "3 elegant towers rising G + 34 floors",
+      "Panoramic views & expansive layouts",
+      "Price starting from ?2.85 Cr onwards*"
+    ]
+  },
+  "amenities": {
+    "meta": {
+      "eyebrow": "Amenities",
+      "title": "Your Leisure Adorned With Opulence",
+      "subtitle": "From sports to leisure, wellness to education?",
+      "tagline": "Thoughtfully curated spaces for every stage of life."
+    },
+    "amenityImages": [
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FSwimming_Pool_e5f47afcc1.png&w=1920&q=75",
+        "title": "Swimming Pool",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FMiyawaki_Forest_589c83e784.png&w=1920&q=75",
+        "title": "Miyawako Forest",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FAmenity_Image_960x645px_03_c9e9631b50.jpg&w=1920&q=75",
+        "title": "Aromatherapy Garden",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FTemple_of_Body_and_Soul_0665a48d16.png&w=1920&q=75",
+        "title": "Temple of Mind and Body",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FAir_Filtration_tower_c968b57dd5.png&w=1920&q=75",
+        "title": "Air Filtration Tower",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FPet_Park_or_Dog_Park_or_Bark_Park_86ec4c7d3f.png&w=1920&q=75",
+        "title": "Pet Corner",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FYoga_and_Meditation_Deck_523f7dbdbb.png&w=1920&q=75",
+        "title": "Yoga Space",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FAmenity_Image_960x645px_04_9055783bf2.jpg&w=1920&q=75",
+        "title": "Gridiron Running Track",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FGymnasium_2ec3f4328c.png&w=1920&q=75",
+        "title": "Gym and TRX Station",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FIndoor_games_room_01_705d0fd899.png&w=256&q=75",
+        "title": "Indoor Games Room",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FClubhouse_house_34th_floor_847bf8aaa3.jpg&w=1920&q=75",
+        "title": "Club Aura on 34th level",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FRyokan_7b5abbb009.jpg&w=1920&q=75",
+        "title": "The Ryokan - Japanese Theme Restaurant",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FAbove_34_Los_Angeles_themed_restaurant_0baec6b956.png&w=1920&q=75",
+        "title": "Above Thirty Four - Los Angeles Themed Restaurant",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FJapanese_Spa_Onsen_Room_6b42f2b9f2.png&w=1920&q=75",
+        "title": "Onsen Room - Japanese Themed Spa",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FSquash_Court_1_882d6d16e2.webp&w=1920&q=75",
+        "title": "Squash Court",
+        "media_type": "image"
+      }
+    ]
+  },
+  "views": {
+    "meta": {
+      "eyebrow": "Views",
+      "title": "Mesmerizing Views",
+      "subtitle": "Wake up to greenery and breathtaking vistas.",
+      "tagline": "Every window opens to calm, light, and openness."
+    },
+    "images": [
+      {
+        "src": "https://backend.puravankara.com/uploads/3_df31f46970.png"
+      },
+      {
+        "src": "https://backend.puravankara.com/uploads/1_7eb23b2e9e.png"
+      },
+      {
+        "src": "https://backend.puravankara.com/uploads/3_6db2e0173f.png"
+      },
+      {
+        "src": "https://backend.puravankara.com/uploads/2_4429818d88.png"
+      },
+      {
+        "src": "https://backend.puravankara.com/uploads/1_8ef68eb09b.png"
+      }
+    ]
+  },
+  "locationUI": {
+    "meta": {
+      "eyebrow": "Location",
+      "title": "The Perfect Setting",
+      "subtitle": "Everything you need within easy reach ? schools, hospitals, connectivity & more.",
+      "tagline": "Life. Convenience. Future-ready."
+    },
+    "videoId": "Me7Jlz__2Lg",
+    "mapUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3886.5591090201456!2d77.63326897359079!3d13.063712112855113!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae19cd10cc5161%3A0x95264b2a77b017e2!2sPurva%20Atmosphere!5e0!3m2!1sen!2sin!4v1767107584862!5m2!1sen!2sin",
+    "categories": [
+      {
+        "title": "Transportation",
+        "items": [
+          "Nagavara Metro Station (upcoming) 5 mins",
+          "Hebbal Railway Station 10 mins",
+          "Kempegowda International Airport 30 mins"
+        ]
+      },
+      {
+        "title": "Educational Institutions",
+        "items": [
+          "Rashtrotthana Vidya Kendra 3 mins",
+          "Kensri School 7 mins",
+          "Ryan International School 10 mins",
+          "Royal Concorde International School 12 mins"
+        ]
+      },
+      {
+        "title": "Healthcare",
+        "items": [
+          "Columbia Asia Hospital 10 mins",
+          "Aster CMI Hospital 12 mins",
+          "Manipal Hospital 15 mins",
+          "Bangalore Baptist Hospital 20 mins"
+        ]
+      },
+      {
+        "title": "Business & Commercial Hubs",
+        "items": [
+          "Manyata Tech Park 7 mins",
+          "Brigade Magnum 10 mins",
+          "Karle Town Centre 12 mins",
+          "Kirloskar Tech Park 15 mins"
+        ]
+      },
+      {
+        "title": "Retail, Shopping & Entertainment",
+        "items": [
+          "Elements Mall 10 mins",
+          "Esteem Mall 15 mins",
+          "Mall of Asia 20 mins",
+          "Orion East Mall 20 mins"
+        ]
+      },
+      {
+        "title": "Culture & Green Spaces",
+        "items": [
+          "Lumbini Gardens 15 mins",
+          "Hebbal Lake Park 18 mins"
+        ]
+      }
+    ]
+  },
+  "propertyPlans": {
+    "meta": {
+      "eyebrow": "Layouts",
+      "title": "Meticulously Designed Homes",
+      "subtitle": "Explore our thoughtfully designed homes with virtual walkthroughs and detailed floor plans",
+      "tagline": "Homes designed around real life, not just square feet."
+    },
+    "masterPlan": {
+      "image": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FPurva_Atmosphere_691e9443a5.webp&w=1920&q=75",
+      "title": "Master Plan",
+      "description": "Master plan for the township"
+    },
+    "modelFlats": [
+      {
+        "title": "Walkthrough",
+        "youtubeId": "cq1NXUc8O6s",
+        "order": 1
+      },
+      {
+        "title": "Worldhome Collection",
+        "youtubeId": "JVIGawUuJxY",
+        "order": 2
+      }
+    ],
+    "unitPlans": [
+      {
+        "title": "3BHK",
+        "sba": "1680-2010 sft",
+        "price": "2.80 Cr onwards",
+        "floorPlanImage": "https://backend.puravankara.com/uploads/Atmosphere_1_7050946b08.webp"
+      }
+    ]
+  },
+  "paymentPlans": {
+    "meta": {
+      "eyebrow": "Payment Plans",
+      "title": "Pricing & Payment Plans",
+      "subtitle": "Transparent costing ? Milestone-based ? RERA compliant",
+      "tagline": "Pay as construction progresses. No surprises later."
+    },
+    "pricingTitle": "How much to pay?",
+    "scheduleTitle": "When to pay?",
+    "ctaText": "Get pricing and payment details",
+    "pricingComputation": [
+      {
+        "title": "Sales Consideration",
+        "items": [
+          "Flat/Unit Cost",
+          "Club Development Charges",
+          "Premium Location Charges",
+          "Floor Rise Charges",
+          "Car Park Charges"
+        ]
+      },
+      {
+        "title": "GST on Sale Consideration",
+        "items": [
+          "Under-Construction Units",
+          "Ready-to-Move Units",
+          "Charged as per IT Act",
+          "Applied milestone-wise"
+        ]
+      },
+      {
+        "title": "Other / Possession Charges",
+        "items": [
+          "Advance Maintenance (Actuals) ",
+          "Electricity & Water Infra Charges",
+          "Corpus Fund",
+          "Legal Charges",
+          "Modifications (if applicable)"
+        ]
+      },
+      {
+        "title": "Stamp Duty & Registration",
+        "items": [
+          "Stamp / Admin Fees (if applicable)",
+          "GST on Other Charges",
+          "Approx. total",
+          "Stamp Duty",
+          "Cess",
+          "Surcharge",
+          "Registration"
+        ]
+      }
+    ],
+    "paymentSchedule": [
+      {
+        "title": "Agreement Stage",
+        "items": [
+          "Initial Advance",
+          "Balance Advance",
+          "Post Agreement Execution"
+        ]
+      },
+      {
+        "title": "Structure Completion",
+        "items": [
+          "Ground/Stilt Slab",
+          "Third Floor Slab",
+          "Sixth Floor Slab",
+          "Ninth Floor Slab"
+        ]
+      },
+      {
+        "title": "Possession",
+        "items": [
+          "Terrace Slab",
+          "Flooring Completion",
+          "External Windows",
+          "Lift Erection"
+        ]
+      }
+    ]
+  },
+  "construction": {
+    "updates": [
+      {
+        "name": "Status Video",
+        "type": "video",
+        "videoId": "3MYqpKmBDfQ"
+      }
+    ]
+  },
+  "testimonials": {
+    "meta": {
+      "eyebrow": "Testimonials",
+      "title": "What Our Customers Say",
+      "subtitle": "Hear from families living here",
+      "tagline": "Real stories from families who chose to live here."
+    },
+    "testimonials": [
+      {
+        "name": "Rajkumar and Priya",
+        "videoId": "bmtTR42sWyA"
+      },
+      {
+        "name": "Kiran Singh",
+        "videoId": "-_al0xM6F7U"
+      },
+      {
+        "name": "Abhinav Rashtogi",
+        "videoId": "i8GAmUV1itc"
+      },
+      {
+        "name": "Vishal",
+        "videoId": "1M2C-pbtDfU"
+      }
+    ]
+  },
+  "aboutBuilder": {
+    "name": "Puravankara",
+    "meta": {
+      "eyebrow": "Developer",
+      "title": "About the Developer",
+      "subtitle": "A trusted name with a proven track record in delivering quality homes",
+      "tagline": "Built on credibility. Known for consistency."
+    },
+    "description": "Puravankara Limited, headquartered in Bengaluru, is one of India?s most admired and trusted home builders and is recognized among the top real estate companies in India, with a legacy of excellence spanning over 50 years. Founded in 1975, the company is known for delivering high-quality homes on time with complete transparency.",
+    "descriptionExpanded": "Puravankara has launched three prominent brands, each catering to distinct market segments. Puravankara itself is recognized for its luxurious, state-of-the-art projects that incorporate innovative technology to redefine future homes. Provident Housing Ltd., a wholly-owned subsidiary launched in 2008, addresses the needs of mid-income homeowners. Purva Land, established in 2021, offers a lucrative investment opportunity through plotted developments, responding to the evolving needs of homebuyers. Additionally, Starworth Infrastructure and Construction Limited (SICL) provides technology-enabled construction solutions. Puravankara also has a strong presence in commercial office spaces.",
+    "stats": [
+      {
+        "label": "Years of Legacy",
+        "value": "50+ years (est. 1975)"
+      },
+      {
+        "label": "Homes Delivered",
+        "value": "50,000+ homes"
+      },
+      {
+        "label": "Happy Customers",
+        "value": "55,000+ families"
+      },
+      {
+        "label": "Total Development (Delivered + Ongoing)",
+        "value": "45+ million sq. ft."
+      },
+      {
+        "label": "Projects Delivered",
+        "value": "80+ residential & mixed-use projects"
+      },
+      {
+        "label": "Presence Across Cities",
+        "value": "6 major Indian cities"
+      }
+    ]
+  },
+  "loanSupport": {
+    "enabled": true,
+    "meta": {
+      "eyebrow": "Loans",
+      "title": "Check Your Home Loan Eligibility",
+      "subtitle": "Know your budget and EMI options before you decide",
+      "tagline": "Plan with confidence. Buy with clarity."
+    },
+    "banks": [
+      {
+        "name": "SBI"
+      },
+      {
+        "name": "HDFC"
+      },
+      {
+        "name": "ICICI"
+      },
+      {
+        "name": "AXIS"
+      },
+      {
+        "name": "PNB"
+      },
+      {
+        "name": "Canara"
+      }
+    ]
+  },
+  "faq": {
+    "meta": {
+      "eyebrow": "FAQ",
+      "title": "Frequently Asked Questions",
+      "subtitle": "Everything you need to know before making a decision",
+      "tagline": "Clear answers. No guesswork."
+    },
+    "faqs": [
+      {
+        "title": "Where is Purva Atmosphere located?",
+        "items": [
+          "Purva Atmosphere is located in Thanisandra, North Bangalore, close to Manyata Tech Park, offering excellent connectivity to Hebbal, ORR, Airport Road, and key business hubs."
+        ]
+      },
+      {
+        "title": "What type of homes are available at Purva Atmosphere?",
+        "items": [
+          "Purva Atmosphere offers spacious 3 BHK luxury apartments, designed with large layouts, premium finishes, and tech-enabled features."
+        ]
+      },
+      {
+        "title": "How large is the project and what is the land area?",
+        "items": [
+          "The project is spread across approximately 9 acres, with generous open spaces and thoughtfully planned towers that enhance privacy and views."
+        ]
+      },
+      {
+        "title": "How many towers and floors does Purva Atmosphere have?",
+        "items": [
+          "Purva Atmosphere comprises 3 residential towers, each rising G + 34 floors, creating a landmark high-rise community in North Bangalore."
+        ]
+      },
+      {
+        "title": "What makes Purva Atmosphere unique among luxury apartments in North Bangalore?",
+        "items": [
+          "Key highlights include a rooftop clubhouse with sky deck and theatre, a signature cloud walk, a 40-ft air filtration tower, large open spaces, and a strong focus on wellness and lifestyle luxury."
+        ]
+      },
+      {
+        "title": "Who is the developer of Purva Atmosphere?",
+        "items": [
+          "Purva Atmosphere is developed by Puravankara Limited, a reputed real estate brand with over five decades of experience in premium housing."
+        ]
+      },
+      {
+        "title": "Is Purva Atmosphere suitable for professionals working in Manyata Tech Park?",
+        "items": [
+          "Yes. Its proximity to Manyata Tech Park makes it ideal for senior professionals seeking reduced commute time, premium living standards, and a calm residential environment."
+        ]
+      },
+      {
+        "title": "What amenities are available at Purva Atmosphere?",
+        "items": [
+          "Residents enjoy a rooftop clubhouse, sky deck, private theatre, cloud walk, landscaped open spaces, fitness facilities, leisure zones, and wellness-focused amenities."
+        ]
+      },
+      {
+        "title": "What is the price range of apartments at Purva Atmosphere?",
+        "items": [
+          "Luxury 3 BHK apartments at Purva Atmosphere are priced from ?2.85 Cr onwards*, depending on unit size, floor level, and view."
+        ]
+      },
+      {
+        "title": "Is Purva Atmosphere a good option for long-term investment?",
+        "items": [
+          "Yes. Strong demand drivers include proximity to IT hubs, limited supply of large luxury homes in Thanisandra, premium positioning, and strong brand value."
+        ]
+      },
+      {
+        "title": "Does Purva Atmosphere offer good rental potential?",
+        "items": [
+          "Yes. Luxury 3 BHK homes near Manyata Tech Park attract senior IT professionals, leadership roles, and expat tenants, supporting healthy rental demand."
+        ]
+      },
+      {
+        "title": "Is Purva Atmosphere RERA approved?",
+        "items": [
+          "Yes. Purva Atmosphere is RERA registered, ensuring transparency, regulatory compliance, and buyer protection as per applicable norms."
+        ]
+      },
+      {
+        "title": "Are these homes suitable for end users or investors?",
+        "items": [
+          "Both. End users benefit from spacious luxury living and wellness features, while investors gain from location strength, rental demand, and long-term appreciation potential."
+        ]
+      },
+      {
+        "title": "How can I book a site visit or get detailed pricing?",
+        "items": [
+          "You can request a guided site visit, receive the latest pricing and availability, and get unbiased assistance through PropYouLike."
+        ]
+      }
+    ]
+  }
+}
