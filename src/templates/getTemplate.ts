@@ -1,5 +1,3 @@
-// src/templates/getTemplate.ts
-
 import ApartmentDefault from "@/templates/default/ApartmentDefault";
 import VillaDefault from "@/templates/default/VillaDefault";
 import PlotDefault from "@/templates/default/PlotDefault";
@@ -34,11 +32,11 @@ const TYPE_MAP: Record<string, string> = {
 export function getTemplate(builder: string, type: string) {
   /* ---------------- HARD GUARD ---------------- */
   if (!builder || !type) {
-    runtimeLog("TemplateResolver", "error", "Missing builder or type", {
+    runtimeLog("TemplateResolver", "fatal", "Missing builder or type", {
       builder,
       type,
     });
-    return null;
+    throw new Error("TemplateResolver: builder and type are required"); // 🔧 CHANGED
   }
 
   /* ---------------- NORMALIZATION ---------------- */
@@ -47,16 +45,16 @@ export function getTemplate(builder: string, type: string) {
   const normalizedType = TYPE_MAP[normalizedTypeRaw];
 
   if (!normalizedType) {
-    runtimeLog("TemplateResolver", "error", "Unsupported project type", {
+    runtimeLog("TemplateResolver", "fatal", "Unsupported project type", {
       builder: normalizedBuilder,
       type,
     });
-    return null;
+    throw new Error(`Unsupported project type: ${type}`); // 🔧 CHANGED
   }
 
   /* ---------------- NAMING CONVENTION ---------------- */
   const componentName =
-    capitalize(normalizedType) + capitalize(normalizedBuilder);
+    pascal(normalizedType) + pascal(normalizedBuilder); // 🔧 CHANGED
 
   const expectedPath =
     `/src/templates/builders/${normalizedBuilder}/${componentName}.tsx`;
@@ -78,19 +76,21 @@ export function getTemplate(builder: string, type: string) {
   const fallback = getDefaultTemplate(normalizedType);
 
   if (!fallback) {
-    runtimeLog("TemplateResolver", "fatal", "No template available", {
+    runtimeLog("TemplateResolver", "fatal", "No default template available", {
       builder: normalizedBuilder,
       type: normalizedType,
-      expectedPath,
     });
-    return null;
+    throw new Error(`No default template for type: ${normalizedType}`); // 🔧 CHANGED
   }
 
-  runtimeLog("TemplateResolver", "warn", "Using default template", {
-    builder: normalizedBuilder,
-    type: normalizedType,
-    fallback: fallback.name || "AnonymousDefault",
-  });
+  // 🔧 CHANGED: default usage is NORMAL, not warning
+  if (import.meta.env.DEV) {
+    runtimeLog("TemplateResolver", "info", "Using default template", {
+      builder: normalizedBuilder,
+      type: normalizedType,
+      fallback: fallback.name,
+    });
+  }
 
   return fallback;
 }
@@ -114,6 +114,10 @@ function getDefaultTemplate(type: string) {
 /* ======================================================
    UTIL
 ====================================================== */
-function capitalize(str: string) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
+function pascal(str: string) {
+  return str
+    .split(/[^a-zA-Z0-9]/)
+    .filter(Boolean)
+    .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
+    .join("");
 }
