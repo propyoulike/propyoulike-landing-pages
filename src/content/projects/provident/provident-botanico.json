@@ -12,7 +12,7 @@
     "city": "Bengaluru",
     "state": "Karnataka",
     "country": "India",
-    "pincode": 560117
+    "pincode": "560117"
   },
   "hero": {
     "videoId": "EMC1ByRl2Wc",
@@ -370,58 +370,58 @@
     "updates": [
       {
         "name": "Tower 1",
-        "type": "/images/construction/provident-botanico/0001.jpg",
-        "image": "image"
+        "type": "image",
+        "image": "/images/construction/provident-botanico/0001.jpg"
       },
       {
         "name": "Tower 2",
-        "type": "/images/construction/provident-botanico/0002.jpg",
-        "image": "image"
+        "image": "/images/construction/provident-botanico/0002.jpg",
+        "type": "image"
       },
       {
         "name": "Tower 3",
-        "type": "/images/construction/provident-botanico/0003.jpg",
-        "image": "image"
+        "image": "/images/construction/provident-botanico/0003.jpg",
+        "type": "image"
       },
       {
         "name": "Tower 4",
-        "type": "/images/construction/provident-botanico/0004.jpg",
-        "image": "image"
+        "image": "/images/construction/provident-botanico/0004.jpg",
+        "type": "image"
       },
       {
         "name": "Tower 5",
-        "type": "/images/construction/provident-botanico/0005.jpg",
-        "image": "image"
+        "image": "/images/construction/provident-botanico/0005.jpg",
+        "type": "image"
       },
       {
         "name": "Tower 6",
-        "type": "/images/construction/provident-botanico/0006.jpg",
-        "image": "image"
+        "image": "/images/construction/provident-botanico/0006.jpg",
+        "type": "image"
       },
       {
         "name": "Tower 7",
-        "type": "/images/construction/provident-botanico/0007.jpg",
-        "image": "image"
+        "image": "/images/construction/provident-botanico/0007.jpg",
+        "type": "image"
       },
       {
         "name": "Tower 8",
-        "type": "/images/construction/provident-botanico/0008.jpg",
-        "image": "image"
+        "image": "/images/construction/provident-botanico/0008.jpg",
+        "type": "image"
       },
       {
         "name": "Tower 9",
-        "type": "/images/construction/provident-botanico/0009.jpg",
-        "image": "image"
+        "image": "/images/construction/provident-botanico/0009.jpg",
+        "type": "image"
       },
       {
         "name": "STP",
-        "type": "/images/construction/provident-botanico/0010.jpg",
-        "image": "image"
+        "image": "/images/construction/provident-botanico/0010.jpg",
+        "type": "image"
       },
       {
         "name": "Clubhouse",
-        "type": "/images/construction/provident-botanico/0011.jpg",
-        "image": "image"
+        "image": "/images/construction/provident-botanico/0011.jpg",
+        "type": "image"
       }
     ]
   },
