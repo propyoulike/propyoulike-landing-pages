@@ -1,0 +1,551 @@
+{
+  "project": {
+    "slug": "botanico",
+    "builder": "provident",
+    "projectName": "Provident Botanico",
+    "type": "Apartment",
+    "status": "Under Construction",
+    "featured": true,
+    "area": "Soukya Road",
+    "locality": "Whitefield",
+    "zone": "East",
+    "city": "Bengaluru",
+    "state": "Karnataka",
+    "country": "India",
+    "pincode": 560117
+  },
+  "hero": {
+    "videoId": "EMC1ByRl2Wc",
+    "meta": {
+      "eyebrow": "Hero",
+      "title": "Find a Home That Fits Your Life",
+      "subtitle": "Verified projects ? Clear pricing ? Guided site visits",
+      "tagline": "Built for your today. Planned for your tomorrow."
+    },
+    "quickInfo": {
+      "price": "?94.99 L Onwards",
+      "typology": "2 & 3 BHK"
+    },
+    "images": [
+      "https://www.providenthousing.com/wp-content/uploads/2025/11/Botanico_20_80_web_banner_1600px-x-550px.webp"
+    ]
+  },
+  "summary": {
+    "meta": {
+      "eyebrow": "Highlights",
+      "title": "Designed for Everyday Living",
+      "subtitle": "A thoughtfully planned community that balances comfort, connectivity, and long-term value",
+      "tagline": "Where location, layout, and lifestyle come together"
+    },
+    "description": "Imagine waking up to the gentle rustling of leaves, the melodious songs of birds, and the fresh scent of the great outdoors. Living within nature isn't just a dream; it's a reality waiting for you to explore. Presenting Provident Botanico where the five elements of nature seamlessly merge within a single property",
+    "highlights": [
+      "2 & 3 BHK Sustainable homes",
+      "40+ lifestyle amenities",
+      "20,000 sft clubhouse",
+      "30+ indegenious species of trees",
+      "Just 10 mins from ITPL",
+      "70% Open Space",
+      "9 Themed Gardens",
+      "4000+ trees"
+    ]
+  },
+  "amenities": {
+    "meta": {
+      "eyebrow": "Amenities",
+      "title": "Your Leisure Adorned With Opulence",
+      "subtitle": "From sports to leisure, wellness to education?",
+      "tagline": "Thoughtfully curated spaces for every stage of life."
+    },
+    "amenityImages": [
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2024/03/Prvdnt_Btnco_Treehut_view.webp",
+        "title": "Tree House",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2024/03/Prvdnt_Btnco_Clubhouse_Night-view.webp",
+        "title": "Clubhouse",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2024/03/Prvdnt_Btnco_kids-play-area_view.webp",
+        "title": "Children Playarea",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2024/03/Prvdnt_Btnco_Pool_day_view.webp",
+        "title": "Swimming Pool",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2024/03/Prvdnt_Btnco_Silent_zone_view.webp",
+        "title": "Meditation Pavillion",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2024/03/Prvdnt_Btnco_Open-ground_view.webp",
+        "title": "Multipurpose Ground",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2024/03/Prvdnt_Btnco_Volleyball-Court_View.webp",
+        "title": "Beach Volleyball Court",
+        "media_type": "image"
+      }
+    ]
+  },
+  "views": {
+    "meta": {
+      "eyebrow": "Views",
+      "title": "Mesmerizing Views",
+      "subtitle": "Wake up to greenery and breathtaking vistas.",
+      "tagline": "Every window opens to calm, light, and openness."
+    },
+    "images": [
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2024/02/New-Project-2.webp",
+        "title": "Master bedroom with balcony",
+        "order": 1,
+        "is_active": true
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2024/02/New-Project-1.webp",
+        "title": "Kitchen",
+        "order": 2,
+        "is_active": true
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2024/02/New-Project.webp",
+        "title": "Living & Dining Room",
+        "order": 3,
+        "is_active": true
+      }
+    ]
+  },
+  "locationUI": {
+    "meta": {
+      "eyebrow": "Location",
+      "title": "The Perfect Setting",
+      "subtitle": "Everything you need within easy reach ? schools, hospitals, connectivity & more.",
+      "tagline": "Life. Convenience. Future-ready."
+    },
+    "videoId": "jxzJazNDXbw",
+    "mapUrl": "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7775.345643597713!2d77.80604500000001!3d12.992766!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae0f6142c74137%3A0x8c9dfd3a59220c29!2sProvident%20Botanico!5e0!3m2!1sen!2sin!4v1765117001890!5m2!1sen!2sin",
+    "categories": [
+      {
+        "title": "Educational Institutions",
+        "items": [
+          "Bangalore International Academy - 1 min",
+          "Bloomers School - 8 mins",
+          "MVJ College of Engineering - 10 mins",
+          "Shriram Global School - 11 mins",
+          "DPS Whitefield - 12 mins"
+        ]
+      },
+      {
+        "title": "IT Tech Parks",
+        "items": [
+          "Brigade Tech Park - 14 min",
+          "ITPL - 16 mins",
+          "First Technology Park - 16 mins",
+          "Prestige Shantiniketan - 18 mins",
+          "Sigma Tech Park - 18 mins",
+          "Divyashree Technopark - 20 mins"
+        ]
+      },
+      {
+        "title": "Hospitals",
+        "items": [
+          "Sathya Sai General Hospital - 16 min",
+          "Manipal Hospital - 18 mins",
+          "Aster Whitefield Hospital - 19 mins"
+        ]
+      },
+      {
+        "title": "Shopping Malls",
+        "items": [
+          "Nexus Whitefield - 9 min",
+          "Park Square Mall - 14 mins",
+          "Nexus Shantinikentan Mall - 18 mins",
+          "Phoenix Market City - 24 mins",
+          "VR Bengaluru Mall - 24 mins"
+        ]
+      },
+      {
+        "title": "Connectivity",
+        "items": [
+          "Hopefarm Channasandra Metro Station - 12 min",
+          "KR Puram Railway Station - 30 mins",
+          "Kempegowda International Airport - 70 mins"
+        ]
+      }
+    ]
+  },
+  "propertyPlans": {
+    "meta": {
+      "eyebrow": "Layouts",
+      "title": "Meticulously Designed Homes",
+      "subtitle": "Explore our thoughtfully designed homes with virtual walkthroughs and detailed floor plans",
+      "tagline": "Homes designed around real life, not just square feet."
+    },
+    "masterPlan": {
+      "image": "https://www.providenthousing.com/wp-content/uploads/2024/03/Master-Plan.webp",
+      "title": "Master Plan",
+      "description": "Master plan for the township"
+    },
+    "modelFlats": [
+      {
+        "title": "Model Flat",
+        "youtubeId": "hf9Jz4RNLPo",
+        "order": 1
+      },
+      {
+        "title": "Model Flat",
+        "youtubeId": "XmMnstP0dCY",
+        "order": 2
+      }
+    ],
+    "unitPlans": [
+      {
+        "title": "2BHK COMFORT",
+        "description": "Experience the thoughtful design and smart use of space",
+        "sba": "1030 sq.ft",
+        "ca": "649 sq.ft",
+        "usable": "682 sq.ft",
+        "floorPlanImage": "https://www.providenthousing.com/wp-content/uploads/2024/03/2-bhk-C-type-2-scaled.webp"
+      },
+      {
+        "title": "2BHK GRAND",
+        "description": "Explore premium homes designed for growing families",
+        "sba": "1059 sq.ft",
+        "ca": "647 sq.ft",
+        "usable": "711 sq.ft",
+        "floorPlanImage": "https://www.providenthousing.com/wp-content/uploads/2024/03/2-bhk-G_type1-scaled.webp"
+      },
+      {
+        "title": "3BHK COMFORT",
+        "description": "Explore premium homes designed for growing families",
+        "sba": "1334 sq.ft",
+        "ca": "827 sq.ft",
+        "usable": "893 sq.ft",
+        "floorPlanImage": "https://www.providenthousing.com/wp-content/uploads/2024/03/3-bhk-C-type-1-scaled.webp"
+      },
+      {
+        "title": "3BHK GRAND",
+        "description": "Discover luxurious living with premium finishes",
+        "sba": "1494 sq.ft",
+        "ca": "933 sq.ft",
+        "usable": "1003 sq.ft",
+        "floorPlanImage": "https://www.providenthousing.com/wp-content/uploads/2024/03/3-bhk-G-type1A-1-scaled.webp"
+      }
+    ],
+    "floorPlans": [
+      {
+        "title": "Tower 1",
+        "image": "https://www.providenthousing.com/wp-content/uploads/2024/03/Tower1_GF-scaled.webp"
+      },
+      {
+        "title": "Tower 2",
+        "image": "https://www.providenthousing.com/wp-content/uploads/2024/03/Tower2_GF-scaled.webp"
+      },
+      {
+        "title": "Tower 3",
+        "image": "https://www.providenthousing.com/wp-content/uploads/2024/03/Tower-3-GF-scaled.webp"
+      },
+      {
+        "title": "Tower 4",
+        "image": "https://www.providenthousing.com/wp-content/uploads/2024/03/Tower-4_GF-scaled.webp"
+      },
+      {
+        "title": "Tower 5",
+        "image": "https://www.providenthousing.com/wp-content/uploads/2024/03/Tower-5-GF-scaled.webp"
+      },
+      {
+        "title": "Tower 6",
+        "image": "https://www.providenthousing.com/wp-content/uploads/2024/03/Tower-6_GF-scaled.webp"
+      },
+      {
+        "title": "Tower 7",
+        "image": "https://www.providenthousing.com/wp-content/uploads/2024/03/Tower-7-Ground-Floor-scaled.webp"
+      },
+      {
+        "title": "Tower 8",
+        "image": "https://www.providenthousing.com/wp-content/uploads/2024/03/Tower-8-_First-Floor-scaled.webp"
+      },
+      {
+        "title": "Tower 9",
+        "image": "https://www.providenthousing.com/wp-content/uploads/2024/03/Tower-9-FF-scaled.webp"
+      }
+    ]
+  },
+  "paymentPlans": {
+    "meta": {
+      "eyebrow": "Payment Plans",
+      "title": "Pricing & Payment Plans",
+      "subtitle": "Transparent costing ? Milestone-based ? RERA compliant",
+      "tagline": "Pay as construction progresses. No surprises later."
+    },
+    "pricingTitle": "How much to pay?",
+    "scheduleTitle": "When to pay?",
+    "ctaText": "Get pricing and payment details",
+    "pricingComputation": [
+      {
+        "title": "Sales Consideration",
+        "items": [
+          "Flat/Unit Cost",
+          "Club Development Charges",
+          "Premium Location Charges",
+          "Floor Rise Charges",
+          "Car Park Charges"
+        ]
+      },
+      {
+        "title": "GST on Sale Consideration",
+        "items": [
+          "Under-Construction Units",
+          "Ready-to-Move Units",
+          "Charged as per IT Act",
+          "Applied milestone-wise"
+        ]
+      },
+      {
+        "title": "Other / Possession Charges",
+        "items": [
+          "Advance Maintenance (Actuals) ",
+          "Electricity & Water Infra Charges",
+          "Corpus Fund",
+          "Legal Charges",
+          "Modifications (if applicable)"
+        ]
+      },
+      {
+        "title": "Stamp Duty & Registration",
+        "items": [
+          "Stamp / Admin Fees (if applicable)",
+          "GST on Other Charges",
+          "Approx. total",
+          "Stamp Duty",
+          "Cess",
+          "Surcharge",
+          "Registration"
+        ]
+      }
+    ],
+    "paymentSchedule": [
+      {
+        "title": "Agreement Stage",
+        "items": [
+          "Initial Advance",
+          "Balance Advance",
+          "Post Agreement Execution"
+        ]
+      },
+      {
+        "title": "Structure Completion",
+        "items": [
+          "Ground/Stilt Slab",
+          "Third Floor Slab",
+          "Sixth Floor Slab",
+          "Ninth Floor Slab"
+        ]
+      },
+      {
+        "title": "Possession",
+        "items": [
+          "Terrace Slab",
+          "Flooring Completion",
+          "External Windows",
+          "Lift Erection"
+        ]
+      }
+    ]
+  },
+  "construction": {
+    "meta": {
+      "eyebrow": "Progress",
+      "title": "Construction Progress",
+      "subtitle": "Stay updated with the work happening on-site.",
+      "tagline": "Track real progress with verified on-site updates."
+    },
+    "updates": [
+      {
+        "name": "Tower 1",
+        "type": "/images/construction/provident-botanico/0001.jpg",
+        "image": "image"
+      },
+      {
+        "name": "Tower 2",
+        "type": "/images/construction/provident-botanico/0002.jpg",
+        "image": "image"
+      },
+      {
+        "name": "Tower 3",
+        "type": "/images/construction/provident-botanico/0003.jpg",
+        "image": "image"
+      },
+      {
+        "name": "Tower 4",
+        "type": "/images/construction/provident-botanico/0004.jpg",
+        "image": "image"
+      },
+      {
+        "name": "Tower 5",
+        "type": "/images/construction/provident-botanico/0005.jpg",
+        "image": "image"
+      },
+      {
+        "name": "Tower 6",
+        "type": "/images/construction/provident-botanico/0006.jpg",
+        "image": "image"
+      },
+      {
+        "name": "Tower 7",
+        "type": "/images/construction/provident-botanico/0007.jpg",
+        "image": "image"
+      },
+      {
+        "name": "Tower 8",
+        "type": "/images/construction/provident-botanico/0008.jpg",
+        "image": "image"
+      },
+      {
+        "name": "Tower 9",
+        "type": "/images/construction/provident-botanico/0009.jpg",
+        "image": "image"
+      },
+      {
+        "name": "STP",
+        "type": "/images/construction/provident-botanico/0010.jpg",
+        "image": "image"
+      },
+      {
+        "name": "Clubhouse",
+        "type": "/images/construction/provident-botanico/0011.jpg",
+        "image": "image"
+      }
+    ]
+  },
+  "testimonials": {
+    "meta": {
+      "eyebrow": "Testimonials",
+      "title": "What Our Customers Say",
+      "subtitle": "Hear from families living here",
+      "tagline": "Real stories from families who chose to live here."
+    },
+    "testimonials": [
+      {
+        "name": "Gaurav",
+        "videoId": "zbARSh4SFqY"
+      },
+      {
+        "name": "Rohit Kumar",
+        "videoId": "k1uvqCo9AR0"
+      },
+      {
+        "name": "Hansa and Vishal",
+        "videoId": "VBIFBWsZbZ8"
+      },
+      {
+        "name": "Bharat Bhaskar",
+        "videoId": "wwc7bPteukw"
+      },
+      {
+        "name": "Vivek and Deepa",
+        "videoId": "d6GP30j4usM"
+      }
+    ]
+  },
+  "aboutBuilder": {
+    "name": "Provident",
+    "meta": {
+      "eyebrow": "Developer",
+      "title": "About the Developer",
+      "subtitle": "A trusted name with a proven track record in delivering quality homes",
+      "tagline": "Built on credibility. Known for consistency."
+    },
+    "description": "Established in 2008, Provident Housing Limited is a large-scale community developer, offering the greatest value within the residential segment. The company caters to the diverse residential needs of buyers, with a focus on aspirational home ownership.",
+    "descriptionExpanded": "A 100% subsidiary of Puravankara Limited, Provident Housing carries its legacy with a portfolio of remarkable residential developments across 9 cities, namely, Bengaluru, Kochi, Mumbai, Goa, Hyderabad, Mangalore, Chennai, Coimbatore, and Pune. With a family of 55,000+ happy residents, the company?s mammoth scale of development is evidenced by its track record of ~20 million square feet of projects: ~12.8 million square feet completed and ~7.2 million square feet of ongoing projects. Additionally, ~5.2 million square feet are planned and are under approval for new launches.\n \n Customer obsession is at the heart of everything we do at Provident Housing. This credo guides us in every aspect of our work, from design to handover, ensuring that we consistently enhance the customer?s experience and elevate their lifestyle with homes designed for more.",
+    "stats": [
+      {
+        "label": "Years Experience",
+        "value": "16 +"
+      },
+      {
+        "label": "Happy Customers",
+        "value": "55,000 +"
+      },
+      {
+        "label": "Million Sq.Ft. Delivered",
+        "value": "12.8 +"
+      },
+      {
+        "label": "Cities",
+        "value": "9 Cities"
+      },
+      {
+        "label": "Homes in the Making",
+        "value": "11,000 +"
+      },
+      {
+        "label": "Homes Delivered",
+        "value": "14,000 +"
+      }
+    ]
+  },
+  "loanSupport": {
+    "enabled": true,
+    "meta": {
+      "eyebrow": "Loans",
+      "title": "Check Your Home Loan Eligibility",
+      "subtitle": "Know your budget and EMI options before you decide",
+      "tagline": "Plan with confidence. Buy with clarity."
+    },
+    "banks": [
+      {
+        "name": "SBI"
+      },
+      {
+        "name": "HDFC"
+      },
+      {
+        "name": "ICICI"
+      },
+      {
+        "name": "AXIS"
+      },
+      {
+        "name": "PNB"
+      },
+      {
+        "name": "Canara"
+      }
+    ]
+  },
+  "brochure": {
+    "meta": {
+      "eyebrow": "Document",
+      "title": "A lifestyle project that suits your needs.",
+      "subtitle": "Explore detailed information on floor plans, amenities, pricing, layout plans and official project documents.",
+      "tagline": "Official documents, layouts, and details ? all in one place."
+    },
+    "coverImage": "https://www.providenthousing.com/wp-content/uploads/2024/03/PROVIDENT-BOTANICO-BOOK-FRONT-MOCKUP.png",
+    "documents": [
+      {
+        "title": "RERA Certificate",
+        "url": "https://www.providenthousing.com/wp-content/uploads/2024/02/Provident-Botanico-RERA-Number.pdf"
+      },
+      {
+        "title": "EC Certificate",
+        "url": "https://www.providenthousing.com/wp-content/uploads/2024/03/Botanico-EC.pdf"
+      }
+    ]
+  },
+  "faq": {
+    "meta": {
+      "eyebrow": "FAQ",
+      "title": "Frequently Asked Questions",
+      "subtitle": "Everything you need to know before making a decision",
+      "tagline": "Clear answers. No guesswork."
+    }
+  }
+}
