@@ -1,0 +1,599 @@
+{
+  "project": {
+    "slug": "park-square",
+    "builder": "provident",
+    "projectName": "Provident Park Square",
+    "type": "Apartment",
+    "status": "Ready to move in",
+    "featured": true,
+    "area": "Judicial Layout",
+    "locality": "Kanakpura Road",
+    "zone": "South",
+    "city": "Bengaluru",
+    "state": "Karnataka",
+    "country": "India",
+    "pincode": "560062"
+  },
+  "hero": {
+    "videoId": "7jT1MV-RkAw",
+    "meta": {
+      "eyebrow": "Hero",
+      "title": "Find a Home That Fits Your Life",
+      "subtitle": "Verified projects ? Clear pricing ? Guided site visits",
+      "tagline": "Built for your today. Planned for your tomorrow."
+    },
+    "quickInfo": {
+      "price": "?1.09 Cr Onwards",
+      "typology": "2 BHK, 3 BHK",
+      "size": "20 Acres"
+    },
+    "images": [
+      "https://www.providenthousing.com/wp-content/uploads/2024/02/PS_-LP-Banner_1600px-x-550px-2.webp"
+    ]
+  },
+  "summary": {
+    "meta": {
+      "eyebrow": "Highlights",
+      "title": "Designed for Everyday Living",
+      "subtitle": "A thoughtfully planned community that balances comfort, connectivity, and long-term value",
+      "tagline": "Where location, layout, and lifestyle come together"
+    },
+    "description": "Provident Park Square is a world-class residential project located in the prime area of Judicial Layout, Off Kanakapura Road, Bangalore. Spread across 20 acres of land area, Provident Park Square offers 2 & 3 BHK homes sized from 529 sq. ft. to 1314 sq. ft. with luxurious in-home features as well as amenities at great prices. For those seeking quality and luxury living, this project is your ideal choice to experience exceptional living.",
+    "highlights": [
+      "Premium 2 & 3 BHK homes on Kanakapura Road",
+      "Integrated township with modern amenities and green spaces",
+      "Excellent connectivity via NICE Road and metro corridor",
+      "Ideal for comfortable living and long-term value",
+      "Ideal for comfortable living and long-term value"
+    ]
+  },
+  "amenities": {
+    "meta": {
+      "eyebrow": "Amenities",
+      "title": "Your Leisure Adorned With Opulence",
+      "subtitle": "From sports to leisure, wellness to education?",
+      "tagline": "Thoughtfully curated spaces for every stage of life."
+    },
+    "amenityImages": [
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2024/02/amenitie-barbeque-1.jpg",
+        "title": "Barbeque Deck",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2024/02/amenitie-chess-1.jpg",
+        "title": "Chess Court",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2024/02/amenitie-climbing-1.jpg",
+        "title": "Climbing Wall",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2024/02/amenitie-criket-1-1.jpg",
+        "title": "Cricket Practice Pitch",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2024/02/amenitie-dry-fountain-1-1.jpg",
+        "title": "Dry Deck Fountain",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2024/02/amenitie-forest-1-1.jpg",
+        "title": "Forest Trail",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2024/02/amenitie-kabbadi-1-1.jpg",
+        "title": "Kabaddi Court",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2024/02/amenitie-scating-ring-1.jpg",
+        "title": "Skating Rink",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2024/02/amenitie-senior-citizen-1.jpg",
+        "title": "Senior Citizen Court",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2024/02/child-play-area-5.png",
+        "title": "Childrens Play Area",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2024/02/hopscotch-2.png",
+        "title": "Hopscotch",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2024/02/jogging-track-5.png",
+        "title": "Jogging Track",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2024/02/paw-park-3.png",
+        "title": "Paw Park",
+        "media_type": "image"
+      }
+    ]
+  },
+  "views": {
+    "meta": {
+      "eyebrow": "Views",
+      "title": "Mesmerizing Views",
+      "subtitle": "Wake up to greenery and breathtaking vistas.",
+      "tagline": "Every window opens to calm, light, and openness."
+    },
+    "images": [
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2024/02/Living-room-01-1.webp",
+        "title": "Living Room",
+        "order": 1,
+        "is_active": true
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2024/02/Bedroom1-01-1.webp",
+        "title": "Bedroom",
+        "order": 2,
+        "is_active": true
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2024/02/Living-Room2-01-1.webp",
+        "title": "Living Room",
+        "order": 3,
+        "is_active": true
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2024/02/Bedroom2-01-1.webp",
+        "title": "Master Bedroom",
+        "order": 4,
+        "is_active": true
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2024/02/Kitchen-01-1.webp",
+        "title": "Kitchen",
+        "order": 5,
+        "is_active": true
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2024/02/Bedroom3-01-1.webp",
+        "title": "Bedroom",
+        "order": 6,
+        "is_active": true
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2024/02/Living-Room3-01-1.webp",
+        "title": "Living and Dining",
+        "order": 7,
+        "is_active": true
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2024/02/1-6-1-2.webp",
+        "title": "Project View",
+        "order": 8,
+        "is_active": true
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2024/02/3-5-1-2.webp",
+        "title": "Roadside View",
+        "order": 9,
+        "is_active": true
+      }
+    ]
+  },
+  "locationUI": {
+    "meta": {
+      "eyebrow": "Location",
+      "title": "The Perfect Setting",
+      "subtitle": "Everything you need within easy reach ? schools, hospitals, connectivity & more.",
+      "tagline": "Life. Convenience. Future-ready."
+    },
+    "videoId": "OQi6mMlfllM",
+    "mapUrl": "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d31117.660149977582!2d77.541299!3d12.862158!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae417a8e22df31%3A0xf75cab391d57204e!2sProvident%20Park%20Square!5e0!3m2!1sen!2sin!4v1765260640924!5m2!1sen!2sin",
+    "categories": [
+      {
+        "title": "Commute",
+        "items": [
+          "Banashankari Circle - 8.5 Km",
+          "Outer Ring Road - 7.5 Km",
+          "Nice Road - 1.8 Km",
+          "Metro Station - 1.2 Km",
+          "Bus stop - 0.1 Km",
+          "Auto Stand - 0.7 Km"
+        ]
+      },
+      {
+        "title": "Entertainment & Worship",
+        "items": [
+          "Forum Value Mall - 5.7Km",
+          "Arena Mall - 4.1Km",
+          "Metro Cash and Carry - 5.8Km",
+          "D???mart - 1.8Km",
+          "Vega City - 10.6Km",
+          "Tata Chroma - 3.3Km",
+          "Empire restaurant - 3.5Km",
+          "Absolute Barbeque - 3.3Km",
+          "Barbeque Nation - 3.6Km",
+          "Adyar Ananda Bhavan - 3.4Km",
+          "Banashankari Temple - 8.5Km",
+          "ISKCON Krishna Leela Theme Park - 5.2Km",
+          "Sri Sri Ravi Shankar Art of Living - 5.9Km",
+          "Marikamba Temple - 2.6Km",
+          "Shree Vajramunishwara Temple - 2.5Km",
+          "Pratyangira Devi Temple - 4.5Km"
+        ]
+      },
+      {
+        "title": "Schools",
+        "items": [
+          "Sri Kumaran???s Public School - 1.1Km",
+          "Delhi Public School - 6.1Km",
+          "Valley International - 4.5Km",
+          "Yashasvi International School - 1.1Km",
+          "Alpine Public School - 6.4Km",
+          "Jyothi Kendriya Vidyalaya - 6.6Km",
+          "Jnana Sweekar Public School - 0.9Km",
+          "Rashtrotthana Vidya Kendra - 7.5Km",
+          "National Public School BSK 5th Stage - 6.1Km",
+          "Deeksha School - 0.3Km",
+          "Presidency School Banashankari - 5.9Km",
+          "Vidyashilp School - Banashankari - 2.4Km"
+        ]
+      },
+      {
+        "title": "Colleges",
+        "items": [
+          "KSIT Engineering College - 2.8Km",
+          "CREST (Centre for Research, Education, Sadhana and Training) - 9.4Km",
+          "Yellamma Dasappa Institute of Technology - 4.4Km",
+          "Dayanand Sagar College of Engineering - 6.3Km",
+          "APS institutions - 12.7Km",
+          "Jyothi institute of Technology - 5.1Km",
+          "RV College of Architecture - 5.2Km",
+          "KSEM Engineering & Architecture College - 0.3Km"
+        ]
+      },
+      {
+        "title": "Hospitals",
+        "items": [
+          "Cura Multispeciality hospital - 4.9Km",
+          "Cloud 9 hospital - 3.2Km",
+          "Shankar super Speciality Hospital - 2.3Km",
+          "Astra super Speciality Hospital - 5.4Km",
+          "Sagar Hospital - 7.6Km",
+          "Apollo Hospital - 10.8Km",
+          "Manipal Hospital (Upcoming) opp to Metro Cash and Carry - 5.9Km",
+          "Vasavi Hospital - 6.9Km",
+          "BGS Global Hospital - 9.6Km",
+          "Fortis Hospital - 9.8Km"
+        ]
+      },
+      {
+        "title": "Corporates",
+        "items": [
+          "Subramanya Arcade - 13Km",
+          "Kalyani Magnum - 10.9Km",
+          "Global Village Technology Park - 10.6Km"
+        ]
+      }
+    ]
+  },
+  "propertyPlans": {
+    "meta": {
+      "eyebrow": "Layouts",
+      "title": "Meticulously Designed Homes",
+      "subtitle": "Explore our thoughtfully designed homes with virtual walkthroughs and detailed floor plans",
+      "tagline": "Homes designed around real life, not just square feet."
+    },
+    "masterPlan": {
+      "image": "https://www.providenthousing.com/wp-content/uploads/2024/02/Master-Plan-park-square.webp",
+      "title": "Master Plan",
+      "description": "Master plan for the township"
+    },
+    "modelFlats": [
+      {
+        "title": "Model Flat",
+        "youtubeId": "JZXDqRCwXrY",
+        "order": 3
+      },
+      {
+        "title": "Model Flat",
+        "youtubeId": "8YgoIWkA5S0",
+        "order": 2
+      },
+      {
+        "title": "Walkthrough",
+        "youtubeId": "ZSjkBAsmCSg",
+        "order": 1
+      }
+    ],
+    "unitPlans": [
+      {
+        "title": "2BHK",
+        "description": "2 BHK Grand",
+        "sba": "941 sq.ft",
+        "ca": "616 sq.ft",
+        "usable": "733 sq.ft",
+        "floorPlanImage": "https://www.providenthousing.com/wp-content/uploads/2024/02/2bhk-unit-plan.webp"
+      },
+      {
+        "title": "3BHK",
+        "description": "3BHK Grand",
+        "sba": "1288 sq.ft",
+        "ca": "881 sq.ft",
+        "usable": "1004 sq.ft",
+        "floorPlanImage": "https://www.providenthousing.com/wp-content/uploads/2024/02/3bhk-unit-plan.webp"
+      }
+    ]
+  },
+  "paymentPlans": {
+    "meta": {
+      "eyebrow": "Payment Plans",
+      "title": "Pricing & Payment Plans",
+      "subtitle": "Transparent costing ? Milestone-based ? RERA compliant",
+      "tagline": "Pay as construction progresses. No surprises later."
+    },
+    "pricingTitle": "How much to pay?",
+    "scheduleTitle": "When to pay?",
+    "ctaText": "Get pricing and payment details",
+    "pricingComputation": [
+      {
+        "title": "Sales Consideration",
+        "items": [
+          "Flat/Unit Cost",
+          "Club Development Charges",
+          "Premium Location Charges",
+          "Floor Rise Charges",
+          "Car Park Charges"
+        ]
+      },
+      {
+        "title": "GST on Sale Consideration",
+        "items": [
+          "Under-Construction Units",
+          "Ready-to-Move Units",
+          "Charged as per IT Act",
+          "Applied milestone-wise"
+        ]
+      },
+      {
+        "title": "Other / Possession Charges",
+        "items": [
+          "Advance Maintenance (Actuals) ",
+          "Electricity & Water Infra Charges",
+          "Corpus Fund",
+          "Legal Charges",
+          "Modifications (if applicable)"
+        ]
+      },
+      {
+        "title": "Stamp Duty & Registration",
+        "items": [
+          "Stamp / Admin Fees (if applicable)",
+          "GST on Other Charges",
+          "Approx. total",
+          "Stamp Duty",
+          "Cess",
+          "Surcharge",
+          "Registration"
+        ]
+      }
+    ],
+    "paymentSchedule": [
+      {
+        "title": "Agreement Stage",
+        "items": [
+          "Initial Advance",
+          "Balance Advance",
+          "Post Agreement Execution"
+        ]
+      },
+      {
+        "title": "Structure Completion",
+        "items": [
+          "Ground/Stilt Slab",
+          "Third Floor Slab",
+          "Sixth Floor Slab",
+          "Ninth Floor Slab"
+        ]
+      },
+      {
+        "title": "Possession",
+        "items": [
+          "Terrace Slab",
+          "Flooring Completion",
+          "External Windows",
+          "Lift Erection"
+        ]
+      }
+    ]
+  },
+  "construction": {
+    "meta": {
+      "eyebrow": "Progress",
+      "title": "Construction Progress",
+      "subtitle": "Stay updated with the work happening on-site.",
+      "tagline": "Track real progress with verified on-site updates."
+    },
+    "updates": [
+      {
+        "name": "Wing 1",
+        "type": "image",
+        "image": "/images/construction/provident-ecopolitan/Ecopolitan-Montly-Progress-Report-Nov-25_page-0004.jpg"
+      },
+      {
+        "name": "Wing 2",
+        "type": "image",
+        "image": "/images/construction/provident-ecopolitan/Ecopolitan-Montly-Progress-Report-Nov-25_page-0005.jpg"
+      },
+      {
+        "name": "Wing 3",
+        "type": "image",
+        "image": "/images/construction/provident-ecopolitan/Ecopolitan-Montly-Progress-Report-Nov-25_page-0006.jpg"
+      },
+      {
+        "name": "Wing 4",
+        "type": "image",
+        "image": "/images/construction/provident-ecopolitan/Ecopolitan-Montly-Progress-Report-Nov-25_page-0007.jpg"
+      },
+      {
+        "name": "Wing 5",
+        "type": "image",
+        "image": "/images/construction/provident-ecopolitan/Ecopolitan-Montly-Progress-Report-Nov-25_page-0008.jpg"
+      },
+      {
+        "name": "Wing 6",
+        "type": "image",
+        "image": "/images/construction/provident-ecopolitan/Ecopolitan-Montly-Progress-Report-Nov-25_page-0009.jpg"
+      },
+      {
+        "name": "Wing 7",
+        "type": "image",
+        "image": "/images/construction/provident-ecopolitan/Ecopolitan-Montly-Progress-Report-Nov-25_page-0010.jpg"
+      },
+      {
+        "name": "Other Activities",
+        "type": "image",
+        "image": "/images/construction/provident-ecopolitan/Ecopolitan-Montly-Progress-Report-Nov-25_page-0011.jpg"
+      },
+      {
+        "name": "Block A",
+        "type": "image",
+        "image": "/images/construction/provident-ecopolitan/Ecopolitan-Montly-Progress-Report-Nov-25_page-0012.jpg"
+      },
+      {
+        "name": "Block B",
+        "type": "image",
+        "image": "/images/construction/provident-ecopolitan/Ecopolitan-Montly-Progress-Report-Nov-25_page-0013.jpg"
+      }
+    ]
+  },
+  "testimonials": {
+    "meta": {
+      "eyebrow": "Testimonials",
+      "title": "What Our Customers Say",
+      "subtitle": "Hear from families living here",
+      "tagline": "Real stories from families who chose to live here."
+    },
+    "testimonials": [
+      {
+        "name": "Arpitha",
+        "videoId": "daI6dhqJTY0"
+      },
+      {
+        "name": "Vidya Subodh Hegde and Family",
+        "videoId": "nBi-UT3MroE"
+      },
+      {
+        "name": "Bhavana Karwar",
+        "videoId": "pUBaNiP1uDo"
+      },
+      {
+        "name": "Amrutha V and Rahul",
+        "videoId": "RP0jtYgtNzo"
+      },
+      {
+        "name": "First time buyer",
+        "videoId": "AVULKNWBKD8"
+      },
+      {
+        "name": "Resident Doctor",
+        "videoId": "uGfhAqNGFeU"
+      }
+    ]
+  },
+  "aboutBuilder": {
+    "name": "Provident",
+    "meta": {
+      "eyebrow": "Developer",
+      "title": "About the Developer",
+      "subtitle": "A trusted name with a proven track record in delivering quality homes",
+      "tagline": "Built on credibility. Known for consistency."
+    },
+    "description": "Established in 2008, Provident Housing Limited is a large-scale community developer, offering the greatest value within the residential segment. The company caters to the diverse residential needs of buyers, with a focus on aspirational home ownership.",
+    "descriptionExpanded": "A 100% subsidiary of Puravankara Limited, Provident Housing carries its legacy with a portfolio of remarkable residential developments across 9 cities, namely, Bengaluru, Kochi, Mumbai, Goa, Hyderabad, Mangalore, Chennai, Coimbatore, and Pune. With a family of 55,000+ happy residents, the company?s mammoth scale of development is evidenced by its track record of ~20 million square feet of projects: ~12.8 million square feet completed and ~7.2 million square feet of ongoing projects. Additionally, ~5.2 million square feet are planned and are under approval for new launches.\n \n Customer obsession is at the heart of everything we do at Provident Housing. This credo guides us in every aspect of our work, from design to handover, ensuring that we consistently enhance the customer?s experience and elevate their lifestyle with homes designed for more.",
+    "stats": [
+      {
+        "label": "Years Experience",
+        "value": "16 +"
+      },
+      {
+        "label": "Happy Customers",
+        "value": "55,000 +"
+      },
+      {
+        "label": "Million Sq.Ft. Delivered",
+        "value": "12.8 +"
+      },
+      {
+        "label": "Cities",
+        "value": "9 Cities"
+      },
+      {
+        "label": "Homes in the Making",
+        "value": "11,000 +"
+      },
+      {
+        "label": "Homes Delivered",
+        "value": "14,000 +"
+      }
+    ]
+  },
+  "loanSupport": {
+    "enabled": true,
+    "meta": {
+      "eyebrow": "Loans",
+      "title": "Check Your Home Loan Eligibility",
+      "subtitle": "Know your budget and EMI options before you decide",
+      "tagline": "Plan with confidence. Buy with clarity."
+    },
+    "banks": [
+      {
+        "name": "SBI"
+      },
+      {
+        "name": "HDFC"
+      },
+      {
+        "name": "ICICI"
+      },
+      {
+        "name": "AXIS"
+      },
+      {
+        "name": "PNB"
+      },
+      {
+        "name": "Canara"
+      }
+    ]
+  },
+  "brochure": {
+    "meta": {
+      "eyebrow": "Document",
+      "title": "A lifestyle project that suits your needs.",
+      "subtitle": "Explore detailed information on floor plans, amenities, pricing, layout plans and official project documents.",
+      "tagline": "Official documents, layouts, and details ? all in one place."
+    },
+    "coverImage": "https://www.providenthousing.com/wp-content/uploads/2024/02/parksquare-download-brouchre.webp",
+    "documents": [
+      {
+        "title": "RERA Certificate",
+        "url": "https://www.providenthousing.com/wp-content/uploads/2024/02/PRMKARERA1251310PR200226003305-6.pdf"
+      }
+    ]
+  },
+  "faq": {
+    "meta": {
+      "eyebrow": "FAQ",
+      "title": "Frequently Asked Questions",
+      "subtitle": "Everything you need to know before making a decision",
+      "tagline": "Clear answers. No guesswork."
+    }
+  }
+}
