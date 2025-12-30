@@ -1,0 +1,485 @@
+{
+  "project": {
+    "slug": "provident",
+    "builder": "capella",
+    "projectName": "Provident Capella",
+    "type": "Apartment",
+    "status": "Under Construction",
+    "featured": true,
+    "area": "Soukya Road",
+    "locality": "Whitefield",
+    "zone": "East",
+    "city": "Bengaluru",
+    "state": "Karnataka",
+    "country": "India",
+    "pincode": "560117"
+  },
+  "hero": {
+    "videoId": "48y3JGRXPNk",
+    "meta": {
+      "eyebrow": "Hero",
+      "title": "Find a Home That Fits Your Life",
+      "subtitle": "Verified projects ? Clear pricing ? Guided site visits",
+      "tagline": "Built for your today. Planned for your tomorrow."
+    },
+    "quickInfo": {
+      "price": "?99.99 L Onwards",
+      "typology": "2.5 BHK"
+    },
+    "images": [
+      "https://www.providenthousing.com/wp-content/uploads/2022/12/Capella_1600px-x-550px-5.webp"
+    ]
+  },
+  "summary": {
+    "meta": {
+      "eyebrow": "Highlights",
+      "title": "Designed for Everyday Living",
+      "subtitle": "A thoughtfully planned community that balances comfort, connectivity, and long-term value",
+      "tagline": "Where location, layout, and lifestyle come together"
+    },
+    "description": "Provident Capella is ?A CHILD ENGAGING HOME THAT APPEALS TO ADULTS LIKE YOU? located near the Hope Farm Junction, Whitefield. Thoughtfully designed for working professionals like you, we understand that your lives revolve around your children. Their joys, dreams and challenges occupy your waking days and sleepless nights. As a parent, your top-priority is to provide your kids with amenities-filled, enriching lifestyle, which is why we have conceptualized a home that?s singularly focused on your child like no other.",
+    "highlights": [
+      "Well-designed 1 & 2 BHK apartments on Soukya Road, Whitefield",
+      "Excellent connectivity to IT hubs, metro and social infrastructure",
+      "Modern amenities within a secure gated community",
+      "Ideal for first-time homebuyers and long-term investment"
+    ]
+  },
+  "amenities": {
+    "meta": {
+      "eyebrow": "Amenities",
+      "title": "Your Leisure Adorned With Opulence",
+      "subtitle": "From sports to leisure, wellness to education?",
+      "tagline": "Thoughtfully curated spaces for every stage of life."
+    },
+    "amenityImages": [
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2022/12/reading-room-amenitie-1-2.jpg",
+        "title": "Library",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2022/12/amenitie-kabbadi-1-1-2.jpg",
+        "title": "Kabbadi Court",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2022/12/amenitie-swimming-2-2-2.jpg",
+        "title": "Swimming Pool",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2022/12/child-play-area-5-3.png",
+        "title": "Kids Play Area",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2022/12/amenitie-yoga-3-1.jpg",
+        "title": "Gym & Aerobics",
+        "media_type": "image"
+      }
+    ]
+  },
+  "views": {
+    "meta": {
+      "eyebrow": "Views",
+      "title": "Mesmerizing Views",
+      "subtitle": "Wake up to greenery and breathtaking vistas.",
+      "tagline": "Every window opens to calm, light, and openness."
+    },
+    "images": [
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2022/12/Kids-Bed-room-01-1.webp",
+        "title": "Kids Bedroom",
+        "order": 1,
+        "is_active": true
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2022/12/Mater-Bed-room-01-1.webp",
+        "title": "Master bedroom with balcony",
+        "order": 2,
+        "is_active": true
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2022/12/Balcony-01-1.webp",
+        "title": "Living Room Balcony",
+        "order": 3,
+        "is_active": true
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2022/12/Kitchen-01-3-1.webp",
+        "title": "Kitchen",
+        "order": 4,
+        "is_active": true
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2022/12/Living-Room-01-3-1.webp",
+        "title": "Living & Dining Room",
+        "order": 5,
+        "is_active": true
+      },
+      {
+        "src": "https://www.providenthousing.com/wp-content/uploads/2022/12/Passage-01-1.webp",
+        "title": "Living Room Balcony",
+        "order": 6,
+        "is_active": true
+      }
+    ]
+  },
+  "locationUI": {
+    "meta": {
+      "eyebrow": "Location",
+      "title": "The Perfect Setting",
+      "subtitle": "Everything you need within easy reach ? schools, hospitals, connectivity & more.",
+      "tagline": "Life. Convenience. Future-ready."
+    },
+    "videoId": "HFMQr5Z6iFU",
+    "mapUrl": "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d971.9182054497142!2d77.806034!3d12.992766!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae0f426171efe5%3A0x7c46453cb4fe95be!2sProvident%20Capella!5e0!3m2!1sen!2sin!4v1765277062943!5m2!1sen!2sin",
+    "categories": [
+      {
+        "title": "Commute",
+        "items": [
+          "ITPL - 8 km",
+          "Devanagudi Railway Station - 3 km",
+          "Upcoming Metro Station @ HopeFarm Junction - 6 km",
+          "KR Puram Railway Station - 17 km",
+          "Kempegowda International Airport - 39 km",
+          "Satellite Town Ring Road - Immediate proximity"
+        ]
+      },
+      {
+        "title": "Corporates",
+        "items": [
+          "Over 350 IT companies are here in Whitefield"
+        ]
+      },
+      {
+        "title": "Hospitals",
+        "items": [
+          "Sri Sathya Sai General Hospital - 9 km",
+          "Manipal Hospital - 9 km"
+        ]
+      },
+      {
+        "title": "Entertainment & Worship",
+        "items": [
+          "Ascendas Park Square Mall - 8 km",
+          "Nexus Shantiniketan Mall - 9 km",
+          "Phoenix Market City - 12 km",
+          "VR Bengaluru Mall - 12 km"
+        ]
+      },
+      {
+        "title": "Schools",
+        "items": [
+          "Bangalore International Academy - 1km",
+          "Winmore Academy - 8 km"
+        ]
+      },
+      {
+        "title": "Colleges",
+        "items": [
+          "MVJ College of Engineering - 6 km",
+          "Samruddhi PU & Degree College - 10 km",
+          "Govt ITI College - 6 km"
+        ]
+      }
+    ]
+  },
+  "propertyPlans": {
+    "meta": {
+      "eyebrow": "Layouts",
+      "title": "Meticulously Designed Homes",
+      "subtitle": "Explore our thoughtfully designed homes with virtual walkthroughs and detailed floor plans",
+      "tagline": "Homes designed around real life, not just square feet."
+    },
+    "masterPlan": {
+      "image": "https://www.providenthousing.com/wp-content/uploads/2022/12/Master-Plan-01-scaled.webp",
+      "title": "Master Plan",
+      "description": "Master plan for the township"
+    },
+    "modelFlats": [
+      {
+        "title": "Model Flat",
+        "youtubeId": "Qcln5HkRcVM",
+        "order": 1
+      }
+    ],
+    "unitPlans": [
+      {
+        "title": "1BHK",
+        "description": "1 BHK Unit",
+        "sba": "570 sq.ft",
+        "ca": "360 sq.ft",
+        "usable": "360 sq.ft",
+        "floorPlanImage": "https://www.providenthousing.com/wp-content/uploads/2022/12/Capella-Brochure_Feb-8th-45-scaled.webp"
+      },
+      {
+        "title": "2BHK",
+        "description": "2BHK Unit",
+        "sba": "880 sq.ft",
+        "ca": "550 sq.ft",
+        "usable": "600 sq.ft",
+        "floorPlanImage": "https://www.providenthousing.com/wp-content/uploads/2022/12/Capella-Brochure_Feb-8th-46-scaled.webp"
+      },
+      {
+        "title": "2.5BHK",
+        "description": "2.5BHK Unit",
+        "sba": "1110 sq.ft",
+        "ca": "640 sq.ft",
+        "usable": "750 sq.ft",
+        "floorPlanImage": "https://www.providenthousing.com/wp-content/uploads/2022/12/Capella-Brochure_Feb-8th-47-scaled.webp"
+      }
+    ],
+    "floorPlans": [
+      {
+        "title": "Tower 1",
+        "image": "https://www.providenthousing.com/wp-content/uploads/2022/12/Capella-Brochure_Feb-8th-30-scaled.webp"
+      },
+      {
+        "title": "Tower 2",
+        "image": "https://www.providenthousing.com/wp-content/uploads/2022/12/Capella-Brochure_Feb-8th-31-scaled.webp"
+      },
+      {
+        "title": "Tower 3",
+        "image": "https://www.providenthousing.com/wp-content/uploads/2022/12/Capella-Brochure_Feb-8th-33-scaled.webp"
+      },
+      {
+        "title": "Tower 4",
+        "image": "https://www.providenthousing.com/wp-content/uploads/2022/12/Capella-Brochure_Feb-8th-35-scaled.webp"
+      },
+      {
+        "title": "Tower 5",
+        "image": "https://www.providenthousing.com/wp-content/uploads/2022/12/Capella-Brochure_Feb-8th-37-scaled.webp"
+      },
+      {
+        "title": "Tower 6",
+        "image": "https://www.providenthousing.com/wp-content/uploads/2022/12/Capella-Brochure_Feb-8th-39-scaled.webp"
+      }
+    ]
+  },
+  "paymentPlans": {
+    "meta": {
+      "eyebrow": "Payment Plans",
+      "title": "Pricing & Payment Plans",
+      "subtitle": "Transparent costing ? Milestone-based ? RERA compliant",
+      "tagline": "Pay as construction progresses. No surprises later."
+    },
+    "pricingTitle": "How much to pay?",
+    "scheduleTitle": "When to pay?",
+    "ctaText": "Get pricing and payment details",
+    "pricingComputation": [
+      {
+        "title": "Sales Consideration",
+        "items": [
+          "Flat/Unit Cost",
+          "Club Development Charges",
+          "Premium Location Charges",
+          "Floor Rise Charges",
+          "Car Park Charges"
+        ]
+      },
+      {
+        "title": "GST on Sale Consideration",
+        "items": [
+          "Under-Construction Units",
+          "Ready-to-Move Units",
+          "Charged as per IT Act",
+          "Applied milestone-wise"
+        ]
+      },
+      {
+        "title": "Other / Possession Charges",
+        "items": [
+          "Advance Maintenance (Actuals) ",
+          "Electricity & Water Infra Charges",
+          "Corpus Fund",
+          "Legal Charges",
+          "Modifications (if applicable)"
+        ]
+      },
+      {
+        "title": "Stamp Duty & Registration",
+        "items": [
+          "Stamp / Admin Fees (if applicable)",
+          "GST on Other Charges",
+          "Approx. total",
+          "Stamp Duty",
+          "Cess",
+          "Surcharge",
+          "Registration"
+        ]
+      }
+    ],
+    "paymentSchedule": [
+      {
+        "title": "Agreement Stage",
+        "items": [
+          "Initial Advance",
+          "Balance Advance",
+          "Post Agreement Execution"
+        ]
+      },
+      {
+        "title": "Structure Completion",
+        "items": [
+          "Ground/Stilt Slab",
+          "Third Floor Slab",
+          "Sixth Floor Slab",
+          "Ninth Floor Slab"
+        ]
+      },
+      {
+        "title": "Possession",
+        "items": [
+          "Terrace Slab",
+          "Flooring Completion",
+          "External Windows",
+          "Lift Erection"
+        ]
+      }
+    ]
+  },
+  "construction": {
+    "meta": {
+      "eyebrow": "Progress",
+      "title": "Construction Progress",
+      "subtitle": "Stay updated with the work happening on-site.",
+      "tagline": "Track real progress with verified on-site updates."
+    },
+    "updates": [
+      {
+        "name": "Tower 1",
+        "type": "image",
+        "image": "/images/construction/provident-capella/capella_-sep-month-2025_page-0004.jpg"
+      },
+      {
+        "name": "Tower 6",
+        "type": "image",
+        "image": "/images/construction/provident-capella/capella_-sep-month-2025_page-0005.jpg"
+      },
+      {
+        "name": "Tower 7",
+        "type": "image",
+        "image": "/images/construction/provident-capella/capella_-sep-month-2025_page-0006.jpg"
+      },
+      {
+        "name": "Amenities",
+        "type": "image",
+        "image": "/images/construction/provident-capella/capella_-sep-month-2025_page-0007.jpg"
+      },
+      {
+        "name": "Amenities",
+        "type": "image",
+        "image": "/images/construction/provident-capella/capella_-sep-month-2025_page-0008.jpg"
+      }
+    ]
+  },
+  "testimonials": {
+    "meta": {
+      "eyebrow": "Testimonials",
+      "title": "What Our Customers Say",
+      "subtitle": "Hear from families living here",
+      "tagline": "Real stories from families who chose to live here."
+    },
+    "testimonials": [
+      {
+        "name": "Ashok and Family",
+        "videoId": "l6sLkwGHgyw"
+      },
+      {
+        "name": "Chakra Prasad, Aparna and Rian",
+        "videoId": "QetrVbLppmI"
+      }
+    ]
+  },
+  "aboutBuilder": {
+    "name": "Provident",
+    "meta": {
+      "eyebrow": "Developer",
+      "title": "About the Developer",
+      "subtitle": "A trusted name with a proven track record in delivering quality homes",
+      "tagline": "Built on credibility. Known for consistency."
+    },
+    "description": "Established in 2008, Provident Housing Limited is a large-scale community developer, offering the greatest value within the residential segment. The company caters to the diverse residential needs of buyers, with a focus on aspirational home ownership.",
+    "descriptionExpanded": "A 100% subsidiary of Puravankara Limited, Provident Housing carries its legacy with a portfolio of remarkable residential developments across 9 cities, namely, Bengaluru, Kochi, Mumbai, Goa, Hyderabad, Mangalore, Chennai, Coimbatore, and Pune. With a family of 55,000+ happy residents, the company?s mammoth scale of development is evidenced by its track record of ~20 million square feet of projects: ~12.8 million square feet completed and ~7.2 million square feet of ongoing projects. Additionally, ~5.2 million square feet are planned and are under approval for new launches.\n \n Customer obsession is at the heart of everything we do at Provident Housing. This credo guides us in every aspect of our work, from design to handover, ensuring that we consistently enhance the customer?s experience and elevate their lifestyle with homes designed for more.",
+    "stats": [
+      {
+        "label": "Years Experience",
+        "value": "16 +"
+      },
+      {
+        "label": "Happy Customers",
+        "value": "55,000 +"
+      },
+      {
+        "label": "Million Sq.Ft. Delivered",
+        "value": "12.8 +"
+      },
+      {
+        "label": "Cities",
+        "value": "9 Cities"
+      },
+      {
+        "label": "Homes in the Making",
+        "value": "11,000 +"
+      },
+      {
+        "label": "Homes Delivered",
+        "value": "14,000 +"
+      }
+    ]
+  },
+  "loanSupport": {
+    "enabled": true,
+    "meta": {
+      "eyebrow": "Loans",
+      "title": "Check Your Home Loan Eligibility",
+      "subtitle": "Know your budget and EMI options before you decide",
+      "tagline": "Plan with confidence. Buy with clarity."
+    },
+    "banks": [
+      {
+        "name": "SBI"
+      },
+      {
+        "name": "HDFC"
+      },
+      {
+        "name": "ICICI"
+      },
+      {
+        "name": "AXIS"
+      },
+      {
+        "name": "PNB"
+      },
+      {
+        "name": "Canara"
+      }
+    ]
+  },
+  "brochure": {
+    "meta": {
+      "eyebrow": "Document",
+      "title": "A lifestyle project that suits your needs.",
+      "subtitle": "Explore detailed information on floor plans, amenities, pricing, layout plans and official project documents.",
+      "tagline": "Official documents, layouts, and details ? all in one place."
+    },
+    "coverImage": "https://www.providenthousing.com/wp-content/uploads/2022/12/494771652-capella-1-new.webp",
+    "documents": [
+      {
+        "title": "RERA Certificate",
+        "url": "https://www.providenthousing.com/wp-content/uploads/2022/12/provident-capella-RERA.pdf"
+      }
+    ]
+  },
+  "faq": {
+    "meta": {
+      "eyebrow": "FAQ",
+      "title": "Frequently Asked Questions",
+      "subtitle": "Everything you need to know before making a decision",
+      "tagline": "Clear answers. No guesswork."
+    }
+  }
+}
