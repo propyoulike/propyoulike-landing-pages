@@ -12,7 +12,7 @@
     "city": "Bengaluru",
     "state": "Karnataka",
     "country": "India",
-    "pincode": 560117
+    "pincode": "560117"
   },
   "hero": {
     "videoId": "EMC1ByRl2Wc",
@@ -130,7 +130,7 @@
       "tagline": "Life. Convenience. Future-ready."
     },
     "videoId": "jxzJazNDXbw",
-    "mapUrl": "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7775.345643597713!2d77.80604500000001!3d12.992766!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae0f6142c74137%3A0x8c9dfd3a59220c29!2sProvident%20Botanico!5e0!3m2!1sen!2sin!4v1765117001890!5m2!1sen!2sin",
+    "mapUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.672747989911!2d77.80346987358944!3d12.992770714416817!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae0f6142c74137%3A0x8c9dfd3a59220c29!2sProvident%20Botanico!5e0!3m2!1sen!2sin!4v1767061287776!5m2!1sen!2sin",
     "categories": [
       {
         "title": "Educational Institutions",
@@ -370,58 +370,58 @@
     "updates": [
       {
         "name": "Tower 1",
-        "type": "/images/construction/provident-botanico/0001.jpg",
-        "image": "image"
+        "type": "image",
+        "image": "/images/construction/provident-botanico/0001.jpg"
       },
       {
         "name": "Tower 2",
-        "type": "/images/construction/provident-botanico/0002.jpg",
-        "image": "image"
+        "type": "image",
+        "image": "/images/construction/provident-botanico/0002.jpg"
       },
       {
         "name": "Tower 3",
-        "type": "/images/construction/provident-botanico/0003.jpg",
-        "image": "image"
+        "type": "image",
+        "image": "/images/construction/provident-botanico/0003.jpg"
       },
       {
         "name": "Tower 4",
-        "type": "/images/construction/provident-botanico/0004.jpg",
-        "image": "image"
+        "type": "image",
+        "image": "/images/construction/provident-botanico/0004.jpg"
       },
       {
         "name": "Tower 5",
-        "type": "/images/construction/provident-botanico/0005.jpg",
-        "image": "image"
+        "type": "image",
+        "image": "/images/construction/provident-botanico/0005.jpg"
       },
       {
         "name": "Tower 6",
-        "type": "/images/construction/provident-botanico/0006.jpg",
-        "image": "image"
+        "type": "image",
+        "image": "/images/construction/provident-botanico/0006.jpg"
       },
       {
         "name": "Tower 7",
-        "type": "/images/construction/provident-botanico/0007.jpg",
-        "image": "image"
+        "type": "image",
+        "image": "/images/construction/provident-botanico/0007.jpg"
       },
       {
         "name": "Tower 8",
-        "type": "/images/construction/provident-botanico/0008.jpg",
-        "image": "image"
+        "type": "image",
+        "image": "/images/construction/provident-botanico/0008.jpg"
       },
       {
         "name": "Tower 9",
-        "type": "/images/construction/provident-botanico/0009.jpg",
-        "image": "image"
+        "type": "image",
+        "image": "/images/construction/provident-botanico/0009.jpg"
       },
       {
         "name": "STP",
-        "type": "/images/construction/provident-botanico/0010.jpg",
-        "image": "image"
+        "type": "image",
+        "image": "/images/construction/provident-botanico/0010.jpg"
       },
       {
         "name": "Clubhouse",
-        "type": "/images/construction/provident-botanico/0011.jpg",
-        "image": "image"
+        "type": "image",
+        "image": "/images/construction/provident-botanico/0011.jpg"
       }
     ]
   },
