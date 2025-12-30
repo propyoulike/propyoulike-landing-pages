@@ -150,19 +150,63 @@ function mergeFaqs({ builder, projectSlug }) {
    SEO (STATIC, SAFE)
 ============================================================ */
 
-function buildSEO(project) {
+function resolveOgImage(payload, publicSlug) {
+  // Payload may be null (e.g. builder pages)
+  if (payload && payload.hero) {
+    const hero = payload.hero;
+
+    // 1️⃣ Prefer YouTube thumbnail
+    if (hero.videoId) {
+      return `https://img.youtube.com/vi/${hero.videoId}/maxresdefault.jpg`;
+    }
+
+    // 2️⃣ Fallback to first hero image
+    if (Array.isArray(hero.images) && hero.images.length > 0) {
+      return hero.images[0];
+    }
+  }
+
+  // 3️⃣ Final static fallback (always safe)
+  return `/images/projects/${publicSlug}/og.jpg`;
+}
+
+/* ============================================================
+   SEO (STATIC, SAFE, HERO-AWARE)
+============================================================ */
+
+function buildSEO(project, payload) {
   const { projectName, city, publicSlug } = project;
 
   if (!projectName || !city || !publicSlug) {
-    throw new Error(
-      `❌ SEO identity incomplete for ${projectName || "UNKNOWN"}`
-    );
+    throw new Error(`❌ SEO identity incomplete for ${projectName || "UNKNOWN"}`);
   }
 
+  const ORIGIN = "https://propyoulike.com";
+
+  const title = `${projectName} | ${city} | Price, Floor Plans, Brochure`;
+  const description =
+    `Explore ${projectName} pricing, floor plans, amenities and location.`;
+
+  const ogImage = resolveOgImage(payload, publicSlug);
+  const ogImageUrl = ogImage.startsWith("http")
+    ? ogImage
+    : ORIGIN + ogImage;
+
   return `
-<title>${projectName} | ${city} | Price, Floor Plans, Brochure</title>
-<meta name="description" content="Explore ${projectName} pricing, floor plans, amenities." />
-<link rel="canonical" href="https://propyoulike.com/${publicSlug}" />
+<title>${title}</title>
+<meta name="description" content="${description}" />
+<link rel="canonical" href="${ORIGIN}/${publicSlug}" />
+
+<meta property="og:type" content="website" />
+<meta property="og:title" content="${title}" />
+<meta property="og:description" content="${description}" />
+<meta property="og:url" content="${ORIGIN}/${publicSlug}" />
+<meta property="og:image" content="${ogImageUrl}" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="${title}" />
+<meta name="twitter:description" content="${description}" />
+<meta name="twitter:image" content="${ogImageUrl}" />
 `;
 }
 
@@ -234,7 +278,7 @@ function serialize(payload) {
 
 for (const payload of getProjects()) {
   const html = TEMPLATE
-    .replace("<!--__SOCIAL_META__-->", buildSEO(payload.project))
+    .replace("<!--__SOCIAL_META__-->", buildSEO(payload.project, payload))
     .replace("__PROJECT_JSON__", serialize(payload))
     .replace(
       "<!--__PROJECT_ENTRY__-->",

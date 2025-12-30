@@ -422,54 +422,19 @@
     },
     "updates": [
       {
-        "name": "Wing 1",
+        "name": "Tower 3A & 3B",
         "type": "image",
-        "image": "/images/construction/provident-ecopolitan/Ecopolitan-Montly-Progress-Report-Nov-25_page-0004.jpg"
+        "image": "/images/construction/provident-park-square/Parksquare_report-for-Oct-2025_page-0004.jpg"
       },
       {
-        "name": "Wing 2",
+        "name": "Tower 2A & 2B",
         "type": "image",
-        "image": "/images/construction/provident-ecopolitan/Ecopolitan-Montly-Progress-Report-Nov-25_page-0005.jpg"
+        "image": "/images/construction/provident-park-square/Parksquare_report-for-Oct-2025_page-0005.jpg"
       },
       {
-        "name": "Wing 3",
+        "name": "Tower 1A & 1B",
         "type": "image",
-        "image": "/images/construction/provident-ecopolitan/Ecopolitan-Montly-Progress-Report-Nov-25_page-0006.jpg"
-      },
-      {
-        "name": "Wing 4",
-        "type": "image",
-        "image": "/images/construction/provident-ecopolitan/Ecopolitan-Montly-Progress-Report-Nov-25_page-0007.jpg"
-      },
-      {
-        "name": "Wing 5",
-        "type": "image",
-        "image": "/images/construction/provident-ecopolitan/Ecopolitan-Montly-Progress-Report-Nov-25_page-0008.jpg"
-      },
-      {
-        "name": "Wing 6",
-        "type": "image",
-        "image": "/images/construction/provident-ecopolitan/Ecopolitan-Montly-Progress-Report-Nov-25_page-0009.jpg"
-      },
-      {
-        "name": "Wing 7",
-        "type": "image",
-        "image": "/images/construction/provident-ecopolitan/Ecopolitan-Montly-Progress-Report-Nov-25_page-0010.jpg"
-      },
-      {
-        "name": "Other Activities",
-        "type": "image",
-        "image": "/images/construction/provident-ecopolitan/Ecopolitan-Montly-Progress-Report-Nov-25_page-0011.jpg"
-      },
-      {
-        "name": "Block A",
-        "type": "image",
-        "image": "/images/construction/provident-ecopolitan/Ecopolitan-Montly-Progress-Report-Nov-25_page-0012.jpg"
-      },
-      {
-        "name": "Block B",
-        "type": "image",
-        "image": "/images/construction/provident-ecopolitan/Ecopolitan-Montly-Progress-Report-Nov-25_page-0013.jpg"
+        "image": "/images/construction/provident-park-square/Parksquare_report-for-Oct-2025_page-0006.jpg"
       }
     ]
   },

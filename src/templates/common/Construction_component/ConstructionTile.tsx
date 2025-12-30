@@ -1,9 +1,20 @@
 // src/templates/common/Construction_component/ConstructionTile.tsx
+
 import MediaTile from "@/components/media/MediaTile";
 import { Building2, Play } from "lucide-react";
 
-export default function ConstructionTile({ tower, onClick }) {
-  const isVideo = !!tower.videoId;
+export default function ConstructionTile({
+  update,
+  onClick,
+}: {
+  update: {
+    name: string;
+    image: string;
+    videoId?: string;
+  };
+  onClick: () => void;
+}) {
+  const isVideo = Boolean(update.videoId);
 
   return (
     <button
@@ -12,14 +23,13 @@ export default function ConstructionTile({ tower, onClick }) {
     >
       <div className="relative aspect-video rounded-xl overflow-hidden shadow-lg">
         <MediaTile
-          src={tower.image}
-          youtubeId={tower.videoId}
+          src={update.image}
+          youtubeId={update.videoId}
           aspect="16:9"
           rounded
           clickable={false}
         />
 
-        {/* Custom play button UI for video */}
         {isVideo && (
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="w-16 h-16 rounded-full bg-primary shadow-2xl flex items-center justify-center opacity-90 group-hover:scale-110 transition">
@@ -28,15 +38,11 @@ export default function ConstructionTile({ tower, onClick }) {
           </div>
         )}
 
-        {/* Bottom label */}
-        <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/70 px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Building2 className="w-4 h-4 text-white/90" />
-            <span className="text-white font-semibold text-sm">
-              {tower.name}
-            </span>
-          </div>
-          <span className="text-xs text-white/80 hidden sm:inline">Tap to view</span>
+        <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/70 px-4 py-3 flex items-center gap-2">
+          <Building2 className="w-4 h-4 text-white/90" />
+          <span className="text-white font-semibold text-sm">
+            {update.name}
+          </span>
         </div>
       </div>
     </button>

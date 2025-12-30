@@ -8,19 +8,11 @@ interface SEOProps {
   project: ProjectData;
 }
 
-const ORIGIN = "https://propyoulike.com";
-
 export default function ProjectSEO({ project }: SEOProps) {
   if (!project) return null;
 
-/* -----------------------------------------------
-    URL & CANONICAL (LOCKED)
------------------------------------------------ */
-const canonicalSlug = `${project.builder}-${project.slug}`;
-const url = `${ORIGIN}/${canonicalSlug}`;
-
   /* -----------------------------------------------
-      TITLE + DESCRIPTION
+      DESCRIPTION (USED IN SCHEMAS ONLY)
   ----------------------------------------------- */
   const city =
     project.locationMeta?.city ||
@@ -28,25 +20,16 @@ const url = `${ORIGIN}/${canonicalSlug}`;
     project.locationUI?.title?.split(",").pop()?.trim() ||
     "";
 
-  const title = `${project.projectName}${
-    city ? " | " + city : ""
-  } | Price, Floor Plans, Brochure`;
-
   const desc =
     project.summary?.description ||
     `Explore ${project.projectName} – pricing, floor plans, amenities, location and brochure.`;
 
   /* -----------------------------------------------
-      OG IMAGE (AUTO-GENERATED)
-  ----------------------------------------------- */
-  const ogImage = `https://og.propyoulike.com/${canonicalSlug}.png`;
-
-  /* -----------------------------------------------
       FAQ JSON-LD
   ----------------------------------------------- */
-const faqList = Array.isArray(project.faq?.items)
-  ? project.faq.items
-  : [];
+  const faqList = Array.isArray(project.faq?.items)
+    ? project.faq.items
+    : [];
 
   const faqSchema =
     faqList.length > 0
@@ -71,15 +54,13 @@ const faqList = Array.isArray(project.faq?.items)
     "@context": "https://schema.org",
     "@type": "ApartmentComplex",
     name: project.projectName,
-    url,
-    image: ogImage,
+    description: desc,
     address: {
       "@type": "PostalAddress",
       addressLocality: city,
       addressCountry: "IN",
     },
     brand: project.builder,
-    description: desc,
   };
 
   /* -----------------------------------------------
@@ -105,7 +86,7 @@ const faqList = Array.isArray(project.faq?.items)
       : null;
 
   /* -----------------------------------------------
-      BREADCRUMB JSON-LD (SINGLE SOURCE)
+      BREADCRUMB JSON-LD
   ----------------------------------------------- */
   const breadcrumbs = resolveBreadcrumbs({
     type: "project",
@@ -116,23 +97,8 @@ const faqList = Array.isArray(project.faq?.items)
 
   return (
     <Helmet>
-      {/* Primary Meta */}
-      <title>{title}</title>
-      <meta name="description" content={desc} />
-      <link rel="canonical" href={url} />
+      {/* JSON-LD ONLY — NO META TAGS */}
 
-      {/* OpenGraph */}
-      <meta property="og:title" content={title} />
-      <meta property="og:description" content={desc} />
-      <meta property="og:image" content={ogImage} />
-      <meta property="og:url" content={url} />
-      <meta property="og:type" content="website" />
-
-      {/* Twitter */}
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:image" content={ogImage} />
-
-      {/* JSON-LD */}
       <script type="application/ld+json">
         {JSON.stringify(projectSchema)}
       </script>

@@ -6,15 +6,21 @@ interface Props {
   onChange: (tower: string) => void;
 }
 
-export default function TowerFilter({ towers, active, onChange }: Props) {
+export default function TowerFilter({
+  towers,
+  active,
+  onChange,
+}: Props) {
+  if (!towers.length) return null;
+
   return (
     <div className="flex gap-3 overflow-x-auto pb-2 mb-6 scrollbar-hide">
-      {["All", ...towers].map((tower) => {
+      {towers.map((tower) => {
         const isActive = active === tower;
 
         return (
           <button
-            key={tower}
+            key={`tower-${tower}`}
             onClick={() => onChange(tower)}
             className={[
               "px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition",
