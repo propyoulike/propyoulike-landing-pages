@@ -59,7 +59,7 @@ function getProjectIdentity(data) {
   console.log("🧪 project keys:", Object.keys(data.project));
   console.log("🧪 project snapshot:", data.project);
 
-  const { slug, builder, type, projectName, city } = data.project;
+  const { slug, builder, type, projectName, city, zone, locality, area, pincode } = data.project;
 
   console.log("🧪 identity fields:", {
     slug,
@@ -67,6 +67,10 @@ function getProjectIdentity(data) {
     type,
     projectName,
     city,
+    zone,
+    locality,
+    area,
+    pincode,
   });
 
   if (
@@ -112,6 +116,10 @@ function getProjectIdentity(data) {
     ----------------------------- */
     projectName,
     city,
+    zone,
+    locality,
+    area,
+    pincode,
   };
 }
 

@@ -175,7 +175,7 @@ function resolveOgImage(payload, publicSlug) {
 ============================================================ */
 
 function buildSEO(project, payload) {
-  const { projectName, city, publicSlug } = project;
+  const { projectName, city, zone, locality, area, publicSlug } = project;
 
   if (!projectName || !city || !publicSlug) {
     throw new Error(`❌ SEO identity incomplete for ${projectName || "UNKNOWN"}`);
@@ -183,7 +183,7 @@ function buildSEO(project, payload) {
 
   const ORIGIN = "https://propyoulike.com";
 
-  const title = `${projectName} | ${city} | Price, Floor Plans, Brochure`;
+  const title = `${projectName} | ${city} | ${zone} | ${locality} | ${area}`;
   const description =
     `Explore ${projectName} pricing, floor plans, amenities and location.`;
 
