@@ -1,0 +1,551 @@
+{
+  "project": {
+    "slug": "celestial",
+    "builder": "purva",
+    "projectName": "Purva Celestial",
+    "type": "Apartment",
+    "status": "Under Construction",
+    "featured": false,
+    "area": "Hosahalli",
+    "locality": "Bagaluru",
+    "zone": "North",
+    "city": "Bengaluru",
+    "state": "Karnataka",
+    "country": "India",
+    "pincode": "562157"
+  },
+  "hero": {
+    "videoId": "R8x09B3ZNnY",
+    "meta": {
+      "eyebrow": "Hero",
+      "title": "Find a Home That Fits Your Life",
+      "subtitle": "Verified projects ? Clear pricing ? Guided site visits",
+      "tagline": "Built for your today. Planned for your tomorrow."
+    },
+    "quickInfo": {
+      "price": "? 1.01 Cr Onwards*",
+      "typology": "2 BHK",
+      "size": "150 Acres"
+    },
+    "images": [
+      "https://backend.puravankara.com/uploads/celestial_5710d4dea4.jpg"
+    ]
+  },
+  "summary": {
+    "meta": {
+      "eyebrow": "Highlights",
+      "title": "Designed for Everyday Living",
+      "subtitle": "A thoughtfully planned community that balances comfort, connectivity, and long-term value",
+      "tagline": "Where location, layout, and lifestyle come together"
+    },
+    "description": "Located along Bangalore?s fast-growing Airport Corridor, this premium residential enclave offers thoughtfully designed homes that blend technology, comfort, and nature. Just 20 minutes from the International Airport, Purva Celestial features BluNex-enabled smart residences with voice-controlled automation for effortless, modern living.\n\nSet within a vast 150-acre integrated township, the project is surrounded by lush tropical landscapes and an oxygenated clubhouse that promotes a healthier, more balanced lifestyle. With world-class amenities and seamless access to leading schools, malls, and healthcare, residents enjoy everyday convenience without compromising on luxury.\n\nA perfect choice for both homeowners and investors, Purva Celestial brings together connectivity, innovation, and exclusivity?creating homes truly designed for tomorrow.",
+    "highlights": [
+      "Smart, future-ready 2 BHK residences designed for modern living",
+      "25+ premium lifestyle amenities for leisure, wellness & community",
+      "Multi-purpose games court, gym & kids? play area for active living",
+      "Landscaped gardens, swimming pool & amphitheatre for social & leisure moments",
+      "24/7 security with controlled access for complete peace of mind",
+      "Seamless connectivity along the Airport Corridor",
+      "4 contemporary residential towers rising G + 13 floors",
+      "Homes from ?1.01 Cr onwards*"
+    ]
+  },
+  "amenities": {
+    "meta": {
+      "eyebrow": "Amenities",
+      "title": "Your Leisure Adorned With Opulence",
+      "subtitle": "From sports to leisure, wellness to education?",
+      "tagline": "Thoughtfully curated spaces for every stage of life."
+    },
+    "amenityImages": [
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FAmphitheatre_64c9094598.png&w=1920&q=75",
+        "title": "Amphitheatre",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FKids_Play_Area_ecb660b918.png&w=1920&q=75",
+        "title": "Kids Playarea",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FSwimming_Pool_e5f47afcc1.png&w=1920&q=75",
+        "title": "Swimming Pool",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FAmenity_Image_960x645px_04_2945d4ab1e.jpg&w=1920&q=75",
+        "title": "Garden",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FCricket_Practice_Net_790e353140.png&w=1920&q=75",
+        "title": "Cricket Practice Pitch",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2Fbasketball_19fe8f5b18.png&w=1920&q=75",
+        "title": "Half Basketball Court",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FTennis_Court_41bdf38c69.png&w=1920&q=75",
+        "title": "Tennis Court",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FMultipurpose_Court_5c557e996a.png&w=1920&q=75",
+        "title": "Multipurpose Court",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FCards_room_6fbd8026ec.png&w=1920&q=75",
+        "title": "Cards Room",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FGymnasium_2ec3f4328c.png&w=1920&q=75",
+        "title": "Gymnasium",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FCreche_4bdff55110.png&w=1920&q=75",
+        "title": "Creche",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FSquash_Court_1_882d6d16e2.webp&w=1920&q=75",
+        "title": "Squash Court"
+      }
+    ]
+  },
+  "views": {
+    "meta": {
+      "eyebrow": "Views",
+      "title": "Mesmerizing Views",
+      "subtitle": "Wake up to greenery and breathtaking vistas.",
+      "tagline": "Every window opens to calm, light, and openness."
+    },
+    "images": [
+      {
+        "src": "https://backend.puravankara.com/uploads/1_1c419365c5.png"
+      },
+      {
+        "src": "https://backend.puravankara.com/uploads/Interior_Images_1_4576cdc580.jpg"
+      },
+      {
+        "src": "https://backend.puravankara.com/uploads/Interior_Images_3_56adc24d9c.jpg"
+      },
+      {
+        "src": "https://backend.puravankara.com/uploads/Interior_Images_2_3316ded314.jpg"
+      },
+      {
+        "src": "https://backend.puravankara.com/uploads/3_4028e8797f.png"
+      },
+      {
+        "src": "https://backend.puravankara.com/uploads/2_ab0258905b.png"
+      },
+      {
+        "src": "https://backend.puravankara.com/uploads/1_4a2827a417.png"
+      }
+    ]
+  },
+  "locationUI": {
+    "meta": {
+      "eyebrow": "Location",
+      "title": "The Perfect Setting",
+      "subtitle": "Everything you need within easy reach ? schools, hospitals, connectivity & more.",
+      "tagline": "Life. Convenience. Future-ready."
+    },
+    "videoId": "mstjyt2s2I4",
+    "mapUrl": "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7770.545243620776!2d77.638943!3d13.145196!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae198832e8b5df%3A0xe35302a5286768d2!2sPurva%20Zenium!5e0!3m2!1sen!2sin!4v1767168275376!5m2!1sen!2sin",
+    "categories": [
+      {
+        "title": "Transportation",
+        "items": [
+          "Kempegowda International Airport 10 mins",
+          "Airport Road Metro Station 15 mins",
+          "Yelahanka Railway Station 20 mins",
+          "Hebbal Railway Station 25 mins"
+        ]
+      },
+      {
+        "title": "Educational Institutions",
+        "items": [
+          "Canadian International School 15 mins",
+          "Stonehill International School 20 mins",
+          "Vidyashilp Academy 20 mins",
+          "Ryan International School 25 mins"
+        ]
+      },
+      {
+        "title": "Healthcare",
+        "items": [
+          "Aster CMI Hospital 20 mins",
+          "Columbia Asia Hospital Hebbal 25 mins",
+          "Cloudnine Hospital 30 mins",
+          "Manipal Hospital 35 mins"
+        ]
+      },
+      {
+        "title": "Business & Commercial Hubs",
+        "items": [
+          "KIADB Aerospace Park 10 mins",
+          "Shell Technology Centre 15 mins",
+          "Kirloskar Business Park 25 mins",
+          "Manyata Tech Park 30 mins"
+        ]
+      },
+      {
+        "title": "Retail, Shopping & Entertainment",
+        "items": [
+          "Mall of Asia 15 mins",
+          "Decathlon Sports India 20 mins",
+          "RMZ Galleria Mall 25 mins",
+          "Elements Mall 30 mins"
+        ]
+      },
+      {
+        "title": "Culture & Green Spaces",
+        "items": [
+          "Hebbal Lake 25 mins",
+          "Lumbini Gardens 30 mins",
+          "Nandi Hills 40 mins"
+        ]
+      }
+    ]
+  },
+  "propertyPlans": {
+    "meta": {
+      "eyebrow": "Layouts",
+      "title": "Meticulously Designed Homes",
+      "subtitle": "Explore our thoughtfully designed homes with virtual walkthroughs and detailed floor plans",
+      "tagline": "Homes designed around real life, not just square feet."
+    },
+    "masterPlan": {
+      "image": "https://backend.puravankara.com/uploads/Purva_Celestial_c6200d5586.webp",
+      "title": "Master Plan",
+      "description": "Master plan for the township"
+    },
+    "unitPlans": [
+      {
+        "title": "2BHK Grand",
+        "sba": "1280 sft",
+        "ca": "860 sft",
+        "usable": "915 sft",
+        "price": "1.01 Cr onwards",
+        "floorPlanImage": "https://backend.puravankara.com/uploads/Purva_Celestial_copy_0_ed086da511.webp"
+      }
+    ]
+  },
+  "paymentPlans": {
+    "meta": {
+      "eyebrow": "Payment Plans",
+      "title": "Pricing & Payment Plans",
+      "subtitle": "Transparent costing ? Milestone-based ? RERA compliant",
+      "tagline": "Pay as construction progresses. No surprises later."
+    },
+    "pricingTitle": "How much to pay?",
+    "scheduleTitle": "When to pay?",
+    "ctaText": "Get pricing and payment details",
+    "pricingComputation": [
+      {
+        "title": "Sales Consideration",
+        "items": [
+          "Flat/Unit Cost",
+          "Club Development Charges",
+          "Premium Location Charges",
+          "Floor Rise Charges",
+          "Car Park Charges"
+        ]
+      },
+      {
+        "title": "GST on Sale Consideration",
+        "items": [
+          "Under-Construction Units",
+          "Ready-to-Move Units",
+          "Charged as per IT Act",
+          "Applied milestone-wise"
+        ]
+      },
+      {
+        "title": "Other / Possession Charges",
+        "items": [
+          "Advance Maintenance (Actuals) ",
+          "Electricity & Water Infra Charges",
+          "Corpus Fund",
+          "Legal Charges",
+          "Modifications (if applicable)"
+        ]
+      },
+      {
+        "title": "Stamp Duty & Registration",
+        "items": [
+          "Stamp / Admin Fees (if applicable)",
+          "GST on Other Charges",
+          "Approx. total",
+          "Stamp Duty",
+          "Cess",
+          "Surcharge",
+          "Registration"
+        ]
+      }
+    ],
+    "paymentSchedule": [
+      {
+        "title": "Agreement Stage",
+        "items": [
+          "Initial Advance",
+          "Balance Advance",
+          "Post Agreement Execution"
+        ]
+      },
+      {
+        "title": "Structure Completion",
+        "items": [
+          "Ground/Stilt Slab",
+          "Third Floor Slab",
+          "Sixth Floor Slab",
+          "Ninth Floor Slab"
+        ]
+      },
+      {
+        "title": "Possession",
+        "items": [
+          "Terrace Slab",
+          "Flooring Completion",
+          "External Windows",
+          "Lift Erection"
+        ]
+      }
+    ]
+  },
+  "construction": {
+    "meta": {
+      "eyebrow": "PROGRESS",
+      "title": "Construction updates",
+      "subtitle": "Track the latest construction progress with photos and videos",
+      "tagline": "Updated regularly to reflect on-site progress"
+    },
+    "updates": [
+      {
+        "name": "Status Video",
+        "type": "video",
+        "videoId": "1V42-tjxxA0"
+      }
+    ]
+  },
+  "testimonials": {
+    "meta": {
+      "eyebrow": "Testimonials",
+      "title": "What Our Customers Say",
+      "subtitle": "Hear from families living here",
+      "tagline": "Real stories from families who chose to live here."
+    },
+    "testimonials": [
+      {
+        "name": "abhimanyu dhamija",
+        "quote": "Well done project by purva at a very convenient green location.\r",
+        "rating": 5
+      },
+      {
+        "name": "Suresh D",
+        "quote": "Located off airport road. The approach road to the apartment is surrounded by trees. It must be atleast 2 km from the main road. The apartment looks very good and have kept ample space for visitors. The apartment is also well kept. The hall for organizing functions is a bit small.",
+        "rating": 4
+      },
+      {
+        "name": "Hari Kishore",
+        "quote": "Good property in North Bangalore by Purva. Good for both end use and investment purpose. Having good amenities as well.\r",
+        "rating": 4
+      },
+      {
+        "name": "Divya Singh",
+        "quote": "It?s a peaceful place to live\r",
+        "rating": 4
+      },
+      {
+        "name": "Kevi Naleo",
+        "quote": "Except the distance, it's a very good place. Ideal for WFH\r",
+        "rating": 4
+      },
+      {
+        "name": "Aakash Singh",
+        "quote": "I don't understand why there isn't a single comment or review regarding the severe delay in possession of Purva Zenium Phase 1. The expected date of completion being Dec 2023, the work for all the other towers got completed just a few weeks ago. And the registration and possession dates are not known at all.\r\n\r\nFurnishing work in T13 is still going on and without this completion possession cannot be given. I have to admit I am quite disappointed with the service. @Purvanakara-Delivering on your promise is key to retain existing customers and attract new ones.\r\n\r\nI see lack of alignment between the construction team, the sales team and the customer service team. The sales team gets to promise you the world and then the customer service team is left to bear the anger and frustration of customers due to delay on part of the construction team and the overall management.\r\n\r\nI expected much more from Puravankara.\r\n\r\nFor my review I will probably get the same reply as others have received stating that we can contact the customer service!! Please, do not give this reply. Rather, try your best and deliver.\r",
+        "rating": 2
+      },
+      {
+        "name": "Baby George",
+        "quote": "The area is very good. It is a very large area having the site of many big builders. In fact more than ten thousand apartments may come in an area of say,200 acres. For purva ,the alignment and spacing between towers are proper. Maybe they are adhering to the rules. However , i am apprehensive about the price. Not sure about the price of above ten thousand per sq.ft is worth it here.",
+        "rating": 4
+      }
+    ]
+  },
+  "aboutBuilder": {
+    "name": "purva",
+    "meta": {
+      "eyebrow": "Developer",
+      "title": "About the Developer",
+      "subtitle": "A trusted name with a proven track record in delivering quality homes",
+      "tagline": "Built on credibility. Known for consistency."
+    },
+    "description": "Puravankara Limited, headquartered in Bengaluru, is one of India?s most admired and trusted home builders and is recognized among the top real estate companies in India, with a legacy of excellence spanning over 50 years. Founded in 1975, the company is known for delivering high-quality homes on time with complete transparency.",
+    "descriptionExpanded": "Puravankara has launched three prominent brands, each catering to distinct market segments. Puravankara itself is recognized for its luxurious, state-of-the-art projects that incorporate innovative technology to redefine future homes. Provident Housing Ltd., a wholly-owned subsidiary launched in 2008, addresses the needs of mid-income homeowners. Purva Land, established in 2021, offers a lucrative investment opportunity through plotted developments, responding to the evolving needs of homebuyers. Additionally, Starworth Infrastructure and Construction Limited (SICL) provides technology-enabled construction solutions. Puravankara also has a strong presence in commercial office spaces.",
+    "stats": [
+      {
+        "label": "Years of Legacy",
+        "value": "50+ years (est. 1975)"
+      },
+      {
+        "label": "Homes Delivered",
+        "value": "50,000+ homes"
+      },
+      {
+        "label": "Happy Customers",
+        "value": "55,000+ families"
+      },
+      {
+        "label": "Total Development (Delivered + Ongoing)",
+        "value": "45+ million sq. ft."
+      },
+      {
+        "label": "Projects Delivered",
+        "value": "80+ residential & mixed-use projects"
+      },
+      {
+        "label": "Presence Across Cities",
+        "value": "6 major Indian cities"
+      }
+    ]
+  },
+  "loanSupport": {
+    "enabled": true,
+    "meta": {
+      "eyebrow": "Loans",
+      "title": "Check Your Home Loan Eligibility",
+      "subtitle": "Know your budget and EMI options before you decide",
+      "tagline": "Plan with confidence. Buy with clarity."
+    },
+    "banks": [
+      {
+        "name": "SBI"
+      },
+      {
+        "name": "HDFC"
+      },
+      {
+        "name": "ICICI"
+      },
+      {
+        "name": "AXIS"
+      },
+      {
+        "name": "PNB"
+      },
+      {
+        "name": "Canara"
+      }
+    ]
+  },
+  "brochure": {
+    "meta": {
+      "eyebrow": "DOWNLOADS",
+      "title": "Brochure & official documents",
+      "subtitle": "Access brochures, floor plans, approvals and key project details",
+      "tagline": "Everything you need to evaluate the project ? in one place"
+    }
+  },
+  "faq": {
+    "meta": {
+      "eyebrow": "FAQ",
+      "title": "Frequently Asked Questions",
+      "subtitle": "Everything you need to know before making a decision",
+      "tagline": "Clear answers. No guesswork."
+    },
+    "faqs": [
+      {
+        "title": "Where is Purva Celestial located?",
+        "items": [
+          "Purva Celestial is located along the Airport Corridor in North-East Bangalore, just 20 minutes from the International Airport and well connected via major roads and metro access."
+        ]
+      },
+      {
+        "title": "What type of homes are available at Purva Celestial?",
+        "items": [
+          "Purva Celestial offers thoughtfully designed 2 BHK apartments featuring smart-living technologies and modern layouts, ideal for contemporary lifestyles."
+        ]
+      },
+      {
+        "title": "How large is the project and what is the land area?",
+        "items": [
+          "The project is part of a sprawling 150-acre integrated township with lush landscapes, open spaces, and community zones designed for healthy living."
+        ]
+      },
+      {
+        "title": "How many towers and floors does Purva Celestial have?",
+        "items": [
+          "Purva Celestial comprises 4 residential towers rising up to G+13 floors, blending mid-rise living with skyline views and community charm."
+        ]
+      },
+      {
+        "title": "What makes Purva Celestial unique among apartments near the Airport Corridor?",
+        "items": [
+          "Purva Celestial uniquely blends nature, technology, and sustainability with features like BluNex smart home automation, landscaped gardens, premium amenities, and seamless connectivity to airport and city hubs."
+        ]
+      },
+      {
+        "title": "Who is the developer of Purva Celestial?",
+        "items": [
+          "Purva Celestial is developed by Puravankara Limited, a trusted real estate brand with over five decades of experience in delivering quality residential communities."
+        ]
+      },
+      {
+        "title": "Is Purva Celestial suitable for frequent flyers or airport professionals?",
+        "items": [
+          "Yes. Its proximity to the International Airport, corporate hubs, and major transport links makes Purva Celestial an excellent choice for professionals who travel frequently or work in airport-connected businesses."
+        ]
+      },
+      {
+        "title": "What amenities are available at Purva Celestial?",
+        "items": [
+          "Residents enjoy 25+ premium amenities including landscaped gardens, an amphitheatre, swimming pool, gymnasium, multi-purpose courts, kids? play areas, and wellness zones for a balanced lifestyle."
+        ]
+      },
+      {
+        "title": "What is the price range of apartments at Purva Celestial?",
+        "items": [
+          "Smart 2 BHK apartments at Purva Celestial are priced from approximately ?1.01 Cr onwards*, depending on configuration, floor level, and unit size."
+        ]
+      },
+      {
+        "title": "Is Purva Celestial a good option for long-term investment?",
+        "items": [
+          "Yes. Strong investment fundamentals include its strategic Airport Corridor location, rising infrastructure, and tech-enabled living, offering potential for good appreciation and rental demand."
+        ]
+      },
+      {
+        "title": "Does Purva Celestial offer good rental potential?",
+        "items": [
+          "Yes. 2 BHK smart homes in a growing corridor near the airport attract young professionals, corporate travellers, and families, making them highly sought after in the rental market."
+        ]
+      },
+      {
+        "title": "Is Purva Celestial RERA approved?",
+        "items": [
+          "Yes. Purva Celestial is RERA registered, ensuring transparency, legal compliance, and buyer protection as per applicable regulations."
+        ]
+      },
+      {
+        "title": "Are these homes suitable for end users or investors?",
+        "items": [
+          "Both. End users benefit from smart-enabled homes, convenience, and quality living, while investors benefit from strong rental and appreciation potential in the Airport Corridor."
+        ]
+      },
+      {
+        "title": "How can I book a site visit or get detailed pricing?",
+        "items": [
+          "You can request a guided site visit, receive the latest pricing and availability, and get unbiased assistance through PropYouLike."
+        ]
+      }
+    ]
+  }
+}
