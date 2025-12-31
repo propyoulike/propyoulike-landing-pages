@@ -1,0 +1,574 @@
+{
+  "project": {
+    "slug": "parkhill",
+    "builder": "purva",
+    "projectName": "Purva Parkhill",
+    "type": "Apartment",
+    "status": "Under Construction",
+    "featured": true,
+    "area": "Kanakpura Road",
+    "locality": "Mallasandra",
+    "zone": "South",
+    "city": "Bengaluru",
+    "state": "Karnataka",
+    "country": "India",
+    "pincode": "560109"
+  },
+  "hero": {
+    "videoId": "kmXBQb0sLFo",
+    "meta": {
+      "eyebrow": "Hero",
+      "title": "Find a Home That Fits Your Life",
+      "subtitle": "Verified projects ? Clear pricing ? Guided site visits",
+      "tagline": "Built for your today. Planned for your tomorrow."
+    },
+    "quickInfo": {
+      "price": "? 2.02 Cr Onwards*",
+      "typology": "3 BHK",
+      "size": "15 Acres"
+    },
+    "images": [
+      "https://backend.puravankara.com/uploads/Parkhill_4290c0eddd.jpg"
+    ]
+  },
+  "summary": {
+    "meta": {
+      "eyebrow": "Highlights",
+      "title": "Designed for Everyday Living",
+      "subtitle": "A thoughtfully planned community that balances comfort, connectivity, and long-term value",
+      "tagline": "Where location, layout, and lifestyle come together"
+    },
+    "description": "Experience expansive living at Purva Park Hill.\nSet across 15 acres of lush greenery off Kanakapura Road, this thoughtfully planned community offers spacious 3 BHK residences with large balconies, 80% open spaces, and 40+ curated amenities designed for holistic living. With seamless connectivity to NICE Road and JP Nagar Metro, Purva Park Hill places South Bengaluru?s leading schools, cultural hubs, and business districts within easy reach.\n\nA home where space, serenity, and convenience come together?so everyday living feels truly elevated.",
+    "highlights": [
+      "Spacious 3 BHK Tri-Deck homes with seamless indoor?outdoor living",
+      "Expansive balconies & well-planned layouts that maximise space and light",
+      "Grand clubhouse & large swimming pool for elevated leisure",
+      "1 km dedicated jogging track set amidst landscaped greens",
+      "Yoga & wellness zones for everyday rejuvenation",
+      "Squash court & curated sports amenities for active lifestyles",
+      "Lush open spaces across a serene community",
+      "4 elegant towers rising G + 20 floors",
+      "Homes from ?2.02 Cr onwards*"
+    ]
+  },
+  "amenities": {
+    "meta": {
+      "eyebrow": "Amenities",
+      "title": "Your Leisure Adorned With Opulence",
+      "subtitle": "From sports to leisure, wellness to education?",
+      "tagline": "Thoughtfully curated spaces for every stage of life."
+    },
+    "amenityImages": [
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FGymnasium_2ec3f4328c.png&w=1920&q=75",
+        "title": "Gymnasium",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FGymnasium_2ec3f4328c.png&w=1920&q=75",
+        "title": "Cards Room",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FSalon_abda52320b.png&w=1920&q=75",
+        "title": "Manicure Station",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FLibrary_1_d33700a3d0.webp&w=1920&q=75",
+        "title": "Library",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FGym_26ed714b00.png&w=1920&q=75",
+        "title": "Fitness Studio",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2Fgraphic_designers_working_their_desk_671f43decc.jpg&w=1920&q=75",
+        "title": "Work From Home Station",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FSquash_Court_1_882d6d16e2.webp&w=1920&q=75",
+        "title": "Squash Court",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2Fmeeting_79913d4c78.png&w=1920&q=75",
+        "title": "Meeting Rooms",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FTennis_Court_41bdf38c69.png&w=1920&q=75",
+        "title": "Tennis Court",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FCricket_Practice_Net_790e353140.png&w=1920&q=75",
+        "title": "Cricket Practice Pitch",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2Flow_angle_shot_wooden_treehouse_with_windows_middle_forest_blue_sky_9d4f1e07ab.jpg&w=1920&q=75",
+        "title": "Tree House",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FYoga_and_Meditation_Deck_523f7dbdbb.png&w=1920&q=75",
+        "title": "Yoga Space",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FMini_Golf_9d8cb0cf31.png&w=1920&q=75",
+        "title": "Putting Golf",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FSenior_Citizen_Court_dafe88593b.png&w=1920&q=75",
+        "title": "Senior Citizen Court",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2Fbeach_volleyball_50587720ef.jpg&w=1920&q=75",
+        "title": "Beach Volleyball",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FSkating_rink_ff8c91fdd6.png&w=1920&q=75",
+        "title": "Skating Rink",
+        "media_type": "image"
+      }
+    ]
+  },
+  "views": {
+    "meta": {
+      "eyebrow": "Views",
+      "title": "Mesmerizing Views",
+      "subtitle": "Wake up to greenery and breathtaking vistas.",
+      "tagline": "Every window opens to calm, light, and openness."
+    },
+    "images": [
+      {
+        "src": "https://backend.puravankara.com/uploads/1_83a419435b.png"
+      },
+      {
+        "src": "https://backend.puravankara.com/uploads/3_95cb44bf61.png"
+      },
+      {
+        "src": "https://backend.puravankara.com/uploads/2_93ce0b1a3a.png"
+      },
+      {
+        "src": "https://backend.puravankara.com/uploads/4_35ccb09149.png"
+      },
+      {
+        "src": "https://backend.puravankara.com/uploads/1_e02eefb358.png"
+      },
+      {
+        "src": "https://backend.puravankara.com/uploads/5_73bd707710.png"
+      },
+      {
+        "src": "https://backend.puravankara.com/uploads/6_bdd0bd65cf.png"
+      },
+      {
+        "src": "https://backend.puravankara.com/uploads/4_198f88e056.png"
+      },
+      {
+        "src": "https://backend.puravankara.com/uploads/2_4686d274ff.png"
+      },
+      {
+        "src": "https://backend.puravankara.com/uploads/3_76e3b3a271.png"
+      }
+    ]
+  },
+  "locationUI": {
+    "meta": {
+      "eyebrow": "Location",
+      "title": "The Perfect Setting",
+      "subtitle": "Everything you need within easy reach ? schools, hospitals, connectivity & more.",
+      "tagline": "Life. Convenience. Future-ready."
+    },
+    "videoId": "aosI4yUTn4s",
+    "mapUrl": "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7779.668404421339!2d77.545113!3d12.853983!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae15a8390e91d3%3A0xa37d9ed80a8035bc!2sPurva%20Park%20Hill!5e0!3m2!1sen!2sin!4v1767153482686!5m2!1sen!2sin",
+    "categories": [
+      {
+        "title": "Transportation",
+        "items": [
+          "Vajarahalli Metro Station 2 mins",
+          "NICE Road Junction 5 mins",
+          "Banashankari Bus Terminal 10 mins",
+          "JP Nagar 15 mins",
+          "KR Market 20 mins",
+          "Kempegowda International Airport 60 mins"
+        ]
+      },
+      {
+        "title": "Educational Institutions",
+        "items": [
+          "RMS International School 3 mins",
+          "Jnana Sweekar Public School 5 mins",
+          "Kumarans School 10 mins",
+          "Jain University (CMS) 10 mins",
+          "Dayananda Sagar Institutions 15 mins",
+          "IIM Bangalore 20 mins"
+        ]
+      },
+      {
+        "title": "Healthcare",
+        "items": [
+          "Sagar Hospitals 10 mins",
+          "Apollo Speciality Hospital, JP Nagar 15 mins",
+          "BGS Gleneagles Global Hospital 20 mins",
+          "Fortis Hospital, Bannerghatta 25 mins"
+        ]
+      },
+      {
+        "title": "Business & Commercial Hubs",
+        "items": [
+          "Global Village Tech Park 15 mins",
+          "JP Nagar Business District 15 mins",
+          "Electronic City 35 mins",
+          "CBD (MG Road) 35 mins"
+        ]
+      },
+      {
+        "title": "Retail, Shopping & Entertainment",
+        "items": [
+          "D-Mart, Kanakapura Road 2 mins",
+          "Gopalan Arcade Mall 10 mins",
+          "Metro Cash & Carry 10 mins",
+          "Vega City Mall 15 mins",
+          "Royal Meenakshi Mall 20 mins"
+        ]
+      },
+      {
+        "title": "Culture & Green Spaces",
+        "items": [
+          "Turahalli Forest Viewpoint 5 mins",
+          "Art of Living International Centre 30 mins",
+          "Lalbagh Botanical Garden 35 mins",
+          "Bannerghatta Biological Park 35 mins"
+        ]
+      }
+    ]
+  },
+  "propertyPlans": {
+    "meta": {
+      "eyebrow": "Layouts",
+      "title": "Meticulously Designed Homes",
+      "subtitle": "Explore our thoughtfully designed homes with virtual walkthroughs and detailed floor plans",
+      "tagline": "Homes designed around real life, not just square feet."
+    },
+    "masterPlan": {
+      "image": "https://backend.puravankara.com/uploads/Park_Hill_db494f2205.jpg",
+      "title": "Master Plan",
+      "description": "Master plan for the township"
+    },
+    "modelFlats": [
+      {
+        "title": "Walkthrough",
+        "youtubeId": "5PBEURnU1Fc",
+        "order": 1
+      }
+    ],
+    "unitPlans": [
+      {
+        "title": "3BHK",
+        "sba": "1743 sft",
+        "price": "1.5 Cr onwards",
+        "floorPlanImage": "https://backend.puravankara.com/uploads/Park_Hill_hires_c79f61fcb7.jpg"
+      }
+    ]
+  },
+  "paymentPlans": {
+    "meta": {
+      "eyebrow": "Payment Plans",
+      "title": "Pricing & Payment Plans",
+      "subtitle": "Transparent costing ? Milestone-based ? RERA compliant",
+      "tagline": "Pay as construction progresses. No surprises later."
+    },
+    "pricingTitle": "How much to pay?",
+    "scheduleTitle": "When to pay?",
+    "ctaText": "Get pricing and payment details",
+    "pricingComputation": [
+      {
+        "title": "Sales Consideration",
+        "items": [
+          "Flat/Unit Cost",
+          "Club Development Charges",
+          "Premium Location Charges",
+          "Floor Rise Charges",
+          "Car Park Charges"
+        ]
+      },
+      {
+        "title": "GST on Sale Consideration",
+        "items": [
+          "Under-Construction Units",
+          "Ready-to-Move Units",
+          "Charged as per IT Act",
+          "Applied milestone-wise"
+        ]
+      },
+      {
+        "title": "Other / Possession Charges",
+        "items": [
+          "Advance Maintenance (Actuals) ",
+          "Electricity & Water Infra Charges",
+          "Corpus Fund",
+          "Legal Charges",
+          "Modifications (if applicable)"
+        ]
+      },
+      {
+        "title": "Stamp Duty & Registration",
+        "items": [
+          "Stamp / Admin Fees (if applicable)",
+          "GST on Other Charges",
+          "Approx. total",
+          "Stamp Duty",
+          "Cess",
+          "Surcharge",
+          "Registration"
+        ]
+      }
+    ],
+    "paymentSchedule": [
+      {
+        "title": "Agreement Stage",
+        "items": [
+          "Initial Advance",
+          "Balance Advance",
+          "Post Agreement Execution"
+        ]
+      },
+      {
+        "title": "Structure Completion",
+        "items": [
+          "Ground/Stilt Slab",
+          "Third Floor Slab",
+          "Sixth Floor Slab",
+          "Ninth Floor Slab"
+        ]
+      },
+      {
+        "title": "Possession",
+        "items": [
+          "Terrace Slab",
+          "Flooring Completion",
+          "External Windows",
+          "Lift Erection"
+        ]
+      }
+    ]
+  },
+  "construction": {
+    "meta": {
+      "eyebrow": "PROGRESS",
+      "title": "Construction updates",
+      "subtitle": "Track the latest construction progress with photos and videos",
+      "tagline": "Updated regularly to reflect on-site progress"
+    },
+    "updates": [
+      {
+        "name": "Status Video",
+        "type": "video",
+        "videoId": "GM8b57NPkOI"
+      }
+    ]
+  },
+  "testimonials": {
+    "meta": {
+      "eyebrow": "Testimonials",
+      "title": "What Our Customers Say",
+      "subtitle": "Hear from families living here",
+      "tagline": "Real stories from families who chose to live here."
+    },
+    "testimonials": [
+      {
+        "name": "Deepika",
+        "videoId": "UlKIM169sm8"
+      },
+      {
+        "name": "Nasir",
+        "videoId": "3YMb3jb_X4o"
+      },
+      {
+        "name": "Siddharth & Pranita Sen",
+        "videoId": "Z_hEmIa3io4"
+      },
+      {
+        "name": "Ramya and Prashant",
+        "videoId": "-3s8CyHBCdI"
+      }
+    ]
+  },
+  "aboutBuilder": {
+    "name": "purva",
+    "meta": {
+      "eyebrow": "Developer",
+      "title": "About the Developer",
+      "subtitle": "A trusted name with a proven track record in delivering quality homes",
+      "tagline": "Built on credibility. Known for consistency."
+    },
+    "description": "Puravankara Limited, headquartered in Bengaluru, is one of India?s most admired and trusted home builders and is recognized among the top real estate companies in India, with a legacy of excellence spanning over 50 years. Founded in 1975, the company is known for delivering high-quality homes on time with complete transparency.",
+    "descriptionExpanded": "Puravankara has launched three prominent brands, each catering to distinct market segments. Puravankara itself is recognized for its luxurious, state-of-the-art projects that incorporate innovative technology to redefine future homes. Provident Housing Ltd., a wholly-owned subsidiary launched in 2008, addresses the needs of mid-income homeowners. Purva Land, established in 2021, offers a lucrative investment opportunity through plotted developments, responding to the evolving needs of homebuyers. Additionally, Starworth Infrastructure and Construction Limited (SICL) provides technology-enabled construction solutions. Puravankara also has a strong presence in commercial office spaces.",
+    "stats": [
+      {
+        "label": "Years of Legacy",
+        "value": "50+ years (est. 1975)"
+      },
+      {
+        "label": "Homes Delivered",
+        "value": "50,000+ homes"
+      },
+      {
+        "label": "Happy Customers",
+        "value": "55,000+ families"
+      },
+      {
+        "label": "Total Development (Delivered + Ongoing)",
+        "value": "45+ million sq. ft."
+      },
+      {
+        "label": "Projects Delivered",
+        "value": "80+ residential & mixed-use projects"
+      },
+      {
+        "label": "Presence Across Cities",
+        "value": "6 major Indian cities"
+      }
+    ]
+  },
+  "loanSupport": {
+    "enabled": true,
+    "meta": {
+      "eyebrow": "Loans",
+      "title": "Check Your Home Loan Eligibility",
+      "subtitle": "Know your budget and EMI options before you decide",
+      "tagline": "Plan with confidence. Buy with clarity."
+    },
+    "banks": [
+      {
+        "name": "SBI"
+      },
+      {
+        "name": "HDFC"
+      },
+      {
+        "name": "ICICI"
+      },
+      {
+        "name": "AXIS"
+      },
+      {
+        "name": "PNB"
+      },
+      {
+        "name": "Canara"
+      }
+    ]
+  },
+  "brochure": {
+    "meta": {
+      "eyebrow": "DOWNLOADS",
+      "title": "Brochure & official documents",
+      "subtitle": "Access brochures, floor plans, approvals and key project details",
+      "tagline": "Everything you need to evaluate the project ? in one place"
+    }
+  },
+  "faq": {
+    "meta": {
+      "eyebrow": "FAQ",
+      "title": "Frequently Asked Questions",
+      "subtitle": "Everything you need to know before making a decision",
+      "tagline": "Clear answers. No guesswork."
+    },
+    "faqs": [
+      {
+        "title": "Where is Purva Park Hill located?",
+        "items": [
+          "Purva Park Hill is located off Kanakapura Road in South Bangalore, close to NICE Road and JP Nagar Metro, offering excellent connectivity to key residential, educational, and commercial hubs."
+        ]
+      },
+      {
+        "title": "What type of homes are available at Purva Park Hill?",
+        "items": [
+          "Purva Park Hill offers spacious 3 BHK luxury apartments, including distinctive Tri-Deck homes designed for expansive, comfortable living."
+        ]
+      },
+      {
+        "title": "How large is the project and what is the land area?",
+        "items": [
+          "The project is spread across approximately 15 acres, with nearly 80% open spaces, landscaped greens, and thoughtfully planned community areas."
+        ]
+      },
+      {
+        "title": "How many towers and floors does Purva Park Hill have?",
+        "items": [
+          "Purva Park Hill comprises 4 residential towers, each rising G + 20 floors, offering a balanced high-rise community with ample open views."
+        ]
+      },
+      {
+        "title": "What makes Purva Park Hill unique among apartments on Kanakapura Road?",
+        "items": [
+          "Key highlights include Tri-Deck homes, large balconies, a 1 km jogging track, expansive open spaces, and lifestyle amenities designed for wellness, leisure, and family living."
+        ]
+      },
+      {
+        "title": "Who is the developer of Purva Park Hill?",
+        "items": [
+          "Purva Park Hill is developed by Puravankara Limited, a reputed real estate brand with over five decades of experience in premium residential development."
+        ]
+      },
+      {
+        "title": "Is Purva Park Hill suitable for professionals working in South Bangalore?",
+        "items": [
+          "Yes. Its proximity to NICE Road and Metro connectivity makes it ideal for professionals working in JP Nagar, Jayanagar, Bannerghatta Road, and other parts of South Bangalore."
+        ]
+      },
+      {
+        "title": "What amenities are available at Purva Park Hill?",
+        "items": [
+          "Residents enjoy 40+ lifestyle amenities including a grand clubhouse, large swimming pool, 1 km jogging track, yoga zones, squash court, sports facilities, and landscaped open spaces."
+        ]
+      },
+      {
+        "title": "What is the price range of apartments at Purva Park Hill?",
+        "items": [
+          "Luxury 3 BHK apartments at Purva Park Hill are priced from ?2.02 Cr onwards*, depending on configuration, floor level, and unit specifications."
+        ]
+      },
+      {
+        "title": "Is Purva Park Hill a good option for long-term investment?",
+        "items": [
+          "Yes. Strong fundamentals include its large land parcel, improving Kanakapura Road infrastructure, proximity to Metro and NICE Road, and strong brand backing."
+        ]
+      },
+      {
+        "title": "Does Purva Park Hill offer good rental potential?",
+        "items": [
+          "Yes. Spacious 3 BHK homes in gated communities along Kanakapura Road attract families and professionals seeking long-term rentals, supporting stable rental demand."
+        ]
+      },
+      {
+        "title": "Is Purva Park Hill RERA approved?",
+        "items": [
+          "Yes. Purva Park Hill is RERA registered, ensuring transparency, regulatory compliance, and buyer protection as per applicable norms."
+        ]
+      },
+      {
+        "title": "Are these homes suitable for end users or investors?",
+        "items": [
+          "Both. End users benefit from space, open environments, and lifestyle amenities, while investors gain from infrastructure-led appreciation and steady rental prospects."
+        ]
+      },
+      {
+        "title": "How can I book a site visit or get detailed pricing?",
+        "items": [
+          "You can request a guided site visit, receive the latest pricing and availability, and get unbiased assistance through PropYouLike."
+        ]
+      }
+    ]
+  }
+}
