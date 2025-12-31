@@ -1,0 +1,542 @@
+{
+  "project": {
+    "slug": "meraki",
+    "builder": "purva",
+    "projectName": "Purva Meraki",
+    "type": "Apartment",
+    "status": "Under Construction",
+    "featured": true,
+    "area": "Muneshwara Nagar",
+    "locality": "HSR Layout",
+    "zone": "South",
+    "city": "Bengaluru",
+    "state": "Karnataka",
+    "country": "India",
+    "pincode": "560102"
+  },
+  "hero": {
+    "videoId": "yF7c9SLA3i4",
+    "meta": {
+      "eyebrow": "Hero",
+      "title": "Find a Home That Fits Your Life",
+      "subtitle": "Verified projects ? Clear pricing ? Guided site visits",
+      "tagline": "Built for your today. Planned for your tomorrow."
+    },
+    "quickInfo": {
+      "price": "? 3.90 Cr Onwards*",
+      "typology": "3 BHK"
+    },
+    "images": [
+      "https://backend.puravankara.com/uploads/Meraki_7b92046c8c.png"
+    ]
+  },
+  "summary": {
+    "meta": {
+      "eyebrow": "Highlights",
+      "title": "Designed for Everyday Living",
+      "subtitle": "A thoughtfully planned community that balances comfort, connectivity, and long-term value",
+      "tagline": "Where location, layout, and lifestyle come together"
+    },
+    "description": "Located in the heart of HSR Layout, this rare architectural masterpiece redefines ultra-luxury living in Bangalore. Designed for those who value exclusivity, Purva Meraki blends refined aesthetics, world-class amenities, and a sense of quiet prestige?creating homes that are as sophisticated as they are timeless.\n\nWith seamless connectivity to Outer Ring Road, Electronic City, and Koramangala, residents enjoy effortless access to Bengaluru?s prime business and lifestyle hubs, while remaining cocooned in a serene, upscale neighbourhood. Surrounded by lush parks, elite social destinations, and premium commercial centres, Purva Meraki offers the perfect balance of urban dynamism and tranquil living.\n\nMore than a residence, Purva Meraki is a statement?where heritage elegance meets contemporary luxury, crafted for those who settle for nothing but the exceptional.",
+    "highlights": [
+      "Only 44 ultra-spacious residences for true privacy and exclusivity",
+      "Limited-edition 3 BHK luxury homes with expansive layouts",
+      "Sun-filled interiors crafted with brick, glass & natural wood finishes",
+      "Large private balconies blending indoor elegance with outdoor calm",
+      "Landscaped green pockets offering serene, private retreats",
+      "Curated, high-end lifestyle amenities for refined living",
+      "Single iconic tower with 2B + G + 8 floors",
+      "Prestigious HSR Layout address with seamless city connectivity",
+      "Homes from ?3.90 Cr onwards*"
+    ]
+  },
+  "amenities": {
+    "meta": {
+      "eyebrow": "Amenities",
+      "title": "Your Leisure Adorned With Opulence",
+      "subtitle": "From sports to leisure, wellness to education?",
+      "tagline": "Thoughtfully curated spaces for every stage of life."
+    },
+    "amenityImages": [
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FFestival_Area_Banquet_Hall_Celebration_Area_e8b9a65aa0.png&w=1920&q=75",
+        "title": "Banquet Area",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FF_6dcdf403f7.png&w=1920&q=75",
+        "title": "Water Feature",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FOutdoor_gym_4ccb9103c9.jpg&w=1920&q=75",
+        "title": "Outdoor Gym",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2Fhigh_angle_view_footprints_sand_beach_7d94cd2a37.jpg&w=1920&q=75",
+        "title": "Acupressure Walk",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FAmphitheatre_64c9094598.png&w=1920&q=75",
+        "title": "Social Seating Area",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FKids_Play_Area_ecb660b918.png&w=1920&q=75",
+        "title": "Kids Play Area",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2Fwarm_welcoming_atmosphere_as_guests_arrive_party_venue_c3155d7295.jpg&w=1920&q=75",
+        "title": "Party Lawn",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FInfinity_pool_c41b32da9d.jpg&w=1920&q=75",
+        "title": "Infinity Pool",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2Flong_shot_woman_with_backpack_79e84bf44b.jpg&w=1920&q=75",
+        "title": "Skywalk",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2Ffemale_admiring_breathtaking_sunset_green_forests_1_383027326d.jpg&w=1920&q=75",
+        "title": "Sunset View Deck",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FYoga_and_Meditation_Deck_523f7dbdbb.png&w=1920&q=75",
+        "title": "Yogs Spaces",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FCards_room_6fbd8026ec.png&w=1920&q=75",
+        "title": "Floor Games",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2Fframe_from_plants_drawing_suplies_7146223623.jpg&w=1920&q=75",
+        "title": "Arts and Crafts Zone",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2Ftable_tennis_1_1668d9c7f2.png&w=1920&q=75",
+        "title": "Outdoor Table Tennis",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FOutdoor_Seating_Area_2a49ca1796.jpg&w=1920&q=75",
+        "title": "Outdoor Seating",
+        "media_type": "image"
+      }
+    ]
+  },
+  "views": {
+    "meta": {
+      "eyebrow": "Views",
+      "title": "Mesmerizing Views",
+      "subtitle": "Wake up to greenery and breathtaking vistas.",
+      "tagline": "Every window opens to calm, light, and openness."
+    },
+    "images": [
+      {
+        "src": "https://backend.puravankara.com/uploads/1_c566455ab2.png"
+      },
+      {
+        "src": "https://backend.puravankara.com/uploads/2_060618313d.png"
+      },
+      {
+        "src": "https://backend.puravankara.com/uploads/2_bba73adc77.png"
+      },
+      {
+        "src": "https://backend.puravankara.com/uploads/4_84ac64f7dd.png"
+      },
+      {
+        "src": "https://backend.puravankara.com/uploads/1_6da58d5826.png"
+      },
+      {
+        "src": "https://backend.puravankara.com/uploads/3_94b6eab739.png"
+      }
+    ]
+  },
+  "locationUI": {
+    "meta": {
+      "eyebrow": "Location",
+      "title": "The Perfect Setting",
+      "subtitle": "Everything you need within easy reach ? schools, hospitals, connectivity & more.",
+      "tagline": "Life. Convenience. Future-ready."
+    },
+    "videoId": "Tt6x4jU6His",
+    "mapUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3889.117921802144!2d77.64463487358766!3d12.90013821644402!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae15cb32d9d923%3A0xe79e1ba5079b6df2!2sPurva%20Meraki!5e0!3m2!1sen!2sin!4v1767170370966!5m2!1sen!2sin",
+    "categories": [
+      {
+        "title": "Transportation",
+        "items": [
+          "HSR BDA Complex 2 mins",
+          "Outer Ring Road 2 mins",
+          "Silk Board Junction 5 mins",
+          "HSR 24th Main Road 5 mins",
+          "Koramangala 10 mins",
+          "MG Road 25 mins",
+          "Kempegowda International Airport 60 mins"
+        ]
+      },
+      {
+        "title": "Educational Institutions",
+        "items": [
+          "NIFT Bangalore 3 mins",
+          "Narayana Techno School 5 mins",
+          "National Public School, HSR 5 mins",
+          "Cambridge Public School 10 mins",
+          "DPS East 15 mins",
+          "Christ University 20 mins",
+          "New Horizon College 20 mins"
+        ]
+      },
+      {
+        "title": "Healthcare",
+        "items": [
+          "Greenview Medical Center 2 mins",
+          "Motherhood Hospital, Sarjapur 10 mins",
+          "Sakra World Hospital1 5 mins",
+          "St. John's Hospital1 5 mins",
+          "Manipal Hospital, HAL 20 mins"
+        ]
+      },
+      {
+        "title": "Business & Commercial Hubs",
+        "items": [
+          "RMZ EcoWorld / RMZ Ecopark 15 mins",
+          "Embassy Tech Village 15 mins",
+          "Koramangala Startup Hub 10 mins",
+          "Electronic City 25 mins",
+          "MG Road CBD 25 mins"
+        ]
+      },
+      {
+        "title": "Retail, Shopping & Entertainment",
+        "items": [
+          "HSR BDA Complex Market 2 mins",
+          "Total Mall 5 mins",
+          "Forum Mall, Koramangala 10 mins",
+          "Central Mall, Bellandur 15 mins",
+          "Phoenix Marketcity 25 mins"
+        ]
+      },
+      {
+        "title": "Culture & Green Spaces",
+        "items": [
+          "HSR Club & Park 3 mins",
+          "Agara Lake 10 mins",
+          "Kudlu Lake 10 mins",
+          "Kaikondrahalli Lake 15 mins",
+          "Lalbagh Botanical Garden 30 mins"
+        ]
+      }
+    ]
+  },
+  "propertyPlans": {
+    "meta": {
+      "eyebrow": "Layouts",
+      "title": "Meticulously Designed Homes",
+      "subtitle": "Explore our thoughtfully designed homes with virtual walkthroughs and detailed floor plans",
+      "tagline": "Homes designed around real life, not just square feet."
+    },
+    "masterPlan": {
+      "image": "https://backend.puravankara.com/uploads/Meraki_33c16eaef7.jpg",
+      "title": "Master Plan",
+      "description": "Master plan for the township"
+    },
+    "unitPlans": [
+      {
+        "title": "3BHK Luxury",
+        "sba": "2692 sft",
+        "price": "3.90 Cr onwards",
+        "floorPlanImage": "https://backend.puravankara.com/uploads/Meraki_1_aed35ed29f.jpg"
+      }
+    ]
+  },
+  "paymentPlans": {
+    "meta": {
+      "eyebrow": "Payment Plans",
+      "title": "Pricing & Payment Plans",
+      "subtitle": "Transparent costing ? Milestone-based ? RERA compliant",
+      "tagline": "Pay as construction progresses. No surprises later."
+    },
+    "pricingTitle": "How much to pay?",
+    "scheduleTitle": "When to pay?",
+    "ctaText": "Get pricing and payment details",
+    "pricingComputation": [
+      {
+        "title": "Sales Consideration",
+        "items": [
+          "Flat/Unit Cost",
+          "Club Development Charges",
+          "Premium Location Charges",
+          "Floor Rise Charges",
+          "Car Park Charges"
+        ]
+      },
+      {
+        "title": "GST on Sale Consideration",
+        "items": [
+          "Under-Construction Units",
+          "Ready-to-Move Units",
+          "Charged as per IT Act",
+          "Applied milestone-wise"
+        ]
+      },
+      {
+        "title": "Other / Possession Charges",
+        "items": [
+          "Advance Maintenance (Actuals) ",
+          "Electricity & Water Infra Charges",
+          "Corpus Fund",
+          "Legal Charges",
+          "Modifications (if applicable)"
+        ]
+      },
+      {
+        "title": "Stamp Duty & Registration",
+        "items": [
+          "Stamp / Admin Fees (if applicable)",
+          "GST on Other Charges",
+          "Approx. total",
+          "Stamp Duty",
+          "Cess",
+          "Surcharge",
+          "Registration"
+        ]
+      }
+    ],
+    "paymentSchedule": [
+      {
+        "title": "Agreement Stage",
+        "items": [
+          "Initial Advance",
+          "Balance Advance",
+          "Post Agreement Execution"
+        ]
+      },
+      {
+        "title": "Structure Completion",
+        "items": [
+          "Ground/Stilt Slab",
+          "Third Floor Slab",
+          "Sixth Floor Slab",
+          "Ninth Floor Slab"
+        ]
+      },
+      {
+        "title": "Possession",
+        "items": [
+          "Terrace Slab",
+          "Flooring Completion",
+          "External Windows",
+          "Lift Erection"
+        ]
+      }
+    ]
+  },
+  "construction": {
+    "meta": {
+      "eyebrow": "PROGRESS",
+      "title": "Construction updates",
+      "subtitle": "Track the latest construction progress with photos and videos",
+      "tagline": "Updated regularly to reflect on-site progress"
+    },
+    "updates": [
+      {
+        "name": "Status Video",
+        "type": "video",
+        "videoId": "1V42-tjxxA0"
+      }
+    ]
+  },
+  "testimonials": {
+    "meta": {
+      "eyebrow": "Testimonials",
+      "title": "What Our Customers Say",
+      "subtitle": "Hear from families living here",
+      "tagline": "Real stories from families who chose to live here."
+    },
+    "testimonials": [
+      {
+        "name": "Anuvrat",
+        "videoId": "i5n6eg5bCag"
+      }
+    ]
+  },
+  "aboutBuilder": {
+    "name": "purva",
+    "meta": {
+      "eyebrow": "Developer",
+      "title": "About the Developer",
+      "subtitle": "A trusted name with a proven track record in delivering quality homes",
+      "tagline": "Built on credibility. Known for consistency."
+    },
+    "description": "Puravankara Limited, headquartered in Bengaluru, is one of India?s most admired and trusted home builders and is recognized among the top real estate companies in India, with a legacy of excellence spanning over 50 years. Founded in 1975, the company is known for delivering high-quality homes on time with complete transparency.",
+    "descriptionExpanded": "Puravankara has launched three prominent brands, each catering to distinct market segments. Puravankara itself is recognized for its luxurious, state-of-the-art projects that incorporate innovative technology to redefine future homes. Provident Housing Ltd., a wholly-owned subsidiary launched in 2008, addresses the needs of mid-income homeowners. Purva Land, established in 2021, offers a lucrative investment opportunity through plotted developments, responding to the evolving needs of homebuyers. Additionally, Starworth Infrastructure and Construction Limited (SICL) provides technology-enabled construction solutions. Puravankara also has a strong presence in commercial office spaces.",
+    "stats": [
+      {
+        "label": "Years of Legacy",
+        "value": "50+ years (est. 1975)"
+      },
+      {
+        "label": "Homes Delivered",
+        "value": "50,000+ homes"
+      },
+      {
+        "label": "Happy Customers",
+        "value": "55,000+ families"
+      },
+      {
+        "label": "Total Development (Delivered + Ongoing)",
+        "value": "45+ million sq. ft."
+      },
+      {
+        "label": "Projects Delivered",
+        "value": "80+ residential & mixed-use projects"
+      },
+      {
+        "label": "Presence Across Cities",
+        "value": "6 major Indian cities"
+      }
+    ]
+  },
+  "loanSupport": {
+    "enabled": true,
+    "meta": {
+      "eyebrow": "Loans",
+      "title": "Check Your Home Loan Eligibility",
+      "subtitle": "Know your budget and EMI options before you decide",
+      "tagline": "Plan with confidence. Buy with clarity."
+    },
+    "banks": [
+      {
+        "name": "SBI"
+      },
+      {
+        "name": "HDFC"
+      },
+      {
+        "name": "ICICI"
+      },
+      {
+        "name": "AXIS"
+      },
+      {
+        "name": "PNB"
+      },
+      {
+        "name": "Canara"
+      }
+    ]
+  },
+  "brochure": {
+    "meta": {
+      "eyebrow": "DOWNLOADS",
+      "title": "Brochure & official documents",
+      "subtitle": "Access brochures, floor plans, approvals and key project details",
+      "tagline": "Everything you need to evaluate the project ? in one place"
+    }
+  },
+  "faq": {
+    "meta": {
+      "eyebrow": "FAQ",
+      "title": "Frequently Asked Questions",
+      "subtitle": "Everything you need to know before making a decision",
+      "tagline": "Clear answers. No guesswork."
+    },
+    "faqs": [
+      {
+        "title": "Where is Purva Meraki located?",
+        "items": [
+          "Purva Meraki is located in the heart of HSR Layout, Bangalore, one of the city?s most prestigious residential neighbourhoods, known for its calm environment and elite social infrastructure."
+        ]
+      },
+      {
+        "title": "What type of homes are available at Purva Meraki?",
+        "items": [
+          "Purva Meraki offers ultra-luxury 3 BHK apartments, designed for buyers seeking expansive living spaces, privacy, and refined architectural detailing."
+        ]
+      },
+      {
+        "title": "How exclusive is Purva Meraki?",
+        "items": [
+          "Purva Meraki is an extremely low-density development with only 44 exclusive residences, ensuring privacy, quiet living, and a rare sense of exclusivity."
+        ]
+      },
+      {
+        "title": "How many towers and floors does Purva Meraki have?",
+        "items": [
+          "The project features a single iconic tower with 2 basements + ground + 8 floors, reinforcing its boutique, private character."
+        ]
+      },
+      {
+        "title": "What makes Purva Meraki different from other luxury projects in Bangalore?",
+        "items": [
+          "Purva Meraki stands out for its limited inventory, large private balconies, refined material palette (brick, glass, wood), and a design philosophy focused on understated luxury rather than high-density living."
+        ]
+      },
+      {
+        "title": "Who is the developer of Purva Meraki?",
+        "items": [
+          "Purva Meraki is developed by Puravankara Limited, a renowned real estate brand with over five decades of experience in premium and luxury housing."
+        ]
+      },
+      {
+        "title": "Is Purva Meraki suitable for senior professionals and business owners?",
+        "items": [
+          "Yes. Purva Meraki is ideal for CXOs, entrepreneurs, business owners, and senior professionals who value privacy, prestige, and proximity to key business districts."
+        ]
+      },
+      {
+        "title": "What kind of amenities does Purva Meraki offer?",
+        "items": [
+          "Amenities are thoughtfully curated for luxury living and include landscaped greens, wellness and fitness spaces, exclusive resident areas, and premium lifestyle facilities designed for a refined audience."
+        ]
+      },
+      {
+        "title": "What is the price range of apartments at Purva Meraki?",
+        "items": [
+          "Ultra-luxury residences at Purva Meraki are priced from ?3.90 Cr onwards*, depending on configuration, floor level, and unit size."
+        ]
+      },
+      {
+        "title": "Is Purva Meraki a good long-term investment?",
+        "items": [
+          "Yes. With its rare low-density format, prime HSR Layout location, and limited supply of ultra-luxury homes, Purva Meraki offers strong long-term value preservation and appreciation potential."
+        ]
+      },
+      {
+        "title": "Does Purva Meraki have rental potential?",
+        "items": [
+          "Yes. Luxury homes in HSR Layout attract senior executives, founders, and expat tenants, supporting high-value rentals with low vacancy risk."
+        ]
+      },
+      {
+        "title": "Is Purva Meraki RERA approved?",
+        "items": [
+          "Yes. Purva Meraki is RERA registered, ensuring full legal compliance, transparency, and buyer protection as per regulations."
+        ]
+      },
+      {
+        "title": "Are these homes better suited for end users or investors?",
+        "items": [
+          "Primarily end users seeking exclusivity, privacy, and prestige. However, investors also benefit from limited inventory, premium tenant demand, and long-term capital appreciation."
+        ]
+      },
+      {
+        "title": "How can I get detailed pricing or arrange a private site visit?",
+        "items": [
+          "You can request a private, appointment-based site visit, receive detailed pricing, floor plans, and personalised assistance through PropYouLike."
+        ]
+      }
+    ]
+  }
+}
