@@ -1,0 +1,562 @@
+{
+  "project": {
+    "slug": "orient-grand",
+    "builder": "purva",
+    "projectName": "Purva Orient Grand",
+    "type": "Apartment",
+    "status": "Under Construction",
+    "featured": true,
+    "area": "Lalbagh Main Road",
+    "locality": "Sudhama Nagar",
+    "zone": "Central",
+    "city": "Bengaluru",
+    "state": "Karnataka",
+    "country": "India",
+    "pincode": "560027"
+  },
+  "hero": {
+    "videoId": "Kz5nHbniQx4",
+    "meta": {
+      "eyebrow": "Hero",
+      "title": "Find a Home That Fits Your Life",
+      "subtitle": "Verified projects ? Clear pricing ? Guided site visits",
+      "tagline": "Built for your today. Planned for your tomorrow."
+    },
+    "quickInfo": {
+      "price": "? 6.00 Cr Onwards*",
+      "typology": "3 & 4 BHK",
+      "size": "1.15 Acres"
+    },
+    "images": [
+      "https://backend.puravankara.com/uploads/Orient_Grand_0cc64c4f54.jpg"
+    ]
+  },
+  "summary": {
+    "meta": {
+      "eyebrow": "Highlights",
+      "title": "Designed for Everyday Living",
+      "subtitle": "A thoughtfully planned community that balances comfort, connectivity, and long-term value",
+      "tagline": "Where location, layout, and lifestyle come together"
+    },
+    "description": "Experience timeless luxury at Purva Orient Grand.\nSet in the heart of old Bengaluru, just moments from the iconic Lalbagh Botanical Garden, this ultra-premium address blends historic charm with contemporary sophistication. Thoughtfully crafted 3 BHK and expansive 4 BHK residences offer generous spaces, refined detailing, and uninterrupted views?designed for those who value elegance, privacy, and legacy living.\n\nEvery element reflects understated grandeur. From sprawling private decks overlooking serene gardens to a world-class rooftop clubhouse designed by Singapore-based architect Andy Fisher, life here is curated at the highest level. The 25th-floor infinity pool rises above the city skyline, while exclusive social spaces create an atmosphere of quiet prestige and meaningful connection.\n\nPurva Orient Grand is more than a residence?it is a rare statement of cultural richness and refined living, redefining luxury apartments on Lalbagh Road for a discerning few.",
+    "highlights": [
+      "Only 97 ultra-luxury residences across a private 1.15-acre enclave",
+      "Zero shared walls ensuring complete privacy and seclusion",
+      "Expansive private decks designed for serene, uninterrupted living",
+      "Limited-edition 3 & 4 BHK residences with grand proportions",
+      "Art-led interiors & refined architectural detailing throughout",
+      "Intuitive home automation for effortless, modern living",
+      "Victorian-inspired Rose & Cypress Club for exclusive social experiences",
+      "Al fresco party deck at the top for curated gatherings",
+      "Single iconic tower rising G + 24 floors",
+      "Ultra-luxury homes from ?6.00 Cr onwards*"
+    ]
+  },
+  "amenities": {
+    "meta": {
+      "eyebrow": "Amenities",
+      "title": "Your Leisure Adorned With Opulence",
+      "subtitle": "From sports to leisure, wellness to education?",
+      "tagline": "Thoughtfully curated spaces for every stage of life."
+    },
+    "amenityImages": [
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FInfinity_Pool_0154211a51.png&w=1920&q=75",
+        "title": "Infinity Pool at 25th Level",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2Fred_wine_glass_table_restaurant_804931f08e.jpg&w=1920&q=75",
+        "title": "Devecote Dining and Pit Lounge",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FFete_Rooftop_b90eb7d426.png&w=1920&q=75",
+        "title": "The Fete Rooftop Recreation",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FZumba_and_Zumba_Deck_16a88a6d88.png&w=1920&q=75",
+        "title": "Zumba Deck",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FMini_Golf_9d8cb0cf31.png&w=1920&q=75",
+        "title": "Putting Golf",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FPet_Park_or_Dog_Park_or_Bark_Park_86ec4c7d3f.png&w=1920&q=75",
+        "title": "Pet Corner",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FAmenity_Image_960x645px_04_2945d4ab1e.jpg&w=1920&q=75",
+        "title": "Gardens",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FOutdoor_Seating_Area_2a49ca1796.jpg&w=1920&q=75",
+        "title": "Outdoor Seating",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FAmenity_Image_960x645px_04_2945d4ab1e.jpg&w=1920&q=75",
+        "title": "Kinetic Garden",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FKoi_Pond_5f53368f71.png&w=1920&q=75",
+        "title": "Koi Pond",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FSpa_4afc444644.png&w=1920&q=75",
+        "title": "Steam, Sauna, and Spa",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FSalon_abda52320b.png&w=1920&q=75",
+        "title": "Manicure Station",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FGymnasium_2ec3f4328c.png&w=1920&q=75",
+        "title": "Bodycare Fitness Studio",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FLarder_Room_and_Whiskey_Lounge_08c5e9ec6c.png&w=1920&q=75",
+        "title": "The Larder Room and Whisky Lounge",
+        "media_type": "image"
+      }
+    ]
+  },
+  "views": {
+    "meta": {
+      "eyebrow": "Views",
+      "title": "Mesmerizing Views",
+      "subtitle": "Wake up to greenery and breathtaking vistas.",
+      "tagline": "Every window opens to calm, light, and openness."
+    },
+    "images": [
+      {
+        "src": "https://backend.puravankara.com/uploads/V4_lift_01_a6b8866876.png"
+      },
+      {
+        "src": "https://backend.puravankara.com/uploads/Bedroom_04_GI_01_b35fd49e6c.png"
+      },
+      {
+        "src": "https://backend.puravankara.com/uploads/Balcony_To_Outside_G_I_01_52d5959028.png"
+      },
+      {
+        "src": "https://backend.puravankara.com/uploads/Balcony_02_G_I_01_895ab698c6.png"
+      },
+      {
+        "src": "https://backend.puravankara.com/uploads/Fete_GO_01_1d3e1b47de.png"
+      },
+      {
+        "src": "https://backend.puravankara.com/uploads/Gate_View_Night_GO_01_37681bacf7.png"
+      },
+      {
+        "src": "https://backend.puravankara.com/uploads/Mini_Golf_GO_01_575e998aea.png"
+      },
+      {
+        "src": "https://backend.puravankara.com/uploads/v5_sitout_GO_01_9630472ba8.png"
+      }
+    ]
+  },
+  "locationUI": {
+    "meta": {
+      "eyebrow": "Location",
+      "title": "The Perfect Setting",
+      "subtitle": "Everything you need within easy reach ? schools, hospitals, connectivity & more.",
+      "tagline": "Life. Convenience. Future-ready."
+    },
+    "videoId": "-EHnBX-Revw",
+    "mapUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.1562219619846!2d77.58740557358882!3d12.961853515094898!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae151e3ab02823%3A0xbeec37b4aff45c64!2sPurva%20Orient%20Grand!5e0!3m2!1sen!2sin!4v1767172734275!5m2!1sen!2sin",
+    "categories": [
+      {
+        "title": "Transportation",
+        "items": [
+          "Lalbagh Metro Station 5 mins",
+          "MG Road Metro Station 10 mins",
+          "Majestic Railway Station 20 mins",
+          "Kempegowda International Airport 60 mins"
+        ]
+      },
+      {
+        "title": "Educational Institutions",
+        "items": [
+          "College of Pharmacy 2 mins",
+          "Bishop Cotton School 10 mins",
+          "St. Joseph's College of Commerce 10 mins",
+          "Bangalore Medical College and Research Institute 10 mins"
+        ]
+      },
+      {
+        "title": "Healthcare",
+        "items": [
+          "Mallya Hospital 5 mins"
+        ]
+      },
+      {
+        "title": "Business & Government Hubs",
+        "items": [
+          "Passport Office 5 mins",
+          "Vidhana Soudha 10 mins"
+        ]
+      },
+      {
+        "title": "Lifestyle & Recreation",
+        "items": [
+          "UB City 5 mins",
+          "Bangalore Club 10 mins",
+          "Brigade Road 15 mins",
+          "Commercial Street 15 mins"
+        ]
+      },
+      {
+        "title": "Culture & Green Spaces",
+        "items": [
+          "Lalbagh Gardens 5 mins",
+          "Cubbon Park 10 mins"
+        ]
+      }
+    ]
+  },
+  "propertyPlans": {
+    "meta": {
+      "eyebrow": "Layouts",
+      "title": "Meticulously Designed Homes",
+      "subtitle": "Explore our thoughtfully designed homes with virtual walkthroughs and detailed floor plans",
+      "tagline": "Homes designed around real life, not just square feet."
+    },
+    "masterPlan": {
+      "image": "https://backend.puravankara.com/uploads/Purva_orient_grand_2_bdb80e7f6f.jpg",
+      "title": "Master Plan",
+      "description": "Master plan for the township"
+    },
+    "unitPlans": [
+      {
+        "title": "3BHK",
+        "sba": "1992-2262 sft",
+        "price": "6.00 Cr onwards",
+        "floorPlanImage": "https://backend.puravankara.com/uploads/3_BHK_b911d79122.png"
+      },
+      {
+        "title": "4BHK Elegance",
+        "sba": "2160 - 3360 Sq.ft.",
+        "price": "7.50 Cr onwards",
+        "floorPlanImage": "https://backend.puravankara.com/uploads/4_BHK_Elegance_a2ace9d743.png"
+      },
+      {
+        "title": "4BHK Grandeur",
+        "sba": "2160 - 3360 Sq.ft.",
+        "price": "9.90 Cr onwards",
+        "floorPlanImage": "https://backend.puravankara.com/uploads/4_BHK_Grandeur_df40832e2e.png"
+      },
+      {
+        "title": "4 BHK Luxury",
+        "sba": "2160 - 3360 Sq.ft.",
+        "price": "8.15 Cr onwards",
+        "floorPlanImage": "https://backend.puravankara.com/uploads/4_BHK_Luxury_7d08f3258b.png"
+      }
+    ]
+  },
+  "paymentPlans": {
+    "meta": {
+      "eyebrow": "Payment Plans",
+      "title": "Pricing & Payment Plans",
+      "subtitle": "Transparent costing ? Milestone-based ? RERA compliant",
+      "tagline": "Pay as construction progresses. No surprises later."
+    },
+    "pricingTitle": "How much to pay?",
+    "scheduleTitle": "When to pay?",
+    "ctaText": "Get pricing and payment details",
+    "pricingComputation": [
+      {
+        "title": "Sales Consideration",
+        "items": [
+          "Flat/Unit Cost",
+          "Club Development Charges",
+          "Premium Location Charges",
+          "Floor Rise Charges",
+          "Car Park Charges"
+        ]
+      },
+      {
+        "title": "GST on Sale Consideration",
+        "items": [
+          "Under-Construction Units",
+          "Ready-to-Move Units",
+          "Charged as per IT Act",
+          "Applied milestone-wise"
+        ]
+      },
+      {
+        "title": "Other / Possession Charges",
+        "items": [
+          "Advance Maintenance (Actuals) ",
+          "Electricity & Water Infra Charges",
+          "Corpus Fund",
+          "Legal Charges",
+          "Modifications (if applicable)"
+        ]
+      },
+      {
+        "title": "Stamp Duty & Registration",
+        "items": [
+          "Stamp / Admin Fees (if applicable)",
+          "GST on Other Charges",
+          "Approx. total",
+          "Stamp Duty",
+          "Cess",
+          "Surcharge",
+          "Registration"
+        ]
+      }
+    ],
+    "paymentSchedule": [
+      {
+        "title": "Agreement Stage",
+        "items": [
+          "Initial Advance",
+          "Balance Advance",
+          "Post Agreement Execution"
+        ]
+      },
+      {
+        "title": "Structure Completion",
+        "items": [
+          "Ground/Stilt Slab",
+          "Third Floor Slab",
+          "Sixth Floor Slab",
+          "Ninth Floor Slab"
+        ]
+      },
+      {
+        "title": "Possession",
+        "items": [
+          "Terrace Slab",
+          "Flooring Completion",
+          "External Windows",
+          "Lift Erection"
+        ]
+      }
+    ]
+  },
+  "construction": {
+    "meta": {
+      "eyebrow": "PROGRESS",
+      "title": "Construction updates",
+      "subtitle": "Track the latest construction progress with photos and videos",
+      "tagline": "Updated regularly to reflect on-site progress"
+    },
+    "updates": [
+      {
+        "name": "Status Video",
+        "type": "video",
+        "videoId": "PfUgiwaNLKM"
+      }
+    ]
+  },
+  "testimonials": {
+    "meta": {
+      "eyebrow": "Testimonials",
+      "title": "What Our Customers Say",
+      "subtitle": "Hear from families living here",
+      "tagline": "Real stories from families who chose to live here."
+    },
+    "testimonials": [
+      {
+        "name": "\r\nAryan Murthy",
+        "quote": "Excellent under construction flats with modern amenities\r",
+        "rating": 5
+      },
+      {
+        "name": "Hari K vyas",
+        "quote": "Just great modern housing likes of developed world economy countries\r",
+        "rating": 5
+      },
+      {
+        "name": "Maheswaran ?Appu? N",
+        "quote": "It's under construction, beautiful ultra luxury apartment",
+        "rating": 5
+      },
+      {
+        "name": "\r\nroshan sethi",
+        "quote": "Excellent location and great product in the heart of city",
+        "rating": 5
+      }
+    ]
+  },
+  "aboutBuilder": {
+    "name": "purva",
+    "meta": {
+      "eyebrow": "Developer",
+      "title": "About the Developer",
+      "subtitle": "A trusted name with a proven track record in delivering quality homes",
+      "tagline": "Built on credibility. Known for consistency."
+    },
+    "description": "Puravankara Limited, headquartered in Bengaluru, is one of India?s most admired and trusted home builders and is recognized among the top real estate companies in India, with a legacy of excellence spanning over 50 years. Founded in 1975, the company is known for delivering high-quality homes on time with complete transparency.",
+    "descriptionExpanded": "Puravankara has launched three prominent brands, each catering to distinct market segments. Puravankara itself is recognized for its luxurious, state-of-the-art projects that incorporate innovative technology to redefine future homes. Provident Housing Ltd., a wholly-owned subsidiary launched in 2008, addresses the needs of mid-income homeowners. Purva Land, established in 2021, offers a lucrative investment opportunity through plotted developments, responding to the evolving needs of homebuyers. Additionally, Starworth Infrastructure and Construction Limited (SICL) provides technology-enabled construction solutions. Puravankara also has a strong presence in commercial office spaces.",
+    "stats": [
+      {
+        "label": "Years of Legacy",
+        "value": "50+ years (est. 1975)"
+      },
+      {
+        "label": "Homes Delivered",
+        "value": "50,000+ homes"
+      },
+      {
+        "label": "Happy Customers",
+        "value": "55,000+ families"
+      },
+      {
+        "label": "Total Development (Delivered + Ongoing)",
+        "value": "45+ million sq. ft."
+      },
+      {
+        "label": "Projects Delivered",
+        "value": "80+ residential & mixed-use projects"
+      },
+      {
+        "label": "Presence Across Cities",
+        "value": "6 major Indian cities"
+      }
+    ]
+  },
+  "loanSupport": {
+    "enabled": true,
+    "meta": {
+      "eyebrow": "Loans",
+      "title": "Check Your Home Loan Eligibility",
+      "subtitle": "Know your budget and EMI options before you decide",
+      "tagline": "Plan with confidence. Buy with clarity."
+    },
+    "banks": [
+      {
+        "name": "SBI"
+      },
+      {
+        "name": "HDFC"
+      },
+      {
+        "name": "ICICI"
+      },
+      {
+        "name": "AXIS"
+      },
+      {
+        "name": "PNB"
+      },
+      {
+        "name": "Canara"
+      }
+    ]
+  },
+  "brochure": {
+    "meta": {
+      "eyebrow": "DOWNLOADS",
+      "title": "Brochure & official documents",
+      "subtitle": "Access brochures, floor plans, approvals and key project details",
+      "tagline": "Everything you need to evaluate the project ? in one place"
+    }
+  },
+  "faq": {
+    "meta": {
+      "eyebrow": "FAQ",
+      "title": "Frequently Asked Questions",
+      "subtitle": "Everything you need to know before making a decision",
+      "tagline": "Clear answers. No guesswork."
+    },
+    "faqs": [
+      {
+        "title": "Where is Purva Orient Grand located?",
+        "items": [
+          "Purva Orient Grand is located on Lalbagh Road in the prestigious heart of Bengaluru, offering easy access to cultural landmarks, premium retail destinations, and key commercial hubs."
+        ]
+      },
+      {
+        "title": "What types of homes are available at Purva Orient Grand?",
+        "items": [
+          "Purva Orient Grand offers limited edition **3 & 4 BHK ultra-luxury residences**, designed for high net worth individuals seeking expansive living spaces, privacy, and architectural excellence."
+        ]
+      },
+      {
+        "title": "How exclusive is Purva Orient Grand?",
+        "items": [
+          "Purva Orient Grand is a rare boutique address with just **97 ultra-luxury residences** and **zero shared walls**, ensuring absolute privacy and a private community feel."
+        ]
+      },
+      {
+        "title": "How many towers and floors does Purva Orient Grand have?",
+        "items": [
+          "The development comprises **1 iconic tower** rising to **G + 24 floors**, creating an elegant, skyline presence."
+        ]
+      },
+      {
+        "title": "What makes Purva Orient Grand different from other luxury projects in Bengaluru?",
+        "items": [
+          "Purva Orient Grand distinguishes itself with private decks for every residence, artistic flourishes, intuitive home automation, exclusive lifestyle spaces like the Rose & Cypress Club, and an al fresco party area with skyline views."
+        ]
+      },
+      {
+        "title": "Who is the developer of Purva Orient Grand?",
+        "items": [
+          "Purva Orient Grand is developed by :contentReference[oaicite:0]{index=0}, a reputed developer with a strong legacy in crafting premium and luxury residential communities."
+        ]
+      },
+      {
+        "title": "Is Purva Orient Grand suitable for professionals and families?",
+        "items": [
+          "Yes. Its premier location, luxurious design, and private living environment make it ideal for both discerning professionals and families who value exclusivity and quality."
+        ]
+      },
+      {
+        "title": "What amenities are available at Purva Orient Grand?",
+        "items": [
+          "Amenities include an exclusive rooftop infinity pool, the Victorian-inspired Rose & Cypress Club, al fresco party deck, landscaped gardens, wellness spaces, and curated social areas that match an ultra-luxury lifestyle."
+        ]
+      },
+      {
+        "title": "What is the price range of apartments at Purva Orient Grand?",
+        "items": [
+          "Ultra-luxury 3 & 4 BHK residences at Purva Orient Grand are priced from **?6.00 Cr onwards***, depending on configuration and floor level."
+        ]
+      },
+      {
+        "title": "Is Purva Orient Grand a good long-term investment?",
+        "items": [
+          "Yes. With its limited inventory, iconic location, ultra-luxury positioning, and strong brand backing, Purva Orient Grand offers potential for long-term value appreciation and prestige."
+        ]
+      },
+      {
+        "title": "Does Purva Orient Grand offer good rental potential?",
+        "items": [
+          "Yes. Ultra-luxury residences in HSR and Lalbagh Road areas attract senior executives, business leaders, and premium tenants, supporting high rental yields."
+        ]
+      },
+      {
+        "title": "Is Purva Orient Grand RERA approved?",
+        "items": [
+          "Yes. Purva Orient Grand is RERA registered, ensuring regulatory compliance, transparency, and buyer protection as per applicable norms."
+        ]
+      },
+      {
+        "title": "Are these homes suitable for end users or investors?",
+        "items": [
+          "Ultra-luxury homes at Purva Orient Grand are ideal for end users seeking refined living and privacy, and also suitable for investors targeting premium rental demand and long-term capital appreciation."
+        ]
+      },
+      {
+        "title": "How can I book a private site visit or get detailed pricing?",
+        "items": [
+          "You can request a private, appointment-based site visit, receive detailed pricing, floor plans, and personalised assistance through PropYouLike."
+        ]
+      }
+    ]
+  }
+}
