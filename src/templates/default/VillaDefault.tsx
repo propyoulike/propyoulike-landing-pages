@@ -1,30 +1,30 @@
-// src/templates/default/VillaDefault.tsx
+// src/templates/builders/provident/ApartmentProvident.tsx
 
 /**
  * ============================================================
- * VillaDefault Template
+ * ApartmentProvident Template
  * ============================================================
  *
  * ROLE
  * ------------------------------------------------------------
- * - Fallback visual template for Villa-type projects
- * - Delegates rendering to ApartmentDefault
+ * - Builder-specific template for Provident apartment projects
+ * - Bridges flat project identity with structured section payload
+ * - Delegates rendering to ProjectRenderer
  *
- * WHY THIS EXISTS
+ * OBSERVABILITY
  * ------------------------------------------------------------
- * - Villas currently reuse the Apartment fallback UI
- * - Avoids duplicate code while keeping template routing explicit
+ * - One structural log per render
+ * - Section presence visibility (no payload logging)
+ * - No console usage
  *
  * ============================================================
  */
 
-import ApartmentDefault from "./ApartmentDefault";
+import ProjectRenderer from "@/templates/common/ProjectRenderer";
+import { createProjectContext } from "@/templates/common/projectContext";
+import { runtimeLog } from "@/lib/log/runtimeLog";
 
-/**
- * Minimal identity contract for default templates.
- * Kept aligned with ApartmentDefault.
- */
-interface VillaDefaultProps {
+type Props = {
   project: {
     slug: string;
     builder: string;
@@ -32,14 +32,38 @@ interface VillaDefaultProps {
     projectName?: string;
     [key: string]: any;
   };
-}
+  payload: Record<string, any>;
+};
 
-/**
- * VillaDefault
- *
- * Intentionally delegates to ApartmentDefault.
- * Delegation is silent by design.
- */
-export default function VillaDefault({ project }: VillaDefaultProps) {
-  return <ApartmentDefault project={project} />;
+export default function ApartmentProvident({
+  project,
+  payload,
+}: Props) {
+  /* ----------------------------------------------------------
+     TEMPLATE-LEVEL STRUCTURAL LOG (Layer 2)
+     ----------------------------------------------------------
+     Fires once per render.
+     Logs structure, never payload values.
+  ---------------------------------------------------------- */
+  runtimeLog("Template", "info", "ApartmentProvident render", {
+    slug: project.slug,
+    projectName: project.projectName,
+    sectionKeys: payload ? Object.keys(payload) : [],
+  });
+
+  /* ----------------------------------------------------------
+     Create runtime context (pure)
+  ---------------------------------------------------------- */
+  const ctx = createProjectContext(project, payload);
+
+  /* ----------------------------------------------------------
+     Delegate rendering (PURE)
+  ---------------------------------------------------------- */
+  return (
+    <ProjectRenderer
+      project={project}
+      payload={payload}
+      ctx={ctx}
+    />
+  );
 }
