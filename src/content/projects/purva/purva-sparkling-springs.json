@@ -1,0 +1,535 @@
+{
+  "project": {
+    "slug": "sparkling-springs",
+    "builder": "purva",
+    "projectName": "Purva Sparkling Springs",
+    "type": "Villa",
+    "status": "Under Construction",
+    "featured": true,
+    "area": "Kammanahalli",
+    "locality": "Bannerghatta Main Road",
+    "zone": "South",
+    "city": "Bengaluru",
+    "state": "Karnataka",
+    "country": "India",
+    "pincode": "560083"
+  },
+  "hero": {
+    "videoId": "1mvs2vqwS9k",
+    "meta": {
+      "eyebrow": "Hero",
+      "title": "Find a Home That Fits Your Life",
+      "subtitle": "Verified projects ? Clear pricing ? Guided site visits",
+      "tagline": "Built for your today. Planned for your tomorrow."
+    },
+    "quickInfo": {
+      "price": "? 4.80 Cr Onwards*",
+      "typology": "3 BHK",
+      "size": "20 Acres"
+    },
+    "images": [
+      "https://backend.puravankara.com/uploads/sparkling_ad7f1710e4.png"
+    ]
+  },
+  "summary": {
+    "meta": {
+      "eyebrow": "Highlights",
+      "title": "Designed for Everyday Living",
+      "subtitle": "A thoughtfully planned community that balances comfort, connectivity, and long-term value",
+      "tagline": "Where location, layout, and lifestyle come together"
+    },
+    "description": "Discover a life shaped by water, nature, and quiet luxury at Purva Sparkling Springs ? The Sound of Water.\nThis exclusive villa enclave is thoughtfully designed around Bangalore?s largest man-made waterfall, where flowing water features, lush landscapes, and a serene Buddha statue create an atmosphere of rare tranquillity. Every element is crafted to slow life down and elevate everyday living.\n\nDesigned for discerning homeowners, these luxury villas offer immersive wellness and leisure experiences?from meditative garden walks and pristine water bodies to vibrant yet intimate community spaces. The result is a lifestyle that balances indulgence with inner calm.\n\nLocated along Bannerghatta Road, Purva Sparkling Springs enjoys seamless connectivity to major IT hubs, leading educational institutions, and lifestyle destinations. A gated villa community where serenity meets sophistication, it is an ideal choice for those seeking premium 3 BHK villas that offer privacy, nature, and refined living?without compromise",
+    "highlights": [
+      "Exclusive 3 & 4 BHK luxury villas set across 20 acres of lush greenery",
+      "Water-inspired master planning creating a calm, resort-like living experience",
+      "12,000 sq. ft. grand clubhouse with curated lifestyle spaces",
+      "Infinity swimming pool overlooking serene landscapes",
+      "State-of-the-art sports & wellness zones for holistic living",
+      "Gated community with low-density planning and enhanced privacy",
+      "Excellent connectivity to Jigani, NICE Junction & Electronic City",
+      "Villas from ?4.80 Cr onwards*"
+    ]
+  },
+  "amenities": {
+    "meta": {
+      "eyebrow": "Amenities",
+      "title": "Your Leisure Adorned With Opulence",
+      "subtitle": "From sports to leisure, wellness to education?",
+      "tagline": "Thoughtfully curated spaces for every stage of life."
+    },
+    "amenityImages": [
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FTemple_of_Body_and_Soul_0665a48d16.png&w=1920&q=75",
+        "title": "Temple of Body and Soul",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2Fbasketball_19fe8f5b18.png&w=1920&q=75",
+        "title": "Half Basketball Court",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FMan_made_waterfall_969c8bcac2.jpg&w=1920&q=75",
+        "title": "Manmade Waterfall",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FInfinity_pool_c41b32da9d.jpg&w=1920&q=75",
+        "title": "Infinity Pool",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FKids_Play_Area_ecb660b918.png&w=1920&q=75",
+        "title": "Kids Playarea",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FMultipurpose_Court_5c557e996a.png&w=1920&q=75",
+        "title": "Multipurpose Court",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FCricket_Practice_Net_790e353140.png&w=1920&q=75",
+        "title": "Cricket Practice Pitch",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FYoga_and_Meditation_Deck_523f7dbdbb.png&w=1920&q=75",
+        "title": "Yoga Space",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FAmenity_Image_960x645px_03_c9e9631b50.jpg&w=1920&q=75",
+        "title": "Garden of Five Senses",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FJogging_or_Running_Track_0ce87a1986.jpeg&w=1920&q=75",
+        "title": "Jogging Track",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FGymnasium_2ec3f4328c.png&w=1920&q=75",
+        "title": "Gymnasium",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FTable_Tennis_13abfaa574.png&w=1920&q=75",
+        "title": "Table Tennis",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FJamming_Room_17e3cffa9c.jpg&w=1920&q=75",
+        "title": "Jamming Room",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.puravankara.com/_next/image?url=https%3A%2F%2Fbackend.puravankara.com%2Fuploads%2FClubhouse_3093012a09.jpg&w=1920&q=75",
+        "title": "12,000 sft Clubhouse",
+        "media_type": "image"
+      }
+    ]
+  },
+  "views": {
+    "meta": {
+      "eyebrow": "Views",
+      "title": "Mesmerizing Views",
+      "subtitle": "Wake up to greenery and breathtaking vistas.",
+      "tagline": "Every window opens to calm, light, and openness."
+    },
+    "images": [
+      {
+        "src": "https://backend.puravankara.com/uploads/3_7a3d0c35f8.png"
+      },
+      {
+        "src": "https://backend.puravankara.com/uploads/5_40f29c04de.png"
+      },
+      {
+        "src": "https://backend.puravankara.com/uploads/6_a92d20125a.png"
+      },
+      {
+        "src": "https://backend.puravankara.com/uploads/4_9ae16dae6b.png"
+      },
+      {
+        "src": "https://backend.puravankara.com/uploads/2_b7334f40cf.png"
+      },
+      {
+        "src": "https://backend.puravankara.com/uploads/1_08ae624e1a.png"
+      },
+      {
+        "src": "https://backend.puravankara.com/uploads/4_de85373a5c.png"
+      },
+      {
+        "src": "https://backend.puravankara.com/uploads/1_db88750d72.png"
+      },
+      {
+        "src": "https://backend.puravankara.com/uploads/2_667f054627.png"
+      }
+    ]
+  },
+  "locationUI": {
+    "meta": {
+      "eyebrow": "Location",
+      "title": "The Perfect Setting",
+      "subtitle": "Everything you need within easy reach ? schools, hospitals, connectivity & more.",
+      "tagline": "Life. Convenience. Future-ready."
+    },
+    "videoId": "nKOh9YZWuwY",
+    "mapUrl": "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7779.758772361768!2d77.604464!3d12.851066!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae6bcbe6057b21%3A0x4d49ea8e114f7308!2sPurva%20Sparkling%20Springs!5e0!3m2!1sen!2sin!4v1767176350484!5m2!1sen!2sin",
+    "categories": [
+      {
+        "title": "Transportation",
+        "items": [
+          "Jayadeva Hospital Metro Station 15 mins",
+          "Bangalore City Railway Station 30 mins",
+          "MG Road Metro Station 30 mins",
+          "Kempegowda International Airport 60 mins"
+        ]
+      },
+      {
+        "title": "Educational Institutions",
+        "items": [
+          "IIM Bangalore 5 mins",
+          "Ryan International School 10 mins",
+          "BGS National Public School 10 mins",
+          "Vibgyor High School 15 mins"
+        ]
+      },
+      {
+        "title": "Healthcare",
+        "items": [
+          "Fortis Hospital 10 mins",
+          "Apollo Hospitals Bannerghatta 10 mins",
+          "Jayadeva Hospital 15 mins",
+          "Narayana Health City 20 mins"
+        ]
+      },
+      {
+        "title": "Business & Commercial Hubs",
+        "items": [
+          "Kalyani Magnum IT Tech Park 10 mins",
+          "HSBC Software Development India 15 mins",
+          "Electronic City 25 mins",
+          "Global Village Tech Park 30 mins"
+        ]
+      },
+      {
+        "title": "Retail, Shopping & Entertainment",
+        "items": [
+          "Royal Meenakshi Mall 5 mins",
+          "Decathlon Bannerghatta 5 mins",
+          "Vega City Mall 10 mins",
+          "Gopalan Innovation Mall 15 mins"
+        ]
+      },
+      {
+        "title": "Culture & Green Spaces",
+        "items": [
+          "Bannerghatta National Park 20 mins",
+          "Lalbagh Botanical Garden 30 mins",
+          "Turahalli Forest 30 mins"
+        ]
+      }
+    ]
+  },
+  "propertyPlans": {
+    "meta": {
+      "eyebrow": "Layouts",
+      "title": "Meticulously Designed Homes",
+      "subtitle": "Explore our thoughtfully designed homes with virtual walkthroughs and detailed floor plans",
+      "tagline": "Homes designed around real life, not just square feet."
+    },
+    "masterPlan": {
+      "image": "https://backend.puravankara.com/uploads/SS_f3c4c636e3.webp",
+      "title": "Master Plan",
+      "description": "Master plan for the township"
+    },
+    "unitPlans": [
+      {
+        "title": "3BHK",
+        "sba": "3335 - 4477 Sq.ft.",
+        "price": "4.80 Cr onwards",
+        "floorPlanImage": "https://backend.puravankara.com/uploads/SS_1_11cc3a44ca.webp"
+      }
+    ]
+  },
+  "paymentPlans": {
+    "meta": {
+      "eyebrow": "Payment Plans",
+      "title": "Pricing & Payment Plans",
+      "subtitle": "Transparent costing ? Milestone-based ? RERA compliant",
+      "tagline": "Pay as construction progresses. No surprises later."
+    },
+    "pricingTitle": "How much to pay?",
+    "scheduleTitle": "When to pay?",
+    "ctaText": "Get pricing and payment details",
+    "pricingComputation": [
+      {
+        "title": "Sales Consideration",
+        "items": [
+          "Flat/Unit Cost",
+          "Club Development Charges",
+          "Premium Location Charges",
+          "Floor Rise Charges",
+          "Car Park Charges"
+        ]
+      },
+      {
+        "title": "GST on Sale Consideration",
+        "items": [
+          "Under-Construction Units",
+          "Ready-to-Move Units",
+          "Charged as per IT Act",
+          "Applied milestone-wise"
+        ]
+      },
+      {
+        "title": "Other / Possession Charges",
+        "items": [
+          "Advance Maintenance (Actuals) ",
+          "Electricity & Water Infra Charges",
+          "Corpus Fund",
+          "Legal Charges",
+          "Modifications (if applicable)"
+        ]
+      },
+      {
+        "title": "Stamp Duty & Registration",
+        "items": [
+          "Stamp / Admin Fees (if applicable)",
+          "GST on Other Charges",
+          "Approx. total",
+          "Stamp Duty",
+          "Cess",
+          "Surcharge",
+          "Registration"
+        ]
+      }
+    ],
+    "paymentSchedule": [
+      {
+        "title": "Agreement Stage",
+        "items": [
+          "Initial Advance",
+          "Balance Advance",
+          "Post Agreement Execution"
+        ]
+      },
+      {
+        "title": "Structure Completion",
+        "items": [
+          "Ground/Stilt Slab",
+          "Third Floor Slab",
+          "Sixth Floor Slab",
+          "Ninth Floor Slab"
+        ]
+      },
+      {
+        "title": "Possession",
+        "items": [
+          "Terrace Slab",
+          "Flooring Completion",
+          "External Windows",
+          "Lift Erection"
+        ]
+      }
+    ]
+  },
+  "construction": {
+    "meta": {
+      "eyebrow": "PROGRESS",
+      "title": "Construction updates",
+      "subtitle": "Track the latest construction progress with photos and videos",
+      "tagline": "Updated regularly to reflect on-site progress"
+    },
+    "updates": [
+      {
+        "name": "Status Video",
+        "type": "video",
+        "videoId": "vgYR97gXSho"
+      }
+    ]
+  },
+  "testimonials": {
+    "meta": {
+      "eyebrow": "Testimonials",
+      "title": "What Our Customers Say",
+      "subtitle": "Hear from families living here",
+      "tagline": "Real stories from families who chose to live here."
+    },
+    "testimonials": [
+      {
+        "name": "Shobhit & Ramita",
+        "videoId": "oasJepBztAo"
+      }
+    ]
+  },
+  "aboutBuilder": {
+    "name": "purva",
+    "meta": {
+      "eyebrow": "Developer",
+      "title": "About the Developer",
+      "subtitle": "A trusted name with a proven track record in delivering quality homes",
+      "tagline": "Built on credibility. Known for consistency."
+    },
+    "description": "Puravankara Limited, headquartered in Bengaluru, is one of India?s most admired and trusted home builders and is recognized among the top real estate companies in India, with a legacy of excellence spanning over 50 years. Founded in 1975, the company is known for delivering high-quality homes on time with complete transparency.",
+    "descriptionExpanded": "Puravankara has launched three prominent brands, each catering to distinct market segments. Puravankara itself is recognized for its luxurious, state-of-the-art projects that incorporate innovative technology to redefine future homes. Provident Housing Ltd., a wholly-owned subsidiary launched in 2008, addresses the needs of mid-income homeowners. Purva Land, established in 2021, offers a lucrative investment opportunity through plotted developments, responding to the evolving needs of homebuyers. Additionally, Starworth Infrastructure and Construction Limited (SICL) provides technology-enabled construction solutions. Puravankara also has a strong presence in commercial office spaces.",
+    "stats": [
+      {
+        "label": "Years of Legacy",
+        "value": "50+ years (est. 1975)"
+      },
+      {
+        "label": "Homes Delivered",
+        "value": "50,000+ homes"
+      },
+      {
+        "label": "Happy Customers",
+        "value": "55,000+ families"
+      },
+      {
+        "label": "Total Development (Delivered + Ongoing)",
+        "value": "45+ million sq. ft."
+      },
+      {
+        "label": "Projects Delivered",
+        "value": "80+ residential & mixed-use projects"
+      },
+      {
+        "label": "Presence Across Cities",
+        "value": "6 major Indian cities"
+      }
+    ]
+  },
+  "loanSupport": {
+    "enabled": true,
+    "meta": {
+      "eyebrow": "Loans",
+      "title": "Check Your Home Loan Eligibility",
+      "subtitle": "Know your budget and EMI options before you decide",
+      "tagline": "Plan with confidence. Buy with clarity."
+    },
+    "banks": [
+      {
+        "name": "SBI"
+      },
+      {
+        "name": "HDFC"
+      },
+      {
+        "name": "ICICI"
+      },
+      {
+        "name": "AXIS"
+      },
+      {
+        "name": "PNB"
+      },
+      {
+        "name": "Canara"
+      }
+    ]
+  },
+  "brochure": {
+    "meta": {
+      "eyebrow": "DOWNLOADS",
+      "title": "Brochure & official documents",
+      "subtitle": "Access brochures, floor plans, approvals and key project details",
+      "tagline": "Everything you need to evaluate the project ? in one place"
+    }
+  },
+  "faq": {
+    "meta": {
+      "eyebrow": "FAQ",
+      "title": "Frequently Asked Questions",
+      "subtitle": "Everything you need to know before making a decision",
+      "tagline": "Clear answers. No guesswork."
+    },
+    "faqs": [
+      {
+        "title": "Where is Purva Sparkling Springs located?",
+        "items": [
+          "Purva Sparkling Springs is located off Bannerghatta Road, South Bangalore, with excellent connectivity to Jigani, NICE Junction, and Electronic City."
+        ]
+      },
+      {
+        "title": "What type of homes are available at Purva Sparkling Springs?",
+        "items": [
+          "Purva Sparkling Springs offers premium 3 & 4 BHK luxury villas, designed for buyers seeking privacy, space, and a nature-centric lifestyle."
+        ]
+      },
+      {
+        "title": "How large is the project and what is the land area?",
+        "items": [
+          "The project is spread across approximately 20 acres with expansive landscaped greens, water-inspired features, and low-density planning."
+        ]
+      },
+      {
+        "title": "What makes Purva Sparkling Springs unique among villa projects in Bangalore?",
+        "items": [
+          "Key highlights include Bangalore?s largest man-made waterfall, water-themed master planning, tranquil fountains, lush greenery, and a strong focus on wellness and slow living."
+        ]
+      },
+      {
+        "title": "Who is the developer of Purva Sparkling Springs?",
+        "items": [
+          "Purva Sparkling Springs is developed by Puravankara Limited, a reputed real estate brand with over five decades of experience in premium residential development."
+        ]
+      },
+      {
+        "title": "What amenities are available at Purva Sparkling Springs?",
+        "items": [
+          "Residents enjoy a 12,000 sq. ft. clubhouse, infinity pool, sports facilities, wellness zones, landscaped gardens, water bodies, and curated leisure spaces."
+        ]
+      },
+      {
+        "title": "Is Purva Sparkling Springs suitable for professionals working in Electronic City?",
+        "items": [
+          "Yes. Its proximity to Electronic City, Jigani Industrial Area, and NICE Road makes it ideal for professionals seeking luxury villa living with manageable commute times."
+        ]
+      },
+      {
+        "title": "What is the price range of villas at Purva Sparkling Springs?",
+        "items": [
+          "Luxury villas at Purva Sparkling Springs are priced from ?4.80 Cr onwards*, depending on configuration, plot size, and specifications."
+        ]
+      },
+      {
+        "title": "Is Purva Sparkling Springs a good option for end users?",
+        "items": [
+          "Yes. The project is ideal for end users who value privacy, wellness-focused living, spacious villas, and a serene gated community environment."
+        ]
+      },
+      {
+        "title": "Is Purva Sparkling Springs a good long-term investment?",
+        "items": [
+          "Yes. Strong fundamentals include large land parcel, limited luxury villa supply in South Bangalore, infrastructure growth along Bannerghatta Road, and strong brand credibility."
+        ]
+      },
+      {
+        "title": "Does Purva Sparkling Springs offer good rental potential?",
+        "items": [
+          "Yes. Luxury villas near Electronic City and NICE Road attract senior professionals and business owners, supporting premium rental demand in the long term."
+        ]
+      },
+      {
+        "title": "Is Purva Sparkling Springs RERA approved?",
+        "items": [
+          "Yes. Purva Sparkling Springs is RERA registered, ensuring transparency, regulatory compliance, and buyer protection as per applicable norms."
+        ]
+      },
+      {
+        "title": "Are these villas suitable for investors or end users?",
+        "items": [
+          "Both. End users benefit from privacy and wellness-centric living, while investors gain from limited villa inventory and long-term appreciation potential."
+        ]
+      },
+      {
+        "title": "How can I book a site visit or get detailed pricing?",
+        "items": [
+          "You can request a guided site visit, get the latest pricing and availability, and receive unbiased assistance through PropYouLike."
+        ]
+      }
+    ]
+  }
+}
