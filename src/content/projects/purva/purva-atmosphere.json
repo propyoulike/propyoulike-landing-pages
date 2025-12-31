@@ -237,14 +237,9 @@
     },
     "modelFlats": [
       {
-        "title": "Walkthrough",
-        "youtubeId": "cq1NXUc8O6s",
-        "order": 1
-      },
-      {
         "title": "Worldhome Collection",
         "youtubeId": "JVIGawUuJxY",
-        "order": 2
+        "order": 1
       }
     ],
     "unitPlans": [
@@ -339,6 +334,12 @@
     ]
   },
   "construction": {
+    "meta": {
+      "eyebrow": "PROGRESS",
+      "title": "Construction updates",
+      "subtitle": "Track the latest construction progress with photos and videos",
+      "tagline": "Updated regularly to reflect on-site progress"
+    },
     "updates": [
       {
         "name": "Status Video",
@@ -370,11 +371,15 @@
       {
         "name": "Vishal",
         "videoId": "1M2C-pbtDfU"
+      },
+      {
+        "name": "Rohit and Vinita Goyal",
+        "videoId": "cq1NXUc8O6s"
       }
     ]
   },
   "aboutBuilder": {
-    "name": "Puravankara",
+    "name": "purva",
     "meta": {
       "eyebrow": "Developer",
       "title": "About the Developer",
@@ -438,6 +443,14 @@
         "name": "Canara"
       }
     ]
+  },
+  "brochure": {
+    "meta": {
+      "eyebrow": "DOWNLOADS",
+      "title": "Brochure & official documents",
+      "subtitle": "Access brochures, floor plans, approvals and key project details",
+      "tagline": "Everything you need to evaluate the project ? in one place"
+    }
   },
   "faq": {
     "meta": {
