@@ -8,19 +8,35 @@
     },
     {
       "heading": "Data We Collect",
-      "body": "We collect personal information such as name, phone number, email address when users submit inquiry forms or interact with our lead generation tools."
+      "body": "We collect personal information such as name, phone number, and email address when users submit inquiry forms, request site visits, or interact with our lead generation tools."
     },
     {
       "heading": "How We Use Your Data",
-      "body": "Your information is used to contact you regarding your property inquiries, project updates, and related real estate services. We may share your details with our verified real estate partners when needed."
+      "body": "Your information is used to contact you regarding your property inquiries, site visit scheduling, pricing details, and related real estate assistance. Your details may be shared with verified developer sales teams strictly for fulfilling your request."
+    },
+    {
+      "heading": "WhatsApp and Phone Communication",
+      "body": "By submitting your contact details on PropYouLike, you consent to receiving calls, WhatsApp messages, or SMS from our team regarding your property inquiry, site visit coordination, and related real estate assistance. Communication may also involve verified developer sales representatives where required. We do not request sensitive information such as passwords, OTPs, banking details, or card information."
     },
     {
       "heading": "Third-Party Tools",
-      "body": "We may use tools such as Google Analytics, Facebook Pixel, LinkedIn Insight Tag, and Privyr to improve user experience and track marketing performance."
+      "body": "We use third-party tools such as Google Analytics, Google Tag Manager, Facebook Pixel, LinkedIn Insight Tag, Microsoft Clarity, Hotjar, and Privyr to improve website performance, analyze traffic, and manage lead communication."
+    },
+    {
+      "heading": "Cookies and Tracking Technologies",
+      "body": "PropYouLike uses cookies and similar tracking technologies to understand user behavior, measure marketing effectiveness, and improve user experience. These tools may collect anonymized usage data. Users can manage or disable cookies through their browser settings."
     },
     {
       "heading": "Your Rights",
-      "body": "You may request access, correction, or deletion of your personal data at any time by contacting us at the email provided."
+      "body": "You have the right to request access, correction, or deletion of your personal data. You may also opt out of marketing communications at any time by contacting us through the details provided below."
+    },
+    {
+      "heading": "Business Role Clarification",
+      "body": "PropYouLike is a real estate marketing and channel partner platform. We are not the developer, promoter, or owner of the projects listed on our website. All project names, trademarks, images, and details belong to their respective developers."
+    },
+    {
+      "heading": "Contact Information",
+      "body": "If you have any questions about this Privacy Policy or how your data is handled, you may contact us at: Email: hi@propyoulike.com | Phone: +91 93798 22010 | Address: PropYouLike, Nandi Enclave, Banashankari 3rd Stage, Bengaluru, Karnataka, India."
     }
   ]
 }

@@ -4,19 +4,39 @@
   "content": [
     {
       "heading": "Introduction",
-      "body": "By accessing PropYouLike, you agree to the terms outlined here. If you disagree with any part, please discontinue use."
+      "body": "By accessing or using the PropYouLike website, you agree to comply with and be bound by these Terms of Use. If you do not agree with any part of these terms, you must discontinue use of the website."
     },
     {
-      "heading": "Use of Information",
-      "body": "Content provided on this platform including pricing, availability, and specifications is based on inputs from developers and may change without notice."
+      "heading": "Nature of Services",
+      "body": "PropYouLike operates as a RERA-registered real estate marketing and channel partner. We assist users with property discovery, project information, lead facilitation, and site visit coordination. PropYouLike does not sell properties directly and is not the developer, promoter, or owner of the projects listed."
+    },
+    {
+      "heading": "Information Accuracy",
+      "body": "All property-related information including pricing, availability, layouts, images, amenities, timelines, and specifications is provided by the respective developers or authorized sources. Such information is subject to change without prior notice. Users are advised to independently verify all details with the developer and through official RERA portals before making any decisions."
+    },
+    {
+      "heading": "Use of Website",
+      "body": "Users agree to use this website only for lawful purposes related to property research and enquiries. Any misuse, misrepresentation, automated data extraction, or unauthorized commercial use of the content is strictly prohibited."
+    },
+    {
+      "heading": "Lead Submission & Communication",
+      "body": "By submitting your contact details on PropYouLike, you consent to being contacted by PropYouLike representatives and/or authorized developer sales teams via phone calls, WhatsApp, email, or SMS regarding your enquiry. You understand that submitting a lead does not constitute a booking or contractual obligation."
     },
     {
       "heading": "Limitation of Liability",
-      "body": "PropYouLike shall not be liable for any losses arising due to reliance on property information. Users are advised to verify details with the developer or official RERA sources."
+      "body": "PropYouLike shall not be liable for any direct, indirect, incidental, or consequential losses arising from reliance on information available on this website. All property transactions are strictly between the buyer and the respective developer."
     },
     {
       "heading": "Intellectual Property",
-      "body": "All branding, content, and assets on this platform are the property of PropYouLike or their respective owners."
+      "body": "All PropYouLike branding, website design, original content, and proprietary materials are the intellectual property of PropYouLike. Third-party logos, images, and trademarks belong to their respective owners and are used for informational purposes only."
+    },
+    {
+      "heading": "Third-Party Links",
+      "body": "This website may contain links to third-party websites including developer portals, RERA websites, and external tools. PropYouLike is not responsible for the content, accuracy, or practices of such third-party websites."
+    },
+    {
+      "heading": "Governing Law",
+      "body": "These Terms of Use shall be governed by and construed in accordance with the laws of India. Any disputes shall be subject to the exclusive jurisdiction of courts in Bengaluru, Karnataka."
     }
   ]
 }

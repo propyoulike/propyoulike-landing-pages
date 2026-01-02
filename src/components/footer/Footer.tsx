@@ -1,73 +1,77 @@
 import PropYouLike from "@/content/global/propyoulike.json";
-import {
-  Youtube,
-  Linkedin,
-  Instagram,
-  Facebook,
-} from "lucide-react";
+import { Youtube, Linkedin, Instagram, Facebook } from "lucide-react";
 
 interface FooterProps {
-  project?: any;
+  project?: {
+    projectName?: string;
+    city?: string;
+  };
   builder?: {
     name?: string;
     logo?: string;
   };
-  city?: string;
 }
 
-export default function Footer({
-  project,
-  builder,
-  city,
-}: FooterProps) {
-  /* -------------------------------------------------
-     Resolve context (Project → Builder → City → Home)
-  -------------------------------------------------- */
-  const resolvedBuilder =
-    project?.aboutBuilder ?? builder ?? null;
-
-  const builderName = resolvedBuilder?.name;
-  const builderLogo = resolvedBuilder?.logo;
+export default function Footer({ project, builder }: FooterProps) {
+  const builderName = builder?.name;
+  const builderLogo = builder?.logo;
   const projectName = project?.projectName;
-
-  const showContext =
-    builderName || projectName || city;
+  const city = project?.city;
 
   const social = PropYouLike.social ?? {};
 
   return (
-    <footer className="relative mt-16 bg-gradient-to-b from-[#060B16] to-[#020617] text-muted-foreground">
+    <footer
+      id="site-footer"
+      className="relative mt-16 bg-gradient-to-b from-[#060B16] to-[#020617] text-muted-foreground"
+    >
       <div className="container mx-auto px-4">
 
         {/* ─────────────────────────────────
-           TOP CONTEXT (hidden on homepage)
+           PLATFORM IDENTITY (ALWAYS VISIBLE)
         ───────────────────────────────── */}
-        {showContext && (
+        <div className="py-6 flex items-center gap-3">
+          {PropYouLike.logo && (
+            <img
+              src={PropYouLike.logo}
+              alt="PropYouLike"
+              className="h-7 w-auto object-contain opacity-90"
+              loading="lazy"
+            />
+          )}
+          <div className="text-sm font-semibold text-white">
+            {PropYouLike.name}
+          </div>
+        </div>
+
+        <div className="border-t border-white/10" />
+
+        {/* ─────────────────────────────────
+           CONTEXT (BUILDER / PROJECT)
+        ───────────────────────────────── */}
+        {(builderName || projectName || city) && (
           <>
             <div className="py-6">
               <div className="flex items-center gap-3">
                 {builderLogo && (
                   <img
                     src={builderLogo}
-                    alt={builderName}
+                    alt={builderName ?? "Builder"}
                     className="h-6 w-auto object-contain opacity-80"
                     loading="lazy"
                   />
                 )}
-
                 <div>
                   {builderName && (
                     <div className="text-sm font-semibold text-white">
                       {builderName}
                     </div>
                   )}
-
                   {projectName && (
                     <div className="text-xs text-muted-foreground">
                       {projectName}
                     </div>
                   )}
-
                   {!projectName && city && (
                     <div className="text-xs text-muted-foreground">
                       Properties in {city}
@@ -76,120 +80,86 @@ export default function Footer({
                 </div>
               </div>
             </div>
-
             <div className="border-t border-white/10" />
           </>
         )}
 
         {/* ─────────────────────────────────
-           BOTTOM: Brand + Compliance + Social
+           COMPLIANCE (NEVER CONDITIONAL)
         ───────────────────────────────── */}
         <div className="py-6 space-y-4 text-xs leading-relaxed">
 
-          {/* Brand + RERA Disclaimer */}
-          {PropYouLike?.rera?.disclaimer && (
-            <div className="flex items-start gap-3">
-              {PropYouLike.logo && (
-                <img
-                  src={PropYouLike.logo}
-                  alt="PropYouLike"
-                  className="h-5 w-auto opacity-70"
-                  loading="lazy"
-                />
-              )}
-              <p className="max-w-3xl">
-                {PropYouLike.rera.disclaimer}
-              </p>
-            </div>
-          )}
+          <p className="max-w-3xl">
+            <strong>Channel Partner Disclosure:</strong>{" "}
+            PropYouLike is a RERA-registered real estate marketing platform and
+            acts as an official channel partner for select developers. We assist
+            homebuyers with verified project information, pricing guidance, and
+            site visit coordination. PropYouLike is not the developer, promoter,
+            or owner of the projects listed on this website.
+          </p>
 
-          {/* RERA Registration */}
-          {PropYouLike?.rera?.id && (
-            <p>
-              <span className="font-medium text-white/80">
-                RERA Registration ({PropYouLike.rera.state}):
-              </span>{" "}
-              {PropYouLike.rera.id}
-            </p>
-          )}
+          <p>
+            <strong>Contact:</strong>{" "}
+            <a href="mailto:hi@propyoulike.com">hi@propyoulike.com</a> | +91 93798
+            22010
+          </p>
 
-          {/* Social Icons (trust zone only) */}
+          <p>
+            <strong>Address:</strong> Banashankari 3rd Stage, Bengaluru,
+            Karnataka, India – 560085
+          </p>
+
+          <p>
+            <strong>RERA Registration ({PropYouLike.rera.state}):</strong>{" "}
+            {PropYouLike.rera.id}
+          </p>
+
           {(social.youtube ||
             social.linkedin ||
             social.instagram ||
             social.facebook) && (
             <div className="flex items-center gap-4 pt-2">
               {social.youtube && (
-                <a
-                  href={social.youtube}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="YouTube"
-                  className="hover:text-white transition"
-                >
+                <a href={social.youtube} target="_blank" rel="noopener noreferrer">
                   <Youtube className="h-4 w-4" />
                 </a>
               )}
-
               {social.linkedin && (
-                <a
-                  href={social.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="LinkedIn"
-                  className="hover:text-white transition"
-                >
+                <a href={social.linkedin} target="_blank" rel="noopener noreferrer">
                   <Linkedin className="h-4 w-4" />
                 </a>
               )}
-
               {social.instagram && (
-                <a
-                  href={social.instagram}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Instagram"
-                  className="hover:text-white transition"
-                >
+                <a href={social.instagram} target="_blank" rel="noopener noreferrer">
                   <Instagram className="h-4 w-4" />
                 </a>
               )}
-
               {social.facebook && (
-                <a
-                  href={social.facebook}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Facebook"
-                  className="hover:text-white transition"
-                >
+                <a href={social.facebook} target="_blank" rel="noopener noreferrer">
                   <Facebook className="h-4 w-4" />
                 </a>
               )}
             </div>
           )}
 
-          {/* Legal links */}
           <div className="flex flex-wrap gap-4 pt-2">
-            <a href="/privacy-policy" className="hover:text-white">
+            <a href="/legal/about" target="_blank" rel="noopener noreferrer">
+              About Us
+            </a>
+            <a href="/legal/contact" target="_blank" rel="noopener noreferrer">
+              Contact Us
+            </a>
+            <a href="/legal/privacy" target="_blank" rel="noopener noreferrer">
               Privacy Policy
             </a>
-            <a href="/terms" className="hover:text-white">
+            <a href="/legal/terms" target="_blank" rel="noopener noreferrer">
               Terms of Use
             </a>
-            {PropYouLike?.rera?.verificationUrl && (
-              <a
-                href={PropYouLike.rera.verificationUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-white"
-              >
-                RERA Disclaimer
-              </a>
-            )}
+            <a href="/legal/rera" target="_blank" rel="noopener noreferrer">
+              RERA Disclaimer
+            </a>
           </div>
 
-          {/* Copyright */}
           <p className="pt-2 text-white/40">
             © {new Date().getFullYear()} PropYouLike. All rights reserved.
           </p>

@@ -1,37 +1,3 @@
-// src/templates/common/LocationUI/LocationUI_component.tsx
-
-/**
- * ============================================================
- * LocationUI_component
- * ============================================================
- *
- * ROLE
- * ------------------------------------------------------------
- * - Displays location media (map / video)
- * - Shows categorized distance & connectivity data
- * - Provides a single, soft site-visit CTA
- *
- * ARCHITECTURAL GUARANTEES
- * ------------------------------------------------------------
- * - Pure render from props
- * - No project identity or routing logic
- * - Hydration-safe
- * - Optional browser-only enhancements
- *
- * DESIGN PRINCIPLES
- * ------------------------------------------------------------
- * 1. PURE BY DEFAULT
- *    → Rendering must succeed without browser APIs
- *
- * 2. OPTIONAL ENHANCEMENTS
- *    → Animations must never block rendering
- *
- * 3. SCHEMA-ALIGNED
- *    → Props reflect authoring intent, not runtime guesses
- *
- * ============================================================
- */
-
 import { memo } from "react";
 import { Button } from "@/components/ui/button";
 import { useLeadCTAContext } from "@/components/lead/LeadCTAProvider";
@@ -43,27 +9,16 @@ import LocationCategoryAccordion from "./LocationCategoryAccordion";
 import BaseSection from "../BaseSection";
 import type { SectionMeta } from "@/content/types/sectionMeta";
 
-/* ---------------------------------------------------------------------
-   TYPES (SCHEMA-ALIGNED)
-------------------------------------------------------------------------*/
 interface LocationUIProps {
   id?: string;
-
-  /** Canonical section meta */
   meta?: SectionMeta;
-
   videoId?: string;
   mapUrl?: string;
-
   categories?: any[];
 }
 
-/* ---------------------------------------------------------------------
-   COMPONENT
-------------------------------------------------------------------------*/
 const LocationUI_component = memo(function LocationUI_component({
   id = "locationUI",
-
   meta = {
     eyebrow: "LOCATION",
     title: "Location & connectivity",
@@ -72,15 +27,10 @@ const LocationUI_component = memo(function LocationUI_component({
     tagline:
       "Understand daily travel convenience before you visit",
   },
-
   videoId,
   mapUrl,
   categories = [],
 }: LocationUIProps) {
-  /* ------------------------------------------------------------
-     Optional animation enhancement
-     (Safe: hook self-guards for browser / SSR)
-  ------------------------------------------------------------ */
   useScrollReveal(".fade-up");
 
   const { openCTA } = useLeadCTAContext();
@@ -98,14 +48,16 @@ const LocationUI_component = memo(function LocationUI_component({
       padding="md"
     >
       {/* ─────────────────────────────
-         MEDIA (VIDEO / MAP)
+         MEDIA (SPACE RESERVED)
       ───────────────────────────── */}
       {(videoId || mapUrl) && (
-        <div className="fade-up">
-          <LocationMediaPanel
-            videoId={videoId}
-            mapUrl={mapUrl}
-          />
+        <div className="fade-up contain-layout">
+          <div className="min-h-[280px] md:min-h-[360px]">
+            <LocationMediaPanel
+              videoId={videoId}
+              mapUrl={mapUrl}
+            />
+          </div>
         </div>
       )}
 
@@ -113,7 +65,7 @@ const LocationUI_component = memo(function LocationUI_component({
          DISTANCES / CATEGORIES
       ───────────────────────────── */}
       {categories.length > 0 && (
-        <div className="max-w-4xl mx-auto mt-10 fade-up">
+        <div className="max-w-4xl mx-auto mt-10 fade-up contain-layout">
           <LocationCategoryAccordion
             categories={categories}
           />
@@ -121,21 +73,23 @@ const LocationUI_component = memo(function LocationUI_component({
       )}
 
       {/* ─────────────────────────────
-         SINGLE, SOFT CTA
+         CTA (HEIGHT LOCKED)
       ───────────────────────────── */}
-      <div className="mt-14 text-center fade-up">
-        <Button
-          size="lg"
-          className="rounded-xl px-12"
-          onClick={() =>
-            openCTA({
-              source: "section",
-              label: "location_book_site_visit",
-            })
-          }
-        >
-          Book site visit
-        </Button>
+      <div className="mt-14 text-center fade-up contain-layout">
+        <div className="h-[56px] flex items-center justify-center">
+          <Button
+            size="lg"
+            className="rounded-xl px-12"
+            onClick={() =>
+              openCTA({
+                source: "section",
+                label: "location_book_site_visit",
+              })
+            }
+          >
+            Book site visit
+          </Button>
+        </div>
       </div>
     </BaseSection>
   );

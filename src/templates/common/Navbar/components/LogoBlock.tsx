@@ -49,24 +49,24 @@ export default function LogoBlock({
       )}
 
       {/* -------- Project Logo OR Name -------- */}
-      {logo ? (
-        <img
-          src={logo}
-          alt={projectName ? `${projectName} logo` : "Project logo"}
-          width={shrink ? 32 : 40}
-          height={shrink ? 32 : 40}
-          className="transition-all object-contain"
-          draggable={false}
-        />
-      ) : (
-        <span
-          className={`${
-            shrink ? "text-sm" : "text-base"
-          } font-bold leading-none text-foreground whitespace-nowrap`}
-        >
-          {projectName}
-        </span>
-      )}
+{logo ? (
+  <img
+    src={logo}
+    alt={projectName ? `${projectName} logo` : "Project logo"}
+    width={shrink ? 32 : 40}
+    height={shrink ? 32 : 40}
+    className="transition-all object-contain"
+    draggable={false}
+  />
+) : projectName ? (
+  <span
+    className={`${
+      shrink ? "text-sm" : "text-base"
+    } font-bold leading-none text-foreground whitespace-nowrap`}
+  >
+    {projectName}
+  </span>
+) : null}
     </button>
   );
 }

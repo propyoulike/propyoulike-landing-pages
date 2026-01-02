@@ -1,11 +1,17 @@
-// src/templates/common/Testimonials_component/TestimonialCard.tsx
-
 import { Play } from "lucide-react";
 import StarRating from "./StarRating";
 import TestimonialVideoPlayer from "./TestimonialVideoPlayer";
 
+interface Testimonial {
+  name: string;
+  quote?: string;
+  rating?: number;
+  videoId?: string;
+  thumbUrl?: string;
+}
+
 interface TestimonialCardProps {
-  t: any;
+  t: Testimonial;
   activeVideo: string | null;
   setActiveVideo: (v: string | null) => void;
   isLarge?: boolean;
@@ -20,12 +26,13 @@ export default function TestimonialCard({
   onPlay,
 }: TestimonialCardProps) {
   const hasVideo = Boolean(t.videoId);
-  const playing = activeVideo === t.videoId;
+  const playing = hasVideo && activeVideo === t.videoId;
 
   const thumbnail =
     t.thumbUrl ||
-    (hasVideo &&
-      `https://img.youtube.com/vi/${t.videoId}/maxresdefault.jpg`);
+    (hasVideo
+      ? `https://img.youtube.com/vi/${t.videoId}/hqdefault.jpg`
+      : undefined);
 
   return (
     <div className="bg-card rounded-2xl overflow-hidden border border-border shadow-md">
@@ -34,24 +41,33 @@ export default function TestimonialCard({
         <div className="relative aspect-video bg-muted">
           {playing ? (
             <TestimonialVideoPlayer
-              videoId={t.videoId}
+              videoId={t.videoId!}
               onExit={() => setActiveVideo(null)}
             />
           ) : (
             <>
-              <img
-                src={thumbnail}
-                alt={`Testimonial from ${t.name}`}
-                loading="lazy"
-                decoding="async"
-                className="w-full h-full object-cover"
-              />
+              {thumbnail ? (
+                <img
+                  src={thumbnail}
+                  alt={`Testimonial from ${t.name}`}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center text-xs text-muted-foreground">
+                  Video testimonial
+                </div>
+              )}
 
               <button
                 aria-label={`Play testimonial video by ${t.name}`}
                 onClick={() => {
-                  setActiveVideo(t.videoId);
-                  onPlay?.();
+                  setActiveVideo(null);
+                  requestAnimationFrame(() => {
+                    setActiveVideo(t.videoId!);
+                    onPlay?.();
+                  });
                 }}
                 className="absolute inset-0 flex items-center justify-center 
                            bg-black/20 hover:bg-black/30 transition"

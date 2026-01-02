@@ -6,27 +6,22 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "build:dev": "vite build --mode development && npm run postbuild",
-  "build:bigrock": "vite build --mode bigrock",
-    "postbuild": "node scripts/generate-sitemap.cjs && node scripts/generate-prerender-pages.cjs",
-  "deploy:bigrock": "npm run build:bigrock && npm run postbuild && scripts\\deploy-bigrock.bat",
+    "build:dev": "vite build --mode development",
+    "build:bigrock": "vite build --mode bigrock",
+    "deploy:build": "node scripts/deploy-build.cjs",
+    "deploy:bigrock": "npm run deploy:build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "start": "vite",
     "generate:templates": "tsx scripts/generateTemplates.ts",
     "validate:projects": "tsx scripts/validateProjects.ts",
     "validate:section-templates": "tsx scripts/jsonTemplateGenerator/validateSectionTemplates.ts",
-    "generate:authoring-schema":
-      "cross-env TS_NODE_PROJECT=tsconfig.node.json node --loader ts-node/esm scripts/jsonTemplateGenerator/authoring/deriveAuthoringSchema.ts",
-
-    "generate:json-templates":
-      "cross-env TS_NODE_PROJECT=tsconfig.node.json node --loader ts-node/esm scripts/jsonTemplateGenerator/generateTemplatesFromAuthoring.ts",
-
-    "validate:templates":
-      "cross-env TS_NODE_PROJECT=tsconfig.node.json node --loader ts-node/esm scripts/jsonTemplateGenerator/validateTemplates.ts",
-
-    "generate:authoring-templates":
-      "cross-env TS_NODE_PROJECT=tsconfig.node.json node --loader ts-node/esm scripts/jsonTemplateGenerator/authoring/generateAuthoringTemplates.ts"
+    "generate:authoring-schema": 
+"cross-env TS_NODE_PROJECT=tsconfig.node.json node --loader ts-node/esm scripts/jsonTemplateGenerator/authoring/deriveAuthoringSchema.ts",
+    "generate:json-templates": 
+"cross-env TS_NODE_PROJECT=tsconfig.node.json node --loader ts-node/esm scripts/jsonTemplateGenerator/generateTemplatesFromAuthoring.ts",
+    "validate:templates": "cross-env TS_NODE_PROJECT=tsconfig.node.json node --loader ts-node/esm scripts/jsonTemplateGenerator/validateTemplates.ts",
+    "generate:authoring-templates": 
+"cross-env TS_NODE_PROJECT=tsconfig.node.json node --loader ts-node/esm scripts/jsonTemplateGenerator/authoring/generateAuthoringTemplates.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

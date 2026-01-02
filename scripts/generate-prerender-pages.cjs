@@ -4,24 +4,6 @@
  * ============================================================
  * STATIC PRERENDER (SEO + DATA ONLY)
  * ============================================================
- *
- * 🔒 HARD RULES (LOCKED — NON-NEGOTIABLE)
- * ------------------------------------------------------------
- * 1. Prerenders ONLY:
- *    - SEO <head> metadata
- *    - Serialized project payload (JSON)
- *
- * 2. NEVER:
- *    - Imports React
- *    - Renders UI
- *    - Mutates section data at runtime
- *
- * 3. Runtime JS is injected via Vite manifest
- *    - No hardcoded filenames
- *    - Hash-safe
- *
- * If this script throws → BUILD MUST FAIL
- * ============================================================
  */
 
 const fs = require("fs");
@@ -33,7 +15,7 @@ const {
 } = require("./utils/projectIdentity.cjs");
 
 /* ============================================================
-   PATHS (EXPLICIT — NO MAGIC)
+   PATHS
 ============================================================ */
 
 const PROJECTS_DIR = path.resolve("src/content/projects");
@@ -43,9 +25,10 @@ const GLOBAL_DIR = path.resolve("src/content/global");
 const DIST_DIR = path.resolve("dist");
 const TEMPLATE_PATH = path.resolve("project.html");
 const MANIFEST_PATH = path.join(DIST_DIR, ".vite", "manifest.json");
+const ORIGIN = "https://propyoulike.com";
 
 /* ============================================================
-   TEMPLATE LOAD (FAIL FAST)
+   TEMPLATE
 ============================================================ */
 
 if (!fs.existsSync(TEMPLATE_PATH)) {
@@ -55,158 +38,133 @@ if (!fs.existsSync(TEMPLATE_PATH)) {
 const TEMPLATE = fs.readFileSync(TEMPLATE_PATH, "utf8");
 
 if (!TEMPLATE.includes("__PROJECT_JSON__")) {
-  throw new Error("❌ project.html missing __PROJECT_JSON__ placeholder");
+  throw new Error("❌ project.html missing __PROJECT_JSON__");
 }
 
 if (!TEMPLATE.includes("<!--__PROJECT_ENTRY__-->")) {
-  throw new Error(
-    "❌ project.html missing <!--__PROJECT_ENTRY__--> placeholder"
-  );
+  throw new Error("❌ project.html missing <!--__PROJECT_ENTRY__-->");
 }
 
 /* ============================================================
-   MANIFEST LOAD (CRITICAL)
+   MANIFEST
 ============================================================ */
 
 if (!fs.existsSync(MANIFEST_PATH)) {
-  throw new Error(
-    "❌ Vite manifest missing at dist/.vite/manifest.json. Run vite build first."
-  );
+  throw new Error("❌ Vite manifest missing");
 }
 
 const manifest = JSON.parse(fs.readFileSync(MANIFEST_PATH, "utf8"));
-const projectEntryFile =
-  manifest["src/projectEntry.tsx"]?.file;
+const projectEntryFile = manifest["src/projectEntry.tsx"]?.file;
 
 if (!projectEntryFile) {
-  throw new Error(
-    "❌ src/projectEntry.tsx not found in Vite manifest"
-  );
+  throw new Error("❌ projectEntry not found in manifest");
 }
 
 console.log("✓ Using project entry:", projectEntryFile);
 
 /* ============================================================
-   JSON SAFE LOAD
+   HELPERS
 ============================================================ */
 
-function readJSONIfExists(filePath) {
-  if (!fs.existsSync(filePath)) return null;
-  return JSON.parse(fs.readFileSync(filePath, "utf8"));
+function readJSONIfExists(p) {
+  if (!fs.existsSync(p)) return null;
+  return JSON.parse(fs.readFileSync(p, "utf8"));
 }
 
 /* ============================================================
-   FAQ MERGE (BUILD-TIME, DATA ONLY)
+   FAQ MERGE
 ============================================================ */
 
 function mergeFaqs({ builder, projectSlug }) {
-  const globalBlock =
+  const globalFaqs =
     readJSONIfExists(path.join(GLOBAL_DIR, "faq.json"))?.faqs ?? [];
 
-  const builderBlock =
+  const builderFaqs =
     readJSONIfExists(
       path.join(BUILDERS_DIR, builder, "builder_faq.json")
     )?.faqs ?? [];
 
-  const projectBlock =
+  const projectFaqs =
     readJSONIfExists(
-      path.join(
-        PROJECTS_DIR,
-        builder,
-        `${builder}-${projectSlug}.json`
-      )
-    )?.faq ?? {};
-
-  const projectFaqs = projectBlock.faqs ?? [];
-
-  if (
-    !Array.isArray(globalBlock) ||
-    !Array.isArray(builderBlock) ||
-    !Array.isArray(projectFaqs)
-  ) {
-    throw new Error(
-      `❌ FAQ arrays invalid for ${builder}/${projectSlug}`
-    );
-  }
-
-  const map = new Map();
-
-  for (const f of globalBlock) map.set(f.question, f);
-  for (const f of builderBlock) map.set(f.question, f);
-  for (const f of projectFaqs) map.set(f.question, f);
+      path.join(PROJECTS_DIR, builder, `${builder}-${projectSlug}.json`)
+    )?.faq?.faqs ?? [];
 
   return {
-    meta: projectBlock.meta ?? {
+    meta: {
       eyebrow: "FAQ",
       title: "Frequently Asked Questions",
-      subtitle:
-        "Everything you should know before buying this home",
+      subtitle: "Everything you should know before buying this home",
     },
-    faqs: Array.from(map.values()),
+    faqs: [...globalFaqs, ...builderFaqs, ...projectFaqs],
   };
 }
 
 /* ============================================================
-   SEO (STATIC, SAFE)
+   SEO META
 ============================================================ */
 
 function resolveOgImage(payload, publicSlug) {
-  // Payload may be null (e.g. builder pages)
-  if (payload && payload.hero) {
-    const hero = payload.hero;
-
-    // 1️⃣ Prefer YouTube thumbnail
-    if (hero.videoId) {
-      return `https://img.youtube.com/vi/${hero.videoId}/maxresdefault.jpg`;
-    }
-
-    // 2️⃣ Fallback to first hero image
-    if (Array.isArray(hero.images) && hero.images.length > 0) {
-      return hero.images[0];
-    }
+  if (payload?.hero?.videoId) {
+    return `https://img.youtube.com/vi/${payload.hero.videoId}/maxresdefault.jpg`;
   }
 
-  // 3️⃣ Final static fallback (always safe)
+  if (payload?.hero?.images?.length) {
+    return payload.hero.images[0];
+  }
+
   return `/images/projects/${publicSlug}/og.jpg`;
 }
-
-/* ============================================================
-   SEO (STATIC, SAFE, HERO-AWARE)
-============================================================ */
 
 function buildSEO(project, payload) {
   const { projectName, city, zone, locality, area, publicSlug } = project;
 
-  if (!projectName || !city || !publicSlug) {
-    throw new Error(`❌ SEO identity incomplete for ${projectName || "UNKNOWN"}`);
-  }
-
-  const ORIGIN = "https://propyoulike.com";
-
   const title = `${projectName} | ${city} | ${zone} | ${locality} | ${area}`;
-  const description =
-    `Explore ${projectName} pricing, floor plans, amenities and location.`;
+  const description = `Explore ${projectName} pricing, floor plans, amenities and location.`;
 
   const ogImage = resolveOgImage(payload, publicSlug);
-  const ogImageUrl = ogImage.startsWith("http")
-    ? ogImage
-    : ORIGIN + ogImage;
+  const ogImageUrl = ogImage.startsWith("http") ? ogImage : ORIGIN + ogImage;
 
   return `
 <title>${title}</title>
 <meta name="description" content="${description}" />
-<link rel="canonical" href="${ORIGIN}/${publicSlug}" />
+<link rel="canonical" href="${ORIGIN}/${publicSlug}/" />
 
 <meta property="og:type" content="website" />
 <meta property="og:title" content="${title}" />
 <meta property="og:description" content="${description}" />
-<meta property="og:url" content="${ORIGIN}/${publicSlug}" />
+<meta property="og:url" content="${ORIGIN}/${publicSlug}/" />
 <meta property="og:image" content="${ogImageUrl}" />
 
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="${title}" />
 <meta name="twitter:description" content="${description}" />
 <meta name="twitter:image" content="${ogImageUrl}" />
+`;
+}
+
+/* ============================================================
+   PROJECT SCHEMA (THE MISSING PIECE)
+============================================================ */
+
+function buildProjectSchema(project) {
+  const residence = {
+    "@context": "https://schema.org",
+    "@type": "Residence",
+    name: project.projectName,
+    url: `${ORIGIN}/${project.publicSlug}/`,
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: project.locality,
+      addressRegion: project.city,
+      postalCode: project.pincode,
+      addressCountry: "IN",
+    },
+  };
+
+  return `
+<script type="application/ld+json">
+${JSON.stringify(residence)}
+</script>
 `;
 }
 
@@ -218,58 +176,32 @@ function getProjects() {
   const payloads = [];
 
   for (const builder of fs.readdirSync(PROJECTS_DIR)) {
-    const builderDir = path.join(PROJECTS_DIR, builder);
-    if (!fs.statSync(builderDir).isDirectory()) continue;
+    const dir = path.join(PROJECTS_DIR, builder);
+    if (!fs.statSync(dir).isDirectory()) continue;
 
-    for (const file of fs.readdirSync(builderDir)) {
+    for (const file of fs.readdirSync(dir)) {
       if (!file.endsWith(".json")) continue;
 
-      const raw = JSON.parse(
-        fs.readFileSync(path.join(builderDir, file), "utf8")
-      );
+      const raw = JSON.parse(fs.readFileSync(path.join(dir, file), "utf8"));
+      const identity = getProjectIdentity(raw.project ?? raw);
 
-      const identity = getProjectIdentity(raw);
       if (!identity) {
-        throw new Error(
-          `❌ Invalid project identity in ${builder}/${file}`
-        );
+        throw new Error(`❌ Invalid project identity in ${builder}/${file}`);
       }
 
-      const payload = {
+      payloads.push({
         ...raw,
         project: identity,
         faq: mergeFaqs({
           builder,
           projectSlug: identity.slug,
         }),
-        __sourceFile: `${builder}/${file}`,
-      };
-
-      delete payload.slug;
-      delete payload.builder;
-      delete payload.projectName;
-      delete payload.city;
-
-      payloads.push(payload);
+      });
     }
   }
 
-  enforceProjectGuards(payloads.map((p) => p.project));
+  enforceProjectGuards(payloads.map(p => p.project));
   return payloads;
-}
-
-/* ============================================================
-   SERIALIZATION
-============================================================ */
-
-function serialize(payload) {
-  try {
-    return JSON.stringify(payload);
-  } catch {
-    throw new Error(
-      `❌ Failed to serialize ${payload.project.projectName}`
-    );
-  }
 }
 
 /* ============================================================
@@ -278,8 +210,12 @@ function serialize(payload) {
 
 for (const payload of getProjects()) {
   const html = TEMPLATE
-    .replace("<!--__SOCIAL_META__-->", buildSEO(payload.project, payload))
-    .replace("__PROJECT_JSON__", serialize(payload))
+    .replace(
+      "<!--__SOCIAL_META__-->",
+      buildSEO(payload.project, payload) +
+        buildProjectSchema(payload.project)
+    )
+    .replace("__PROJECT_JSON__", JSON.stringify(payload))
     .replace(
       "<!--__PROJECT_ENTRY__-->",
       `<script type="module" src="/${projectEntryFile}"></script>`
@@ -292,6 +228,4 @@ for (const payload of getProjects()) {
   console.log(`✓ prerendered /${payload.project.publicSlug}`);
 }
 
-/* ============================================================
-   END OF FILE — DO NOT EXTEND
-============================================================ */
+console.log("✅ Project prerender complete");

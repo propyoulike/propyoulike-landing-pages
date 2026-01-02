@@ -1,17 +1,27 @@
-// src/templates/common/Testimonials_component/TestimonialSingle.tsx
-
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useLeadCTAContext } from "@/components/lead/LeadCTAProvider";
 import TestimonialCard from "./TestimonialCard";
 
-export default function TestimonialSingle({ t }: { t: any }) {
+interface Testimonial {
+  name: string;
+  quote?: string;
+  rating?: number;
+  videoId?: string;
+  thumbUrl?: string;
+}
+
+export default function TestimonialSingle({ t }: { t: Testimonial }) {
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
   const { openCTA } = useLeadCTAContext();
 
+  // Reset video if testimonial changes
+  useEffect(() => {
+    setActiveVideo(null);
+  }, [t]);
+
   return (
     <div className="max-w-3xl mx-auto">
-
       {/* Testimonial */}
       <TestimonialCard
         t={t}
@@ -27,16 +37,15 @@ export default function TestimonialSingle({ t }: { t: any }) {
           variant="secondary"
           className="rounded-xl px-10"
           onClick={() =>
-            openCTA({
-              source: "testimonials",
-              label: "Single Testimonial – Book Site Visit",
-            })
+            openCTA(
+              "testimonial_single_book_site_visit",
+              "I want to book a site visit after watching a testimonial."
+            )
           }
         >
           Book Site Visit
         </Button>
       </div>
-
     </div>
   );
 }

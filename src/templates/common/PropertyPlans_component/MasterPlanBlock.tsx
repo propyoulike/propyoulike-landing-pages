@@ -3,6 +3,7 @@
 import { Card } from "@/components/ui/card";
 import { useState } from "react";
 import ImageZoomModal from "@/components/image/ImageZoomModal";
+import { cfImage } from "@/lib/media/cloudflareImage";
 
 interface MasterPlanBlockProps {
   image?: string;
@@ -18,6 +19,9 @@ export default function MasterPlanBlock({
   const [zoomImage, setZoomImage] = useState<string | null>(null);
 
   if (!image) return null;
+
+  const previewSrc = cfImage(image, { width: 1200 });
+  const zoomSrc = cfImage(image, { width: 2400, quality: 90 });
 
   return (
     <>
@@ -40,13 +44,13 @@ export default function MasterPlanBlock({
 
           <button
             type="button"
-            onClick={() => setZoomImage(image)}
+            onClick={() => setZoomImage(zoomSrc)}
             className="relative block w-full cursor-zoom-in focus:outline-none"
             aria-label="Tap to zoom master plan"
             title="Tap to zoom"
           >
             <img
-              src={image}
+              src={previewSrc}
               alt={title ?? "Master Plan"}
               className="w-full h-auto rounded-xl object-contain bg-gray-50"
               loading="lazy"

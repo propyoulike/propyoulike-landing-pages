@@ -43,6 +43,7 @@ type ProjectPageProps = {
   project: {
     slug: string;
     builder: string;
+    builderName?: string;     // human name (NEW)
     type: string;
     projectName?: string;
     status?: string;

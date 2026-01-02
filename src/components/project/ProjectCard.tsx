@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
 import { useLeadCTAContext } from "@/components/lead/LeadCTAProvider";
 import { useState } from "react";
+import { cfImage } from "@/lib/media/cloudflareImage";
+
+/* ============================================================
+   CTA MESSAGE MAP
+============================================================ */
 
 const CTA_MESSAGES = {
   site_visit: (projectName: string) =>
@@ -11,10 +16,31 @@ const CTA_MESSAGES = {
     `Please send the brochure for ${projectName}.`,
 };
 
+/* ============================================================
+   TYPES
+============================================================ */
+
 interface ProjectCardProps {
   project: any;
   variant?: "default" | "homepage";
 }
+
+/* ============================================================
+   IMAGE PROXY (Cloudflare Worker)
+   - Prevents CORS / hotlink blocks
+   - Origin-agnostic
+============================================================ */
+
+function proxifyImage(url?: string | null) {
+  if (!url) return null;
+  return `https://image-proxy.propyoulike.workers.dev/${encodeURIComponent(
+    url
+  )}`;
+}
+
+/* ============================================================
+   COMPONENT
+============================================================ */
 
 export default function ProjectCard({
   project,
@@ -26,6 +52,7 @@ export default function ProjectCard({
 
   const {
     slug,
+    publicSlug,
     projectName,
     heroImage,
     heroVideoId,
@@ -38,6 +65,12 @@ export default function ProjectCard({
     locality,
   } = project;
 
+  /* ---------------- HARD GUARD ---------------- */
+  if (!publicSlug) {
+    console.error("❌ Project missing publicSlug", project);
+    return null;
+  }
+
   const name = projectName || "Unnamed Project";
 
   /* ---------------- Label normalizer ---------------- */
@@ -48,14 +81,15 @@ export default function ProjectCard({
       .replace(/\b\w/g, (c) => c.toUpperCase());
   }
 
-  /* ---------------- Image fallback state ---------------- */
+  /* ---------------- Image sources ---------------- */
   const youtubeThumb = heroVideoId
-    ? `https://img.youtube.com/vi/${heroVideoId}/hqdefault.jpg`
+    ? proxifyImage(
+        `https://img.youtube.com/vi/${heroVideoId}/hqdefault.jpg`
+      )
     : null;
 
-  // start with heroImage if present, else youtube
   const [imgSrc, setImgSrc] = useState<string | null>(
-    heroImage || youtubeThumb
+    proxifyImage(heroImage) || youtubeThumb
   );
 
   /* ---------------- Location ---------------- */
@@ -64,25 +98,41 @@ export default function ProjectCard({
 
   /* ---------------- CTA handler ---------------- */
   function handleOpenCTA(typeKey: keyof typeof CTA_MESSAGES) {
-    const label = `${typeKey}_${slug}`;
+    const label = `${typeKey}_${slug || publicSlug}`;
     const message = CTA_MESSAGES[typeKey](name);
     openCTA(label, message);
   }
 
+  /* ---------------- Image sizing rules ---------------- */
+  const imageWidth = variant === "homepage" ? 640 : 800;
+  const imageHeight = 192;
+
+  /* ============================================================
+     RENDER
+  ============================================================ */
+
   return (
     <div className="rounded-xl overflow-hidden bg-background border shadow hover:shadow-lg transition group">
-      {/* IMAGE */}
+      {/* =================================================
+         IMAGE
+      ================================================== */}
       {imgSrc ? (
         <div className="relative">
           <img
-            src={imgSrc}
+            src={cfImage(imgSrc, {
+              width: imageWidth,
+              quality: 75,
+            })}
             alt={name}
+            width={imageWidth}
+            height={imageHeight}
             className="w-full h-48 object-cover"
-            loading="lazy"
+            loading={variant === "homepage" ? "lazy" : "eager"}
+            decoding="async"
+            fetchpriority={variant === "homepage" ? "auto" : "high"}
             referrerPolicy="no-referrer"
             crossOrigin="anonymous"
             onError={() => {
-              // If hero image fails, fall back to YouTube thumbnail
               if (imgSrc !== youtubeThumb && youtubeThumb) {
                 setImgSrc(youtubeThumb);
               } else {
@@ -91,7 +141,7 @@ export default function ProjectCard({
             }}
           />
 
-          {/* Listing page badges */}
+          {/* Badges (default variant only) */}
           {variant === "default" && type && (
             <span className="absolute top-2 left-2 bg-background/80 text-xs font-semibold px-3 py-1 rounded">
               {formatLabel(type)}
@@ -110,7 +160,9 @@ export default function ProjectCard({
         </div>
       )}
 
-      {/* CONTENT */}
+      {/* =================================================
+         CONTENT
+      ================================================== */}
       <div className="p-4">
         <h3 className="text-lg font-semibold leading-snug">
           {name}
@@ -138,7 +190,9 @@ export default function ProjectCard({
           </p>
         )}
 
-        {/* LISTING / BUILDER PAGE */}
+        {/* =================================================
+           LISTING / BUILDER PAGE
+        ================================================== */}
         {variant === "default" && (
           <>
             <div className="grid grid-cols-2 gap-2 text-sm my-3">
@@ -166,7 +220,7 @@ export default function ProjectCard({
 
             <div className="flex gap-3">
               <Link
-                to={`/${slug}`}
+                to={`/${publicSlug}`}
                 className="flex-1 text-center bg-primary text-white py-2 rounded-lg text-sm font-medium hover:bg-primary/90"
               >
                 View Project
@@ -185,11 +239,13 @@ export default function ProjectCard({
           </>
         )}
 
-        {/* HOMEPAGE */}
+        {/* =================================================
+           HOMEPAGE VARIANT
+        ================================================== */}
         {variant === "homepage" && (
           <div className="pt-4">
             <Link
-              to={`/${slug}`}
+              to={`/${publicSlug}`}
               className="inline-flex items-center justify-center rounded-lg border px-4 py-2 text-sm font-medium hover:bg-muted transition"
             >
               View Project

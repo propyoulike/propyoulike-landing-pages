@@ -1,18 +1,16 @@
-// src/components/media/MediaTile.tsx
-
 import AspectBox from "./AspectBox";
 import YouTubePlayer from "@/components/video/YouTubePlayer";
 import ImageRenderer from "@/components/image/ImageRenderer";
-import PlayIconOverlay from "./PlayIconOverlay";
 
 export interface MediaProps {
   src?: string;
   youtubeId?: string;
   title?: string;
   description?: string;
-  aspect?: string;       // default ratio
+  aspect?: string;
   rounded?: boolean;
   clickable?: boolean;
+  onClick?: () => void;
 }
 
 export default function MediaTile({
@@ -24,14 +22,14 @@ export default function MediaTile({
   rounded = true,
   clickable = false,
   onClick,
-}: MediaProps & { onClick?: () => void }) {
-
-  const isVideo = !!youtubeId;
+}: MediaProps) {
+  const isVideo = Boolean(youtubeId);
+  const isClickable = clickable && !isVideo;
 
   return (
     <div
-      className={`space-y-2 ${clickable ? "cursor-pointer" : ""}`}
-      onClick={clickable ? onClick : undefined}
+      className={`space-y-2 ${isClickable ? "cursor-pointer" : ""}`}
+      onClick={isClickable ? onClick : undefined}
     >
       <AspectBox ratio={aspect}>
         <div
@@ -39,20 +37,18 @@ export default function MediaTile({
             rounded ? "rounded-2xl" : ""
           }`}
         >
-          {/* VIDEO */}
           {isVideo ? (
-            <>
-              <YouTubePlayer videoId={youtubeId!} rounded={rounded} />
-              <PlayIconOverlay />
-            </>
+            <YouTubePlayer videoId={youtubeId!} rounded={rounded} />
+          ) : src ? (
+            <ImageRenderer src={src} rounded={rounded} />
           ) : (
-            /* IMAGE */
-            <ImageRenderer src={src!} rounded={rounded} />
+            <div className="w-full h-full bg-muted flex items-center justify-center text-xs text-muted-foreground">
+              Media coming soon
+            </div>
           )}
         </div>
       </AspectBox>
 
-      {/* Title + Description */}
       {title && <p className="text-sm font-medium">{title}</p>}
       {description && (
         <p className="text-xs text-muted-foreground">{description}</p>

@@ -1,21 +1,3 @@
-/**
- * ============================================================
- * Breadcrumbs (Pure UI)
- * ============================================================
- *
- * ROLE
- * ------------------------------------------------------------
- * - Render breadcrumb navigation
- * - ZERO data access
- * - ZERO routing logic
- *
- * DATA CONTRACT
- * ------------------------------------------------------------
- * Receives fully-resolved breadcrumb items via props.
- *
- * ============================================================
- */
-
 import { Link } from "react-router-dom";
 
 export interface BreadcrumbItem {
@@ -41,10 +23,17 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
 
           return (
             <li key={item.url} className="flex items-center">
-              {i > 0 && <span className="mx-1">›</span>}
+              {i > 0 && (
+                <span aria-hidden className="mx-1">
+                  ›
+                </span>
+              )}
 
               {isLast ? (
-                <span className="text-foreground font-medium">
+                <span
+                  aria-current="page"
+                  className="text-foreground font-medium"
+                >
                   {item.name}
                 </span>
               ) : (

@@ -20,14 +20,11 @@ export default function TestimonialVideoPlayer({
       {/* YouTube Player */}
       <YouTubePlayer
         videoId={videoId}
-        mode="click"
-        autoPlay
-        playsInline            // ✅ mobile-safe
+        mode="click"          // user-initiated playback
         className="w-full h-full"
-        onExit={onExit}
       />
 
-      {/* Soft exit hint (non-blocking) */}
+      {/* Soft exit hint (non-blocking, parent-controlled) */}
       {onExit && (
         <button
           type="button"

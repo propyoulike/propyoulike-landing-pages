@@ -158,7 +158,11 @@ export default function ProjectPageView({
       </ProjectErrorBoundary>
 
       <FloatingQuickNav footerId="site-footer" />
-      <Footer id="site-footer" project={project} />
+<Footer
+  id="site-footer"
+  project={project}
+  builder={payload.aboutBuilder}
+/>
     </>
   );
 }

@@ -19,6 +19,8 @@ import ZonePage from "@/pages/ZonePage";
 import PrivacyPage from "@/components/legal/PrivacyPage";
 import TermsPage from "@/components/legal/TermsPage";
 import ReraPage from "@/components/legal/ReraPage";
+import AboutPage from "@/components/legal/AboutPage";
+import ContactPage from "@/components/legal/ContactPage";
 
 import { LeadCTAProvider } from "@/components/lead/LeadCTAProvider";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -68,6 +70,8 @@ export default function App() {
               <Route path="/" element={<Index />} />
 
               {/* Legal */}
+              <Route path="/legal/about" element={<AboutPage />} />
+              <Route path="/legal/contact" element={<ContactPage />} />
               <Route path="/legal/privacy" element={<PrivacyPage />} />
               <Route path="/legal/terms" element={<TermsPage />} />
               <Route path="/legal/rera" element={<ReraPage />} />

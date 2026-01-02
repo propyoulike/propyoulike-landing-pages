@@ -1,18 +1,28 @@
+# ----------------------------------------
+# CRITICAL: disable BigRock 404 override
+# ----------------------------------------
+ErrorDocument 404 default
+
 <IfModule mod_mime.c>
   AddType application/javascript .js
+  AddType application/xml .xml
+  AddType text/xml .xml
 </IfModule>
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
 
-  # NEVER rewrite built assets
-  RewriteRule ^(assets|shared|favicon\.ico|projectEntry\.js) - [L]
+  # Allow sitemap & robots
+  RewriteRule ^(sitemap\.xml|robots\.txt)$ - [L]
 
-  # Static project folders
+  # Never rewrite assets
+  RewriteRule ^(assets|images|shared|favicon\.ico|projectEntry\.js) - [L]
+
+  # Allow real files & folders
   RewriteCond %{REQUEST_FILENAME} -f [OR]
   RewriteCond %{REQUEST_FILENAME} -d
   RewriteRule . - [L]
 
-  # SPA fallback (only homepage)
+  # SPA fallback (homepage only)
   RewriteRule ^$ /index.html [L]
 </IfModule>

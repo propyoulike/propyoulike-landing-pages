@@ -16,12 +16,15 @@ const ModelVideos = memo(({ modelFlats }: ModelVideosProps) => {
           v.id.trim().length > 0 &&
           typeof v.title === "string"
       )
-      .map((v) => ({
-        ...v,
-        thumbnail: `https://img.youtube.com/vi/${v.id}/hqdefault.jpg`,
-      }));
+      .map((v) => {
+        const ytThumb = `https://img.youtube.com/vi/${v.id}/hqdefault.jpg`;
+
+        return {
+          ...v,
+          thumbnail: cfImage(ytThumb, { width: 800 }), // ✅ Cloudflare
+        };
+      });
   }, [modelFlats]);
-  console.log("SECTION DATA: ModelVideos.modelFlats", modelFlats);
 
   if (videos.length === 0) return null;
 
@@ -48,7 +51,7 @@ const ModelVideos = memo(({ modelFlats }: ModelVideosProps) => {
     [videos.length]
   );
 
-  /* ------------------ FULLSCREEN SAFETY ------------------ */
+  /* ------------------ ACTIVE VIDEO ------------------ */
   const activeVideo =
     fullscreenIndex !== null ? videos[fullscreenIndex] : null;
 
@@ -68,28 +71,31 @@ const ModelVideos = memo(({ modelFlats }: ModelVideosProps) => {
             key={vid.id}
             className="model-card flex-shrink-0 w-[85vw] md:w-[550px] lg:w-[700px] snap-center"
           >
-            <div
+            <button
+              type="button"
               onClick={() => setFullscreenIndex(i)}
-              className="relative rounded-2xl overflow-hidden
+              className="
+                relative rounded-2xl overflow-hidden
                 border border-white/20 shadow-2xl
-                bg-black/30 cursor-pointer"
+                bg-black/30 cursor-pointer
+                focus:outline-none focus-visible:ring-2 focus-visible:ring-primary
+              "
             >
               <div className="aspect-video relative">
-                {/* IMAGE SAFE */}
-                {vid.thumbnail && (
-                  <img
-                    src={vid.thumbnail}
-                    alt={vid.title}
-                    loading="lazy"
-                    className="w-full h-full object-cover"
-                  />
-                )}
+                <img
+                  src={vid.thumbnail}
+                  alt={vid.title}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-cover"
+                  draggable={false}
+                />
 
                 <div className="absolute inset-0 flex items-center justify-center">
                   <Play className="w-10 h-10 text-white" />
                 </div>
               </div>
-            </div>
+            </button>
 
             <p className="mt-4 text-center text-lg font-semibold">
               {vid.title}
@@ -98,7 +104,7 @@ const ModelVideos = memo(({ modelFlats }: ModelVideosProps) => {
         ))}
       </div>
 
-      {/* FULLSCREEN MODAL */}
+      {/* ------------------ FULLSCREEN MODAL ------------------ */}
       {activeVideo && (
         <div
           className="fixed inset-0 z-[999] bg-black/90 flex items-center justify-center"
@@ -112,7 +118,7 @@ const ModelVideos = memo(({ modelFlats }: ModelVideosProps) => {
               <YouTubePlayer
                 videoId={activeVideo.id}
                 mode="click"
-                autoPlay
+                forceAutoplay   // ✅ correct prop
               />
             </div>
 

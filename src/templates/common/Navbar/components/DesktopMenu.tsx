@@ -1,4 +1,5 @@
 // src/templates/common/Navbar/components/DesktopMenu.tsx
+import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 
 /* -------------------------------------------------
@@ -24,76 +25,110 @@ export default function DesktopMenu({
   activeId,
   onSelect,
 }: DesktopMenuProps) {
+  const [openId, setOpenId] = useState<string | null>(null);
+
   return (
     <ul className="hidden lg:flex items-center gap-1">
       {menu.map((m) => {
-        const isActive = activeId === m.id;
+        const hasChildren = !!m.children?.length;
+
+        const isChildActive =
+          hasChildren && m.children!.some((c) => c.id === activeId);
+
+        const isActive = activeId === m.id || isChildActive;
+        const isOpen = openId === m.id;
 
         return (
-          <li key={m.id} className="relative group">
-            {/* ---------- Simple link ---------- */}
-            {!m.children?.length ? (
-              <button
-                aria-current={isActive ? "page" : undefined}
-                className={`px-3 py-2 text-sm rounded-lg transition-colors
+          <li
+            key={m.id}
+            className="relative"
+            onMouseLeave={() => setOpenId(null)}
+          >
+            {/* ---------------- Parent ---------------- */}
+            <button
+              type="button"
+              aria-haspopup={hasChildren ? "menu" : undefined}
+              aria-expanded={hasChildren ? isOpen : undefined}
+              aria-current={isActive ? "page" : undefined}
+              className={`flex items-center gap-1.5 px-3 py-2 text-sm rounded-lg transition-colors
+                ${
+                  isActive
+                    ? "text-primary bg-primary/5"
+                    : "text-foreground/80 hover:bg-muted"
+                }
+              `}
+              onClick={() => {
+                if (hasChildren) {
+                  setOpenId(isOpen ? null : m.id);
+                } else {
+                  onSelect(m.id);
+                }
+              }}
+              onKeyDown={(e) => {
+                if (!hasChildren) return;
+
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  setOpenId(isOpen ? null : m.id);
+                }
+
+                if (e.key === "Escape") {
+                  setOpenId(null);
+                }
+              }}
+            >
+              {m.label}
+              {hasChildren && (
+                <ChevronDown
+                  className={`h-3.5 w-3.5 transition-transform ${
+                    isOpen ? "rotate-180" : ""
+                  }`}
+                />
+              )}
+            </button>
+
+            {/* ---------------- Dropdown ---------------- */}
+            {hasChildren && (
+              <div
+                role="menu"
+                className={`
+                  absolute left-0 mt-1 min-w-[12rem]
+                  bg-card border border-border
+                  rounded-xl shadow-lg
+                  transition
                   ${
-                    isActive
-                      ? "text-primary bg-primary/5"
-                      : "text-foreground/80 hover:bg-muted"
+                    isOpen
+                      ? "opacity-100 visible"
+                      : "opacity-0 invisible pointer-events-none"
                   }
                 `}
-                onClick={() => onSelect(m.id)}
               >
-                {m.label}
-              </button>
-            ) : (
-              <>
-                {/* ---------- Parent with dropdown ---------- */}
-                <button
-                  type="button"
-                  aria-haspopup="menu"
-                  aria-expanded={false}
-                  className={`flex items-center gap-1.5 px-3 py-2 text-sm rounded-lg 
-                    ${
-                      isActive
-                        ? "text-primary bg-primary/5"
-                        : "text-foreground/80 hover:bg-muted"
-                    }
-                  `}
-                >
-                  {m.label}
-                  <ChevronDown className="h-3.5 w-3.5" />
-                </button>
+                <ul className="py-2">
+                  {m.children!.map((c) => {
+                    const childActive = activeId === c.id;
 
-                {/* ---------- Dropdown ---------- */}
-                <div
-                  role="menu"
-                  className="
-                    absolute left-0 mt-1 min-w-[12rem]
-                    bg-card border border-border
-                    rounded-xl shadow-lg
-                    opacity-0 invisible
-                    group-hover:opacity-100 group-hover:visible
-                    transition
-                  "
-                >
-                  <ul className="py-2">
-                    {m.children.map((c) => (
+                    return (
                       <li key={c.id} role="menuitem">
                         <button
-                          className="w-full text-left px-4 py-2.5 text-sm hover:bg-muted"
-                          onClick={(e) => {
-                            e.stopPropagation();
+                          className={`w-full text-left px-4 py-2.5 text-sm rounded-md transition
+                            ${
+                              childActive
+                                ? "bg-primary/10 text-primary"
+                                : "hover:bg-muted"
+                            }
+                          `}
+                          onClick={() => {
                             onSelect(c.id);
+                            setOpenId(null);
                           }}
                         >
                           {c.label}
                         </button>
                       </li>
-                    ))}
-                  </ul>
-                </div>
-              </>
+                    );
+                  })}
+                </ul>
+              </div>
             )}
           </li>
         );

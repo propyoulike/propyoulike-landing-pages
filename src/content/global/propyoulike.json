@@ -3,13 +3,14 @@
   "name": "PropYouLike",
   "logo": "/images/brand/PropYouLikeLogo.png",
   "favicon": "/images/brand/favicon.ico",
+  "videoId": "48Zbe6JlnRY",
 
-  "about": "PropYouLike helps homebuyers discover verified properties with transparency & expert guidance.",
+"about": "PropYouLike is a RERA-registered real estate marketing and advisory platform based in Bengaluru. We assist homebuyers with verified project information, pricing guidance, site visit coordination, and sales support through developer-authorised teams. PropYouLike does not act as the developer, promoter, or owner of the projects listed.",
 
   "contact": {
-    "phone": "+919379822010",
+    "phone": "+91 93798 22010",
     "whatsapp": "https://wa.me/919379822010",
-    "email": "propyoulike@gmail.com"
+    "email": "hi@propyoulike.com"
   },
 
   "address": {
@@ -17,7 +18,7 @@
     "line2": "Banashankari 3rd Stage",
     "city": "Bengaluru",
     "state": "Karnataka",
-    "pincode": "560085",
+    "pincode": "560 085",
     "country": "India",
     "mapUrl": "https://maps.app.goo.gl/MVo7p9SKgNkwcv8KA"
   },
@@ -25,7 +26,7 @@
   "rera": {
     "id": "PRM/KA/RERA/1251/310/AG/250811/005899",
     "state": "Karnataka",
-    "disclaimer": "PropYouLike is a RERA-registered real estate marketing partner.",
+    "disclaimer": "Channel Partner Disclosure: PropYouLike is a RERA-registered real estate marketing platform that assists homebuyers with verified project information, pricing guidance, and site visit coordination. PropYouLike is not the developer, promoter, or owner of the projects listed on this website.",
     "verificationUrl": "https://rera.karnataka.gov.in/"
   },
 

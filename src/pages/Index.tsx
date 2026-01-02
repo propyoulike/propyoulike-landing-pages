@@ -2,6 +2,9 @@ import { useLeadCTAContext } from "@/components/lead/LeadCTAProvider";
 import { getFeaturedProjects } from "@/lib/data/project/getFeaturedProjects";
 import ProjectCard from "@/components/project/ProjectCard";
 import Footer from "@/components/footer/Footer";
+import YouTubePlayer from "@/components/video/YouTubePlayer";
+
+import brand from "@/content/global/propyoulike.json";
 
 export default function IndexPage() {
   const { openCTA } = useLeadCTAContext();
@@ -11,18 +14,23 @@ export default function IndexPage() {
     <main className="min-h-screen bg-background text-foreground scroll-smooth">
 
       {/* =================================================
-         Navbar
+         NAVBAR
       ================================================== */}
       <header className="sticky top-0 z-50 border-b bg-background/80 backdrop-blur">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="font-bold text-lg tracking-tight">
-            PropYouLike
+          <div className="flex items-center gap-3">
+            <img
+              src={brand.logo}
+              alt={brand.name}
+              className="h-8 w-auto"
+            />
+            <span className="font-semibold tracking-tight">
+              {brand.name}
+            </span>
           </div>
 
           <nav className="hidden md:flex items-center gap-6 text-sm text-muted-foreground">
-            <a href="#who" className="hover:text-foreground">Who we are</a>
-            <a href="#what" className="hover:text-foreground">What we do</a>
-            <a href="#how" className="hover:text-foreground">How we do it</a>
+            <a href="#why" className="hover:text-foreground">Why us</a>
             {featuredProjects.length > 0 && (
               <a href="#projects" className="hover:text-foreground">
                 Projects
@@ -40,61 +48,118 @@ export default function IndexPage() {
       </header>
 
       {/* =================================================
-         Hero
+         HERO (TEXT + VIDEO)
       ================================================== */}
-      <section className="container mx-auto px-4 py-28 text-center">
-        <h1 className="text-4xl md:text-5xl font-bold tracking-tight max-w-3xl mx-auto">
-          Find verified new homes.  
-          Compare clearly. Visit with confidence.
-        </h1>
+      <section className="container mx-auto px-4 py-16 md:py-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
 
-        <p className="mt-6 text-lg text-muted-foreground max-w-2xl mx-auto">
-          Curated new home projects with honest guidance,
-          assisted site visits, and zero spam.
-        </p>
+          {/* LEFT */}
+          <div>
+            <h1 className="text-3xl md:text-5xl font-bold tracking-tight">
+              Find RERA-registered new home projects.
+              <br className="hidden md:block" />
+              Compare clearly. Visit with confidence.
+            </h1>
 
-        <div className="mt-10">
-          <button
-            onClick={openCTA}
-            className="px-8 py-4 rounded-xl bg-primary text-primary-foreground font-medium"
-          >
-            Get site visit assistance
-          </button>
+            <p className="mt-5 text-lg text-muted-foreground max-w-xl">
+              Curated new home projects with honest guidance,
+              assisted site visits, and no unsolicited communication.
+            </p>
+
+            <div className="mt-8 flex flex-col sm:flex-row gap-4">
+              <button
+                onClick={openCTA}
+                className="px-8 py-4 rounded-xl bg-primary text-primary-foreground font-medium"
+              >
+                Get site visit assistance
+              </button>
+
+              {/* 🔒 GOOGLE ADS POLICY–CRITICAL */}
+              <span className="text-sm text-muted-foreground self-center max-w-md">
+                No brokerage • RERA compliant • Your enquiry is shared only with
+                authorised developer sales teams for the selected project
+              </span>
+            </div>
+          </div>
+
+          {/* RIGHT */}
+          <YouTubePlayer
+            videoId={brand.videoId}
+            title="PropYouLike – How we help homebuyers"
+          />
         </div>
       </section>
 
       {/* =================================================
-         Who / What / How (unchanged, trimmed for clarity)
+         TRUST STRIP
       ================================================== */}
-      <section id="who" className="container mx-auto px-4 py-24 max-w-4xl text-center">
-        <h2 className="text-2xl font-semibold">Who we are</h2>
-        <p className="mt-4 text-muted-foreground">
-          We help buyers choose the right new home with clarity,
-          honest guidance, and human support.
-        </p>
-      </section>
-
-      <section id="what" className="container mx-auto px-4 py-24 max-w-5xl text-center">
-        <h2 className="text-2xl font-semibold">What we do</h2>
-        <p className="mt-4 text-muted-foreground">
-          Curate projects, assist site visits, and support confident decisions.
-        </p>
-      </section>
-
-      <section id="how" className="container mx-auto px-4 py-24 max-w-5xl text-center">
-        <h2 className="text-2xl font-semibold">How we do it</h2>
-        <p className="mt-4 text-muted-foreground">
-          Verify → Understand → Visit → Assist → Decide
-        </p>
+      <section className="border-y bg-muted/30">
+        <div className="container mx-auto px-4 py-6 flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm text-muted-foreground">
+          <span>✅ RERA Registered Channel Partner</span>
+          <span>✅ No Brokerage for Buyers</span>
+          <span>✅ Assisted Site Visits</span>
+          <span>✅ No Spam, No Pressure</span>
+        </div>
       </section>
 
       {/* =================================================
-         Featured Projects (RIGHT WAY)
+         REGULATORY DISCLOSURE (MANDATORY)
+      ================================================== */}
+      <section className="bg-background">
+        <div className="container mx-auto px-4 py-6 max-w-5xl text-center text-xs text-muted-foreground leading-relaxed">
+          <p>
+            <strong>Disclosure:</strong> {brand.name} is a RERA-registered real
+            estate marketing and advisory platform and acts as an authorised
+            channel partner for select developers. {brand.name} is not the
+            developer, promoter, builder, or owner of the projects listed on
+            this website.
+          </p>
+        </div>
+      </section>
+
+      {/* =================================================
+         WHY PROPYOULIKE
+      ================================================== */}
+      <section
+        id="why"
+        className="container mx-auto px-4 py-14 max-w-5xl text-center"
+      >
+        <h2 className="text-2xl font-semibold">
+          Why PropYouLike
+        </h2>
+
+        <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-8 text-left md:text-center">
+          <div>
+            <h3 className="font-medium text-lg">Who we are</h3>
+            <p className="mt-2 text-sm text-muted-foreground">
+              A RERA-registered real estate advisory platform based in Bengaluru.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="font-medium text-lg">What we do</h3>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Curate verified projects, provide pricing clarity,
+              and coordinate site visits.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="font-medium text-lg">How we do it</h3>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Verify → Understand → Visit → Assist → Decide
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* =================================================
+         FEATURED PROJECTS
       ================================================== */}
       {featuredProjects.length > 0 && (
         <section
           id="projects"
-          className="container mx-auto px-4 py-28 max-w-6xl"
+          className="container mx-auto px-4 py-16 max-w-6xl"
         >
           <h2 className="text-2xl font-semibold text-center">
             Featured projects
@@ -104,12 +169,12 @@ export default function IndexPage() {
             A small selection of verified new home projects you can explore in detail.
           </p>
 
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
-            {featuredProjects.map(project => (
+          <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
+            {featuredProjects.map((project) => (
               <ProjectCard
                 key={project.slug}
                 project={project}
-		variant="homepage"
+                variant="homepage"
               />
             ))}
           </div>
@@ -117,10 +182,25 @@ export default function IndexPage() {
       )}
 
       {/* =================================================
-         Footer
+         FINAL CTA
       ================================================== */}
-	<Footer />
+      <section className="container mx-auto px-4 py-16 text-center">
+        <h3 className="text-xl font-semibold">
+          Need help comparing or visiting these projects?
+        </h3>
+        <p className="mt-3 text-muted-foreground">
+          Get unbiased guidance and assisted site visits — at no cost to buyers.
+        </p>
 
+        <button
+          onClick={openCTA}
+          className="mt-6 px-8 py-4 rounded-xl bg-primary text-primary-foreground font-medium"
+        >
+          Get site visit assistance
+        </button>
+      </section>
+
+      <Footer />
     </main>
   );
 }

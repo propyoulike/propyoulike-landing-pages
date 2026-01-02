@@ -4,15 +4,19 @@
   "content": [
     {
       "heading": "Regulatory Compliance",
-      "body": "PropYouLike operates as an Individual RERA registered real estate marketing partner."
+      "body": "PropYouLike operates as a RERA-registered real estate marketing and channel partner. We facilitate property discovery, buyer assistance, and site visit coordination for residential projects listed on this website."
     },
     {
       "heading": "RERA Registration Details",
-      "body": "##RERA_DYNAMIC##"
+      "body": "RERA Registration Number: PRM/KA/RERA/1251/310/AG/250811/005899. State: Karnataka."
+    },
+    {
+      "heading": "Role Clarification",
+      "body": "PropYouLike is not the developer, promoter, or owner of the projects displayed on this website. All project-related information, including pricing, availability, images, and specifications, is provided by the respective developers and is subject to change."
     },
     {
       "heading": "Verification",
-      "body": "Users may verify the registration on the state RERA portal."
+      "body": "Users may independently verify the RERA registration details on the official Karnataka RERA portal at https://rera.karnataka.gov.in."
     }
   ]
 }

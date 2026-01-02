@@ -35,20 +35,29 @@ export default function LocationCategoryAccordion({
             </span>
           </AccordionTrigger>
 
-          <AccordionContent className="accordion-content-item">
-            <ul className="space-y-3">
-              {category.items.map((item, i) => (
-                <li
-                  key={i}
-                  className="flex gap-3 items-start"
-                >
-                  <span className="accordion-bullet mt-2" />
-                  <span className="text-sm text-muted-foreground leading-relaxed">
-                    {item}
-                  </span>
-                </li>
-              ))}
-            </ul>
+          {/* 🔒 HEIGHT-LOCKED CONTENT */}
+          <AccordionContent
+            className="
+              accordion-content-item
+              overflow-hidden
+              will-change-[height]
+            "
+          >
+            <div className="pt-4 pb-2">
+              <ul className="space-y-3">
+                {category.items.map((item, i) => (
+                  <li
+                    key={i}
+                    className="flex gap-3 items-start"
+                  >
+                    <span className="accordion-bullet mt-2" />
+                    <span className="text-sm text-muted-foreground leading-relaxed">
+                      {item}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </AccordionContent>
         </AccordionItem>
       ))}

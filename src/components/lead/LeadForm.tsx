@@ -113,6 +113,12 @@ export default function LeadForm({
       <button type="submit" className="w-full btn-gradient">
         Get Best Offers
       </button>
+<p className="text-[11px] text-muted-foreground leading-snug">
+  By submitting this form, you agree to be contacted by{" "}
+  <strong>PropYouLike</strong>, an authorized channel partner for this project,
+  to assist with site visits and project information.
+  PropYouLike is not the developer or promoter.
+</p>
     </form>
   );
 }
