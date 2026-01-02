@@ -2,19 +2,6 @@
  * ============================================================
  * BUILDER HUB PAGE GENERATOR (LOCKED, FILE-BASED)
  * ============================================================
- *
- * RULES
- * ------------------------------------------------------------
- * - Builders are derived from folder names in src/content/projects
- * - Builder hub MUST be created if folder exists
- * - Projects are added ONLY if identity is valid
- * - No empty ItemList schema allowed
- *
- * OUTPUT
- * ------------------------------------------------------------
- * dist/{builder}/index.html
- *
- * ============================================================
  */
 
 const fs = require("fs");
@@ -52,6 +39,7 @@ function getBuilders() {
       name: builder,
       description: `Explore all ${builder} projects with pricing, floor plans and site visit assistance.`,
       projects: [],
+      hero: null, // 👈 optional, derived from first valid project
     });
 
     for (const file of files) {
@@ -59,13 +47,16 @@ function getBuilders() {
         fs.readFileSync(path.join(builderDir, file), "utf8")
       );
 
-      // 🔑 NORMALIZE SHAPE (nested OR flat)
-      const identity = getProjectIdentity(
-        raw.project ? raw.project : raw
-      );
+      const project = raw.project ? raw.project : raw;
+      const identity = getProjectIdentity(project);
 
       if (identity) {
         builders.get(builder).projects.push(identity);
+
+        // 👇 Capture hero ONCE (first valid project)
+        if (!builders.get(builder).hero && project.hero) {
+          builders.get(builder).hero = project.hero;
+        }
       }
     }
   }
@@ -74,19 +65,39 @@ function getBuilders() {
 }
 
 /* ============================================================
+   OG IMAGE RESOLVER (NO HOSTING)
+============================================================ */
+
+function resolveOgImage(hero) {
+  // 1️⃣ YouTube thumbnail (preferred)
+  if (hero?.videoId) {
+    return `https://img.youtube.com/vi/${hero.videoId}/maxresdefault.jpg`;
+  }
+
+  // 2️⃣ Hero image
+  if (hero?.images?.length) {
+    return hero.images[0];
+  }
+
+  return null;
+}
+
+/* ============================================================
    HTML RENDER (SCHEMA-SAFE)
 ============================================================ */
 
-function renderHTML({ builder, name, description, projects }) {
+function renderHTML({ builder, name, description, projects, hero }) {
   const title = `${name} Projects in Bengaluru | PropYouLike`;
   const canonical = `${DOMAIN}/${builder}/`;
+
+  const ogImage = resolveOgImage(hero);
 
   const orgSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "name": name,
-    "url": canonical,
-    "brand": name,
+    name,
+    url: canonical,
+    brand: name,
   };
 
   const itemListSchema =
@@ -94,11 +105,11 @@ function renderHTML({ builder, name, description, projects }) {
       ? {
           "@context": "https://schema.org",
           "@type": "ItemList",
-          "itemListElement": projects.map((p, idx) => ({
+          itemListElement: projects.map((p, idx) => ({
             "@type": "ListItem",
-            "position": idx + 1,
-            "name": p.projectName || p.slug,
-            "url": `${DOMAIN}/${p.publicSlug}/`,
+            position: idx + 1,
+            name: p.projectName || p.slug,
+            url: `${DOMAIN}/${p.publicSlug}/`,
           })),
         }
       : null;
@@ -118,6 +129,17 @@ function renderHTML({ builder, name, description, projects }) {
 <meta property="og:title" content="${title}" />
 <meta property="og:description" content="${description}" />
 <meta property="og:url" content="${canonical}" />
+
+${
+  ogImage
+    ? `
+<meta property="og:image" content="${ogImage}" />
+<meta property="og:image:secure_url" content="${ogImage}" />
+<meta property="og:image:width" content="1280" />
+<meta property="og:image:height" content="720" />
+<meta property="og:image:type" content="image/jpeg" />`
+    : ""
+}
 
 <!-- Schema.org -->
 <script type="application/ld+json">
