@@ -2,20 +2,16 @@
 
 /**
  * ============================================================
- * Vite Configuration — Canonical Runtime Build
+ * Vite Configuration — Canonical Runtime Build (LOCKED)
  * ============================================================
  *
- * GOALS
+ * GUARANTEES
  * ------------------------------------------------------------
- * 1. Guarantee SINGLE React instance (critical for hooks)
- * 2. Support multiple real entry points (app + projectEntry)
- * 3. Prevent chunk duplication across entries
- * 4. Keep build deterministic and debuggable
- *
- * THIS CONFIG IS ARCHITECTURALLY LOCKED
- * ------------------------------------------------------------
- * - Changing React-related settings without understanding
- *   WILL reintroduce Invalid Hook Call errors.
+ * 1. Single React instance (no invalid hook calls)
+ * 2. Multi-entry support (app + projectEntry)
+ * 3. Deterministic asset paths
+ * 4. No phantom /shared chunks
+ * 5. BigRock + Cloudflare safe
  *
  * ============================================================
  */
@@ -25,7 +21,7 @@ import react from "@vitejs/plugin-react-swc";
 import path from "path";
 
 /* ============================================================
-   🔑 BUILD LOGGING SWITCH (SILENT BY DEFAULT)
+   DEBUG SWITCH
 ============================================================ */
 const DEBUG_BUILD = process.env.VITE_DEBUG_BUILD === "true";
 
@@ -42,43 +38,38 @@ export default defineConfig(({ mode }) => {
   buildLog("Build mode:", mode);
 
   return {
-    /* ---------------------------------------------------------
+    /* --------------------------------------------------------
        BASE
-       ---------------------------------------------------------
-       Must be "/" because:
-       - projectEntry.js is referenced from prerendered HTML
-       - absolute asset paths are required in production
-    --------------------------------------------------------- */
+       --------------------------------------------------------
+       MUST be "/" because:
+       - prerendered HTML uses absolute paths
+       - BigRock does not support sub-path rewrites
+    -------------------------------------------------------- */
     base: "/",
 
-    /* ---------------------------------------------------------
+    /* --------------------------------------------------------
        DEV SERVER
-    --------------------------------------------------------- */
+    -------------------------------------------------------- */
     server: {
       host: "::",
       port: 5173,
     },
 
-    /* ---------------------------------------------------------
+    /* --------------------------------------------------------
        PLUGINS
-       ---------------------------------------------------------
-       ❗ NO dev-only tagging plugins
-       ❗ Keep transform pipeline minimal
-    --------------------------------------------------------- */
-    plugins: [
-      react(),
-    ],
+    -------------------------------------------------------- */
+    plugins: [react()],
 
-    /* ---------------------------------------------------------
+    /* --------------------------------------------------------
        MODULE RESOLUTION (CRITICAL)
-       ---------------------------------------------------------
-       🔒 SINGLE REACT GUARANTEE
-    --------------------------------------------------------- */
+       --------------------------------------------------------
+       🔒 HARD SINGLE-REACT GUARANTEE
+    -------------------------------------------------------- */
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "./src"),
 
-        // 🔑 HARD DEDUPE — DO NOT REMOVE
+        // 🔑 DO NOT REMOVE — prevents duplicate React copies
         react: path.resolve(__dirname, "./node_modules/react"),
         "react-dom": path.resolve(__dirname, "./node_modules/react-dom"),
         "react/jsx-runtime": path.resolve(
@@ -86,29 +77,36 @@ export default defineConfig(({ mode }) => {
           "./node_modules/react/jsx-runtime"
         ),
       },
-
-      // Extra safety: force dependency dedupe
       dedupe: ["react", "react-dom"],
     },
 
-    /* ---------------------------------------------------------
-       BUILD CONFIG
-    --------------------------------------------------------- */
+    /* --------------------------------------------------------
+       BUILD
+    -------------------------------------------------------- */
     build: {
-      manifest: true,          // 🔒 REQUIRED FOR PRERENDER
+      manifest: true,            // REQUIRED for prerender
       outDir: "dist",
       emptyOutDir: true,
       sourcemap: false,
       cssCodeSplit: true,
       assetsInlineLimit: 4096,
+      chunkSizeWarningLimit: 800,
 
-      /* -------------------------------------------------------
-         MULTI-ENTRY STRATEGY
-         -------------------------------------------------------
-         Allowed entries:
-         - index.html → main app shell
-         - projectEntry.tsx → prerender hydration boundary
-      ------------------------------------------------------- */
+      /* ======================================================
+         🔒 CRITICAL FIX (DO NOT REMOVE)
+         ------------------------------------------------------
+         Prevents Vite from injecting <link rel="modulepreload">
+         which caused stale hash references like:
+         /assets/AppProviders.CBWPnK2d.js (404)
+      ====================================================== */
+      modulePreload: false,
+
+      /* ------------------------------------------------------
+         MULTI ENTRY
+         ------------------------------------------------------
+         - index.html → main SPA shell
+         - projectEntry.tsx → prerender hydration entry
+      ------------------------------------------------------ */
       rollupOptions: {
         input: {
           main: path.resolve(__dirname, "index.html"),
@@ -119,35 +117,40 @@ export default defineConfig(({ mode }) => {
         },
 
         output: {
-          /* ---------------------------------------------------
-             ENTRY OUTPUT NAMING
-          --------------------------------------------------- */
-entryFileNames(chunk) {
-  if (chunk.name === "main") return "assets/main.js";
+          /* --------------------------------------------------
+             ENTRY FILES
+          -------------------------------------------------- */
+          entryFileNames(chunk) {
+            if (chunk.name === "main") {
+              return "assets/main.js";
+            }
 
-  // 🔒 projectEntry MUST be hashed
-  if (chunk.name === "projectEntry")
-    return "assets/projectEntry.[hash].js";
+            if (chunk.name === "projectEntry") {
+              return "assets/projectEntry.[hash].js";
+            }
 
-  return "shared/[name].[hash].js";
-},
+            return "assets/[name].[hash].js";
+          },
 
-          /* ---------------------------------------------------
-             SHARED CHUNKS
-          --------------------------------------------------- */
-          chunkFileNames: "shared/[name].[hash].js",
+          /* --------------------------------------------------
+             ALL CHUNKS LIVE IN /assets
+             (NO /shared — prevents missing files)
+          -------------------------------------------------- */
+          chunkFileNames: "assets/[name].[hash].js",
 
+          /* --------------------------------------------------
+             ASSETS
+          -------------------------------------------------- */
           assetFileNames(asset) {
-            if (asset.name === "favicon.ico") return "favicon.ico";
+            if (asset.name === "favicon.ico") {
+              return "favicon.ico";
+            }
             return "assets/[name].[ext]";
           },
 
-          /* ---------------------------------------------------
-             MANUAL CHUNKS (SAFE VERSION)
-             ---------------------------------------------------
-             ❗ React is isolated AND shared
-             ❗ No duplicate React per entry
-          --------------------------------------------------- */
+          /* --------------------------------------------------
+             MANUAL CHUNKS (SAFE + STABLE)
+          -------------------------------------------------- */
           manualChunks(id) {
             if (id.includes("node_modules")) {
               if (
@@ -176,13 +179,11 @@ entryFileNames(chunk) {
           },
         },
       },
-
-      chunkSizeWarningLimit: 800,
     },
 
-    /* ---------------------------------------------------------
+    /* --------------------------------------------------------
        PREVIEW
-    --------------------------------------------------------- */
+    -------------------------------------------------------- */
     preview: {
       port: 4173,
     },

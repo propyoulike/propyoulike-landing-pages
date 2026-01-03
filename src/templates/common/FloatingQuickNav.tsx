@@ -26,6 +26,7 @@
  *
  * 4. NON-INTRUSIVE UX
  *    - Hidden near footer to avoid overlap
+ *    - Hidden when Lead CTA is open
  *    - Hidden on desktop (lg+)
  *
  * 5. FAIL-SAFE
@@ -36,13 +37,14 @@
 import { memo, useEffect, useState, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { buildFloatingNavItems } from "@/utils/buildFloatingNav";
+import { useLeadCTAContext } from "@/components/lead/LeadCTAProvider";
 
 /* -------------------------------------------------
    Types
 -------------------------------------------------- */
 type NavItem = {
-  id: string;     // section DOM id
-  label: string;  // human-readable label
+  id: string;    // section DOM id
+  label: string; // human-readable label
 };
 
 /* -------------------------------------------------
@@ -56,6 +58,9 @@ function FloatingQuickNav() {
   const [visible, setVisible] = useState(false);
   const [activeId, setActiveId] = useState("");
 
+  // ✅ CTA state (single source of truth)
+  const { isCTAOpen } = useLeadCTAContext();
+
   /* -------------------------------------------------
      Refs (non-reactive state)
   -------------------------------------------------- */
@@ -64,9 +69,6 @@ function FloatingQuickNav() {
 
   /* =================================================
      1️⃣ Discover sections (ONCE after mount)
-     -------------------------------------------------
-     - Reads DOM to find section ids + labels
-     - Decoupled from project data & templates
   ================================================== */
   useEffect(() => {
     setItems(buildFloatingNavItems());
@@ -74,9 +76,6 @@ function FloatingQuickNav() {
 
   /* =================================================
      2️⃣ Footer observer
-     -------------------------------------------------
-     - Prevents floating nav overlapping footer CTA
-     - Uses IntersectionObserver (cheap + async)
   ================================================== */
   useEffect(() => {
     const footer = document.querySelector("footer");
@@ -95,10 +94,6 @@ function FloatingQuickNav() {
 
   /* =================================================
      3️⃣ Scroll logic (RAF throttled)
-     -------------------------------------------------
-     - Determines:
-       a) When nav becomes visible
-       b) Which section is active
   ================================================== */
   useEffect(() => {
     if (!items.length) return;
@@ -153,9 +148,14 @@ function FloatingQuickNav() {
   }, [items]);
 
   /* =================================================
-     Guard: nothing to render
+     ✅ HARD GUARD — THIS IS THE FIX
+     - Hide when CTA is open
+     - Hide when not visible
+     - Hide when no sections
   ================================================== */
-  if (!visible || !items.length) return null;
+  if (!visible || !items.length || isCTAOpen) {
+    return null;
+  }
 
   /* =================================================
      Scroll helper
@@ -202,6 +202,5 @@ function FloatingQuickNav() {
 
 /* -------------------------------------------------
    Memoized export
-   - Prevents rerenders unless state changes
 -------------------------------------------------- */
 export default memo(FloatingQuickNav);

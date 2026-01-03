@@ -4,10 +4,9 @@ import Footer from "@/components/footer/Footer";
 import FloatingQuickNav from "@/templates/common/FloatingQuickNav";
 import { LeadCTAProvider } from "@/components/lead/LeadCTAProvider";
 import { getTemplate } from "@/templates/getTemplate";
+import { TrackingProvider } from "@/lib/tracking/TrackingContext";
 
 export default function ProjectDocumentPage({ project }) {
-  console.log("🏗️ Document project:", project);
-
   const [Template, setTemplate] = useState<any>(null);
 
   useEffect(() => {
@@ -19,20 +18,39 @@ export default function ProjectDocumentPage({ project }) {
 
   return (
     <>
+      {/* SEO FIRST – ensures correct page title */}
       <ProjectSEO project={project} />
 
-      {/* ❌ NO Breadcrumbs (router-based) */}
+      {/* ✅ GLOBAL TRACKING CONTEXT (SINGLE SOURCE OF TRUTH) */}
+      <TrackingProvider
+        context={{
+          // platform identity
+          platform: "propyoulike",
+          source: "web",
 
-      <LeadCTAProvider
-        projectName={project.projectName}
-        projectId={project.slug}
-        whatsappNumber="919379822010"
+          // page identity
+          page_type: "project",
+          page_slug: project.slug,
+
+          // business identity
+          project_id: project.slug,
+          project_name: project.projectName,
+          builder_id: project.builder,
+        }}
       >
-        <Template project={project} />
-      </LeadCTAProvider>
+        {/* Lead system (modal / drawer) */}
+        <LeadCTAProvider
+          projectName={project.projectName}
+          projectId={project.slug}
+          whatsappNumber="919379822010"
+        >
+          <Template project={project} />
+        </LeadCTAProvider>
 
-      <FloatingQuickNav footerId="site-footer" />
-      <Footer id="site-footer" project={project} />
+        {/* UI */}
+        <FloatingQuickNav footerId="site-footer" />
+        <Footer id="site-footer" project={project} />
+      </TrackingProvider>
     </>
   );
 }

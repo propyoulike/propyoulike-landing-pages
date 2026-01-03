@@ -100,19 +100,22 @@ function mergeFaqs({ builder, projectSlug }) {
 }
 
 /* ============================================================
-   SEO META
+   SEO / OG IMAGE (WHATSAPP SAFE)
 ============================================================ */
 
 function resolveOgImage(payload, publicSlug) {
+  // 1️⃣ WhatsApp-safe YouTube thumbnail (ALWAYS EXISTS)
   if (payload?.hero?.videoId) {
-    return `https://img.youtube.com/vi/${payload.hero.videoId}/maxresdefault.jpg`;
+    return `https://img.youtube.com/vi/${payload.hero.videoId}/hqdefault.jpg`;
   }
 
+  // 2️⃣ Builder-provided hero image
   if (payload?.hero?.images?.length) {
     return payload.hero.images[0];
   }
 
-  return `/images/projects/${publicSlug}/og.jpg`;
+  // 3️⃣ No local fallback (avoid broken OG)
+  return null;
 }
 
 function buildSEO(project, payload) {
@@ -122,7 +125,11 @@ function buildSEO(project, payload) {
   const description = `Explore ${projectName} pricing, floor plans, amenities and location.`;
 
   const ogImage = resolveOgImage(payload, publicSlug);
-  const ogImageUrl = ogImage.startsWith("http") ? ogImage : ORIGIN + ogImage;
+  const ogImageUrl = ogImage && ogImage.startsWith("http")
+    ? ogImage
+    : ogImage
+    ? ORIGIN + ogImage
+    : null;
 
   return `
 <title>${title}</title>
@@ -133,17 +140,28 @@ function buildSEO(project, payload) {
 <meta property="og:title" content="${title}" />
 <meta property="og:description" content="${description}" />
 <meta property="og:url" content="${ORIGIN}/${publicSlug}/" />
+
+${
+  ogImageUrl
+    ? `
 <meta property="og:image" content="${ogImageUrl}" />
+<meta property="og:image:secure_url" content="${ogImageUrl}" />
+<meta property="og:image:width" content="480" />
+<meta property="og:image:height" content="360" />
+<meta property="og:image:type" content="image/jpeg" />
+`
+    : ""
+}
 
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="${title}" />
 <meta name="twitter:description" content="${description}" />
-<meta name="twitter:image" content="${ogImageUrl}" />
+${ogImageUrl ? `<meta name="twitter:image" content="${ogImageUrl}" />` : ""}
 `;
 }
 
 /* ============================================================
-   PROJECT SCHEMA (THE MISSING PIECE)
+   PROJECT SCHEMA
 ============================================================ */
 
 function buildProjectSchema(project) {
@@ -200,7 +218,7 @@ function getProjects() {
     }
   }
 
-  enforceProjectGuards(payloads.map(p => p.project));
+  enforceProjectGuards(payloads.map((p) => p.project));
   return payloads;
 }
 

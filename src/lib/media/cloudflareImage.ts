@@ -1,10 +1,5 @@
 // src/lib/media/cloudflareImage.ts
 
-const CF_BASE =
-  typeof window !== "undefined"
-    ? window.location.origin
-    : "";
-
 export function cfImage(
   src?: string,
   options?: {
@@ -14,11 +9,16 @@ export function cfImage(
 ) {
   if (!src) return src;
 
-  // Already Cloudflare optimized → do nothing
+  // ❌ Never use Cloudflare resizing for external images
   if (
-    src.includes("imagedelivery.net") ||
-    src.includes("/cdn-cgi/image")
+    src.startsWith("http://") ||
+    src.startsWith("https://")
   ) {
+    return src;
+  }
+
+  // ❌ Never double-process Cloudflare URLs
+  if (src.includes("/cdn-cgi/")) {
     return src;
   }
 
@@ -30,7 +30,5 @@ export function cfImage(
     .filter(Boolean)
     .join(",");
 
-  return `${CF_BASE}/cdn-cgi/image/${params}/${encodeURIComponent(
-    src
-  )}`;
+  return `/cdn-cgi/image/${params}/${src}`;
 }

@@ -24,6 +24,7 @@ interface CTAContextType {
   closeCTA: () => void;
   isMobile: boolean;
   intent?: LeadIntent;
+  isCTAOpen: boolean;
 }
 
 interface LeadCTAProviderProps {
@@ -53,6 +54,7 @@ export const LeadCTAProvider = ({
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [intent, setIntent] = useState<LeadIntent | undefined>();
   const [isMobile, setIsMobile] = useState(false);
+  const isCTAOpen = modalOpen || drawerOpen;
 
   /* ----------------------------------------------------------
      Device detection (SAFE)
@@ -99,7 +101,7 @@ export const LeadCTAProvider = ({
   ---------------------------------------------------------- */
   return (
     <CTAContext.Provider
-      value={{ openCTA, closeCTA, isMobile, intent }}
+      value={{ openCTA, closeCTA, isMobile, intent, isCTAOpen }}
     >
       {children}
 

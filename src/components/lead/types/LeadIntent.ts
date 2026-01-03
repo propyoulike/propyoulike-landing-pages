@@ -1,6 +1,14 @@
 // src/components/lead/types/LeadIntent.ts
+
 export interface LeadIntent {
-  source?: string;     // faq | hero | floating | pricing | etc
-  question?: string;   // FAQ question clicked
-  label?: string;      // CTA label
+  // attribution
+  sourceSection?: string; // hero | summary | pricing | amenities | footer
+  sourceItem?: string;   // CTA label: "Book Site Visit", "WhatsApp"
+
+  // business identity
+  builderId?: string;    // project.builder from JSON
+
+  // optional UX context
+  label?: string;
+  question?: string;
 }

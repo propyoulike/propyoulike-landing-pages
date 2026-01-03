@@ -1,7 +1,9 @@
 import React, { memo, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Phone, Calendar } from "lucide-react";
+
 import { useLeadCTAContext } from "@/components/lead/LeadCTAProvider";
+import type { LeadIntent } from "@/components/lead/types/LeadIntent";
 
 import { useTracking } from "@/lib/tracking/TrackingContext";
 import { EventName } from "@/lib/analytics/events";
@@ -13,10 +15,10 @@ import { CTAType } from "@/lib/analytics/ctaTypes";
 export interface CTAButtonsProps {
   variant?: "default" | "compact" | "hero";
   label?: string;
-  intent?: {
-    sourceSection?: string;
-    sourceItem?: string;
-  };
+
+  /** REQUIRED for attribution */
+  sourceSection: string;   // hero | summary | pricing | amenities | footer
+  builderId: string;       // project.builder from JSON
 }
 
 /* ---------------------------------------------
@@ -25,40 +27,53 @@ export interface CTAButtonsProps {
 const CTAButtons = memo(function CTAButtons({
   variant = "default",
   label = "Book Site Visit",
-  intent,
+  sourceSection,
+  builderId,
 }: CTAButtonsProps) {
   const { openCTA } = useLeadCTAContext();
   const { track } = useTracking();
 
+  /* ---------------------------------------------
+     Form CTA
+  ---------------------------------------------- */
   const handleFormClick = useCallback(() => {
-    // 🔹 Analytics: intent signal
+    // 🔹 Analytics: click intent
     track(EventName.CTAClick, {
       cta_type: CTAType.ContactForm,
-      source_section: intent?.sourceSection,
-      source_item: intent?.sourceItem ?? label,
+      source_section: sourceSection,
+      source_item: label,
     });
 
-    // 🔹 Business logic (unchanged)
-    openCTA(label, {
-      sourceSection: intent?.sourceSection || "cta",
-      sourceItem: intent?.sourceItem || label,
-    });
-  }, [track, openCTA, label, intent]);
+    // 🔹 Canonical intent passed forward
+    const intent: LeadIntent = {
+      sourceSection,
+      sourceItem: label,
+      builderId,
+      label,
+    };
 
+    openCTA(intent);
+  }, [track, openCTA, sourceSection, label, builderId]);
+
+  /* ---------------------------------------------
+     WhatsApp CTA
+  ---------------------------------------------- */
   const handleWhatsAppClick = useCallback(() => {
-    // 🔹 Analytics: intent signal
     track(EventName.CTAClick, {
       cta_type: CTAType.ContactWhatsApp,
-      source_section: intent?.sourceSection,
+      source_section: sourceSection,
       source_item: "whatsapp",
     });
 
-    // 🔹 Business logic (unchanged)
-    openCTA("WhatsApp", {
-      sourceSection: intent?.sourceSection || "cta",
+    const intent: LeadIntent = {
+      sourceSection,
       sourceItem: "whatsapp",
-    });
-  }, [track, openCTA, intent]);
+      builderId,
+      label: "WhatsApp",
+    };
+
+    openCTA(intent);
+  }, [track, openCTA, sourceSection, builderId]);
 
   /* ---------------------------------------------
      Compact / Hero Variant

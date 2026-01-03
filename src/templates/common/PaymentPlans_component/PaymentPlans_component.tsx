@@ -104,8 +104,8 @@ export default function PaymentPlans_component({
           onClick={() =>
             openCTA({
               source: "section",
-              label:
-                "payment_plans_detailed_pricing",
+              label: "payment_plans_detailed_pricing",
+              builderID: project.builder,
             })
           }
         >

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useLeadCTAContext } from "@/components/lead/LeadCTAProvider";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { cfImage } from "@/lib/media/cloudflareImage";
 
 /* ============================================================
@@ -16,31 +16,10 @@ const CTA_MESSAGES = {
     `Please send the brochure for ${projectName}.`,
 };
 
-/* ============================================================
-   TYPES
-============================================================ */
-
 interface ProjectCardProps {
   project: any;
   variant?: "default" | "homepage";
 }
-
-/* ============================================================
-   IMAGE PROXY (Cloudflare Worker)
-   - Prevents CORS / hotlink blocks
-   - Origin-agnostic
-============================================================ */
-
-function proxifyImage(url?: string | null) {
-  if (!url) return null;
-  return `https://image-proxy.propyoulike.workers.dev/${encodeURIComponent(
-    url
-  )}`;
-}
-
-/* ============================================================
-   COMPONENT
-============================================================ */
 
 export default function ProjectCard({
   project,
@@ -65,7 +44,6 @@ export default function ProjectCard({
     locality,
   } = project;
 
-  /* ---------------- HARD GUARD ---------------- */
   if (!publicSlug) {
     console.error("❌ Project missing publicSlug", project);
     return null;
@@ -73,7 +51,6 @@ export default function ProjectCard({
 
   const name = projectName || "Unnamed Project";
 
-  /* ---------------- Label normalizer ---------------- */
   function formatLabel(value?: string) {
     if (!value) return null;
     return value
@@ -82,40 +59,35 @@ export default function ProjectCard({
   }
 
   /* ---------------- Image sources ---------------- */
+
   const youtubeThumb = heroVideoId
-    ? proxifyImage(
-        `https://img.youtube.com/vi/${heroVideoId}/hqdefault.jpg`
-      )
+    ? `https://img.youtube.com/vi/${heroVideoId}/hqdefault.jpg`
     : null;
 
   const [imgSrc, setImgSrc] = useState<string | null>(
-    proxifyImage(heroImage) || youtubeThumb
+    heroImage || youtubeThumb
   );
 
-  /* ---------------- Location ---------------- */
+  // Keep state in sync with incoming props
+  useEffect(() => {
+    setImgSrc(heroImage || youtubeThumb);
+  }, [heroImage, youtubeThumb]);
+
   const location =
     locality && city ? `${locality}, ${city}` : city || "";
 
-  /* ---------------- CTA handler ---------------- */
   function handleOpenCTA(typeKey: keyof typeof CTA_MESSAGES) {
     const label = `${typeKey}_${slug || publicSlug}`;
     const message = CTA_MESSAGES[typeKey](name);
     openCTA(label, message);
   }
 
-  /* ---------------- Image sizing rules ---------------- */
   const imageWidth = variant === "homepage" ? 640 : 800;
   const imageHeight = 192;
 
-  /* ============================================================
-     RENDER
-  ============================================================ */
-
   return (
     <div className="rounded-xl overflow-hidden bg-background border shadow hover:shadow-lg transition group">
-      {/* =================================================
-         IMAGE
-      ================================================== */}
+      {/* IMAGE */}
       {imgSrc ? (
         <div className="relative">
           <img
@@ -130,8 +102,6 @@ export default function ProjectCard({
             loading={variant === "homepage" ? "lazy" : "eager"}
             decoding="async"
             fetchpriority={variant === "homepage" ? "auto" : "high"}
-            referrerPolicy="no-referrer"
-            crossOrigin="anonymous"
             onError={() => {
               if (imgSrc !== youtubeThumb && youtubeThumb) {
                 setImgSrc(youtubeThumb);
@@ -141,7 +111,6 @@ export default function ProjectCard({
             }}
           />
 
-          {/* Badges (default variant only) */}
           {variant === "default" && type && (
             <span className="absolute top-2 left-2 bg-background/80 text-xs font-semibold px-3 py-1 rounded">
               {formatLabel(type)}
@@ -160,15 +129,12 @@ export default function ProjectCard({
         </div>
       )}
 
-      {/* =================================================
-         CONTENT
-      ================================================== */}
+      {/* CONTENT */}
       <div className="p-4">
         <h3 className="text-lg font-semibold leading-snug">
           {name}
         </h3>
 
-        {/* TYPE + STATUS (HOMEPAGE) */}
         {variant === "homepage" && (type || status) && (
           <div className="mt-2 flex flex-wrap gap-2">
             {type && (
@@ -190,9 +156,6 @@ export default function ProjectCard({
           </p>
         )}
 
-        {/* =================================================
-           LISTING / BUILDER PAGE
-        ================================================== */}
         {variant === "default" && (
           <>
             <div className="grid grid-cols-2 gap-2 text-sm my-3">
@@ -239,9 +202,6 @@ export default function ProjectCard({
           </>
         )}
 
-        {/* =================================================
-           HOMEPAGE VARIANT
-        ================================================== */}
         {variant === "homepage" && (
           <div className="pt-4">
             <Link

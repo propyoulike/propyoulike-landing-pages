@@ -201,6 +201,7 @@ const BrochureComponent = memo(function BrochureComponent({
                 leadCTA.openCTA({
                   source: "section",
                   title: "brochure_download",
+                  builderId: project.builder,
                 })
               }
             >
