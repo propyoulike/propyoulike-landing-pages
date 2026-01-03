@@ -1,0 +1,751 @@
+{
+  "project": {
+    "slug": "paradise-on-earth",
+    "builder": "urbanrise",
+    "projectName": "Urbanrise Paradise On Earth",
+    "type": "Villa",
+    "status": "Under Construction",
+    "featured": true,
+    "area": "Gangasandra",
+    "locality": "Kanakpura Road",
+    "zone": "South",
+    "city": "Bengaluru",
+    "state": "Karnataka",
+    "country": "India",
+    "pincode": "562109"
+  },
+  "hero": {
+    "videoId": "TC__oJ_DCog",
+    "meta": {
+      "eyebrow": "Hero",
+      "title": "Find a Home That Fits Your Life",
+      "subtitle": "Verified projects ? Clear pricing ? Guided site visits",
+      "tagline": "Built for your today. Planned for your tomorrow."
+    },
+    "quickInfo": {
+      "price": "? 3.17 Cr Onwards*",
+      "typology": "4, 4.5 & 5 BHK",
+      "size": "24 Acres"
+    },
+    "images": [
+      "https://www.paradiseonearth.in/assets/banner/banner_updated.jpeg",
+      "https://www.paradiseonearth.in/assets/banner/banner_1.webp",
+      "https://www.paradiseonearth.in/assets/banner/banner_3.webp",
+      "https://www.paradiseonearth.in/assets/banner/banner_2.webp",
+      "https://www.paradiseonearth.in/assets/banner/banner_4.webp",
+      "https://www.paradiseonearth.in/assets/banner/banner_5.webp"
+    ]
+  },
+  "summary": {
+    "meta": {
+      "eyebrow": "Highlights",
+      "title": "Designed for Everyday Living",
+      "subtitle": "A thoughtfully planned community that balances comfort, connectivity, and long-term value",
+      "tagline": "Where location, layout, and lifestyle come together"
+    },
+    "description": "?Paradise on Earth?, located in Gangasandra, is surrounded by 2,190 acres of lush green reserve forests, right in the lap of nature. Paradise on Earth is Bengaluru?s first sustainable villa community. Spread across 24 acres of pristine land Paradise on Earth offers 219 tastefully designed villas. The density is just 9 villas per acre which ensures plenty of open spaces with well landscaped parks & plantations. Paradise on Earth has IGBC Platinum rating pre-certification.",
+    "highlights": [
+      "Bengaluru?s first IGBC Platinum pre-certified sustainable villa community, set amid 2,190 acres of protected reserve forest in Gangasandra",
+      "Ultra-low density living with just 219 villas across 24 acres ? only 9 villas per acre, ensuring space, privacy, and quiet",
+      "Private garden villas with 350?450 sq.ft. exclusive garden & deck, extending your home into nature",
+      "Inspired by old-gold Bengaluru living ? leafy lanes, open skies, cross-ventilated homes, and a slower, calmer rhythm of life",
+      "A rare balance of nature and connectivity ? green horizons at home, essential destinations within easy reach",
+      "Designed for families who value space, sustainability, and long-term legacy, not crowded layouts or high-rise living",
+      "Phase 2 of a thoughtfully planned villa enclave, where mornings feel lighter and everyday living feels unhurried",
+      "Forest-side villa living surrounded by 2,190 acres of reserve green cover"
+    ]
+  },
+  "amenities": {
+    "meta": {
+      "eyebrow": "Amenities",
+      "title": "Your Leisure Adorned With Opulence",
+      "subtitle": "From sports to leisure, wellness to education?",
+      "tagline": "Thoughtfully curated spaces for every stage of life."
+    },
+    "amenityImages": [
+      {
+        "src": "https://www.paradiseonearth.in/assets/image/water/water1.jpg",
+        "title": "Rainwater Storage",
+        "description": "3.85 Crore Litres of rainwater storage",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.paradiseonearth.in/assets/image/water/water2.jpg",
+        "title": "Bhungroo well",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.paradiseonearth.in/assets/image/water/water3.jpg",
+        "title": "Perrenial Well",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.paradiseonearth.in/assets/image/solar/solar1.jpg",
+        "title": "Solar Powered Community",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.paradiseonearth.in/assets/image/solar/solar2.jpg",
+        "title": "Solar power rooftop",
+        "description": "6 KW Solar Panels on Roof Top",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.paradiseonearth.in/assets/image/solar/solar3.jpg",
+        "title": "Solar powered street light",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.paradiseonearth.in/assets/features/environmental_intelligence_1.webp",
+        "title": "Manure",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.paradiseonearth.in/assets/image/playarea/Music_Classes.jpg",
+        "title": "Music Classes",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.paradiseonearth.in/assets/image/playarea/Cookery_classes.jpg",
+        "title": "Cookery Classes",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.paradiseonearth.in/assets/image/playarea/Tuition_Classes.jpg",
+        "title": "Tution Classes",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.paradiseonearth.in/assets/image/playarea/Robotic_Classes.jpg",
+        "title": "Robotic Classes",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.paradiseonearth.in/assets/image/playarea/Day_care.jpg",
+        "title": "Daycare",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.paradiseonearth.in/assets/image/playarea/play1.jpg",
+        "title": "Dance Classes",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.paradiseonearth.in/assets/image/amens/ame2.jpg",
+        "title": "Luxury Clamping",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.paradiseonearth.in/assets/image/amens/ame3.jpg",
+        "title": "Open Air Lawn with Movie Screen",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.paradiseonearth.in/assets/image/amens/ame6.jpg",
+        "title": "Viewing Deck",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.paradiseonearth.in/assets/image/amens/Amphitheatre.jpg",
+        "title": "Amphitheatre",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.paradiseonearth.in/assets/image/amens/Perennial_Stream.jpg",
+        "title": "Perrenial Stream",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.paradiseonearth.in/assets/image/clubhouse/Board_Games.jpg",
+        "title": "Board Games",
+        "description": "32000 sft Clubhouse",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.paradiseonearth.in/assets/image/clubhouse/Co-Working_Space.jpg",
+        "title": "Coworking Space",
+        "description": "32000 sft Clubhouse",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.paradiseonearth.in/assets/image/clubhouse/Coffee_Shop.jpg",
+        "title": "Coffee Shop",
+        "description": "32000 sft Clubhouse",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.paradiseonearth.in/assets/image/clubhouse/Grocery_Store.jpg",
+        "title": "Grocery Store",
+        "description": "32000 sft Clubhouse",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.paradiseonearth.in/assets/image/clubhouse/Guest_Rooms.jpg",
+        "title": "Guest Room",
+        "description": "32000 sft Clubhouse",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.paradiseonearth.in/assets/image/clubhouse/Infinity_Pool.jpg",
+        "title": "Infinity Pool",
+        "description": "32000 sft Clubhouse",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.paradiseonearth.in/assets/image/clubhouse/Gym.jpg",
+        "title": "Gym",
+        "description": "32000 sft Clubhouse",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.paradiseonearth.in/assets/image/clubhouse/Squash_Court.jpg",
+        "title": "Squash Court",
+        "description": "32000 sft Clubhouse",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.paradiseonearth.in/assets/image/clubhouse/Badminton_Court.jpg",
+        "title": "Badminton Court",
+        "description": "32000 sft Clubhouse",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.paradiseonearth.in/assets/image/clubhouse/Mini_heatre.jpg",
+        "title": "Mini Theatre",
+        "description": "32000 sft Clubhouse",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.paradiseonearth.in/assets/image/clubhouse/Banquet_Hall.jpg",
+        "title": "Banquet Hall",
+        "description": "32000 sft Clubhouse",
+        "media_type": "image"
+      },
+      {
+        "src": "https://www.paradiseonearth.in/assets/image/clubhouse/vr.jpg",
+        "title": "VR Lounge",
+        "description": "32000 sft Clubhouse",
+        "media_type": "image"
+      },
+      {
+        "src": "https://urbanrise.in/wp-content/uploads/2023/09/Native-trees-1.webp",
+        "title": "Edible Garden",
+        "media_type": "image"
+      },
+      {
+        "src": "https://urbanrise.in/wp-content/uploads/2023/09/Infinity-Pool.webp",
+        "title": "Swimming Pool",
+        "media_type": "image"
+      }
+    ]
+  },
+  "views": {
+    "meta": {
+      "eyebrow": "Views",
+      "title": "Mesmerizing Views",
+      "subtitle": "Wake up to greenery and breathtaking vistas.",
+      "tagline": "Every window opens to calm, light, and openness."
+    },
+    "images": [
+      {
+        "src": "https://www.paradiseonearth.in/assets/features/Location_choices_2.webp"
+      },
+      {
+        "src": "https://www.paradiseonearth.in/assets/features/Location_choices_3.webp"
+      },
+      {
+        "src": "https://www.paradiseonearth.in/assets/features/Location_choices_4.webp"
+      },
+      {
+        "src": "https://www.paradiseonearth.in/assets/features/Location_choices_1.webp"
+      },
+      {
+        "src": "https://www.paradiseonearth.in/assets/gallery/gallery3.jpg"
+      },
+      {
+        "src": "https://www.paradiseonearth.in/assets/gallery/gallery.jpg"
+      },
+      {
+        "src": "https://www.paradiseonearth.in/assets/gallery/gallery2.jpg"
+      },
+      {
+        "src": "https://urbanrise.in/wp-content/uploads/2023/09/240-EF-D_STREET.jpg"
+      },
+      {
+        "src": "https://urbanrise.in/wp-content/uploads/2023/09/240-EF-D.jpg"
+      },
+      {
+        "src": "https://urbanrise.in/wp-content/uploads/2023/09/200-EF-D_STREET.jpg"
+      },
+      {
+        "src": "https://urbanrise.in/wp-content/uploads/2023/09/180-EF-D.jpg"
+      }
+    ]
+  },
+  "locationUI": {
+    "meta": {
+      "eyebrow": "Location",
+      "title": "The Perfect Setting",
+      "subtitle": "Everything you need within easy reach ? schools, hospitals, connectivity & more.",
+      "tagline": "Life. Convenience. Future-ready."
+    },
+    "videoId": "X9g0H7pENCc",
+    "mapUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3890.026879983735!2d77.45975907358657!3d12.841539517719452!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae38c490000001%3A0xe1d124aa566e616e!2sUrban%20Rise%20-%20Paradise%20on%20Earth!5e0!3m2!1sen!2sin!4v1767429866008!5m2!1sen!2sin",
+    "categories": [
+      {
+        "title": "Seamless Connectivity",
+        "items": [
+          "Just 10 minutes to Kanakapura Road & Mysore Road",
+          "15 minutes to key Metro stations including Silk Institute & Challaghatta",
+          "Quick access to NICE Road, simplifying cross-city travel",
+          "Kengeri Railway Station within 20 minutes for regional connectivity"
+        ]
+      },
+      {
+        "title": "Education @ your doorstep",
+        "items": [
+          "BGS International Residential School just 1 minute away",
+          "Multiple leading international & ICSE schools within 6?17 minutes",
+          "Reputed institutions like DPS, Christ School, Gopalan National School close by",
+          "Alternative & holistic schools such as Valley School and Sri Sri Ravishankar Vidya Mandir within easy reach",
+          "A rare advantage for families seeking short school commutes without compromising on quality"
+        ]
+      },
+      {
+        "title": "Colleges & Higher Education Nearby",
+        "items": [
+          "Indian Institute of Journalism just 2 minutes away ? rare academic proximity",
+          "Vivekananda Institute of Technology within 6 minutes",
+          "Strong cluster of engineering, medical & business colleges within 15?30 minutes",
+          "Easy access to reputed institutions like Don Bosco Institute of Technology and Rajarajeshwari Medical College",
+          "Prestigious universities including RV College of Engineering, National School of Indian University & Bangalore University within comfortable commute",
+          "Ideal for families planning long-term education needs without relocation"
+        ]
+      },
+      {
+        "title": "Close to Work. Far from the Rush",
+        "items": [
+          "Seamless access to Global Village Tech Park and key industrial corridors",
+          "Connectivity to Electronic City without sacrificing green, low-density living",
+          "Workdays stay productive ? home life stays calm, private, and unrushed"
+        ]
+      },
+      {
+        "title": "Healthcare & Emergency Access",
+        "items": [
+          "Quality healthcare within minutes, with hospitals close to home",
+          "BMS Hospital just ~7 minutes away for everyday and emergency care",
+          "Rajarajeshwari Medical College & Hospital nearby, offering multi-specialty treatment",
+          "Access to Ayurveda and holistic care at Sri Sri Ayurveda Hospital",
+          "Renowned healthcare networks like BGS Gleneagles and Apollo within comfortable reach",
+          "A location that offers calm living without compromising medical access"
+        ]
+      },
+      {
+        "title": "Recreation, Leisure & Retail",
+        "items": [
+          "A curated leisure circuit with resorts, sports clubs, and golf destinations close by",
+          "Guhantara Arts & Sports Club and Holiday Village Resort for relaxed weekends and family outings",
+          "Wonderla Amusement Park and Eagleton Golf Resort within an easy drive for recreation and retreats",
+          "Access to premium malls like Mantri Arena, Prestige Forum & Gopalan Arcade",
+          "Enjoy the luxury of choice?weekend escapes, fine dining, retail therapy?all without city chaos",
+          "A lifestyle where entertainment is nearby, yet everyday living remains calm and private"
+        ]
+      },
+      {
+        "title": "Comfort & Convenience",
+        "items": [
+          "Everyday essentials and lifestyle destinations within effortless reach",
+          "Decathlon and sports foundations nearby for an active, wellness-driven lifestyle",
+          "Proximity to Art of Living International Center for mindfulness, retreats, and holistic living",
+          "Close to Turahalli Reserve Forest, offering nature walks, cycling, and fresh air escapes",
+          "Spiritual and cultural landmarks like ISKCON Theme Park and Pyramid Valley within easy access",
+          "A neighborhood that balances urban convenience with restorative living"
+        ]
+      }
+    ]
+  },
+  "propertyPlans": {
+    "meta": {
+      "eyebrow": "Layouts",
+      "title": "Meticulously Designed Homes",
+      "subtitle": "Explore our thoughtfully designed homes with virtual walkthroughs and detailed floor plans",
+      "tagline": "Homes designed around real life, not just square feet."
+    },
+    "masterPlan": {
+      "image": "https://urbanrise.in/wp-content/uploads/2023/09/Masterplan.webp",
+      "title": "Master Plan",
+      "description": "Master plan for the township"
+    },
+    "modelFlats": [
+      {
+        "title": "Model Flat",
+        "youtubeId": "qjX3JPfNanY",
+        "order": 1
+      }
+    ],
+    "unitPlans": [
+      {
+        "title": "Type 1 4 BHK",
+        "description": "East Facing, plot area 1624 sft",
+        "sba": "2459 sft",
+        "floorPlanImage": "https://urbanrise.in/wp-content/uploads/2023/09/POE-east.webp"
+      },
+      {
+        "title": "Type 1 4 BHK",
+        "description": "West Facing, plot area 1624 sft",
+        "sba": "2473 sft",
+        "floorPlanImage": "https://urbanrise.in/wp-content/uploads/2023/09/POE-west.webp"
+      },
+      {
+        "title": "Type 2 4 BHK",
+        "description": "West Facing, plot area 1799 sft",
+        "sba": "2671 sft",
+        "floorPlanImage": "https://urbanrise.in/wp-content/uploads/2023/09/POE-west-facing.webp"
+      },
+      {
+        "title": "Type 2 4 BHK",
+        "description": "East Facing, plot area 1799 sft",
+        "sba": "2655 sft",
+        "floorPlanImage": "https://urbanrise.in/wp-content/uploads/2023/09/POE-east-1.webp"
+      },
+      {
+        "title": "Type 3 4 BHK + Home Office",
+        "description": "East Facing, plot area 2150 sft",
+        "sba": "2966 sft",
+        "floorPlanImage": "https://urbanrise.in/wp-content/uploads/2023/09/poe-east-facing.webp"
+      },
+      {
+        "title": "Type 3 4 BHK + Home Office",
+        "description": "West Facing, plot area 2150 sft",
+        "sba": "2976 sft",
+        "floorPlanImage": "https://urbanrise.in/wp-content/uploads/2023/09/poe-west-facing-1.webp"
+      }
+    ]
+  },
+  "paymentPlans": {
+    "meta": {
+      "eyebrow": "Payment Plans",
+      "title": "Pricing & Payment Plans",
+      "subtitle": "Transparent costing ? Milestone-based ? RERA compliant",
+      "tagline": "Pay as construction progresses. No surprises later."
+    },
+    "pricingTitle": "How much to pay?",
+    "scheduleTitle": "When to pay?",
+    "ctaText": "Get pricing and payment details",
+    "pricingComputation": [
+      {
+        "title": "Sales Consideration",
+        "items": [
+          "Flat/Unit Cost",
+          "Club Development Charges",
+          "Premium Location Charges",
+          "Floor Rise Charges",
+          "Car Park Charges"
+        ]
+      },
+      {
+        "title": "GST on Sale Consideration",
+        "items": [
+          "Under-Construction Units",
+          "Ready-to-Move Units",
+          "Charged as per IT Act",
+          "Applied milestone-wise"
+        ]
+      },
+      {
+        "title": "Other / Possession Charges",
+        "items": [
+          "Advance Maintenance (Actuals) ",
+          "Electricity & Water Infra Charges",
+          "Corpus Fund",
+          "Legal Charges",
+          "Modifications (if applicable)"
+        ]
+      },
+      {
+        "title": "Stamp Duty & Registration",
+        "items": [
+          "Stamp / Admin Fees (if applicable)",
+          "GST on Other Charges",
+          "Approx. total",
+          "Stamp Duty",
+          "Cess",
+          "Surcharge",
+          "Registration"
+        ]
+      }
+    ],
+    "paymentSchedule": [
+      {
+        "title": "Agreement Stage",
+        "items": [
+          "Initial Advance",
+          "Balance Advance",
+          "Post Agreement Execution"
+        ]
+      },
+      {
+        "title": "Structure Completion",
+        "items": [
+          "Ground/Stilt Slab",
+          "Third Floor Slab",
+          "Sixth Floor Slab",
+          "Ninth Floor Slab"
+        ]
+      },
+      {
+        "title": "Possession",
+        "items": [
+          "Terrace Slab",
+          "Flooring Completion",
+          "External Windows",
+          "Lift Erection"
+        ]
+      }
+    ]
+  },
+  "construction": {
+    "meta": {
+      "eyebrow": "PROGRESS",
+      "title": "Construction updates",
+      "subtitle": "Track the latest construction progress with photos and videos",
+      "tagline": "Updated regularly to reflect on-site progress"
+    }
+  },
+  "testimonials": {
+    "meta": {
+      "eyebrow": "Testimonials",
+      "title": "What Our Customers Say",
+      "subtitle": "Hear from families living here",
+      "tagline": "Real stories from families who chose to live here."
+    },
+    "testimonials": [
+      {
+        "name": "Sahana Bichugatti",
+        "quote": "Beautiful sustainable villas which are solar powered and they do rain water harvesting for the entire community water supply. Situated in-between kanakapura and Mysore road. Little bit far from the city but well connected to metro and nice road . Another plus point is reputed schools and colleges are near by to this project . Vedaprabhu explained the project details clearly . Bangalore needs these kind of sustainable villas for our future generation. Must visit if anyone wants to purchase a villa in south Bangalore..\r",
+        "rating": 5
+      },
+      {
+        "name": "Anjali Gowda",
+        "quote": "During my visit to the Urbanrise villa at Gangasandra, Bangalore found the property to be truly outstanding and outclass. The design, finish and landscaping reflect premium craftsmanship, while the amenities (clubhouse, fitness centre, swimming pool and well-planned open spaces) exceeded expectations. The business executive Mr.Deepak GM who guided the tour was professional, knowledgeable and transparent ? making the entire experience smooth and reassuring. Highly recommended. An outstanding, outclass villa experience ? superb finishes, exceptional amenities and a business executive who truly understands client needs.\r\n",
+        "rating": 5
+      },
+      {
+        "name": "Abhishek C",
+        "quote": "Feels very close to nature , this place is planned with lot of greener concept and has a good water source , Mr.Satya Raghuram wonderfully explained this concept and has helped us in selecting our dream house. Would recommend this project for people seeking calm nature and a peaceful pollution free life.",
+        "rating": 5
+      },
+      {
+        "name": "Ranjith Kadamboor",
+        "quote": "This is a nature-friendly and dust-free area with wide roads and plenty of space between each villa. The villas are beautifully designed with sustainability in mind, incorporating solar power and a rainwater harvesting system for water supply. Conveniently located between Kanakapura Road and Mysore Road, this community is well-connected to all areas.\r",
+        "rating": 5
+      },
+      {
+        "name": "Chandramouli Rao",
+        "quote": "Great project backed by great set of people. I don?t think anyone who visit the site and meet the individual staff there, would not want to seriously look into buying a property here. Clean legal documents and several sensible and satisfied customers who already call Urbanrise their home, makes it a compelling proposition. Their customer interaction practice both at the site and at the corporate office is highly professional. Price is a bit on the higher side but looking on the ground infrastructure you can think differently.",
+        "rating": 5
+      }
+    ]
+  },
+  "aboutBuilder": {
+    "name": "urbanrise",
+    "meta": {
+      "eyebrow": "Developer",
+      "title": "About the Developer",
+      "subtitle": "A trusted name with a proven track record in delivering quality homes",
+      "tagline": "Built on credibility. Known for consistency."
+    },
+    "description": "Urbanrise is South India?s largest real estate developer, recognized for its pathbreaking and quality residential projects across South India. Backed by the renowned Alliance Group, Urbanrise has delivered over 22,000+ homes and has 72 million square feet under development. Driven by a passion for growth and sustainability, our projects are not just about creating homes but building communities that foster a sense of belonging. With a commitment to integrity and reliability, Urbanrise ensures timely delivery, meeting and exceeding home buyer expectations.",
+    "descriptionExpanded": "Urbanrise Vision is to be the World?s largest real estate developer with annual revenues of $10 Billion by year 2035. Thus bringing pride to our country that they have conquered yet another industry.",
+    "stats": [
+      {
+        "label": "Years of Legacy",
+        "value": "18+ years (est. 2017)"
+      },
+      {
+        "label": "Homes Delivered",
+        "value": "22,000+ homes"
+      },
+      {
+        "label": "Happy Customers",
+        "value": "50,000+ families"
+      },
+      {
+        "label": "Total Development (Delivered + Ongoing)",
+        "value": "72+ million sq. ft."
+      },
+      {
+        "label": "Presence Across Cities",
+        "value": "3 major Indian cities"
+      }
+    ]
+  },
+  "loanSupport": {
+    "enabled": true,
+    "meta": {
+      "eyebrow": "Loans",
+      "title": "Check Your Home Loan Eligibility",
+      "subtitle": "Know your budget and EMI options before you decide",
+      "tagline": "Plan with confidence. Buy with clarity."
+    },
+    "banks": [
+      {
+        "name": "SBI"
+      },
+      {
+        "name": "HDFC"
+      },
+      {
+        "name": "ICICI"
+      },
+      {
+        "name": "AXIS"
+      },
+      {
+        "name": "PNB"
+      },
+      {
+        "name": "Canara"
+      }
+    ]
+  },
+  "brochure": {
+    "meta": {
+      "eyebrow": "DOWNLOADS",
+      "title": "Brochure & official documents",
+      "subtitle": "Access brochures, floor plans, approvals and key project details",
+      "tagline": "Everything you need to evaluate the project ? in one place"
+    }
+  },
+  "faq": {
+    "meta": {
+      "eyebrow": "FAQ",
+      "title": "Frequently Asked Questions",
+      "subtitle": "Everything you need to know before making a decision",
+      "tagline": "Clear answers. No guesswork."
+    },
+    "faqs": [
+      {
+        "title": "Where is Urbanrise Paradise on Earth located?",
+        "items": [
+          "Urbanrise Paradise on Earth is located in Gangasandra, Bengaluru, surrounded by reserve forests and low-density residential zones, offering a nature-first villa lifestyle with good city connectivity."
+        ]
+      },
+      {
+        "title": "What type of project is Paradise on Earth?",
+        "items": [
+          "It is a premium villa community featuring independent villas designed for spacious, private, and sustainable living."
+        ]
+      },
+      {
+        "title": "Is Paradise on Earth a gated community?",
+        "items": [
+          "Yes, Paradise on Earth is a gated villa community with controlled access and internal roads designed for privacy and safety."
+        ]
+      },
+      {
+        "title": "How large is the project and how many villas are there?",
+        "items": [
+          "The project is spread across approximately 24 acres and offers 219 villas, maintaining a low density of about 9 villas per acre."
+        ]
+      },
+      {
+        "title": "What makes Paradise on Earth a low-density project?",
+        "items": [
+          "With only around 9 villas per acre, the project prioritizes open spaces, landscaped parks, and wide internal roads instead of high construction density."
+        ]
+      },
+      {
+        "title": "What is meant by Bengaluru?s first sustainable villa community?",
+        "items": [
+          "Paradise on Earth focuses on eco-conscious planning, large green cover, open spaces, and has received IGBC Platinum pre-certification for sustainability."
+        ]
+      },
+      {
+        "title": "Does the project have any green certification?",
+        "items": [
+          "Yes, Urbanrise Paradise on Earth has IGBC Platinum pre-certification, reflecting its focus on sustainable and environmentally responsible development."
+        ]
+      },
+      {
+        "title": "Do villas come with private gardens?",
+        "items": [
+          "Yes, each villa includes a private garden of approximately 350?450 sq. ft. with a deck, offering personal outdoor living space."
+        ]
+      },
+      {
+        "title": "What lifestyle does Paradise on Earth offer?",
+        "items": [
+          "The project is designed for families seeking quiet, spacious living with greenery, private gardens, and a community that reflects the charm of old Bengaluru."
+        ]
+      },
+      {
+        "title": "Is Paradise on Earth suitable for families?",
+        "items": [
+          "Yes, it is ideal for families looking for spacious homes, private gardens, proximity to schools, and a calm, secure environment."
+        ]
+      },
+      {
+        "title": "How far is Paradise on Earth from Electronic City?",
+        "items": [
+          "Electronic City is approximately 41 minutes away, making it accessible for professionals while retaining a peaceful residential environment."
+        ]
+      },
+      {
+        "title": "How well is the project connected to major roads?",
+        "items": [
+          "The project has good access to Kanakapura Road, Mysore Road, NICE Road Junction, and upcoming metro connectivity in the region."
+        ]
+      },
+      {
+        "title": "Are there metro stations nearby?",
+        "items": [
+          "Yes, Silk Institute Metro Station and Challaghatta Metro Station are within a short driving distance from the project."
+        ]
+      },
+      {
+        "title": "What schools are near Paradise on Earth?",
+        "items": [
+          "Several reputed schools such as BGS International Residential School, Delhi Public School, and Christ School Kengeri are located within driving distance."
+        ]
+      },
+      {
+        "title": "Are colleges and universities accessible from the project?",
+        "items": [
+          "Yes, institutions like RV College of Engineering, National School of Indian University, and Bangalore University are reachable within 30 minutes."
+        ]
+      },
+      {
+        "title": "What healthcare facilities are nearby?",
+        "items": [
+          "Hospitals such as BMS Hospital, Rajarajeshwari Medical College & Hospital, and BGS Gleneagles Global Hospital are accessible from the project."
+        ]
+      },
+      {
+        "title": "Does the project offer a peaceful environment despite city access?",
+        "items": [
+          "Yes, being close to reserve forests and low-density development zones, the project offers quiet surroundings while staying connected to key city hubs."
+        ]
+      },
+      {
+        "title": "Is Paradise on Earth suitable for people who value nature and open spaces?",
+        "items": [
+          "Absolutely. The project is surrounded by greenery and designed with large open spaces, landscaped parks, and forest-adjacent surroundings."
+        ]
+      },
+      {
+        "title": "What recreational options are nearby?",
+        "items": [
+          "Destinations like Guhantara Arts & Sports Club, Wonderla, Eagleton Golf Resort, and major malls are accessible within a short drive."
+        ]
+      },
+      {
+        "title": "Who is the developer of Paradise on Earth?",
+        "items": [
+          "Urbanrise is the developer behind Paradise on Earth, known for large-scale residential developments across South India."
+        ]
+      }
+    ]
+  }
+}
