@@ -437,7 +437,7 @@
       {
         "title": "Sales Consideration",
         "items": [
-          "Flat/Unit Cost",
+          "Flat/Unit Cost | Size ? Base Rate",
           "Club Development Charges",
           "Premium Location Charges",
           "Floor Rise Charges",
@@ -447,8 +447,8 @@
       {
         "title": "GST on Sale Consideration",
         "items": [
-          "Under-Construction Units",
-          "Ready-to-Move Units",
+          "Under-Construction Units - 5%",
+          "Ready-to-Move Units - None",
           "Charged as per IT Act",
           "Applied milestone-wise"
         ]
@@ -457,9 +457,9 @@
         "title": "Other / Possession Charges",
         "items": [
           "Advance Maintenance (Actuals) ",
-          "Electricity & Water Infra Charges",
+          "Electricity & Water Infra Charges - 350 INR per sft of SBA",
           "Corpus Fund",
-          "Legal Charges",
+          "Legal Charges - approx 50K INR",
           "Modifications (if applicable)"
         ]
       },
@@ -467,12 +467,12 @@
         "title": "Stamp Duty & Registration",
         "items": [
           "Stamp / Admin Fees (if applicable)",
-          "GST on Other Charges",
-          "Approx. total",
-          "Stamp Duty",
-          "Cess",
-          "Surcharge",
-          "Registration"
+          "GST on Other Charges - 18%",
+          "Approx. total - 7.6% of agreement value",
+          "Stamp Duty - 5%",
+          "Cess - 10% of stamp duty",
+          "Surcharge - 2% of stamp duty",
+          "Registration - 2%"
         ]
       }
     ],
@@ -482,25 +482,19 @@
         "items": [
           "Initial Advance",
           "Balance Advance",
-          "Post Agreement Execution"
+          "Post Agreement Execution | Around 20%"
         ]
       },
       {
         "title": "Structure Completion",
         "items": [
-          "Ground/Stilt Slab",
-          "Third Floor Slab",
-          "Sixth Floor Slab",
-          "Ninth Floor Slab"
+          "As per agreement"
         ]
       },
       {
         "title": "Possession",
         "items": [
-          "Terrace Slab",
-          "Flooring Completion",
-          "External Windows",
-          "Lift Erection"
+          "As per agreement"
         ]
       }
     ]
