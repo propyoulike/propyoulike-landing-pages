@@ -1,5 +1,3 @@
-// src/templates/common/PaymentPlans_component/PaymentPlans_component.tsx
-
 import { Button } from "@/components/ui/button";
 import { useLeadCTAContext } from "@/components/lead/LeadCTAProvider";
 
@@ -35,6 +33,17 @@ const DEFAULT_META: SectionMeta = {
 };
 
 /* ---------------------------------------------------------------------
+   SAFE OPTIONAL CTA ACCESS
+------------------------------------------------------------------------*/
+function useOptionalLeadCTA() {
+  try {
+    return useLeadCTAContext();
+  } catch {
+    return null;
+  }
+}
+
+/* ---------------------------------------------------------------------
    COMPONENT
 ------------------------------------------------------------------------*/
 export default function PaymentPlans_component({
@@ -47,7 +56,7 @@ export default function PaymentPlans_component({
   scheduleTitle = "Construction-linked payment schedule",
   paymentSchedule = [],
 }: PaymentPlansProps) {
-  const { openCTA } = useLeadCTAContext();
+  const leadCTA = useOptionalLeadCTA();
 
   const hasContent =
     pricingComputation.length > 0 ||
@@ -62,11 +71,8 @@ export default function PaymentPlans_component({
       align="center"
       padding="md"
     >
-      {/* ─────────────────────────────
-         PRICING + PAYMENT GRID
-      ───────────────────────────── */}
+      {/* PRICING + PAYMENT GRID */}
       <div className="grid lg:grid-cols-2 gap-14">
-
         {/* PRICING BREAKUP */}
         {pricingComputation.length > 0 && (
           <div>
@@ -94,24 +100,23 @@ export default function PaymentPlans_component({
         )}
       </div>
 
-      {/* ─────────────────────────────
-         PRIMARY CTA
-      ───────────────────────────── */}
-      <div className="mt-16 text-center">
-        <Button
-          size="lg"
-          className="rounded-xl px-10 font-semibold"
-          onClick={() =>
-            openCTA({
-              source: "section",
-              label: "payment_plans_detailed_pricing",
-              builderID: project.builder,
-            })
-          }
-        >
-          Get detailed pricing & payment breakup
-        </Button>
-      </div>
+      {/* CTA */}
+      {leadCTA && (
+        <div className="mt-16 text-center">
+          <Button
+            size="lg"
+            className="rounded-xl px-10 font-semibold"
+            onClick={() =>
+              leadCTA.openCTA({
+                source: "section",
+                label: "payment_plans_detailed_pricing",
+              })
+            }
+          >
+            Get detailed pricing & payment breakup
+          </Button>
+        </div>
+      )}
     </BaseSection>
   );
 }

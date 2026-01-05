@@ -1,7 +1,7 @@
 import { memo } from "react";
 import { Button } from "@/components/ui/button";
-import { useLeadCTAContext } from "@/components/lead/LeadCTAProvider";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+import { useLeadCTAContext } from "@/components/lead/LeadCTAProvider";
 
 import LocationMediaPanel from "./LocationMediaPanel";
 import LocationCategoryAccordion from "./LocationCategoryAccordion";
@@ -15,6 +15,17 @@ interface LocationUIProps {
   videoId?: string;
   mapUrl?: string;
   categories?: any[];
+}
+
+/* ------------------------------------------------------------
+   SAFE OPTIONAL CTA ACCESS
+------------------------------------------------------------ */
+function useOptionalLeadCTA() {
+  try {
+    return useLeadCTAContext();
+  } catch {
+    return null;
+  }
 }
 
 const LocationUI_component = memo(function LocationUI_component({
@@ -33,10 +44,12 @@ const LocationUI_component = memo(function LocationUI_component({
 }: LocationUIProps) {
   useScrollReveal(".fade-up");
 
-  const { openCTA } = useLeadCTAContext();
+  const leadCTA = useOptionalLeadCTA();
 
   const hasContent =
-    !!videoId || !!mapUrl || categories.length > 0;
+    Boolean(videoId) ||
+    Boolean(mapUrl) ||
+    categories.length > 0;
 
   if (!hasContent) return null;
 
@@ -47,9 +60,7 @@ const LocationUI_component = memo(function LocationUI_component({
       align="center"
       padding="md"
     >
-      {/* ─────────────────────────────
-         MEDIA (SPACE RESERVED)
-      ───────────────────────────── */}
+      {/* MEDIA */}
       {(videoId || mapUrl) && (
         <div className="fade-up contain-layout">
           <div className="min-h-[280px] md:min-h-[360px]">
@@ -61,9 +72,7 @@ const LocationUI_component = memo(function LocationUI_component({
         </div>
       )}
 
-      {/* ─────────────────────────────
-         DISTANCES / CATEGORIES
-      ───────────────────────────── */}
+      {/* DISTANCES */}
       {categories.length > 0 && (
         <div className="max-w-4xl mx-auto mt-10 fade-up contain-layout">
           <LocationCategoryAccordion
@@ -72,26 +81,25 @@ const LocationUI_component = memo(function LocationUI_component({
         </div>
       )}
 
-      {/* ─────────────────────────────
-         CTA (HEIGHT LOCKED)
-      ───────────────────────────── */}
-      <div className="mt-14 text-center fade-up contain-layout">
-        <div className="h-[56px] flex items-center justify-center">
-          <Button
-            size="lg"
-            className="rounded-xl px-12"
-            onClick={() =>
-              openCTA({
-                source: "section",
-                label: "location_book_site_visit",
-                builderId: project.builder,
-              })
-            }
-          >
-            Book site visit
-          </Button>
+      {/* CTA */}
+      {leadCTA && (
+        <div className="mt-14 text-center fade-up contain-layout">
+          <div className="h-[56px] flex items-center justify-center">
+            <Button
+              size="lg"
+              className="rounded-xl px-12"
+              onClick={() =>
+                leadCTA.openCTA({
+                  source: "section",
+                  label: "location_book_site_visit",
+                })
+              }
+            >
+              Book site visit
+            </Button>
+          </div>
         </div>
-      </div>
+      )}
     </BaseSection>
   );
 });

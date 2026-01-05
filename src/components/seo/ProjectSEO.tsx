@@ -4,6 +4,16 @@ import type { ProjectData } from "@/content/schema/project.schema";
 import { resolveBreadcrumbs } from "@/components/seo/resolveBreadcrumbs";
 import { buildBreadcrumbSchema } from "@/components/seo/buildBreadcrumbSchema";
 
+/* ============================================================
+   CONFIG
+============================================================ */
+const ORIGIN = "https://propyoulike.com";
+
+function withTrailingSlash(url?: string) {
+  if (!url) return url;
+  return url.endsWith("/") ? url : `${url}/`;
+}
+
 interface SEOProps {
   project: ProjectData;
 }
@@ -11,9 +21,16 @@ interface SEOProps {
 export default function ProjectSEO({ project }: SEOProps) {
   if (!project) return null;
 
-  /* -----------------------------------------------
-      DESCRIPTION (USED IN SCHEMAS ONLY)
-  ----------------------------------------------- */
+  /* ============================================================
+     CANONICAL (SINGLE SOURCE OF TRUTH)
+  ============================================================ */
+  const canonicalUrl = withTrailingSlash(
+    `${ORIGIN}/${project.slug}`
+  );
+
+  /* ============================================================
+     DESCRIPTION (USED IN SCHEMAS ONLY)
+  ============================================================ */
   const city =
     project.locationMeta?.city ||
     project.city ||
@@ -24,9 +41,9 @@ export default function ProjectSEO({ project }: SEOProps) {
     project.summary?.description ||
     `Explore ${project.projectName} – pricing, floor plans, amenities, location and brochure.`;
 
-  /* -----------------------------------------------
-      FAQ JSON-LD
-  ----------------------------------------------- */
+  /* ============================================================
+     FAQ JSON-LD
+  ============================================================ */
   const faqList = Array.isArray(project.faq?.items)
     ? project.faq.items
     : [];
@@ -47,14 +64,15 @@ export default function ProjectSEO({ project }: SEOProps) {
         }
       : null;
 
-  /* -----------------------------------------------
-      PROJECT SCHEMA
-  ----------------------------------------------- */
+  /* ============================================================
+     PROJECT SCHEMA
+  ============================================================ */
   const projectSchema = {
     "@context": "https://schema.org",
     "@type": "ApartmentComplex",
     name: project.projectName,
     description: desc,
+    url: canonicalUrl,
     address: {
       "@type": "PostalAddress",
       addressLocality: city,
@@ -63,9 +81,9 @@ export default function ProjectSEO({ project }: SEOProps) {
     brand: project.builder,
   };
 
-  /* -----------------------------------------------
-      PRICING SCHEMA
-  ----------------------------------------------- */
+  /* ============================================================
+     PRICING SCHEMA
+  ============================================================ */
   const pricing = project.floorPlansSection?.unitPlans || [];
 
   const pricingSchema =
@@ -74,6 +92,7 @@ export default function ProjectSEO({ project }: SEOProps) {
           "@context": "https://schema.org",
           "@type": "Product",
           name: project.projectName,
+          url: canonicalUrl,
           brand: project.builder,
           offers: pricing.map((p) => ({
             "@type": "Offer",
@@ -85,20 +104,47 @@ export default function ProjectSEO({ project }: SEOProps) {
         }
       : null;
 
-  /* -----------------------------------------------
-      BREADCRUMB JSON-LD
-  ----------------------------------------------- */
+  /* ============================================================
+     BREADCRUMB JSON-LD
+  ============================================================ */
   const breadcrumbs = resolveBreadcrumbs({
     type: "project",
     project,
   });
 
-  const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs);
+const breadcrumbSchema = buildBreadcrumbSchema(
+  breadcrumbs.map((b, idx) => {
+    // Last breadcrumb = canonical URL
+    if (idx === breadcrumbs.length - 1) {
+      return {
+        ...b,
+        item: canonicalUrl,
+      };
+    }
 
+    // Normalize ONLY if item exists
+    if (typeof b.item === "string") {
+      return {
+        ...b,
+        item: withTrailingSlash(b.item),
+      };
+    }
+
+    // Otherwise, return as-is (no crash)
+    return b;
+  })
+);
+
+  /* ============================================================
+     HEAD OUTPUT
+  ============================================================ */
   return (
     <Helmet>
-      {/* JSON-LD ONLY — NO META TAGS */}
+      {/* ===== Canonical hard-lock ===== */}
+      <link rel="canonical" href={canonicalUrl} />
+      <meta property="og:url" content={canonicalUrl} />
 
+      {/* ===== JSON-LD ONLY ===== */}
       <script type="application/ld+json">
         {JSON.stringify(projectSchema)}
       </script>

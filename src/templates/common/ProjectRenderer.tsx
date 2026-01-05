@@ -4,6 +4,7 @@ import { resolveSectionProps } from "@/utils/resolveSectionProps";
 import { buildMenuFromSections } from "@/utils/buildMenuFromSections";
 import { normalizeComponent } from "@/lib/runtime/normalizeComponent";
 import { runtimeLog } from "@/lib/log/runtimeLog";
+import { forbidGlobals } from "@/lib/runtime/forbidGlobals";
 
 import type { BuilderId } from "@/lib/analytics/builderIds";
 
@@ -46,6 +47,16 @@ export default function ProjectRenderer({
   payload,
   ctx,
 }: ProjectRendererProps) {
+  /* ----------------------------------------------------------
+     DEV-ONLY ARCHITECTURAL GUARD
+     ----------------------------------------------------------
+     Prevent illegal access like `project`, `builder`, `slug`
+     inside sections.
+  ---------------------------------------------------------- */
+  if (import.meta.env.DEV) {
+    forbidGlobals(["project", "builder", "slug"]);
+  }
+
   /* ----------------------------------------------------------
      Guards (fail-soft, boundary-safe)
   ---------------------------------------------------------- */

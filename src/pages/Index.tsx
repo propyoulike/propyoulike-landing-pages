@@ -19,22 +19,14 @@ export default function IndexPage() {
       <header className="sticky top-0 z-50 border-b bg-background/80 backdrop-blur">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <img
-              src={brand.logo}
-              alt={brand.name}
-              className="h-8 w-auto"
-            />
-            <span className="font-semibold tracking-tight">
-              {brand.name}
-            </span>
+            <img src={brand.logo} alt={brand.name} className="h-8 w-auto" />
+            <span className="font-semibold tracking-tight">{brand.name}</span>
           </div>
 
           <nav className="hidden md:flex items-center gap-6 text-sm text-muted-foreground">
             <a href="#why" className="hover:text-foreground">Why us</a>
             {featuredProjects.length > 0 && (
-              <a href="#projects" className="hover:text-foreground">
-                Projects
-              </a>
+              <a href="#projects" className="hover:text-foreground">Projects</a>
             )}
           </nav>
 
@@ -48,12 +40,10 @@ export default function IndexPage() {
       </header>
 
       {/* =================================================
-         HERO (TEXT + VIDEO)
+         HERO
       ================================================== */}
       <section className="container mx-auto px-4 py-16 md:py-20">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-
-          {/* LEFT */}
           <div>
             <h1 className="text-3xl md:text-5xl font-bold tracking-tight">
               Find RERA-registered new home projects.
@@ -66,6 +56,17 @@ export default function IndexPage() {
               assisted site visits, and no unsolicited communication.
             </p>
 
+            <p className="mt-4 text-sm text-muted-foreground max-w-xl">
+              Explore verified projects like{" "}
+              <a
+                href="/urbanrise-paradise-on-earth/"
+                className="text-primary font-medium hover:underline"
+              >
+                Urbanrise Paradise on Earth
+              </a>{" "}
+              and other RERA-approved developments in Bengaluru.
+            </p>
+
             <div className="mt-8 flex flex-col sm:flex-row gap-4">
               <button
                 onClick={openCTA}
@@ -74,15 +75,12 @@ export default function IndexPage() {
                 Get site visit assistance
               </button>
 
-              {/* 🔒 GOOGLE ADS POLICY–CRITICAL */}
               <span className="text-sm text-muted-foreground self-center max-w-md">
-                No brokerage • RERA compliant • Your enquiry is shared only with
-                authorised developer sales teams for the selected project
+                No brokerage • RERA compliant • Enquiry shared only with authorised developer teams
               </span>
             </div>
           </div>
 
-          {/* RIGHT */}
           <YouTubePlayer
             videoId={brand.videoId}
             title="PropYouLike – How we help homebuyers"
@@ -103,32 +101,12 @@ export default function IndexPage() {
       </section>
 
       {/* =================================================
-         REGULATORY DISCLOSURE (MANDATORY)
-      ================================================== */}
-      <section className="bg-background">
-        <div className="container mx-auto px-4 py-6 max-w-5xl text-center text-xs text-muted-foreground leading-relaxed">
-          <p>
-            <strong>Disclosure:</strong> {brand.name} is a RERA-registered real
-            estate marketing and advisory platform and acts as an authorised
-            channel partner for select developers. {brand.name} is not the
-            developer, promoter, builder, or owner of the projects listed on
-            this website.
-          </p>
-        </div>
-      </section>
-
-      {/* =================================================
          WHY PROPYOULIKE
       ================================================== */}
-      <section
-        id="why"
-        className="container mx-auto px-4 py-14 max-w-5xl text-center"
-      >
-        <h2 className="text-2xl font-semibold">
-          Why PropYouLike
-        </h2>
+      <section id="why" className="container mx-auto px-4 py-14 max-w-5xl text-center">
+        <h2 className="text-2xl font-semibold">Why PropYouLike</h2>
 
-        <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-8 text-left md:text-center">
+        <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
             <h3 className="font-medium text-lg">Who we are</h3>
             <p className="mt-2 text-sm text-muted-foreground">
@@ -157,27 +135,30 @@ export default function IndexPage() {
          FEATURED PROJECTS
       ================================================== */}
       {featuredProjects.length > 0 && (
-        <section
-          id="projects"
-          className="container mx-auto px-4 py-16 max-w-6xl"
-        >
-          <h2 className="text-2xl font-semibold text-center">
-            Featured projects
-          </h2>
+        <section id="projects" className="container mx-auto px-4 py-16 max-w-6xl">
+          <h2 className="text-2xl font-semibold text-center">Featured projects</h2>
 
           <p className="mt-4 text-center text-muted-foreground">
-            A small selection of verified new home projects you can explore in detail.
+            A selection of verified new home projects you can explore in detail.
           </p>
 
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
-            {featuredProjects.map((project) => (
-              <ProjectCard
-                key={project.slug}
-                project={project}
-                variant="homepage"
-              />
-            ))}
-          </div>
+<div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
+  {featuredProjects.map((project) => {
+    const slug = project.publicSlug || project.slug;
+    if (!slug) return null;
+
+    return (
+      <a
+        key={slug}
+        href={`/${slug}/`}
+        className="block group"
+        aria-label={`View ${project.projectName}`}
+      >
+        <ProjectCard project={project} variant="homepage" />
+      </a>
+    );
+  })}
+</div>
         </section>
       )}
 

@@ -1,28 +1,52 @@
 # ----------------------------------------
-# CRITICAL: disable BigRock 404 override
+# CRITICAL: disable BigRock custom 404 override
 # ----------------------------------------
 ErrorDocument 404 default
 
+# ----------------------------------------
+# Correct MIME types (manifest)
+# ----------------------------------------
 <IfModule mod_mime.c>
-  AddType application/javascript .js
-  AddType application/xml .xml
-  AddType text/xml .xml
+  AddType application/manifest+json .webmanifest
+  AddType application/manifest+json .json
 </IfModule>
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
 
-  # Allow sitemap & robots
-  RewriteRule ^(sitemap\.xml|robots\.txt)$ - [L]
+  # ----------------------------------------
+  # NEVER rewrite critical static files
+  # ----------------------------------------
+  RewriteRule ^site\.webmanifest$ - [L]
+  RewriteRule ^manifest\.json$ - [L]
+  RewriteRule ^robots\.txt$ - [L]
+  RewriteRule ^sitemap\.xml$ - [L]
+  RewriteRule ^favicon\.ico$ - [L]
 
-  # Never rewrite assets
-  RewriteRule ^(assets|images|shared|favicon\.ico|projectEntry\.js) - [L]
-
-  # Allow real files & folders
-  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  # ----------------------------------------
+  # FORCE trailing slash for directories
+  # /provident → /provident/
+  # ----------------------------------------
   RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^(.+[^/])$ /$1/ [R=301,L]
+
+  # ----------------------------------------
+  # Allow real files (JS, CSS, images, etc.)
+  # ----------------------------------------
+  RewriteCond %{REQUEST_FILENAME} -f
   RewriteRule . - [L]
 
-  # SPA fallback (homepage only)
+  # ----------------------------------------
+  # Serve static project & builder pages
+  # /slug/ → /slug/index.html
+  # ----------------------------------------
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteCond %{REQUEST_FILENAME}/index.html -f
+  RewriteRule ^(.+)$ $1/index.html [L]
+
+  # ----------------------------------------
+  # SPA fallback — HOMEPAGE ONLY
+  # ----------------------------------------
   RewriteRule ^$ /index.html [L]
+
 </IfModule>

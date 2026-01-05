@@ -14,26 +14,15 @@
  * ARCHITECTURAL GUARANTEES
  * ------------------------------------------------------------
  * - Pure render from props
- * - No project identity access
- * - No resolver / authoring assumptions
+ * - NO project identity access
+ * - NO resolver assumptions
  * - Safe in SSR / prerender / runtime
  * - Identical behavior in DEV and PROD
- *
- * DESIGN PRINCIPLES
- * ------------------------------------------------------------
- * 1. CONTRACT FIRST
- *    → Component consumes ONLY UI contract
- *
- * 2. FAIL LOUD IN DEV, SILENT IN PROD
- *    → Resolver bugs are caught early
- *
- * 3. DEFENSIVE RENDERING
- *    → Invalid data never breaks UI
  *
  * ============================================================
  */
 
-import { memo, useState, useMemo } from "react";
+import { memo, useMemo, useState } from "react";
 
 import BrochurePreview from "./BrochurePreview";
 import DocumentList from "./DocumentList";
@@ -46,32 +35,22 @@ import BaseSection from "../BaseSection";
 import type { SectionMeta } from "@/content/types/sectionMeta";
 
 /* ---------------------------------------------------------------------
-   UI CONTRACT TYPES
+   UI CONTRACT
 ------------------------------------------------------------------------*/
 interface BrochureDocument {
-  /** Display title (mapped from authoring title) */
   title: string;
-
-  /** Absolute document URL */
   url: string;
 }
 
 interface BrochureProps {
-  /** Section anchor id */
   id?: string;
-
-  /** Canonical section meta */
   meta?: SectionMeta;
-
-  /** Brochure cover image URL */
   coverImage?: unknown;
-
-  /** Resolver-mapped documents list */
   documents?: unknown;
 }
 
 /* ---------------------------------------------------------------------
-   DEFAULT META (STABLE FALLBACK)
+   DEFAULT META
 ------------------------------------------------------------------------*/
 const DEFAULT_META: SectionMeta = {
   eyebrow: "DOWNLOADS",
@@ -83,8 +62,7 @@ const DEFAULT_META: SectionMeta = {
 };
 
 /* ---------------------------------------------------------------------
-   SAFE CONTEXT ACCESS
-   (Component must not assume provider presence)
+   SAFE OPTIONAL CTA ACCESS
 ------------------------------------------------------------------------*/
 function useOptionalLeadCTA() {
   try {
@@ -107,10 +85,7 @@ const BrochureComponent = memo(function BrochureComponent({
   const leadCTA = useOptionalLeadCTA();
 
   /* ------------------------------------------------------------
-     DEV SAFETY GUARD
-     ------------------------------------------------------------
-     Ensures resolver mapping obeys UI contract:
-     [{ title: string, url: string }]
+     DEV CONTRACT VALIDATION
   ------------------------------------------------------------ */
   if (import.meta.env.DEV && documents !== undefined) {
     if (!Array.isArray(documents)) {
@@ -137,8 +112,7 @@ const BrochureComponent = memo(function BrochureComponent({
      SANITIZATION (PROD SAFE)
   ------------------------------------------------------------ */
   const safeCoverImage =
-    typeof coverImage === "string" &&
-    coverImage.trim().length > 0
+    typeof coverImage === "string" && coverImage.trim().length > 0
       ? coverImage
       : null;
 
@@ -154,9 +128,7 @@ const BrochureComponent = memo(function BrochureComponent({
   }, [documents]);
 
   /* ------------------------------------------------------------
-     GUARD — NO CONTENT
-     ------------------------------------------------------------
-     Section renders ONLY when meaningful content exists
+     GUARD — NOTHING TO RENDER
   ------------------------------------------------------------ */
   if (!safeCoverImage && safeDocuments.length === 0) {
     return null;
@@ -174,7 +146,7 @@ const BrochureComponent = memo(function BrochureComponent({
       background="muted"
     >
       <div className="flex flex-col lg:flex-row gap-12 items-start">
-        {/* LEFT — COVER PREVIEW (VISUAL ONLY) */}
+        {/* COVER PREVIEW */}
         {safeCoverImage && (
           <BrochurePreview
             image={safeCoverImage}
@@ -182,15 +154,10 @@ const BrochureComponent = memo(function BrochureComponent({
           />
         )}
 
-        {/* RIGHT — DOCUMENTS + CTA */}
+        {/* DOCUMENTS + CTA */}
         <div className="lg:w-1/2 w-full flex flex-col gap-6">
           {safeDocuments.length > 0 && (
-            <DocumentList
-              documents={safeDocuments.map((d) => ({
-                title: d.title,
-                url: d.url,
-              }))}
-            />
+            <DocumentList documents={safeDocuments} />
           )}
 
           {leadCTA && (
@@ -201,7 +168,6 @@ const BrochureComponent = memo(function BrochureComponent({
                 leadCTA.openCTA({
                   source: "section",
                   title: "brochure_download",
-                  builderId: project.builder,
                 })
               }
             >
@@ -211,12 +177,12 @@ const BrochureComponent = memo(function BrochureComponent({
         </div>
       </div>
 
-      {/* MODAL PREVIEW */}
+      {/* MODAL */}
       {safeCoverImage && modalOpen && (
         <BrochureModal
           open
-          onClose={() => setModalOpen(false)}
           image={safeCoverImage}
+          onClose={() => setModalOpen(false)}
         />
       )}
     </BaseSection>

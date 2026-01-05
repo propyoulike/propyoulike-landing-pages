@@ -53,12 +53,8 @@ export default function ProjectCard({
 
   function formatLabel(value?: string) {
     if (!value) return null;
-    return value
-      .replace(/-/g, " ")
-      .replace(/\b\w/g, (c) => c.toUpperCase());
+    return value.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
   }
-
-  /* ---------------- Image sources ---------------- */
 
   const youtubeThumb = heroVideoId
     ? `https://img.youtube.com/vi/${heroVideoId}/hqdefault.jpg`
@@ -68,7 +64,6 @@ export default function ProjectCard({
     heroImage || youtubeThumb
   );
 
-  // Keep state in sync with incoming props
   useEffect(() => {
     setImgSrc(heroImage || youtubeThumb);
   }, [heroImage, youtubeThumb]);
@@ -83,7 +78,6 @@ export default function ProjectCard({
   }
 
   const imageWidth = variant === "homepage" ? 640 : 800;
-  const imageHeight = 192;
 
   return (
     <div className="rounded-xl overflow-hidden bg-background border shadow hover:shadow-lg transition group">
@@ -91,17 +85,11 @@ export default function ProjectCard({
       {imgSrc ? (
         <div className="relative">
           <img
-            src={cfImage(imgSrc, {
-              width: imageWidth,
-              quality: 75,
-            })}
+            src={cfImage(imgSrc, { width: imageWidth, quality: 75 })}
             alt={name}
-            width={imageWidth}
-            height={imageHeight}
             className="w-full h-48 object-cover"
             loading={variant === "homepage" ? "lazy" : "eager"}
             decoding="async"
-            fetchpriority={variant === "homepage" ? "auto" : "high"}
             onError={() => {
               if (imgSrc !== youtubeThumb && youtubeThumb) {
                 setImgSrc(youtubeThumb);
@@ -131,19 +119,17 @@ export default function ProjectCard({
 
       {/* CONTENT */}
       <div className="p-4">
-        <h3 className="text-lg font-semibold leading-snug">
-          {name}
-        </h3>
+        <h3 className="text-lg font-semibold leading-snug">{name}</h3>
 
         {variant === "homepage" && (type || status) && (
           <div className="mt-2 flex flex-wrap gap-2">
             {type && (
-              <span className="text-xs px-2 py-1 rounded-md bg-muted text-muted-foreground">
+              <span className="text-xs px-2 py-1 rounded-md bg-muted">
                 {formatLabel(type)}
               </span>
             )}
             {status && (
-              <span className="text-xs px-2 py-1 rounded-md border text-muted-foreground">
+              <span className="text-xs px-2 py-1 rounded-md border">
                 {formatLabel(status)}
               </span>
             )}
@@ -151,11 +137,10 @@ export default function ProjectCard({
         )}
 
         {location && (
-          <p className="mt-2 text-sm text-muted-foreground">
-            {location}
-          </p>
+          <p className="mt-2 text-sm text-muted-foreground">{location}</p>
         )}
 
+        {/* DEFAULT VARIANT: owns navigation */}
         {variant === "default" && (
           <>
             <div className="grid grid-cols-2 gap-2 text-sm my-3">
@@ -184,7 +169,7 @@ export default function ProjectCard({
             <div className="flex gap-3">
               <Link
                 to={`/${publicSlug}`}
-                className="flex-1 text-center bg-primary text-white py-2 rounded-lg text-sm font-medium hover:bg-primary/90"
+                className="flex-1 text-center bg-primary text-white py-2 rounded-lg text-sm font-medium"
               >
                 View Project
               </Link>
@@ -194,23 +179,12 @@ export default function ProjectCard({
                   e.preventDefault();
                   handleOpenCTA("site_visit");
                 }}
-                className="flex-1 text-center border border-primary text-primary py-2 rounded-lg text-sm font-medium hover:bg-primary/5"
+                className="flex-1 text-center border border-primary text-primary py-2 rounded-lg text-sm font-medium"
               >
                 Site Visit
               </button>
             </div>
           </>
-        )}
-
-        {variant === "homepage" && (
-          <div className="pt-4">
-            <Link
-              to={`/${publicSlug}`}
-              className="inline-flex items-center justify-center rounded-lg border px-4 py-2 text-sm font-medium hover:bg-muted transition"
-            >
-              View Project
-            </Link>
-          </div>
         )}
       </div>
     </div>

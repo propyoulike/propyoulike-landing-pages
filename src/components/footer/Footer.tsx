@@ -5,6 +5,7 @@ interface FooterProps {
   project?: {
     projectName?: string;
     city?: string;
+    builder?: string; // 👈 builder slug
   };
   builder?: {
     name?: string;
@@ -17,6 +18,7 @@ export default function Footer({ project, builder }: FooterProps) {
   const builderLogo = builder?.logo;
   const projectName = project?.projectName;
   const city = project?.city;
+  const builderSlug = project?.builder;
 
   const social = PropYouLike.social ?? {};
 
@@ -27,9 +29,7 @@ export default function Footer({ project, builder }: FooterProps) {
     >
       <div className="container mx-auto px-4">
 
-        {/* ─────────────────────────────────
-           PLATFORM IDENTITY (ALWAYS VISIBLE)
-        ───────────────────────────────── */}
+        {/* PLATFORM IDENTITY */}
         <div className="py-6 flex items-center gap-3">
           {PropYouLike.logo && (
             <img
@@ -46,9 +46,7 @@ export default function Footer({ project, builder }: FooterProps) {
 
         <div className="border-t border-white/10" />
 
-        {/* ─────────────────────────────────
-           CONTEXT (BUILDER / PROJECT)
-        ───────────────────────────────── */}
+        {/* CONTEXT (BUILDER / PROJECT) */}
         {(builderName || projectName || city) && (
           <>
             <div className="py-6">
@@ -77,6 +75,18 @@ export default function Footer({ project, builder }: FooterProps) {
                       Properties in {city}
                     </div>
                   )}
+
+                  {/* 🔗 INTERNAL LINK: Project → Builder */}
+                  {builderSlug && (
+                    <div className="mt-2">
+                      <a
+                        href={`/${builderSlug}/`}
+                        className="text-xs font-medium text-primary hover:underline"
+                      >
+                        View all {builderName ?? builderSlug} projects
+                      </a>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -84,11 +94,8 @@ export default function Footer({ project, builder }: FooterProps) {
           </>
         )}
 
-        {/* ─────────────────────────────────
-           COMPLIANCE (NEVER CONDITIONAL)
-        ───────────────────────────────── */}
+        {/* COMPLIANCE */}
         <div className="py-6 space-y-4 text-xs leading-relaxed">
-
           <p className="max-w-3xl">
             <strong>Channel Partner Disclosure:</strong>{" "}
             PropYouLike is a RERA-registered real estate marketing platform and
@@ -143,21 +150,11 @@ export default function Footer({ project, builder }: FooterProps) {
           )}
 
           <div className="flex flex-wrap gap-4 pt-2">
-            <a href="/legal/about" target="_blank" rel="noopener noreferrer">
-              About Us
-            </a>
-            <a href="/legal/contact" target="_blank" rel="noopener noreferrer">
-              Contact Us
-            </a>
-            <a href="/legal/privacy" target="_blank" rel="noopener noreferrer">
-              Privacy Policy
-            </a>
-            <a href="/legal/terms" target="_blank" rel="noopener noreferrer">
-              Terms of Use
-            </a>
-            <a href="/legal/rera" target="_blank" rel="noopener noreferrer">
-              RERA Disclaimer
-            </a>
+            <a href="/legal/about" target="_blank" rel="noopener noreferrer">About Us</a>
+            <a href="/legal/contact" target="_blank" rel="noopener noreferrer">Contact Us</a>
+            <a href="/legal/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+            <a href="/legal/terms" target="_blank" rel="noopener noreferrer">Terms of Use</a>
+            <a href="/legal/rera" target="_blank" rel="noopener noreferrer">RERA Disclaimer</a>
           </div>
 
           <p className="pt-2 text-white/40">
