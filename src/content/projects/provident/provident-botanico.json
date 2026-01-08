@@ -455,6 +455,27 @@
       }
     ]
   },
+"googleReviews": {
+"meta": {
+  "eyebrow": "REVIEWS",
+  "title": "Google Reviews",
+  "subtitle": "Verified feedback from Google",
+  "tagline": "Public opinions from real buyers"
+},
+  "enabled": true,
+  "source": "Google",
+  "placeName": "Provident Botanico",
+  "summary": {
+    "rating": 4.3,
+    "reviewCount": 180,
+    "highlight": "Buyers frequently mention greenery, layout, and location advantage."
+  },
+  "cta": {
+    "label": "Read all reviews on Google",
+    "url": "https://www.google.com/search?q=provident+botanico&rlz=1C1ASVC_enTH1088TH1088&oq=provident+bota&gs_lcrp=EgZjaHJvbWUqDwgAECMYJxiABBiKBRjwBTIPCAAQIxgnGIAEGIoFGPAFMg0IARAuGK8BGMcBGIAEMgYIAhBFGDkyBwgDEAAYgAQyBwgEEAAYgAQyBwgFEAAYgAQyBwgGEAAYgAQyBggHEEUYPNIBCDQ5MDVqMGo3qAIAsAIA&sourceid=chrome&ie=UTF-8#lrd=0x3bae0f6142c74137:0x8c9dfd3a59220c29,1,,,,"
+  },
+  "lastVerified": "2025-01-05"
+},
   "aboutBuilder": {
     "name": "Provident",
     "meta": {

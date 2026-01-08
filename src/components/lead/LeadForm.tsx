@@ -24,7 +24,8 @@ type FormData = z.infer<typeof schema>;
 
 interface Props {
   projectName: string;
-  projectId?: string; // project.slug
+  projectId?: string;      // project.slug
+  builderId: string;       // ✅ REQUIRED (DLV fix)
   whatsappNumber: string;
   intent?: LeadIntent;
   onSuccess?: () => void;
@@ -36,6 +37,7 @@ interface Props {
 export default function LeadForm({
   projectName,
   projectId = "UNKNOWN",
+  builderId,
   whatsappNumber,
   intent,
   onSuccess,
@@ -46,11 +48,11 @@ export default function LeadForm({
 
   const { track } = useTracking();
 
-  // 🔒 GUARANTEE: fires once per form lifecycle
+  // 🔒 Fires once per form lifecycle
   const hasStartedRef = useRef(false);
 
   /* -----------------------------------------------
-     form_start (ONCE, FORM-LEVEL)
+     form_start (ONCE)
   ------------------------------------------------ */
   const handleFormStart = () => {
     if (hasStartedRef.current) return;
@@ -62,7 +64,7 @@ export default function LeadForm({
      Submit handler
   ------------------------------------------------ */
   const onSubmit = async (data: FormData) => {
-    // Attempt signal (not conversion)
+    // Attempt signal (NOT conversion)
     track(EventName.FormSubmit);
 
     const waUrl = LeadPipeline.buildWhatsAppUrl(
@@ -80,17 +82,20 @@ export default function LeadForm({
       intent,
     });
 
-    // ✅ REAL conversion
+    // ✅ REAL conversion — FULL DLV CONTRACT
     track(EventName.LeadCreated, {
+      page_type: "project",
+      page_slug: window.location.pathname.replace(/^\/|\/$/g, ""),
+
       project_id: projectId,
       project_name: projectName,
-      builder_id: intent?.builderId,
+      builder_id: builderId, // ✅ guaranteed
+
+      source: "lead_form",
+      section_id: "lead_form",
 
       source_section: intent?.sourceSection,
       source_item: intent?.sourceItem,
-
-      page_slug: window.location.pathname.replace("/", ""),
-      section_id: "lead_form",
     });
 
     window.open(waUrl, "_blank");
@@ -112,9 +117,7 @@ export default function LeadForm({
       )}
 
       <input {...register("name")} placeholder="Name" />
-
       <input {...register("phone")} placeholder="Phone" />
-
       <textarea {...register("message")} placeholder="Your message" />
 
       <button type="submit" className="w-full btn-gradient">

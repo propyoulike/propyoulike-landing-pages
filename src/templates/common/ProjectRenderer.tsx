@@ -1,3 +1,5 @@
+import { useEffect, useRef } from "react";
+
 import sectionsConfig from "@/content/global/sections.config";
 import { COMPONENT_REGISTRY } from "@/content/registry/componentRegistry";
 import { resolveSectionProps } from "@/utils/resolveSectionProps";
@@ -15,6 +17,7 @@ import type { BuilderId } from "@/lib/analytics/builderIds";
 export interface ProjectAnalyticsContext {
   project_id: string;
   builder_id: BuilderId;
+  project_name?: string;
 }
 
 export interface ProjectRendererContext {
@@ -49,9 +52,6 @@ export default function ProjectRenderer({
 }: ProjectRendererProps) {
   /* ----------------------------------------------------------
      DEV-ONLY ARCHITECTURAL GUARD
-     ----------------------------------------------------------
-     Prevent illegal access like `project`, `builder`, `slug`
-     inside sections.
   ---------------------------------------------------------- */
   if (import.meta.env.DEV) {
     forbidGlobals(["project", "builder", "slug"]);
@@ -90,6 +90,29 @@ export default function ProjectRenderer({
     runtimeLog("ProjectRenderer", "fatal", "Invalid payload object", payload);
     return null;
   }
+
+  /* ----------------------------------------------------------
+     🔑 MUST-HAVE: PAGE VIEW (ONCE)
+     This is the canonical DLV source for GTM
+  ---------------------------------------------------------- */
+  const pageViewFiredRef = useRef(false);
+
+  useEffect(() => {
+    if (pageViewFiredRef.current) return;
+    pageViewFiredRef.current = true;
+
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: "page_view",
+
+      page_type: "project",
+      page_slug: window.location.pathname.replace(/^\/|\/$/g, ""),
+
+      project_id: ctx.analytics.project_id,
+      project_name: ctx.analytics.project_name || undefined,
+      builder_id: ctx.analytics.builder_id,
+    });
+  }, [ctx.analytics]);
 
   /* ----------------------------------------------------------
      Menu generation (pure)

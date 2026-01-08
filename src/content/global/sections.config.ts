@@ -220,6 +220,28 @@ const sectionsConfig = [
   },
 
   /* ==========================================================
+     GOOGLE REVIEWS
+     ========================================================== */
+
+{
+  id: "google-reviews",
+  component: "GoogleReviews_component",
+  kind: "derived",
+
+  menu: { visible: false, label: "Google Reviews", order: 15 },
+
+
+  props: {
+  meta: "$payload.googleReviews.meta",
+    rating: "$payload.googleReviews.summary.rating",
+    reviewCount: "$payload.googleReviews.summary.reviewCount",
+    highlight: "$payload.googleReviews.summary.highlight",
+    cta: "$payload.googleReviews.cta",
+  },
+},
+
+
+  /* ==========================================================
      BROCHURE
      ========================================================== */
   {
