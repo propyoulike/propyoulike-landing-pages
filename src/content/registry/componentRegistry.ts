@@ -8,8 +8,7 @@ import LocationUI_component from "@/templates/common/LocationUI_component/Locati
 import Construction_component from "@/templates/common/Construction_component/Construction_component";
 import PaymentPlans_component from "@/templates/common/PaymentPlans_component/PaymentPlans_component";
 import Testimonials_component from "@/templates/common/Testimonials_component/Testimonials_component";
-import GoogleReviews_component from "@/templates/common/GoogleReviews_component/GoogleReviews_component";
-import Brochure_component from "@/templates/common/Brochure_component/Brochure_component";
+import TrustAndClarity_component from "@/templates/common/TrustAndClarity_component/TrustAndClarity_component";
 import AboutBuilder_component from "@/templates/common/AboutBuilder_component/AboutBuilder_component";
 import Faq_component from "@/templates/common/Faq_component/Faq_component";
 
@@ -27,12 +26,11 @@ export const COMPONENT_REGISTRY = {
   Views_component,
   LocationUI_component,
   Construction_component,
-  PaymentPlans_component,
   Testimonials_component,
-  GoogleReviews_component,
-  Brochure_component,
+  TrustAndClarity_component,
   AboutBuilder_component,
   Faq_component,
+  PaymentPlans_component,
 
   /* ===== Widgets (Non-section) ===== */
   LoanAssistance,

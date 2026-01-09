@@ -1,17 +1,20 @@
+// src/components/lead/LeadPipeline.ts
+
 import type { LeadIntent } from "./types/LeadIntent";
 
 const LEADS_ENDPOINT = "https://leads.propyoulike.workers.dev/";
 
 export const LeadPipeline = {
-  /* -----------------------------------------------------------
-     WhatsApp URL (side-channel, not analytics)
-  ----------------------------------------------------------- */
   buildWhatsAppUrl(
     data: any,
     projectName: string,
     whatsappNumber: string,
     intent?: LeadIntent
   ) {
+    const stageLine = intent?.decisionStage
+      ? `\nDecision stage: ${intent.decisionStage.toUpperCase()}`
+      : "";
+
     const context = intent?.question
       ? `\n\nUser asked:\n"${intent.question}"`
       : "";
@@ -21,18 +24,13 @@ Hi, I'm interested in ${projectName}.
 
 Name: ${data.name}
 Phone: ${data.phone}
-Message: ${data.message}${context}
+Email: ${data.email ?? "—"}
+Message: ${data.message}${stageLine}${context}
 `.trim();
 
     return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
   },
 
-  /* -----------------------------------------------------------
-     Lead submission (AUTHORITATIVE)
-     → Cloudflare Worker
-     → Privyr (CRM)
-     → GA4 lead_created (server-side)
-  ----------------------------------------------------------- */
   async submitLead({
     data,
     projectName,
@@ -42,6 +40,7 @@ Message: ${data.message}${context}
     data: {
       name: string;
       phone: string;
+      email?: string;
       message: string;
     };
     projectName: string;
@@ -50,16 +49,26 @@ Message: ${data.message}${context}
   }) {
     const res = await fetch(LEADS_ENDPOINT, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        name: data.name,
-        phone: data.phone,
-        message: data.message,
+        /* core */
+        ...data,
         projectName,
         projectId,
-        intent,
+
+        /* buyer intelligence */
+        decision_stage: intent?.decisionStage ?? "research",
+        trust_reviewed: intent?.trustReviewed ?? false,
+
+        /* CRM */
+        crm: intent?.crm,
+
+        /* attribution */
+        source_section: intent?.sourceSection,
+        source_item: intent?.sourceItem,
+
+        /* identity */
+        builder_id: intent?.builderId,
       }),
     });
 

@@ -552,15 +552,16 @@
     "coverImage": "https://www.providenthousing.com/wp-content/uploads/2024/03/PROVIDENT-BOTANICO-BOOK-FRONT-MOCKUP.png",
     "documents": [
       {
-        "title": "RERA Certificate",
+        "title": "Legal RERA Registration",
         "url": "https://www.providenthousing.com/wp-content/uploads/2024/02/Provident-Botanico-RERA-Number.pdf"
       },
       {
-        "title": "EC Certificate",
+        "title": "Environmental Clearance",
         "url": "https://www.providenthousing.com/wp-content/uploads/2024/03/Botanico-EC.pdf"
       }
     ]
   },
+
   "faq": {
     "meta": {
       "eyebrow": "FAQ",
@@ -568,5 +569,92 @@
       "subtitle": "Everything you need to know before making a decision",
       "tagline": "Clear answers. No guesswork."
     }
+  },
+
+  "trustAndClarity": {
+    "meta": {
+      "eyebrow": "TRUST",
+      "title": "Trust, Reputation & Buyer Clarity",
+      "subtitle": "Independent, verifiable signals buyers usually look for",
+      "tagline": "Designed to reduce uncertainty, not influence decisions"
+    },
+
+    "reputation": {
+      "signals": [
+        {
+          "type": "media",
+          "title": "Puravankara Subsidiary Acquires Land Shares In Botanico, Capella Project",
+          "source": "NDTV Profit",
+          "date": "Jul 2024",
+          "url": "https://www.ndtvprofit.com/business/puravankara-subsidiary-acquires-land-shares-in-botanico-capella-project"
+        },
+        {
+          "type": "media",
+          "title": "Puravankara acquires seven acre land parcel in Bengaluru",
+          "source": "ET Realty",
+          "date": "Jul 2024",
+          "url": "https://realty.economictimes.indiatimes.com/news/industry/puravankara-acquires-seven-acre-land-parcel-in-bengaluru/111433543"
+        }
+      ]
+    },
+
+    "regulatory": {
+      "authority": "Karnataka RERA",
+      "status": "Registered",
+      "reraId": [
+      "PRM/KA/RERA/1250/304/PR/210324/006726"
+      ]
+    },
+
+    "buyerConcerns": {
+      "title": "What buyers usually want clarity on",
+      "items": [
+        {
+          "question": "Is this project genuinely green or just marketed so?",
+          "clarification": "Buyers evaluate open space ratio, tree density, and long-term layout planning."
+        },
+        {
+          "question": "How does Whitefield traffic affect daily living here?",
+          "clarification": "Access roads, peak-hour travel bands, and upcoming infrastructure matter."
+        },
+        {
+          "question": "Is pricing justified for this location?",
+          "clarification": "Pricing reflects layout efficiency, construction stage, and builder delivery confidence."
+        }
+      ]
+    },
+
+    "priceContext": {
+      "title": "How buyers typically evaluate pricing here",
+      "factors": [
+        "Proximity to ITPL and employment hubs",
+        "Open space ratio and density",
+        "Construction progress",
+        "Payment structure"
+      ]
+    },
+
+"buyerReadiness": {
+  "title": "Where are you in your decision journey?",
+  "stages": [
+    {
+      "label": "Just exploring",
+      "cta": "Explore layouts",
+      "stage": "exploring"
+    },
+    {
+      "label": "Shortlisting",
+      "cta": "Check availability",
+      "stage": "shortlisting"
+    },
+    {
+      "label": "Ready to visit",
+      "cta": "Schedule site visit",
+      "stage": "ready_to_visit"
+    }
+  ]
+},
+
+    "lastVerified": "2025-01-05"
   }
 }

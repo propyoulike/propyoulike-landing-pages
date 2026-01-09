@@ -1,36 +1,13 @@
-// src/templates/common/FloatingQuickNav.tsx
-
 /**
  * ============================================================
- * FloatingQuickNav
+ * FloatingQuickNav (FINAL)
  *
- * PURPOSE
+ * Mobile-only floating quick navigation for long project pages
  * ------------------------------------------------------------
- * - Provide a compact, mobile-only quick navigation bar
- * - Reflect currently visible section (scroll spy)
- * - Allow fast jumping between major sections
- *
- * DESIGN PRINCIPLES
- * ------------------------------------------------------------
- * 1. DATALESS COMPONENT
- *    - Does NOT depend on project, type, or builder
- *    - Reads DOM state only (rendered sections)
- *
- * 2. POST-RENDER DISCOVERY
- *    - Nav items are derived AFTER React renders sections
- *    - Prevents coupling to config or templates
- *
- * 3. PERFORMANCE SAFE
- *    - Scroll handling is requestAnimationFrame-throttled
- *    - Passive listeners
- *
- * 4. NON-INTRUSIVE UX
- *    - Hidden near footer to avoid overlap
- *    - Hidden when Lead CTA is open
- *    - Hidden on desktop (lg+)
- *
- * 5. FAIL-SAFE
- *    - If no sections or no visibility → renders nothing
+ * - Post-render DOM discovery
+ * - Scroll-spy with RAF throttling
+ * - Hidden near footer & when Lead CTA is open
+ * - Understated visual language (NOT a CTA)
  * ============================================================
  */
 
@@ -51,32 +28,35 @@ type NavItem = {
    Component
 -------------------------------------------------- */
 function FloatingQuickNav() {
-  /* -------------------------------------------------
+  /* -------------------------------
      State
-  -------------------------------------------------- */
+  -------------------------------- */
   const [items, setItems] = useState<NavItem[]>([]);
   const [visible, setVisible] = useState(false);
   const [activeId, setActiveId] = useState("");
 
-  // ✅ CTA state (single source of truth)
+  /* CTA state (single source of truth) */
   const { isCTAOpen } = useLeadCTAContext();
 
-  /* -------------------------------------------------
-     Refs (non-reactive state)
-  -------------------------------------------------- */
+  /* -------------------------------
+     Refs
+  -------------------------------- */
   const footerVisibleRef = useRef(false);
   const rafRef = useRef<number | null>(null);
 
   /* =================================================
-     1️⃣ Discover sections (ONCE after mount)
-  ================================================== */
+     1️⃣ Discover sections (once after mount)
+  ================================================= */
   useEffect(() => {
-    setItems(buildFloatingNavItems());
+    const discovered = buildFloatingNavItems();
+
+    /* ✅ HARD CAP — mobile readability */
+    setItems(discovered.slice(0, 6));
   }, []);
 
   /* =================================================
-     2️⃣ Footer observer
-  ================================================== */
+     2️⃣ Footer visibility observer
+  ================================================= */
   useEffect(() => {
     const footer = document.querySelector("footer");
     if (!footer) return;
@@ -94,7 +74,7 @@ function FloatingQuickNav() {
 
   /* =================================================
      3️⃣ Scroll logic (RAF throttled)
-  ================================================== */
+  ================================================= */
   useEffect(() => {
     if (!items.length) return;
 
@@ -110,12 +90,12 @@ function FloatingQuickNav() {
           return;
         }
 
-        /* Show after user scrolls past hero */
-        setVisible(window.scrollY > window.innerHeight * 0.6);
+        /* Show shortly after hero */
+        setVisible(window.scrollY > window.innerHeight * 0.35);
 
-        /* Account for fixed header height */
+        /* Account for fixed header */
         const navbar = document.querySelector("header");
-        const offset = (navbar?.clientHeight || 0) + 20;
+        const offset = (navbar?.clientHeight || 0) + 16;
 
         let current = "";
 
@@ -148,18 +128,18 @@ function FloatingQuickNav() {
   }, [items]);
 
   /* =================================================
-     ✅ HARD GUARD — THIS IS THE FIX
-     - Hide when CTA is open
-     - Hide when not visible
-     - Hide when no sections
-  ================================================== */
+     HARD GUARD — DO NOT RENDER WHEN:
+     - CTA is open
+     - Not visible
+     - No items
+  ================================================= */
   if (!visible || !items.length || isCTAOpen) {
     return null;
   }
 
   /* =================================================
      Scroll helper
-  ================================================== */
+  ================================================= */
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
     if (!el) return;
@@ -177,20 +157,27 @@ function FloatingQuickNav() {
 
   /* =================================================
      Render (mobile only)
-  ================================================== */
+  ================================================= */
   return (
-    <div className="fixed bottom-[72px] left-1/2 -translate-x-1/2 z-[9998] lg:hidden">
-      <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-background/90 backdrop-blur-md border shadow-lg">
+    <div
+      className="fixed left-1/2 -translate-x-1/2 z-[9998] lg:hidden"
+style={{
+  bottom: footerVisibleRef.current
+    ? "calc(env(safe-area-inset-bottom, 6px) + 16px)"
+    : "env(safe-area-inset-bottom, 6px)",
+}}
+    >
+      <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-background/90 backdrop-blur-md border shadow-md">
         {items.map((item) => (
           <button
             key={item.id}
             onClick={() => scrollTo(item.id)}
-            className={cn(
-              "px-3 py-1.5 text-sm rounded-full transition-all",
-              activeId === item.id
-                ? "bg-primary text-primary-foreground"
-                : "text-muted-foreground hover:text-foreground"
-            )}
+  className={cn(
+    "flex items-center gap-2 px-3 py-2 rounded-xl backdrop-blur-md border transition-all",
+    footerVisibleRef.current
+      ? "bg-background/80 shadow-sm"
+      : "bg-background/95 shadow-md"
+  )}
           >
             {item.label}
           </button>
@@ -201,6 +188,6 @@ function FloatingQuickNav() {
 }
 
 /* -------------------------------------------------
-   Memoized export
+   Export
 -------------------------------------------------- */
 export default memo(FloatingQuickNav);

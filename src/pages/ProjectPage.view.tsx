@@ -15,12 +15,12 @@ import { runtimeLog } from "@/lib/log/runtimeLog";
 import { assertRouterContext } from "@/lib/runtime/assertRouterContext";
 import { buildBreadcrumbs } from "@/utils/buildBreadcrumbs";
 
-/* 🔑 Global brand config */
+/* Global brand config */
 import propyoulike from "@/content/global/propyoulike.json";
 import { normalizeWhatsappNumber } from "@/utils/normalizeWhatsapp";
 
 /* ------------------------------------------------------------
-   Local Error Boundary
+   Error Boundary
 ------------------------------------------------------------ */
 class ProjectErrorBoundary extends React.Component<
   { children: React.ReactNode },
@@ -35,9 +35,6 @@ class ProjectErrorBoundary extends React.Component<
     runtimeLog("Render", "fatal", "Uncaught render error", {
       message: error.message,
       stack: error.stack,
-      category: error.message.includes("useContext")
-        ? "Missing runtime provider"
-        : "Unknown render error",
     });
     return { hasError: true };
   }
@@ -63,7 +60,7 @@ class ProjectErrorBoundary extends React.Component<
 }
 
 /* ------------------------------------------------------------
-   Props Contract
+   Props
 ------------------------------------------------------------ */
 interface ProjectPageViewProps {
   project: ProjectData;
@@ -78,7 +75,7 @@ export default function ProjectPageView({
   payload,
 }: ProjectPageViewProps) {
   /* ----------------------------------------------------------
-     Runtime environment probes
+     Runtime guard
   ---------------------------------------------------------- */
   const hasRouter = assertRouterContext("ProjectPageView");
 
@@ -107,25 +104,19 @@ export default function ProjectPageView({
     typeof project.builder !== "string" ||
     typeof project.type !== "string"
   ) {
-    runtimeLog("ProjectPageView", "error", "Invalid project identity", project);
     return <main className="p-10">Invalid project data</main>;
   }
 
   if (!payload || typeof payload !== "object") {
-    runtimeLog("ProjectPageView", "error", "Invalid payload", payload);
-    return <main className="p-10">Invalid project data</main>;
+    return <main className="p-10">Invalid project payload</main>;
   }
 
   /* ----------------------------------------------------------
-     Template
+     Template resolution
   ---------------------------------------------------------- */
   const Template = getTemplate(project.builder, project.type);
 
   if (!Template) {
-    runtimeLog("ProjectPageView", "error", "Template not found", {
-      builder: project.builder,
-      type: project.type,
-    });
     return <main className="p-10">No template available</main>;
   }
 
@@ -144,25 +135,31 @@ export default function ProjectPageView({
   ---------------------------------------------------------- */
   return (
     <>
+      {/* SEO + breadcrumbs never depend on runtime UI */}
       <ProjectSEO project={project} />
       <Breadcrumbs items={breadcrumbs} />
 
+      {/* Runtime-safe rendering zone */}
       <ProjectErrorBoundary>
         <LeadCTAProvider
           projectName={project.projectName}
           projectId={project.slug}
           whatsappNumber={whatsappNumber}
         >
+          {/* Main project sections */}
           <Template project={project} payload={payload} />
+
+          {/* ✅ MUST live inside CTA provider */}
+          <FloatingQuickNav footerId="site-footer" />
         </LeadCTAProvider>
       </ProjectErrorBoundary>
 
-      <FloatingQuickNav footerId="site-footer" />
-<Footer
-  id="site-footer"
-  project={project}
-  builder={payload.aboutBuilder}
-/>
+      {/* Footer is OUTSIDE CTA lifecycle */}
+      <Footer
+        id="site-footer"
+        project={project}
+        builder={payload.aboutBuilder}
+      />
     </>
   );
 }

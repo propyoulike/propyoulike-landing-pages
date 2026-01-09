@@ -16,17 +16,37 @@ export interface CTAButtonsProps {
   variant?: "default" | "compact" | "hero";
   label?: string;
 
-  /** REQUIRED for attribution */
-  sourceSection: string;   // hero | summary | pricing | amenities | footer
-  builderId: string;       // project.builder from JSON
+  /**
+   * REQUIRED
+   * hero | property_plans | location | payment_plan | faq | trust_and_clarity
+   */
+  sourceSection: string;
+  builderId: string;
 }
+
+/* ---------------------------------------------
+   Decision-stage resolver (🔑 CORE FIX)
+---------------------------------------------- */
+const decisionStageBySection: Record<
+  string,
+  LeadIntent["decisionStage"]
+> = {
+  hero: "exploring",
+  faq: "exploring",
+
+  property_plans: "shortlisting",
+  location: "shortlisting",
+  payment_plan: "shortlisting",
+
+  trust_and_clarity: "ready_to_visit",
+};
 
 /* ---------------------------------------------
    Component
 ---------------------------------------------- */
 const CTAButtons = memo(function CTAButtons({
   variant = "default",
-  label = "Book Site Visit",
+  label = "Explore layouts",
   sourceSection,
   builderId,
 }: CTAButtonsProps) {
@@ -37,23 +57,31 @@ const CTAButtons = memo(function CTAButtons({
      Form CTA
   ---------------------------------------------- */
   const handleFormClick = useCallback(() => {
-    // 🔹 Analytics: click intent
+    const decisionStage =
+      decisionStageBySection[sourceSection] ?? "exploring";
+
     track(EventName.CTAClick, {
       cta_type: CTAType.ContactForm,
       source_section: sourceSection,
       source_item: label,
     });
 
-    // 🔹 Canonical intent passed forward
     const intent: LeadIntent = {
+      decisionStage,
       sourceSection,
       sourceItem: label,
       builderId,
-      label,
+
+      question:
+        decisionStage === "ready_to_visit"
+          ? "I want to schedule a site visit"
+          : decisionStage === "shortlisting"
+          ? "I want to check availability and pricing"
+          : "I want to explore this project",
     };
 
     openCTA(intent);
-  }, [track, openCTA, sourceSection, label, builderId]);
+  }, [openCTA, track, sourceSection, label, builderId]);
 
   /* ---------------------------------------------
      WhatsApp CTA
@@ -65,15 +93,14 @@ const CTAButtons = memo(function CTAButtons({
       source_item: "whatsapp",
     });
 
-    const intent: LeadIntent = {
+    openCTA({
+      decisionStage: "exploring",
       sourceSection,
       sourceItem: "whatsapp",
       builderId,
-      label: "WhatsApp",
-    };
-
-    openCTA(intent);
-  }, [track, openCTA, sourceSection, builderId]);
+      question: "I want to chat on WhatsApp",
+    });
+  }, [openCTA, track, sourceSection, builderId]);
 
   /* ---------------------------------------------
      Compact / Hero Variant

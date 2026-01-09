@@ -128,7 +128,7 @@ const sectionsConfig = [
   {
     id: "views",
     component: "Views_component",
-    menu: { visible: true, label: "Views", order: 6 },
+    menu: { visible: false, label: "Views", order: 6 },
 
     meta: "$payload.views.meta",
 
@@ -209,7 +209,7 @@ const sectionsConfig = [
   {
     id: "testimonials",
     component: "Testimonials_component",
-    menu: { visible: true, label: "Testimonials", order: 11 },
+    menu: { visible: false, label: "Testimonials", order: 14 },
 
     meta: "$payload.testimonials.meta",
 
@@ -219,43 +219,6 @@ const sectionsConfig = [
     },
   },
 
-  /* ==========================================================
-     GOOGLE REVIEWS
-     ========================================================== */
-
-{
-  id: "google-reviews",
-  component: "GoogleReviews_component",
-  kind: "derived",
-
-  menu: { visible: false, label: "Google Reviews", order: 15 },
-
-
-  props: {
-  meta: "$payload.googleReviews.meta",
-    rating: "$payload.googleReviews.summary.rating",
-    reviewCount: "$payload.googleReviews.summary.reviewCount",
-    highlight: "$payload.googleReviews.summary.highlight",
-    cta: "$payload.googleReviews.cta",
-  },
-},
-
-
-  /* ==========================================================
-     BROCHURE
-     ========================================================== */
-  {
-    id: "brochure",
-    component: "Brochure_component",
-    menu: { visible: false, order: 12 },
-
-    meta: "$payload.brochure.meta",
-
-    props: {
-      coverImage: "$payload.brochure.coverImage",
-      documents: "$payload.brochure.documents",
-    },
-  },
 
   /* ==========================================================
      ABOUT BUILDER
@@ -276,13 +239,50 @@ const sectionsConfig = [
     },
   },
 
+/* ==========================================================
+   TRUST & CLARITY
+   ========================================================== */
+{
+  id: "trust-and-clarity",
+  component: "TrustAndClarity_component",
+
+  menu: {
+    visible: true,
+    label: "Trust & Clarity",
+    order: 11
+
+  },
+
+  props: {
+    meta: "$payload.trustAndClarity.meta",
+
+    reputation: "$payload.trustAndClarity.reputation",
+    buyerConcerns: "$payload.trustAndClarity.buyerConcerns",
+    priceContext: "$payload.trustAndClarity.priceContext",
+    buyerReadiness: "$payload.trustAndClarity.buyerReadiness",
+
+    googleReviews: "$payload.googleReviews",
+
+    builderStats: "$payload.aboutBuilder.stats",
+
+    regulatory: {
+      authority: "$payload.trustAndClarity.regulatory.authority",
+      status: "$payload.trustAndClarity.regulatory.status",
+      reraId: "$payload.trustAndClarity.regulatory.reraId",
+      documents: "$payload.brochure.documents"  
+    },
+
+    lastVerified: "$payload.trustAndClarity.lastVerified",
+  }
+},
+
   /* ==========================================================
      FAQ
      ========================================================== */
   {
     id: "faq",
     component: "Faq_component",
-    menu: { visible: true, label: "FAQ", order: 14 },
+    menu: { visible: true, label: "FAQ", order: 16 },
 
     meta: "$payload.faq.meta",
 

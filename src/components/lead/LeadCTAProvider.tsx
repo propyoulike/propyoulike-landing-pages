@@ -10,7 +10,7 @@ import LeadFormModal from "./LeadFormModal";
 import LeadFormDrawer from "./LeadFormDrawer";
 import type { LeadIntent } from "./types/LeadIntent";
 
-/* ✅ Analytics (CANONICAL) */
+/* ✅ Analytics */
 import { track } from "@/lib/tracking/track";
 import { EventName } from "@/lib/analytics/events";
 import { SectionId } from "@/lib/analytics/sectionIds";
@@ -20,10 +20,10 @@ import { SectionId } from "@/lib/analytics/sectionIds";
 ------------------------------------------------------------ */
 
 interface CTAContextType {
-  openCTA: (intent?: LeadIntent) => void;
+  openCTA: (intent?: LeadIntent & { ctaLabel?: string }) => void;
   closeCTA: () => void;
   isMobile: boolean;
-  intent?: LeadIntent;
+  intent?: LeadIntent & { ctaLabel?: string };
   isCTAOpen: boolean;
 }
 
@@ -52,12 +52,14 @@ export const LeadCTAProvider = ({
 }: LeadCTAProviderProps) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [intent, setIntent] = useState<LeadIntent | undefined>();
+  const [intent, setIntent] =
+    useState<(LeadIntent & { ctaLabel?: string }) | undefined>();
   const [isMobile, setIsMobile] = useState(false);
+
   const isCTAOpen = modalOpen || drawerOpen;
 
   /* ----------------------------------------------------------
-     Device detection (SAFE)
+     Device detection
   ---------------------------------------------------------- */
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
@@ -67,19 +69,43 @@ export const LeadCTAProvider = ({
   }, []);
 
   /* ----------------------------------------------------------
-     Open CTA (CANONICAL)
+     ✅ CANONICAL OPEN CTA (SOURCE OF TRUTH)
   ---------------------------------------------------------- */
   const openCTA = useCallback(
-    (intentData?: LeadIntent) => {
-      setIntent(intentData);
+    (incomingIntent?: LeadIntent & { ctaLabel?: string }) => {
+      const normalizedIntent: LeadIntent & { ctaLabel?: string } = {
+        ...incomingIntent,
 
+        /**
+         * 🔑 ABSOLUTE KEY FIX
+         * Every CTA must resolve a decisionStage HERE
+         * This is why all forms were looking the same earlier.
+         */
+        decisionStage:
+          incomingIntent?.decisionStage ||
+          incomingIntent?.buyerStage ||
+          "exploring",
+
+        /* backward compatibility */
+        source: incomingIntent?.sourceSection,
+
+        label:
+          incomingIntent?.ctaLabel ||
+          incomingIntent?.label ||
+          "Explore layouts",
+      };
+
+      setIntent(normalizedIntent);
+
+      /* analytics observer */
       track(EventName.CTAInteraction, {
         section_id: SectionId.LeadCTA,
         project_id: projectId,
         project_name: projectName,
-        source_item: intentData?.source,
-        label: intentData?.label || "generic",
-        question: intentData?.question,
+        source_item: normalizedIntent.sourceItem,
+        label: normalizedIntent.label,
+        decision_stage: normalizedIntent.decisionStage,
+        question: normalizedIntent.question,
       });
 
       isMobile ? setDrawerOpen(true) : setModalOpen(true);
@@ -90,11 +116,11 @@ export const LeadCTAProvider = ({
   /* ----------------------------------------------------------
      Close CTA
   ---------------------------------------------------------- */
-  const closeCTA = () => {
+  const closeCTA = useCallback(() => {
     setModalOpen(false);
     setDrawerOpen(false);
     setIntent(undefined);
-  };
+  }, []);
 
   /* ----------------------------------------------------------
      Render
@@ -105,6 +131,7 @@ export const LeadCTAProvider = ({
     >
       {children}
 
+      {/* Desktop */}
       <LeadFormModal
         open={modalOpen}
         onOpenChange={setModalOpen}
@@ -114,6 +141,7 @@ export const LeadCTAProvider = ({
         intent={intent}
       />
 
+      {/* Mobile */}
       <LeadFormDrawer
         open={drawerOpen}
         onOpenChange={setDrawerOpen}
@@ -127,7 +155,7 @@ export const LeadCTAProvider = ({
 };
 
 /* ------------------------------------------------------------
-   Hook (STRICT)
+   Hook
 ------------------------------------------------------------ */
 
 export const useLeadCTAContext = () => {
