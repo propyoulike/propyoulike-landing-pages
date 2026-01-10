@@ -23,6 +23,10 @@ interface TrustAndClarityProps {
       reviewCount: number;
       highlight?: string;
     };
+    rating?: number;
+    reviewCount?: number;
+    highlight?: string;
+    url?: string;
     cta?: {
       label: string;
       url: string;
@@ -32,7 +36,8 @@ interface TrustAndClarityProps {
   regulatory?: {
     authority: string;
     status: string;
-    reraId?: string;
+    reraId?: string | string[];
+    legalText?: string;
     documents?: Array<{
       title: string;
       url: string;
@@ -87,11 +92,16 @@ const TrustAndClarity_component = memo(function TrustAndClarity_component({
     !reputation &&
     !buyerConcerns &&
     !priceContext &&
-    !buyerReadiness
+    !buyerReadiness &&
+    !googleReviews &&
+    !regulatory
   ) {
     return null;
   }
 
+  /* -------------------------------------------------
+     CTA Intent Builder
+  -------------------------------------------------- */
   const buildIntent = (
     stage: "exploring" | "shortlisting" | "ready_to_visit",
     label: string,
@@ -109,57 +119,174 @@ const TrustAndClarity_component = memo(function TrustAndClarity_component({
     ctaLabel: cta,
   });
 
+  /* -------------------------------------------------
+     Normalize Google Reviews
+  -------------------------------------------------- */
+  const reviewRating =
+    googleReviews?.summary?.rating ?? googleReviews?.rating;
+
+  const reviewCount =
+    googleReviews?.summary?.reviewCount ??
+    googleReviews?.reviewCount;
+
+  const reviewHighlight =
+    googleReviews?.summary?.highlight ??
+    googleReviews?.highlight;
+
+  /* -------------------------------------------------
+     Normalize RERA IDs (ARRAY SAFE)
+  -------------------------------------------------- */
+  const reraIds: string[] = regulatory?.reraId
+    ? Array.isArray(regulatory.reraId)
+      ? regulatory.reraId
+      : [regulatory.reraId]
+    : [];
+
+  /* -------------------------------------------------
+     Documents & Complaints
+  -------------------------------------------------- */
+  const reraComplaintsLink =
+    regulatory?.documents?.find((d) =>
+      d.title.toLowerCase().includes("complaint")
+    );
+
+  const otherDocuments =
+    regulatory?.documents?.filter(
+      (d) => d !== reraComplaintsLink
+    ) ?? [];
+
   return (
     <BaseSection id={id} meta={meta} align="center" padding="lg">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
 
-        {/* TRUST & REPUTATION */}
+        {/* ================= TRUST & REPUTATION ================= */}
         <div className="rounded-2xl border bg-background p-8">
           <h3 className="text-xl font-semibold mb-6">
             Trust & Reputation
           </h3>
 
+          {/* MEDIA / NEWS */}
           {reputation?.signals?.map((item, i) => (
             <p key={i} className="text-muted-foreground mb-3">
-              {item.title} — <strong>{item.source}</strong>
+              {item.url ? (
+                <a
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline text-foreground"
+                >
+                  {item.title}
+                </a>
+              ) : (
+                item.title
+              )}{" "}
+              — <strong>{item.source}</strong>
             </p>
           ))}
 
-          {googleReviews?.summary && (
+          {/* GOOGLE REVIEWS */}
+          {reviewRating && reviewCount && (
             <>
               <hr className="my-6" />
               <p className="font-medium">
-                ⭐ {googleReviews.summary.rating} / 5 ·{" "}
-                {googleReviews.summary.reviewCount} reviews
+                ⭐ {reviewRating} / 5 · {reviewCount} reviews
               </p>
-              {googleReviews.cta && (
+              {reviewHighlight && (
+                <p className="text-sm text-muted-foreground mt-1">
+                  {reviewHighlight}
+                </p>
+              )}
+              {(googleReviews?.cta || googleReviews?.url) && (
                 <a
-                  href={googleReviews.cta.url}
+                  href={
+                    googleReviews.cta?.url ||
+                    googleReviews.url
+                  }
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-primary font-medium mt-2 inline-block"
                 >
-                  {googleReviews.cta.label} →
+                  {googleReviews.cta?.label ||
+                    "Read all reviews on Google"} →
                 </a>
               )}
             </>
           )}
 
+          {/* REGULATORY */}
           {regulatory && (
             <>
               <hr className="my-6" />
               <p className="font-medium">
                 {regulatory.authority} · {regulatory.status}
               </p>
-              {regulatory.reraId && (
-                <p className="text-sm text-muted-foreground">
-                  RERA ID: {regulatory.reraId}
-                </p>
+
+              {reraIds.length > 0 && (
+                <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
+                  {reraIds.map((id, i) => (
+                    <li key={i}>RERA ID: {id}</li>
+                  ))}
+                </ul>
               )}
             </>
           )}
 
-          {builderStats?.length && (
+          {/* LEGAL TEXT */}
+          {regulatory?.legalText && (
+            <p className="text-xs text-muted-foreground mt-4 leading-relaxed">
+              {regulatory.legalText}
+            </p>
+          )}
+
+          {/* DOCUMENTS */}
+          {otherDocuments.length > 0 && (
+            <>
+              <hr className="my-6" />
+              <p className="font-medium text-sm mb-2">
+                Official documents
+              </p>
+              <ul className="space-y-2 text-sm">
+                {otherDocuments.map((doc, i) => (
+                  <li key={i}>
+                    <a
+                      href={doc.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary hover:underline"
+                    >
+                      {doc.title} →
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+
+          {/* RERA COMPLAINTS */}
+          {reraComplaintsLink && (
+            <>
+              <hr className="my-6" />
+              <p className="font-medium text-sm">
+                Regulatory transparency
+              </p>
+              <p className="text-sm text-muted-foreground mt-1">
+                RERA portals list all complaints filed by buyers.
+                These may include resolved or procedural cases and
+                do not imply wrongdoing unless a final order is passed.
+              </p>
+              <a
+                href={reraComplaintsLink.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary font-medium text-sm mt-3 inline-block"
+              >
+                View complaints on RERA website →
+              </a>
+            </>
+          )}
+
+          {/* BUILDER STATS */}
+          {builderStats?.length > 0 && (
             <>
               <hr className="my-6" />
               <div className="grid grid-cols-2 gap-4">
@@ -213,7 +340,7 @@ const TrustAndClarity_component = memo(function TrustAndClarity_component({
           </div>
         )}
 
-        {/* BUYER READINESS — ACTIONABLE */}
+        {/* BUYER READINESS */}
         {buyerReadiness && (
           <div className="rounded-2xl border bg-background p-8">
             <h3 className="text-xl font-semibold mb-6">

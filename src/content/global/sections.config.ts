@@ -3,39 +3,15 @@
  * Sections Configuration (GLOBAL)
  * ============================================================
  *
- * PURPOSE
+ * Declarative source of truth for ALL project page sections
  * ------------------------------------------------------------
- * - Declarative source of truth for ALL project page sections
- * - Defines:
- *    • Render order
- *    • Menu visibility
- *    • Component mapping
- *    • Explicit data wiring
+ * - Render order
+ * - Menu visibility
+ * - Component mapping
+ * - Explicit data wiring
  *
- * THIS FILE IS PURE CONFIG
- * ------------------------------------------------------------
- * - No logic
- * - No conditionals
- * - No component imports
- *
- * ============================================================
- *
- * DATA SOURCES (STRICT)
- * ------------------------------------------------------------
- * 1. project
- *    → Flat identity only (slug, builder, type, projectName)
- *
- * 2. $payload
- *    → Structured content sections (amenities, views, etc.)
- *
- * 3. $ctx
- *    → Runtime helpers (CTA handlers, menuItems)
- *
- * 4. $resolved
- *    → Derived / global / normalized data
- *
- * ❌ NEVER mix these responsibilities
- *
+ * ❌ No logic
+ * ❌ No imports
  * ============================================================
  */
 
@@ -157,33 +133,31 @@ const sectionsConfig = [
   /* ==========================================================
      CONSTRUCTION
      ========================================================== */
-{
-  id: "construction",
-  component: "Construction_component",
-  menu: { visible: true, label: "Construction", order: 8 },
+  {
+    id: "construction",
+    component: "Construction_component",
+    menu: { visible: true, label: "Construction", order: 8 },
 
-  meta: "$resolved.construction.meta",
+    meta: "$resolved.construction.meta",
 
-  props: {
-    updates: "$resolved.construction.updates",
+    props: {
+      updates: "$resolved.construction.updates",
+    },
   },
-},
 
   /* ==========================================================
-     PAYMENT PLANS
+     PRICING & PAYMENT PLANS
      ========================================================== */
   {
     id: "paymentPlans",
     component: "PaymentPlans_component",
-    menu: { visible: false, order: 9 },
+    menu: { visible: true, label: "Pricing", order: 9 },
 
     meta: "$payload.paymentPlans.meta",
 
     props: {
-      pricingComputation:
-        "$payload.paymentPlans.pricingComputation",
-      paymentSchedule:
-        "$payload.paymentPlans.paymentSchedule",
+      pricingComputation: "$payload.paymentPlans.pricingComputation",
+      paymentSchedule: "$payload.paymentPlans.paymentSchedule",
     },
   },
 
@@ -204,12 +178,60 @@ const sectionsConfig = [
   },
 
   /* ==========================================================
+     TRUST & CLARITY
+     ========================================================== */
+  {
+    id: "trust-and-clarity",
+    component: "TrustAndClarity_component",
+    menu: { visible: true, label: "Trust & Clarity", order: 11 },
+
+    props: {
+      meta: "$payload.trustAndClarity.meta",
+
+      reputation: "$payload.trustAndClarity.reputation",
+      buyerConcerns: "$payload.trustAndClarity.buyerConcerns",
+      priceContext: "$payload.trustAndClarity.priceContext",
+      buyerReadiness: "$payload.trustAndClarity.buyerReadiness",
+
+      googleReviews: "$payload.googleReviews",
+      builderStats: "$payload.aboutBuilder.stats",
+
+      regulatory: {
+        authority: "$payload.trustAndClarity.regulatory.authority",
+        status: "$payload.trustAndClarity.regulatory.status",
+        reraId: "$payload.trustAndClarity.regulatory.reraId",
+        documents: "$payload.brochure.documents",
+      },
+
+      lastVerified: "$payload.trustAndClarity.lastVerified",
+    },
+  },
+
+  /* ==========================================================
+     ABOUT BUILDER
+     ========================================================== */
+  {
+    id: "aboutBuilder",
+    component: "AboutBuilder_component",
+    menu: { visible: false, order: 12 },
+
+    meta: "$payload.aboutBuilder.meta",
+
+    props: {
+      name: "$payload.aboutBuilder.name",
+      description: "$payload.aboutBuilder.description",
+      descriptionExpanded: "$payload.aboutBuilder.descriptionExpanded",
+      stats: "$payload.aboutBuilder.stats",
+    },
+  },
+
+  /* ==========================================================
      TESTIMONIALS
      ========================================================== */
   {
     id: "testimonials",
     component: "Testimonials_component",
-    menu: { visible: false, label: "Testimonials", order: 14 },
+    menu: { visible: false, order: 13 },
 
     meta: "$payload.testimonials.meta",
 
@@ -219,70 +241,13 @@ const sectionsConfig = [
     },
   },
 
-
-  /* ==========================================================
-     ABOUT BUILDER
-     ========================================================== */
-  {
-    id: "aboutBuilder",
-    component: "AboutBuilder_component",
-    menu: { visible: false, order: 13 },
-
-    meta: "$payload.aboutBuilder.meta",
-
-    props: {
-      name: "$payload.aboutBuilder.name",
-      description: "$payload.aboutBuilder.description",
-      descriptionExpanded:
-        "$payload.aboutBuilder.descriptionExpanded",
-      stats: "$payload.aboutBuilder.stats",
-    },
-  },
-
-/* ==========================================================
-   TRUST & CLARITY
-   ========================================================== */
-{
-  id: "trust-and-clarity",
-  component: "TrustAndClarity_component",
-
-  menu: {
-    visible: true,
-    label: "Trust & Clarity",
-    order: 11
-
-  },
-
-  props: {
-    meta: "$payload.trustAndClarity.meta",
-
-    reputation: "$payload.trustAndClarity.reputation",
-    buyerConcerns: "$payload.trustAndClarity.buyerConcerns",
-    priceContext: "$payload.trustAndClarity.priceContext",
-    buyerReadiness: "$payload.trustAndClarity.buyerReadiness",
-
-    googleReviews: "$payload.googleReviews",
-
-    builderStats: "$payload.aboutBuilder.stats",
-
-    regulatory: {
-      authority: "$payload.trustAndClarity.regulatory.authority",
-      status: "$payload.trustAndClarity.regulatory.status",
-      reraId: "$payload.trustAndClarity.regulatory.reraId",
-      documents: "$payload.brochure.documents"  
-    },
-
-    lastVerified: "$payload.trustAndClarity.lastVerified",
-  }
-},
-
   /* ==========================================================
      FAQ
      ========================================================== */
   {
     id: "faq",
     component: "Faq_component",
-    menu: { visible: true, label: "FAQ", order: 16 },
+    menu: { visible: true, label: "FAQ", order: 14 },
 
     meta: "$payload.faq.meta",
 

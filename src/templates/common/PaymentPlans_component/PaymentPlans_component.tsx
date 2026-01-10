@@ -47,7 +47,7 @@ function useOptionalLeadCTA() {
    COMPONENT
 ------------------------------------------------------------------------*/
 export default function PaymentPlans_component({
-  id = "payment-plans",
+  id = "paymentPlans",
   meta = DEFAULT_META,
 
   pricingTitle = "Pricing computation",
